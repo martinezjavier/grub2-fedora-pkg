@@ -12,17 +12,15 @@
 %endif
 
 Name:           grub2
-Version:        1.98
-Release:        0.6.20090911svn%{?dist}
+Epoch:          1
+Version:        1.97.1
+Release:        2%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
 License:        GPLv3+
 URL:            http://www.gnu.org/software/grub/
-#Source0:        http://alpha.gnu.org/pub/gnu/grub/grub-%{version}.tar.gz
-# svn -r2587 co svn://svn.sv.gnu.org/grub/trunk/grub2
-# tar czf grub2.tar.gz --exclude .svn grub2
-Source0:        grub2.tar.gz
+Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{version}.tar.gz
 Source1:        90_persistent
 Source2:        grub.default
 Source3:        README.Fedora
@@ -33,7 +31,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  flex bison ruby binutils
 BuildRequires:  ncurses-devel lzo-devel
-BuildRequires:  freetype2-devel libusb-devel
+BuildRequires:  freetype-devel libusb-devel
 %ifarch %{sparc}
 BuildRequires:  /usr/lib64/crt1.o glibc-static
 %else
@@ -62,7 +60,7 @@ file that is part of this package's documentation for more information.
 
 
 %prep
-%setup -q -n grub2
+%setup -q -n grub-%{version}
 
 %patch0 -p1 -b .grubdir
 %patch1 -p1 -b .dlsym
@@ -177,13 +175,13 @@ exec >/dev/null 2>&1
 %{_sbindir}/%{name}-emu
 %{_sbindir}/%{name}-probe
 %{_sbindir}/%{name}-setup
-%{_sbindir}/%{name}-dumpbios
 %{_sbindir}/%{name}-mkconfig
-%{_sbindir}/%{name}-ofpathname
 %{_bindir}/%{name}-mkimage
 %{_bindir}/%{name}-mkelfimage
 %{_bindir}/%{name}-editenv
-%{_bindir}/%{name}-fstest                     
+%{_bindir}/%{name}-fstest
+%{_bindir}/%{name}-mkfont
+%{_bindir}/%{name}-mkrescue
 %dir %{_sysconfdir}/grub.d
 %config %{_sysconfdir}/grub.d/??_*
 %{_sysconfdir}/grub.d/README
@@ -196,12 +194,20 @@ exec >/dev/null 2>&1
 %doc COPYING INSTALL NEWS README THANKS TODO ChangeLog README.Fedora
 %exclude %{_mandir}
 
-%{_includedir}/grub/
-%{_includedir}/multiboot*.h
 
 
 %changelog
-* Fri Sep 11 2009 Dennis Gilmore <dennis@ausil.us - 1.9-0.6.20090911svn
+* Tue Nov 10 2009 Dennis Gilmore <dennis@ausil.us> - 1:1.97.1-2
+- update filelists
+
+* Tue Nov 10 2009 Dennis Gilmore <dennis@ausil.us> - 1:1.97.1-1
+- update to 1.97.1 release
+- introduce epoch for upgrades
+
+* Tue Nov 10 2009 Dennis Gilmore <dennis@ausil.us> - 1.98-0.7.20090911svn
+- fix BR
+
+* Fri Sep 11 2009 Dennis Gilmore <dennis@ausil.us> - 1.98-0.6.20090911svn
 - update to new svn snapshot
 - add sparc support
 
