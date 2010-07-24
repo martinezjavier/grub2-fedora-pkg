@@ -13,7 +13,7 @@
 
 Name:           grub2
 Epoch:          1
-Version:        1.97.1
+Version:        1.98
 Release:        3%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
@@ -25,7 +25,8 @@ Source1:        90_persistent
 Source2:        grub.default
 Source3:        README.Fedora
 Patch0:         grub-1.95-grubdir.patch
-Patch1:        http://fedorapeople.org/~lkundrak/grub2/grub2-dlsym-v4.patch
+Patch1:         grub-1.97.1-initramfs.patch
+Patch2:         grub-1.98-follow-dev-mapper-symlinks.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -37,11 +38,11 @@ BuildRequires:  /usr/lib64/crt1.o glibc-static
 %else
 BuildRequires:  /usr/lib/crt1.o glibc-static
 %endif
-BuildRequires:  autoconf automake
+BuildRequires:  autoconf automake gettext-devel
 
 # grubby
-Requires(pre):  mkinitrd dracut
-Requires(post): mkinitrd dracut
+Requires(pre):  dracut
+Requires(post): dracut
 
 # TODO: ppc
 ExclusiveArch:  %{ix86} x86_64 %{sparc}
@@ -63,7 +64,8 @@ file that is part of this package's documentation for more information.
 %setup -q -n grub-%{version}
 
 %patch0 -p1 -b .grubdir
-%patch1 -p1 -b .dlsym
+%patch1 -p1 -b .initramfs
+%patch2 -p1 -b .follow-symlinks
 
 # README.Fedora
 cp %{SOURCE3} .
@@ -79,7 +81,6 @@ sh autogen.sh
 %else
         --with-platform=pc              \
 %endif
-        --enable-grub-emu               \
         --program-transform-name=s,grub,%{name},
 # TODO: Other platforms. Use alternatives system?
 #       --with-platform=ieee1275        \
@@ -92,7 +93,6 @@ make %{?_smp_mflags}
 #In file included from normal/lexer.c:23:
 #include/grub/script.h:26:29: error: grub_script.tab.h: No such file or directory
 #make
-
 
 %install
 set -e
@@ -124,6 +124,7 @@ done
 # Defaults
 install -m 644 -D %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/default/grub
 
+%find_lang grub
 
 %clean    
 rm -rf $RPM_BUILD_ROOT
@@ -157,30 +158,36 @@ rm -f /boot/%{name}/device.map
 %triggerin -- kernel, kernel-PAE
 exec >/dev/null 2>&1
 # Generate grub.cfg
-%{name}-mkconfig
+%{name}-mkconfig -o /boot/grub2/grub.cfg
 
 
 %triggerun -- kernel, kernel-PAE
 exec >/dev/null 2>&1
 # Generate grub.cfg
-%{name}-mkconfig
+%{name}-mkconfig -o /boot/grub2/grub.cfg
 
 
-%files
+%files -f grub.lang
 %defattr(-,root,root,-)
 %{_libdir}/%{name}
 %{_libdir}/grub/
 %{_sbindir}/%{name}-mkdevicemap
 %{_sbindir}/%{name}-install
-%{_sbindir}/%{name}-emu
 %{_sbindir}/%{name}-probe
 %{_sbindir}/%{name}-setup
 %{_sbindir}/%{name}-mkconfig
+%{_sbindir}/%{name}-reboot
+%{_sbindir}/%{name}-set-default
 %{_bindir}/%{name}-mkimage
 %{_bindir}/%{name}-mkelfimage
 %{_bindir}/%{name}-editenv
 %{_bindir}/%{name}-fstest
 %{_bindir}/%{name}-mkfont
+%{_bindir}/%{name}-bin2h
+%{_bindir}/%{name}-mkisofs
+%{_bindir}/%{name}-mkpasswd-pbkdf2
+%{_bindir}/%{name}-mkrelpath
+%{_bindir}/%{name}-script-check
 %ifnarch %{sparc}
 %{_bindir}/%{name}-mkrescue
 %endif
@@ -202,6 +209,24 @@ exec >/dev/null 2>&1
 
 
 %changelog
+* Sat Jul 17 2010 Dennis Gilmore <dennis@ausil.us> - 1:1.98-3
+- correctly generate a grub.cfg on kernel update
+
+* Fri May 28 2010 Dennis Gilmore <dennis@ausil.us> - 1:1.98-2
+- add patch so grub2-probe works with lvm to detect devices correctly
+
+* Wed Apr 21 2010 Dennis Gilmore <dennis@ausil.us> - 1:1.98-1
+- update to 1.98
+
+* Fri Feb 12 2010 Dennis Gilmore <dennis@ausil.us> - 1:1.97.2-1
+- update to 1.97.2
+
+* Wed Jan 20 2010 Dennis Gilmore <dennis@ausil.us> - 1:1.97.1-5
+- drop requires on mkinitrd
+
+* Tue Dec 01 2009 Dennis Gilmore <dennis@ausil.us> - 1:1.97.1-4
+- add patch so that grub2 finds fedora's initramfs
+
 * Tue Nov 10 2009 Dennis Gilmore <dennis@ausil.us> - 1:1.97.1-3
 - no mkrescue on sparc arches
 - ofpathname on sparc arches
