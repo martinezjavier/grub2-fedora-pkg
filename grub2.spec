@@ -14,7 +14,7 @@
 Name:           grub2
 Epoch:          1
 Version:        1.98
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -209,6 +209,9 @@ exec >/dev/null 2>&1
 
 
 %changelog
+* Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:1.98-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
 * Sat Jul 17 2010 Dennis Gilmore <dennis@ausil.us> - 1:1.98-3
 - correctly generate a grub.cfg on kernel update
 
