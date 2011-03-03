@@ -13,20 +13,21 @@
 
 Name:           grub2
 Epoch:          1
-Version:        1.98
-Release:        4%{?dist}
+Version:        1.99
+%define filever 1.99~rc1
+Release:        0.1%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
 License:        GPLv3+
 URL:            http://www.gnu.org/software/grub/
-Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{version}.tar.gz
+Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{filever}.tar.gz
 Source1:        90_persistent
 Source2:        grub.default
 Source3:        README.Fedora
-Patch0:         grub-1.95-grubdir.patch
-Patch1:         grub-1.97.1-initramfs.patch
-Patch2:         grub-1.98-follow-dev-mapper-symlinks.patch
+Patch0:		grub-1.99-handle-fwrite-return.patch
+Patch1:		grub-1.99-unused-variable.patch
+Patch2:		grub-1.99-grub_test_assert_printf.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -38,14 +39,15 @@ BuildRequires:  /usr/lib64/crt1.o glibc-static
 %else
 BuildRequires:  /usr/lib/crt1.o glibc-static
 %endif
-BuildRequires:  autoconf automake gettext-devel
+BuildRequires:  autoconf automake autogen device-mapper-devel
+BuildRequires:	freetype-devel gettext-devel git
 
-# grubby
+Requires:	gettext
 Requires(pre):  dracut
 Requires(post): dracut
 
 # TODO: ppc
-ExclusiveArch:  %{ix86} x86_64 %{sparc}
+# ExclusiveArch:  %{ix86} x86_64 %{sparc}
 
 %description
 This is the second version of the GRUB (Grand Unified Bootloader),
@@ -61,11 +63,13 @@ file that is part of this package's documentation for more information.
 
 
 %prep
-%setup -q -n grub-%{version}
-
-%patch0 -p1 -b .grubdir
-%patch1 -p1 -b .initramfs
-%patch2 -p1 -b .follow-symlinks
+%setup -q -n grub-%{filever}
+git init
+git config user.email "pjones@fedoraproject.org"
+git config user.name "Fedora Ninjas"
+git add .
+git commit -a -q -m "%{version} baseline."
+git am %{patches}
 
 # README.Fedora
 cp %{SOURCE3} .
@@ -75,7 +79,12 @@ cp %{SOURCE3} .
 sh autogen.sh
 # -static is needed so that autoconf script is able to link
 # test that looks for _start symbol on 64 bit platforms
-%configure TARGET_LDFLAGS=-static       \
+%configure CFLAGS="$(echo $RPM_OPT_FLAGS | sed \
+	-e 's/-fstack-protector//g' \
+	-e 's/--param=ssp-buffer-size=4//g' \
+	-e 's/-mregparm=3/-mregparm=4//g' \
+	-e 's/-fasynchronous-unwind-tables//g' )" \
+	TARGET_LDFLAGS=-static       \
 %ifarch %{sparc}
         --with-platform=ieee1275        \
 %else
@@ -121,10 +130,11 @@ do
 #        install -m 755 -D $BASE$EXT $TGT
 done
 
+mv $RPM_BUILD_ROOT%{_infodir}/grub.info $RPM_BUILD_ROOT%{_infodir}/grub2.info
+rm $RPM_BUILD_ROOT%{_infodir}/dir
+
 # Defaults
 install -m 644 -D %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/default/grub
-
-%find_lang grub
 
 %clean    
 rm -rf $RPM_BUILD_ROOT
@@ -143,9 +153,15 @@ BOOT_PARTITION=$(df -h /boot |(read; awk '{print $1; exit}'))
 /sbin/grubby --remove-kernel=/boot/%{name}/core.img
 # Add core.img as multiboot kernel to GRUB Legacy menu
 /sbin/grubby --add-kernel=/boot/%{name}/core.img --title="GNU GRUB 2, (%{version})"
+if [ "$1" = 1 ]; then
+	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/grub2.info.gz || :
+fi
 
 
 %preun
+if [ "$1" = 0 ]; then
+	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/grub2.info.gz || :
+fi
 exec >/dev/null
 /sbin/grubby --remove-kernel=/boot/%{name}/core.img
 # XXX Ugly
@@ -167,33 +183,38 @@ exec >/dev/null 2>&1
 %{name}-mkconfig -o /boot/grub2/grub.cfg
 
 
-%files -f grub.lang
+%files
 %defattr(-,root,root,-)
+/etc/bash_completion.d/grub
 %{_libdir}/%{name}
 %{_libdir}/grub/
+%{_sbindir}/%{name}-mkconfig
 %{_sbindir}/%{name}-mkdevicemap
+%{_sbindir}/%{name}-mknetdir
 %{_sbindir}/%{name}-install
 %{_sbindir}/%{name}-probe
-%{_sbindir}/%{name}-setup
-%{_sbindir}/%{name}-mkconfig
 %{_sbindir}/%{name}-reboot
 %{_sbindir}/%{name}-set-default
-%{_bindir}/%{name}-mkimage
-%{_bindir}/%{name}-mkelfimage
+%{_sbindir}/%{name}-setup
+%{_bindir}/%{name}-bin2h
 %{_bindir}/%{name}-editenv
 %{_bindir}/%{name}-fstest
+%{_bindir}/%{name}-kbdcomp
+%{_bindir}/%{name}-menulst2cfg
+# %{_bindir}/%{name}-mkelfimage
 %{_bindir}/%{name}-mkfont
-%{_bindir}/%{name}-bin2h
-%{_bindir}/%{name}-mkisofs
+%{_bindir}/%{name}-mklayout
+%{_bindir}/%{name}-mkimage
+# %{_bindir}/%{name}-mkisofs
 %{_bindir}/%{name}-mkpasswd-pbkdf2
 %{_bindir}/%{name}-mkrelpath
-%{_bindir}/%{name}-script-check
 %ifnarch %{sparc}
 %{_bindir}/%{name}-mkrescue
 %endif
 %ifarch %{sparc}
 %{_sbindir}/%{name}-ofpathname
 %endif
+%{_bindir}/%{name}-script-check
 %dir %{_sysconfdir}/grub.d
 %config %{_sysconfdir}/grub.d/??_*
 %{_sysconfdir}/grub.d/README
@@ -205,8 +226,7 @@ exec >/dev/null 2>&1
 %config(noreplace) /boot/%{name}/grub.cfg
 %doc COPYING INSTALL NEWS README THANKS TODO ChangeLog README.Fedora
 %exclude %{_mandir}
-
-
+%{_infodir}/grub2*
 
 %changelog
 * Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:1.98-4
