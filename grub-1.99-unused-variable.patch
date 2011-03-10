@@ -4,8 +4,9 @@ Date: Wed, 2 Mar 2011 13:47:04 -0500
 Subject: [PATCH] Get rid of unused variable in zfs.
 
 ---
- grub-core/fs/zfs/zfs.c |    2 --
- 1 files changed, 0 insertions(+), 2 deletions(-)
+ grub-core/mmap/efi/mmap.c |    3 +--
+ grub-core/fs/zfs/zfs.c    |    2 --
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/grub-core/fs/zfs/zfs.c b/grub-core/fs/zfs/zfs.c
 index 5b575f3..3a94d88 100644
@@ -26,6 +27,27 @@ index 5b575f3..3a94d88 100644
  
  	  *value = grub_be_to_cpu64 (la->la_array64);
  
+diff --git a/grub-core/mmap/efi/mmap.c b/grub-core/mmap/efi/mmap.c
+index 5b82a87..8e5cce0 100644
+--- a/grub-core/mmap/efi/mmap.c
++++ b/grub-core/mmap/efi/mmap.c
+@@ -194,7 +194,6 @@ grub_mmap_unregister (int handle)
+ {
+   struct overlay *curover, *prevover;
+   grub_efi_boot_services_t *b;
+-  grub_efi_status_t status;
+ 
+   b = grub_efi_system_table->boot_services;
+ 
+@@ -204,7 +203,7 @@ grub_mmap_unregister (int handle)
+     {
+       if (curover->handle == handle)
+ 	{
+-	  status = efi_call_2 (b->free_pages, curover->address, curover->pages);
++	  efi_call_2 (b->free_pages, curover->address, curover->pages);
+ 	  if (prevover != 0)
+ 	    prevover->next = curover->next;
+ 	  else
 -- 
 1.7.3.1
 
