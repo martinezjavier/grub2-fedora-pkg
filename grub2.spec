@@ -11,6 +11,10 @@
 %define _target_platform sparc64-%{_vendor}-%{_target_os}%{?_gnu}
 %endif
 
+%if ! 0%{?efi}
+%global efi %{ix86} x86_64 ia64
+%endif
+
 Name:           grub2
 Epoch:          1
 Version:        1.99
@@ -31,8 +35,8 @@ Patch2:		grub-1.99-grub_test_assert_printf.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:  flex bison ruby binutils
-BuildRequires:  ncurses-devel lzo-devel
+BuildRequires:  flex bison binutils python
+BuildRequires:  ncurses-devel xz-devel
 BuildRequires:  freetype-devel libusb-devel
 %ifarch %{sparc}
 BuildRequires:  /usr/lib64/crt1.o glibc-static
@@ -50,20 +54,40 @@ Requires(post): dracut
 # ExclusiveArch:  %{ix86} x86_64 %{sparc}
 
 %description
-This is the second version of the GRUB (Grand Unified Bootloader),
-a highly configurable and customizable bootloader with modular
-architecture.  It support rich scale of kernel formats, file systems,
-computer architectures and hardware devices.
+The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
+bootloader with modular architecture.  It support rich varietyof kernel formats,
+file systems, computer architectures and hardware devices.
 
-PLEASE NOTE: This is a development snapshot, and as such will not
-replace grub if you install it, but will be merely added as another
-kernel to your existing GRUB menu. Do not replace GRUB (grub package)
-with it unless you know what are you doing. Refer to README.Fedora
-file that is part of this package's documentation for more information.
+%ifarch %{efi}
+%package efi
+Summary:	GRUB for EFI systems.
+Group:		System Environment/Base
 
+%description efi
+The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
+bootloader with modular architecture.  It support rich varietyof kernel formats,
+file systems, computer architectures and hardware devices.  This subpackage
+provides support for EFI systems.
+%endif
 
 %prep
-%setup -q -n grub-%{filever}
+%setup -T -c -n grub-%{version}
+%ifarch %{efi}
+%setup -D -q -T -a 0 -n grub-%{version}
+cd grub-%{filever}
+cp %{SOURCE3} .
+git init
+git config user.email "pjones@fedoraproject.org"
+git config user.name "Fedora Ninjas"
+git add .
+git commit -a -q -m "%{version} baseline."
+git am %{patches}
+cd ..
+mv grub-%{filever} grub-efi-%{filever}
+%endif
+%setup -D -q -T -a 0 -n grub-%{version}
+cd grub-%{filever}
+cp %{SOURCE3} .
 git init
 git config user.email "pjones@fedoraproject.org"
 git config user.name "Fedora Ninjas"
@@ -71,41 +95,75 @@ git add .
 git commit -a -q -m "%{version} baseline."
 git am %{patches}
 
-# README.Fedora
-cp %{SOURCE3} .
-
 
 %build
-sh autogen.sh
+%ifarch %{efi}
+cd grub-efi-%{filever}
+./autogen.sh
+%configure						\
+	CFLAGS="$(echo $RPM_OPT_FLAGS | sed		\
+		-e 's/-fstack-protector//g'		\
+		-e 's/--param=ssp-buffer-size=4//g'	\
+		-e 's/-mregparm=3/-mregparm=4//g'	\
+		-e 's/-fasynchronous-unwind-tables//g' )"\
+	TARGET_LDFLAGS=-static				\
+        --with-platform=efi				\
+        --program-transform-name=s,grub,%{name}-efi,
+make %{?_smp_mflags}
+cd ..
+%endif
+
+cd grub-%{filever}
+./autogen.sh
 # -static is needed so that autoconf script is able to link
 # test that looks for _start symbol on 64 bit platforms
-%configure CFLAGS="$(echo $RPM_OPT_FLAGS | sed \
-	-e 's/-fstack-protector//g' \
-	-e 's/--param=ssp-buffer-size=4//g' \
-	-e 's/-mregparm=3/-mregparm=4//g' \
-	-e 's/-fasynchronous-unwind-tables//g' )" \
-	TARGET_LDFLAGS=-static       \
 %ifarch %{sparc}
-        --with-platform=ieee1275        \
+PLATFORM=ieee1275
 %else
-        --with-platform=pc              \
+PLATFORM=pc
 %endif
+%configure						\
+	CFLAGS="$(echo $RPM_OPT_FLAGS | sed		\
+		-e 's/-fstack-protector//g'		\
+		-e 's/--param=ssp-buffer-size=4//g'	\
+		-e 's/-mregparm=3/-mregparm=4//g'	\
+		-e 's/-fasynchronous-unwind-tables//g' )"\
+	TARGET_LDFLAGS=-static				\
+        --with-platform=$PLATFORM			\
         --program-transform-name=s,grub,%{name},
-# TODO: Other platforms. Use alternatives system?
-#       --with-platform=ieee1275        \
-#       --with-platform=efi             \
-#       --with-platform=i386-pc         \
-
 
 make %{?_smp_mflags}
-#gcc -Inormal -I./normal -I. -Iinclude -I./include -Wall -W -DGRUB_LIBDIR=\"/usr/lib/`echo grub/i386-pc | sed 's&^&&;s,grub,grub2,'`\" -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic -DGRUB_UTIL=1  -MD -c -o grub_emu-normal_lexer.o normal/lexer.c
-#In file included from normal/lexer.c:23:
-#include/grub/script.h:26:29: error: grub_script.tab.h: No such file or directory
-#make
 
 %install
 set -e
 rm -fr $RPM_BUILD_ROOT
+
+%ifarch %{efi}
+cd grub-efi-%{filever}
+make DESTDIR=$RPM_BUILD_ROOT install
+
+# Ghost config file
+install -d $RPM_BUILD_ROOT/boot/%{name}-efi
+touch $RPM_BUILD_ROOT/boot/%{name}-efi/grub.cfg
+ln -s ../boot/%{name}-efi/grub.cfg $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-efi.cfg
+
+# Install ELF files modules and images were created from into
+# the shadow root, where debuginfo generator will grab them from
+find $RPM_BUILD_ROOT -name '*.mod' -o -name '*.img' |
+while read MODULE
+do
+        BASE=$(echo $MODULE |sed -r "s,.*/([^/]*)\.(mod|img),\1,")
+        # Symbols from .img files are in .exec files, while .mod
+        # modules store symbols in .elf. This is just because we
+        # have both boot.img and boot.mod ...
+        EXT=$(echo $MODULE |grep -q '.mod' && echo '.elf' || echo '.exec')
+        TGT=$(echo $MODULE |sed "s,$RPM_BUILD_ROOT,.debugroot,")
+#        install -m 755 -D $BASE$EXT $TGT
+done
+cd ..
+%endif
+
+cd grub-%{filever}
 make DESTDIR=$RPM_BUILD_ROOT install
 
 # Script that makes part of grub.cfg persist across updates
@@ -139,7 +197,6 @@ install -m 644 -D %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/default/grub
 %clean    
 rm -rf $RPM_BUILD_ROOT
 
-
 %post
 exec >/dev/null 2>&1
 # Create device.map or reuse one from GRUB Legacy
@@ -169,19 +226,6 @@ rm -f /boot/%{name}/*.mod
 rm -f /boot/%{name}/*.img
 rm -f /boot/%{name}/*.lst
 rm -f /boot/%{name}/device.map
-
-
-%triggerin -- kernel, kernel-PAE
-exec >/dev/null 2>&1
-# Generate grub.cfg
-%{name}-mkconfig -o /boot/grub2/grub.cfg
-
-
-%triggerun -- kernel, kernel-PAE
-exec >/dev/null 2>&1
-# Generate grub.cfg
-%{name}-mkconfig -o /boot/grub2/grub.cfg
-
 
 %files
 %defattr(-,root,root,-)
@@ -224,9 +268,60 @@ exec >/dev/null 2>&1
 # Actually, this is replaced by update-grub from scriptlets,
 # but it takes care of modified persistent part
 %config(noreplace) /boot/%{name}/grub.cfg
-%doc COPYING INSTALL NEWS README THANKS TODO ChangeLog README.Fedora
+%doc grub-%{filever}/COPYING grub-%{filever}/INSTALL grub-%{filever}/NEWS
+%doc grub-%{filever}/README grub-%{filever}/THANKS grub-%{filever}/TODO
+%doc grub-%{filever}/ChangeLog grub-%{filever}/README.Fedora
 %exclude %{_mandir}
 %{_infodir}/grub2*
+
+%ifarch %{efi}
+%files efi
+%defattr(-,root,root,-)
+/etc/bash_completion.d/grub
+%{_libdir}/grub2-efi
+%{_libdir}/grub/
+%{_sbindir}/grub2-efi-mkconfig
+%{_sbindir}/grub2-efi-mkdevicemap
+%{_sbindir}/grub2-efi-mknetdir
+%{_sbindir}/grub2-efi-install
+%{_sbindir}/grub2-efi-probe
+%{_sbindir}/grub2-efi-reboot
+%{_sbindir}/grub2-efi-set-default
+#%{_sbindir}/grub2-efi-setup
+%{_bindir}/grub2-efi-bin2h
+%{_bindir}/grub2-efi-editenv
+%{_bindir}/grub2-efi-fstest
+%{_bindir}/grub2-efi-kbdcomp
+%{_bindir}/grub2-efi-menulst2cfg
+# %{_bindir}/grub2-efi-mkelfimage
+%{_bindir}/grub2-efi-mkfont
+%{_bindir}/grub2-efi-mklayout
+%{_bindir}/grub2-efi-mkimage
+# %{_bindir}/grub2-efi-mkisofs
+%{_bindir}/grub2-efi-mkpasswd-pbkdf2
+%{_bindir}/grub2-efi-mkrelpath
+%ifnarch %{sparc}
+%{_bindir}/grub2-efi-mkrescue
+%endif
+%ifarch %{sparc}
+%{_sbindir}/grub2-efi-ofpathname
+%endif
+%{_bindir}/grub2-efi-script-check
+%dir %{_sysconfdir}/grub.d
+%config %{_sysconfdir}/grub.d/??_*
+%{_sysconfdir}/grub.d/README
+%{_sysconfdir}/grub2-efi.cfg
+%{_sysconfdir}/default/grub
+%dir /boot/grub2-efi
+# Actually, this is replaced by update-grub from scriptlets,
+# but it takes care of modified persistent part
+%config(noreplace) /boot/grub2-efi/grub.cfg
+%doc grub-%{filever}/COPYING grub-%{filever}/INSTALL grub-%{filever}/NEWS
+%doc grub-%{filever}/README grub-%{filever}/THANKS grub-%{filever}/TODO
+%doc grub-%{filever}/ChangeLog grub-%{filever}/README.Fedora
+%exclude %{_mandir}
+%{_infodir}/grub2*
+%endif
 
 %changelog
 * Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:1.98-4
