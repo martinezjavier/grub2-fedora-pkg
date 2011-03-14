@@ -32,6 +32,7 @@ Source3:        README.Fedora
 Patch0:		grub-1.99-handle-fwrite-return.patch
 Patch1:		grub-1.99-unused-variable.patch
 Patch2:		grub-1.99-grub_test_assert_printf.patch
+Patch3:		grub-1.99-just-say-linux.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -110,6 +111,14 @@ cd grub-efi-%{filever}
         --with-platform=efi				\
         --program-transform-name=s,grub,%{name}-efi,
 make %{?_smp_mflags}
+%ifarch %{ix86}
+%define grubefiarch i386-efi
+%else
+%define grubefiarch %{_arch}-efi
+%endif
+./grub-mkimage -O %{grubefiarch} -o grub.efi -d grub-core part_gpt hfsplus fat \
+	ext2 btrfs normal chain boot configfile linux appleldr minicmd \
+	loadbios reboot halt search font gfxterm
 cd ..
 %endif
 
@@ -160,6 +169,8 @@ do
         TGT=$(echo $MODULE |sed "s,$RPM_BUILD_ROOT,.debugroot,")
 #        install -m 755 -D $BASE$EXT $TGT
 done
+install -m 755 -d $RPM_BUILD_ROOT/boot/efi/EFI/redhat/
+install -m 755 grub.efi $RPM_BUILD_ROOT/boot/efi/EFI/redhat/grub.efi
 cd ..
 %endif
 
@@ -277,6 +288,7 @@ rm -f /boot/%{name}/device.map
 %ifarch %{efi}
 %files efi
 %defattr(-,root,root,-)
+%attr(0755,root,root)/boot/efi/EFI/redhat
 /etc/bash_completion.d/grub
 %{_libdir}/grub2-efi
 %{_libdir}/grub/
