@@ -209,18 +209,10 @@ install -m 644 -D %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/default/grub
 rm -rf $RPM_BUILD_ROOT
 
 %post
-exec >/dev/null 2>&1
-# Create device.map or reuse one from GRUB Legacy
-cp -u /boot/grub/device.map /boot/%{name}/device.map 2>/dev/null ||
-        %{name}-mkdevicemap
 # Determine the partition with /boot
 BOOT_PARTITION=$(df -h /boot |(read; awk '{print $1; exit}'))
 # Generate core.img, but don't let it be installed in boot sector
 %{name}-install --grub-setup=/bin/true $BOOT_PARTITION
-# Remove stale menu.lst entries
-/sbin/grubby --remove-kernel=/boot/%{name}/core.img
-# Add core.img as multiboot kernel to GRUB Legacy menu
-/sbin/grubby --add-kernel=/boot/%{name}/core.img --title="GNU GRUB 2, (%{version})"
 if [ "$1" = 1 ]; then
 	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/grub2.info.gz || :
 fi
@@ -230,8 +222,6 @@ fi
 if [ "$1" = 0 ]; then
 	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/grub2.info.gz || :
 fi
-exec >/dev/null
-/sbin/grubby --remove-kernel=/boot/%{name}/core.img
 # XXX Ugly
 rm -f /boot/%{name}/*.mod
 rm -f /boot/%{name}/*.img
