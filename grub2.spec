@@ -46,6 +46,7 @@ BuildRequires:  /usr/lib/crt1.o glibc-static
 %endif
 BuildRequires:  autoconf automake autogen device-mapper-devel
 BuildRequires:	freetype-devel gettext-devel git
+BuildRequires:	texinfo
 
 Requires:	gettext
 Requires(pre):  dracut
