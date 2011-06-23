@@ -19,7 +19,7 @@ Name:           grub2
 Epoch:          1
 Version:        1.99
 %define filever 1.99~rc1
-Release:        0.1%{?dist}
+Release:        0.2%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -33,6 +33,7 @@ Patch0:		grub-1.99-handle-fwrite-return.patch
 Patch1:		grub-1.99-unused-variable.patch
 Patch2:		grub-1.99-grub_test_assert_printf.patch
 Patch3:		grub-1.99-just-say-linux.patch
+Patch4:		grub-1.99-Workaround-for-variable-set-but-not-used-issue.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -127,7 +128,7 @@ cd grub-%{filever}
 ./autogen.sh
 # -static is needed so that autoconf script is able to link
 # test that looks for _start symbol on 64 bit platforms
-%ifarch %{sparc}
+%ifarch %{sparc} ppc ppc64
 PLATFORM=ieee1275
 %else
 PLATFORM=pc
@@ -241,7 +242,9 @@ rm -f /boot/%{name}/device.map
 %{_sbindir}/%{name}-probe
 %{_sbindir}/%{name}-reboot
 %{_sbindir}/%{name}-set-default
+%ifarch %{ix86} x86_64 %{sparc}
 %{_sbindir}/%{name}-setup
+%endif
 %{_bindir}/%{name}-bin2h
 %{_bindir}/%{name}-editenv
 %{_bindir}/%{name}-fstest
@@ -303,10 +306,10 @@ rm -f /boot/%{name}/device.map
 # %{_bindir}/grub2-efi-mkisofs
 %{_bindir}/grub2-efi-mkpasswd-pbkdf2
 %{_bindir}/grub2-efi-mkrelpath
-%ifnarch %{sparc}
+%ifnarch %{sparc} ppc ppc64
 %{_bindir}/grub2-efi-mkrescue
 %endif
-%ifarch %{sparc}
+%ifarch %{sparc} ppc ppc64
 %{_sbindir}/grub2-efi-ofpathname
 %endif
 %{_bindir}/grub2-efi-script-check
@@ -327,6 +330,9 @@ rm -f /boot/%{name}/device.map
 %endif
 
 %changelog
+* Thu Jun 23 2011 Peter Lemenkov <lemenkov@gmail.com> - 1:1.99-0.2
+- Fixes for ppc and ppc64
+
 * Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:1.98-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
