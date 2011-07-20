@@ -111,7 +111,8 @@ cd grub-efi-%{filever}
 		-e 's/-fasynchronous-unwind-tables//g' )"\
 	TARGET_LDFLAGS=-static				\
         --with-platform=efi				\
-        --program-transform-name=s,grub,%{name}-efi,
+        --program-transform-name=s,grub,%{name}-efi,	\
+        --sbindir=/sbin
 make %{?_smp_mflags}
 %ifarch %{ix86}
 %define grubefiarch i386-efi
@@ -141,7 +142,8 @@ PLATFORM=pc
 		-e 's/-fasynchronous-unwind-tables//g' )"\
 	TARGET_LDFLAGS=-static				\
         --with-platform=$PLATFORM			\
-        --program-transform-name=s,grub,%{name},
+        --program-transform-name=s,grub,%{name},	\
+        --sbindir=/sbin
 
 make %{?_smp_mflags}
 
