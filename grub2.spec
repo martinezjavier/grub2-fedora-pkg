@@ -19,7 +19,7 @@ Name:           grub2
 Epoch:          1
 Version:        1.99
 %define filever 1.99~rc1
-Release:        0.2%{?dist}
+Release:        0.3%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -237,15 +237,15 @@ rm -f /boot/%{name}/device.map
 /etc/bash_completion.d/grub
 %{_libdir}/%{name}
 %{_libdir}/grub/
-%{_sbindir}/%{name}-mkconfig
-%{_sbindir}/%{name}-mkdevicemap
-%{_sbindir}/%{name}-mknetdir
-%{_sbindir}/%{name}-install
-%{_sbindir}/%{name}-probe
-%{_sbindir}/%{name}-reboot
-%{_sbindir}/%{name}-set-default
+/sbin/%{name}-mkconfig
+/sbin/%{name}-mkdevicemap
+/sbin/%{name}-mknetdir
+/sbin/%{name}-install
+/sbin/%{name}-probe
+/sbin/%{name}-reboot
+/sbin/%{name}-set-default
 %ifarch %{ix86} x86_64 %{sparc}
-%{_sbindir}/%{name}-setup
+/sbin/%{name}-setup
 %endif
 %{_bindir}/%{name}-bin2h
 %{_bindir}/%{name}-editenv
@@ -263,7 +263,7 @@ rm -f /boot/%{name}/device.map
 %{_bindir}/%{name}-mkrescue
 %endif
 %ifarch %{sparc}
-%{_sbindir}/%{name}-ofpathname
+/sbin/%{name}-ofpathname
 %endif
 %{_bindir}/%{name}-script-check
 %dir %{_sysconfdir}/grub.d
@@ -288,14 +288,14 @@ rm -f /boot/%{name}/device.map
 /etc/bash_completion.d/grub
 %{_libdir}/grub2-efi
 %{_libdir}/grub/
-%{_sbindir}/grub2-efi-mkconfig
-%{_sbindir}/grub2-efi-mkdevicemap
-%{_sbindir}/grub2-efi-mknetdir
-%{_sbindir}/grub2-efi-install
-%{_sbindir}/grub2-efi-probe
-%{_sbindir}/grub2-efi-reboot
-%{_sbindir}/grub2-efi-set-default
-#%{_sbindir}/grub2-efi-setup
+/sbin/grub2-efi-mkconfig
+/sbin/grub2-efi-mkdevicemap
+/sbin/grub2-efi-mknetdir
+/sbin/grub2-efi-install
+/sbin/grub2-efi-probe
+/sbin/grub2-efi-reboot
+/sbin/grub2-efi-set-default
+#/sbin/grub2-efi-setup
 %{_bindir}/grub2-efi-bin2h
 %{_bindir}/grub2-efi-editenv
 %{_bindir}/grub2-efi-fstest
@@ -312,7 +312,7 @@ rm -f /boot/%{name}/device.map
 %{_bindir}/grub2-efi-mkrescue
 %endif
 %ifarch %{sparc} ppc ppc64
-%{_sbindir}/grub2-efi-ofpathname
+/sbin/grub2-efi-ofpathname
 %endif
 %{_bindir}/grub2-efi-script-check
 %dir %{_sysconfdir}/grub.d
@@ -332,6 +332,9 @@ rm -f /boot/%{name}/device.map
 %endif
 
 %changelog
+* Thu Jul 21 2011 Peter Jones <pjones@redhat.com> - 1.99-0.3
+- Use /sbin not /usr/sbin .
+
 * Thu Jun 23 2011 Peter Lemenkov <lemenkov@gmail.com> - 1:1.99-0.2
 - Fixes for ppc and ppc64
 
