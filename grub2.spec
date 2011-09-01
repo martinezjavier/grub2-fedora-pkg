@@ -18,7 +18,7 @@
 Name:           grub2
 Epoch:          1
 Version:        1.99
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -47,7 +47,7 @@ BuildRequires:  autoconf automake autogen device-mapper-devel
 BuildRequires:	freetype-devel gettext-devel git
 BuildRequires:	texinfo
 
-Requires:	gettext
+Requires:	gettext os-prober which
 Requires(pre):  dracut
 Requires(post): dracut
 
@@ -338,6 +338,10 @@ rm -f /boot/%{name}/device.map
 %endif
 
 %changelog
+* Thu Sep 01 2011 Peter Jones <pjones@redhat.com> - 1.99-2
+- Require os-prober (#678456) (patch from Elad Alfassa)
+- Require which (#734959) (patch from Elad Alfassa)
+
 * Thu Sep 01 2011 Peter Jones <pjones@redhat.com> - 1.99-1
 - Update to grub-1.99 final.
 - Fix crt1.o require on x86-64 (fix from Mads Kiilerich)
