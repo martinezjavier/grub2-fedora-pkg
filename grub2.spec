@@ -18,29 +18,27 @@
 Name:           grub2
 Epoch:          1
 Version:        1.99
-%define filever 1.99~rc1
-Release:        0.3%{?dist}
+Release:        1%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
 License:        GPLv3+
 URL:            http://www.gnu.org/software/grub/
-Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{filever}.tar.gz
+Source0:        ftp://ftp.gnu.org/gnu/grub/grub-%{version}.tar.xz
 Source1:        90_persistent
 Source2:        grub.default
 Source3:        README.Fedora
 Patch0:		grub-1.99-handle-fwrite-return.patch
-Patch1:		grub-1.99-unused-variable.patch
-Patch2:		grub-1.99-grub_test_assert_printf.patch
-Patch3:		grub-1.99-just-say-linux.patch
-Patch4:		grub-1.99-Workaround-for-variable-set-but-not-used-issue.patch
+Patch1:		grub-1.99-grub_test_assert_printf.patch
+Patch2:		grub-1.99-just-say-linux.patch
+Patch3:		grub-1.99-Workaround-for-variable-set-but-not-used-issue.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  flex bison binutils python
 BuildRequires:  ncurses-devel xz-devel
 BuildRequires:  freetype-devel libusb-devel
-%ifarch %{sparc}
+%ifarch %{sparc} x86_64
 BuildRequires:  /usr/lib64/crt1.o glibc-static
 %else
 BuildRequires:  /usr/lib/crt1.o glibc-static
@@ -77,7 +75,7 @@ provides support for EFI systems.
 %setup -T -c -n grub-%{version}
 %ifarch %{efi}
 %setup -D -q -T -a 0 -n grub-%{version}
-cd grub-%{filever}
+cd grub-%{version}
 cp %{SOURCE3} .
 git init
 git config user.email "pjones@fedoraproject.org"
@@ -86,10 +84,10 @@ git add .
 git commit -a -q -m "%{version} baseline."
 git am %{patches}
 cd ..
-mv grub-%{filever} grub-efi-%{filever}
+mv grub-%{version} grub-efi-%{version}
 %endif
 %setup -D -q -T -a 0 -n grub-%{version}
-cd grub-%{filever}
+cd grub-%{version}
 cp %{SOURCE3} .
 git init
 git config user.email "pjones@fedoraproject.org"
@@ -101,17 +99,18 @@ git am %{patches}
 
 %build
 %ifarch %{efi}
-cd grub-efi-%{filever}
+cd grub-efi-%{version}
 ./autogen.sh
-%configure						\
-	CFLAGS="$(echo $RPM_OPT_FLAGS | sed		\
-		-e 's/-fstack-protector//g'		\
-		-e 's/--param=ssp-buffer-size=4//g'	\
-		-e 's/-mregparm=3/-mregparm=4//g'	\
-		-e 's/-fasynchronous-unwind-tables//g' )"\
-	TARGET_LDFLAGS=-static				\
-        --with-platform=efi				\
-        --program-transform-name=s,grub,%{name}-efi,	\
+%configure							\
+	CFLAGS="$(echo $RPM_OPT_FLAGS | sed			\
+		-e 's/-fstack-protector//g'			\
+		-e 's/--param=ssp-buffer-size=4//g'		\
+		-e 's/-mregparm=3/-mregparm=4//g'		\
+		-e 's/-fexceptions//g'				\
+		-e 's/-fasynchronous-unwind-tables//g' )"	\
+	TARGET_LDFLAGS=-static					\
+        --with-platform=efi					\
+        --program-transform-name=s,grub,%{name}-efi,		\
         --sbindir=/sbin
 make %{?_smp_mflags}
 %ifarch %{ix86}
@@ -125,7 +124,7 @@ make %{?_smp_mflags}
 cd ..
 %endif
 
-cd grub-%{filever}
+cd grub-%{version}
 ./autogen.sh
 # -static is needed so that autoconf script is able to link
 # test that looks for _start symbol on 64 bit platforms
@@ -134,15 +133,17 @@ PLATFORM=ieee1275
 %else
 PLATFORM=pc
 %endif
-%configure						\
-	CFLAGS="$(echo $RPM_OPT_FLAGS | sed		\
-		-e 's/-fstack-protector//g'		\
-		-e 's/--param=ssp-buffer-size=4//g'	\
-		-e 's/-mregparm=3/-mregparm=4//g'	\
-		-e 's/-fasynchronous-unwind-tables//g' )"\
-	TARGET_LDFLAGS=-static				\
-        --with-platform=$PLATFORM			\
-        --program-transform-name=s,grub,%{name},	\
+%configure							\
+	CFLAGS="$(echo $RPM_OPT_FLAGS | sed			\
+		-e 's/-fstack-protector//g'			\
+		-e 's/--param=ssp-buffer-size=4//g'		\
+		-e 's/-mregparm=3/-mregparm=4//g'		\
+		-e 's/-fexceptions//g'				\
+		-e 's/-m64//g'					\
+		-e 's/-fasynchronous-unwind-tables//g' )"	\
+	TARGET_LDFLAGS=-static					\
+        --with-platform=$PLATFORM				\
+        --program-transform-name=s,grub,%{name},		\
         --sbindir=/sbin
 
 make %{?_smp_mflags}
@@ -152,7 +153,7 @@ set -e
 rm -fr $RPM_BUILD_ROOT
 
 %ifarch %{efi}
-cd grub-efi-%{filever}
+cd grub-efi-%{version}
 make DESTDIR=$RPM_BUILD_ROOT install
 
 # Ghost config file
@@ -178,7 +179,7 @@ install -m 755 grub.efi $RPM_BUILD_ROOT/boot/efi/EFI/redhat/grub.efi
 cd ..
 %endif
 
-cd grub-%{filever}
+cd grub-%{version}
 make DESTDIR=$RPM_BUILD_ROOT install
 
 # Script that makes part of grub.cfg persist across updates
@@ -204,10 +205,13 @@ do
 done
 
 mv $RPM_BUILD_ROOT%{_infodir}/grub.info $RPM_BUILD_ROOT%{_infodir}/grub2.info
+mv $RPM_BUILD_ROOT%{_infodir}/grub-dev.info $RPM_BUILD_ROOT%{_infodir}/grub2-dev.info
 rm $RPM_BUILD_ROOT%{_infodir}/dir
 
 # Defaults
 install -m 644 -D %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/default/grub
+# TODO: rename locale files to grub2 and make sure gettext works correctly
+rm $RPM_BUILD_ROOT/usr/share/locale/*/LC_MESSAGES/grub.mo
 
 %clean    
 rm -rf $RPM_BUILD_ROOT
@@ -219,12 +223,14 @@ BOOT_PARTITION=$(df -h /boot |(read; awk '{print $1; exit}'))
 %{name}-install --grub-setup=/bin/true $BOOT_PARTITION
 if [ "$1" = 1 ]; then
 	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/grub2.info.gz || :
+	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/grub2-dev.info.gz || :
 fi
 
 
 %preun
 if [ "$1" = 0 ]; then
 	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/grub2.info.gz || :
+	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/grub2-dev.info.gz || :
 fi
 # XXX Ugly
 rm -f /boot/%{name}/*.mod
@@ -275,9 +281,9 @@ rm -f /boot/%{name}/device.map
 # Actually, this is replaced by update-grub from scriptlets,
 # but it takes care of modified persistent part
 %config(noreplace) /boot/%{name}/grub.cfg
-%doc grub-%{filever}/COPYING grub-%{filever}/INSTALL grub-%{filever}/NEWS
-%doc grub-%{filever}/README grub-%{filever}/THANKS grub-%{filever}/TODO
-%doc grub-%{filever}/ChangeLog grub-%{filever}/README.Fedora
+%doc grub-%{version}/COPYING grub-%{version}/INSTALL grub-%{version}/NEWS
+%doc grub-%{version}/README grub-%{version}/THANKS grub-%{version}/TODO
+%doc grub-%{version}/ChangeLog grub-%{version}/README.Fedora
 %exclude %{_mandir}
 %{_infodir}/grub2*
 
@@ -324,14 +330,21 @@ rm -f /boot/%{name}/device.map
 # Actually, this is replaced by update-grub from scriptlets,
 # but it takes care of modified persistent part
 %config(noreplace) /boot/grub2-efi/grub.cfg
-%doc grub-%{filever}/COPYING grub-%{filever}/INSTALL grub-%{filever}/NEWS
-%doc grub-%{filever}/README grub-%{filever}/THANKS grub-%{filever}/TODO
-%doc grub-%{filever}/ChangeLog grub-%{filever}/README.Fedora
+%doc grub-%{version}/COPYING grub-%{version}/INSTALL grub-%{version}/NEWS
+%doc grub-%{version}/README grub-%{version}/THANKS grub-%{version}/TODO
+%doc grub-%{version}/ChangeLog grub-%{version}/README.Fedora
 %exclude %{_mandir}
 %{_infodir}/grub2*
 %endif
 
 %changelog
+* Thu Sep 01 2011 Peter Jones <pjones@redhat.com> - 1.99-1
+- Update to grub-1.99 final.
+- Fix crt1.o require on x86-64 (fix from Mads Kiilerich)
+- Various CFLAGS fixes (from Mads Kiilerich)
+  - -fexceptions and -m64
+- Temporarily ignore translations (from Mads Kiilerich)
+
 * Thu Jul 21 2011 Peter Jones <pjones@redhat.com> - 1.99-0.3
 - Use /sbin not /usr/sbin .
 
