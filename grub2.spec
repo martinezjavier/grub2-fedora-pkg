@@ -217,26 +217,16 @@ rm $RPM_BUILD_ROOT/usr/share/locale/*/LC_MESSAGES/grub.mo
 rm -rf $RPM_BUILD_ROOT
 
 %post
-# Determine the partition with /boot
-BOOT_PARTITION=$(df -h /boot |(read; awk '{print $1; exit}'))
-# Generate core.img, but don't let it be installed in boot sector
-%{name}-install --grub-setup=/bin/true $BOOT_PARTITION
 if [ "$1" = 1 ]; then
 	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/grub2.info.gz || :
 	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/grub2-dev.info.gz || :
 fi
-
 
 %preun
 if [ "$1" = 0 ]; then
 	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/grub2.info.gz || :
 	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/grub2-dev.info.gz || :
 fi
-# XXX Ugly
-rm -f /boot/%{name}/*.mod
-rm -f /boot/%{name}/*.img
-rm -f /boot/%{name}/*.lst
-rm -f /boot/%{name}/device.map
 
 %files
 %defattr(-,root,root,-)
