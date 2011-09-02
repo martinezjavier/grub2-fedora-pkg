@@ -18,7 +18,7 @@
 Name:           grub2
 Epoch:          1
 Version:        1.99
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -328,6 +328,10 @@ fi
 %endif
 
 %changelog
+* Fri Sep 02 2011 Peter Jones <pjones@redhat.com> - 1.99-4
+- Don't do sysadminny things in %preun or %post ever. (#735259)
+- Actually include the changelog in this build (sorry about -3)
+
 * Thu Sep 01 2011 Peter Jones <pjones@redhat.com> - 1.99-2
 - Require os-prober (#678456) (patch from Elad Alfassa)
 - Require which (#734959) (patch from Elad Alfassa)
