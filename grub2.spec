@@ -18,7 +18,7 @@
 Name:           grub2
 Epoch:          1
 Version:        1.99
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -222,6 +222,30 @@ if [ "$1" = 1 ]; then
 	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/grub2-dev.info.gz || :
 fi
 
+# grub2 < 1.99-4 removed a number of essential files in postun. To fix upgrades
+# from the affected grub2 packages, we first back up the files in triggerun and
+# later restore them in triggerpostun.
+# https://bugzilla.redhat.com/show_bug.cgi?id=735259
+%triggerun -- grub2 < 1:1.99-4
+# Back up the files before uninstalling old grub2
+mkdir -p /boot/grub2.tmp &&
+cp -a /boot/grub2/*.mod \
+      /boot/grub2/*.img \
+      /boot/grub2/*.lst \
+      /boot/grub2/device.map \
+      /boot/grub2.tmp/ || :
+
+%triggerpostun -- grub2 < 1:1.99-4
+# ... and restore the files.
+test ! -f /boot/grub2/device.map &&
+test -d /boot/grub2.tmp &&
+mv -f /boot/grub2.tmp/*.mod \
+      /boot/grub2.tmp/*.img \
+      /boot/grub2.tmp/*.lst \
+      /boot/grub2.tmp/device.map \
+      /boot/grub2/ &&
+rm -r /boot/grub2.tmp/ || :
+
 %preun
 if [ "$1" = 0 ]; then
 	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/grub2.info.gz || :
@@ -328,6 +352,9 @@ fi
 %endif
 
 %changelog
+* Sat Sep 03 2011 Kalev Lember <kalevlember@gmail.com> - 1.99-5
+- Fix upgrades from grub2 < 1.99-4 (#735259)
+
 * Fri Sep 02 2011 Peter Jones <pjones@redhat.com> - 1.99-4
 - Don't do sysadminny things in %preun or %post ever. (#735259)
 - Actually include the changelog in this build (sorry about -3)
