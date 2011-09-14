@@ -18,7 +18,7 @@
 Name:           grub2
 Epoch:          1
 Version:        1.99
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -32,6 +32,7 @@ Patch0:		grub-1.99-handle-fwrite-return.patch
 Patch1:		grub-1.99-grub_test_assert_printf.patch
 Patch2:		grub-1.99-just-say-linux.patch
 Patch3:		grub-1.99-Workaround-for-variable-set-but-not-used-issue.patch
+Patch4:		grub2-handle-initramfs-on-xen.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -229,7 +230,7 @@ fi
 %triggerun -- grub2 < 1:1.99-4
 # Back up the files before uninstalling old grub2
 mkdir -p /boot/grub2.tmp &&
-cp -a /boot/grub2/*.mod \
+mv -f /boot/grub2/*.mod \
       /boot/grub2/*.img \
       /boot/grub2/*.lst \
       /boot/grub2/device.map \
@@ -352,6 +353,12 @@ fi
 %endif
 
 %changelog
+* Wed Sep 14 2011 Peter Jones <pjones@redhat.com> - 1.99-6
+- Use mv not cp to try to avoid moving disk blocks around for -5 fix
+  Related: rhbz#735259
+- handle initramfs on xen better (patch from Marko Ristola)
+  Resolves: rhbz#728775
+
 * Sat Sep 03 2011 Kalev Lember <kalevlember@gmail.com> - 1.99-5
 - Fix upgrades from grub2 < 1.99-4 (#735259)
 
