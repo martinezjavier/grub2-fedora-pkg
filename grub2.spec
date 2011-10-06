@@ -18,12 +18,13 @@
 Name:           grub2
 Epoch:          1
 Version:        1.99
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
 License:        GPLv3+
 URL:            http://www.gnu.org/software/grub/
+Obsoletes:	grub-0.97
 Source0:        ftp://ftp.gnu.org/gnu/grub/grub-%{version}.tar.xz
 Source1:        90_persistent
 Source2:        grub.default
@@ -33,6 +34,7 @@ Patch1:		grub-1.99-grub_test_assert_printf.patch
 Patch2:		grub-1.99-just-say-linux.patch
 Patch3:		grub-1.99-Workaround-for-variable-set-but-not-used-issue.patch
 Patch4:		grub2-handle-initramfs-on-xen.patch
+Patch5:		grub2-dmraid.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -353,6 +355,10 @@ fi
 %endif
 
 %changelog
+* Thu Oct 06 2011 Peter Jones <pjones@redhat.com> - 1.99-7
+- Obsolete grub
+  Resolves: rhbz#743381
+
 * Wed Sep 14 2011 Peter Jones <pjones@redhat.com> - 1.99-6
 - Use mv not cp to try to avoid moving disk blocks around for -5 fix
   Related: rhbz#735259
