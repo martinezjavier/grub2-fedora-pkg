@@ -18,13 +18,13 @@
 Name:           grub2
 Epoch:          1
 Version:        1.99
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
 License:        GPLv3+
 URL:            http://www.gnu.org/software/grub/
-Obsoletes:	grub < 0.98
+Obsoletes:	grub < 1:0.98
 Source0:        ftp://ftp.gnu.org/gnu/grub/grub-%{version}.tar.xz
 Source1:        90_persistent
 Source2:        grub.default
@@ -354,6 +354,10 @@ fi
 %endif
 
 %changelog
+* Tue Oct 11 2011 Peter Jones <pjones@redhat.com> - 1.99-9
+- grub has an epoch, so we need that expressed in the obsolete as well.
+  Today isn't my day.
+
 * Tue Oct 11 2011 Peter Jones <pjones@redhat.com> - 1.99-8
 - Fix my bad obsoletes syntax.
 
