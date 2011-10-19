@@ -18,7 +18,7 @@
 Name:           grub2
 Epoch:          1
 Version:        1.99
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -292,7 +292,7 @@ fi
 %config %{_sysconfdir}/grub.d/??_*
 %{_sysconfdir}/grub.d/README
 %{_sysconfdir}/%{name}.cfg
-%{_sysconfdir}/default/grub
+%config(noreplace) %{_sysconfdir}/default/grub
 %dir /boot/%{name}
 # Actually, this is replaced by update-grub from scriptlets,
 # but it takes care of modified persistent part
@@ -341,7 +341,7 @@ fi
 %config %{_sysconfdir}/grub.d/??_*
 %{_sysconfdir}/grub.d/README
 %{_sysconfdir}/grub2-efi.cfg
-%{_sysconfdir}/default/grub
+%config(noreplace) %{_sysconfdir}/default/grub
 %dir /boot/grub2-efi
 # Actually, this is replaced by update-grub from scriptlets,
 # but it takes care of modified persistent part
@@ -354,6 +354,10 @@ fi
 %endif
 
 %changelog
+* Wed Oct 19 2011 Adam Williamson <awilliam@redhat.com> - 1.99-10
+- /etc/default/grub is explicitly intended for user customization, so
+  mark it as config(noreplace)
+
 * Tue Oct 11 2011 Peter Jones <pjones@redhat.com> - 1.99-9
 - grub has an epoch, so we need that expressed in the obsolete as well.
   Today isn't my day.
