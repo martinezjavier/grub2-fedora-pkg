@@ -18,7 +18,7 @@
 Name:           grub2
 Epoch:          1
 Version:        1.99
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -354,6 +354,9 @@ fi
 %endif
 
 %changelog
+* Wed Oct 26 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:1.99-11
+- Rebuilt for glibc bug#747377
+
 * Wed Oct 19 2011 Adam Williamson <awilliam@redhat.com> - 1.99-10
 - /etc/default/grub is explicitly intended for user customization, so
   mark it as config(noreplace)
