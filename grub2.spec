@@ -303,7 +303,7 @@ fi
 %config(noreplace) %{_sysconfdir}/%{name}.cfg
 %config(noreplace) %{_sysconfdir}/default/grub
 %dir /boot/%{name}
-%config(noreplace) /boot/%{name}/grub.cfg
+%ghost %config(noreplace) /boot/%{name}/grub.cfg
 %doc grub-%{version}/COPYING grub-%{version}/INSTALL grub-%{version}/NEWS
 %doc grub-%{version}/README grub-%{version}/THANKS grub-%{version}/TODO
 %doc grub-%{version}/ChangeLog grub-%{version}/README.Fedora
@@ -350,7 +350,7 @@ fi
 %config(noreplace) %{_sysconfdir}/grub2-efi.cfg
 %config(noreplace) %{_sysconfdir}/default/grub
 %dir /boot/grub2-efi
-%config(noreplace) /boot/grub2-efi/grub.cfg
+%ghost %config(noreplace) /boot/grub2-efi/grub.cfg
 %doc grub-%{version}/COPYING grub-%{version}/INSTALL grub-%{version}/NEWS
 %doc grub-%{version}/README grub-%{version}/THANKS grub-%{version}/TODO
 %doc grub-%{version}/ChangeLog grub-%{version}/README.Fedora
