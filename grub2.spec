@@ -232,11 +232,12 @@ if [ "$1" = 1 ]; then
 	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/grub2-dev.info.gz || :
 fi
 
+%triggerun -- grub2 < 1:1.99-4
 # grub2 < 1.99-4 removed a number of essential files in postun. To fix upgrades
 # from the affected grub2 packages, we first back up the files in triggerun and
 # later restore them in triggerpostun.
 # https://bugzilla.redhat.com/show_bug.cgi?id=735259
-%triggerun -- grub2 < 1:1.99-4
+
 # Back up the files before uninstalling old grub2
 mkdir -p /boot/grub2.tmp &&
 mv -f /boot/grub2/*.mod \
