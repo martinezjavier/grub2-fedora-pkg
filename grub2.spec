@@ -153,6 +153,8 @@ make %{?_smp_mflags}
 sed -i -e 's,(grub),(%{name}),g' \
 	-e 's,grub.info,%{name}.info,g' \
 	-e 's,\* GRUB:,* GRUB2:,g' \
+	-e 's,/boot/grub/,/boot/%{name}/,g' \
+	-e 's,grub-,%{name}-,g' \
 	docs/grub.info
 sed -i -e 's,grub-dev,%{name}-dev,g' docs/grub-dev.info
 
