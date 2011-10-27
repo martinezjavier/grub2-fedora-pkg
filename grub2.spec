@@ -35,6 +35,7 @@ Patch2:		grub-1.99-just-say-linux.patch
 Patch3:		grub-1.99-Workaround-for-variable-set-but-not-used-issue.patch
 Patch4:		grub2-handle-initramfs-on-xen.patch
 Patch5:		grub2-1.99-handle-more-dmraid.patch
+Patch6:		grub2-gfxpayload-efi.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
