@@ -294,8 +294,6 @@ fi
 %{_sysconfdir}/%{name}.cfg
 %config(noreplace) %{_sysconfdir}/default/grub
 %dir /boot/%{name}
-# Actually, this is replaced by update-grub from scriptlets,
-# but it takes care of modified persistent part
 %config(noreplace) /boot/%{name}/grub.cfg
 %doc grub-%{version}/COPYING grub-%{version}/INSTALL grub-%{version}/NEWS
 %doc grub-%{version}/README grub-%{version}/THANKS grub-%{version}/TODO
@@ -343,8 +341,6 @@ fi
 %{_sysconfdir}/grub2-efi.cfg
 %config(noreplace) %{_sysconfdir}/default/grub
 %dir /boot/grub2-efi
-# Actually, this is replaced by update-grub from scriptlets,
-# but it takes care of modified persistent part
 %config(noreplace) /boot/grub2-efi/grub.cfg
 %doc grub-%{version}/COPYING grub-%{version}/INSTALL grub-%{version}/NEWS
 %doc grub-%{version}/README grub-%{version}/THANKS grub-%{version}/TODO
