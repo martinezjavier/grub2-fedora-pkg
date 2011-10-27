@@ -4,3 +4,4 @@ GRUB_DEFAULT=saved
 # GRUB_TERMINAL="serial console"
 # GRUB_SERIAL_COMMAND="serial --unit=0 --speed=9600"
 GRUB_CMDLINE_LINUX="quiet rhgb"
+GRUB_DISABLE_RECOVERY="true"
