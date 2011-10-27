@@ -107,7 +107,7 @@ cd grub-efi-%{version}
 	CFLAGS="$(echo $RPM_OPT_FLAGS | sed			\
 		-e 's/-fstack-protector//g'			\
 		-e 's/--param=ssp-buffer-size=4//g'		\
-		-e 's/-mregparm=3/-mregparm=4//g'		\
+		-e 's/-mregparm=3/-mregparm=4/g'		\
 		-e 's/-fexceptions//g'				\
 		-e 's/-fasynchronous-unwind-tables//g' )"	\
 	TARGET_LDFLAGS=-static					\
@@ -139,7 +139,7 @@ PLATFORM=pc
 	CFLAGS="$(echo $RPM_OPT_FLAGS | sed			\
 		-e 's/-fstack-protector//g'			\
 		-e 's/--param=ssp-buffer-size=4//g'		\
-		-e 's/-mregparm=3/-mregparm=4//g'		\
+		-e 's/-mregparm=3/-mregparm=4/g'		\
 		-e 's/-fexceptions//g'				\
 		-e 's/-m64//g'					\
 		-e 's/-fasynchronous-unwind-tables//g' )"	\
