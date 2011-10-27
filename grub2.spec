@@ -165,6 +165,7 @@ rm -fr $RPM_BUILD_ROOT
 %ifarch %{efi}
 cd grub-efi-%{version}
 make DESTDIR=$RPM_BUILD_ROOT install
+mv $RPM_BUILD_ROOT/etc/bash_completion.d/grub $RPM_BUILD_ROOT/etc/bash_completion.d/grub-efi
 
 # Ghost config file
 install -d $RPM_BUILD_ROOT/boot/%{name}-efi
@@ -314,7 +315,7 @@ fi
 %files efi
 %defattr(-,root,root,-)
 %attr(0755,root,root)/boot/efi/EFI/redhat
-/etc/bash_completion.d/grub
+/etc/bash_completion.d/grub-efi
 %{_libdir}/grub2-efi
 %{_libdir}/grub/
 /sbin/grub2-efi-mkconfig
