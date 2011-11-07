@@ -18,7 +18,7 @@
 Name:           grub2
 Epoch:          1
 Version:        1.99
-Release:        11%{?dist}
+Release:        12%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -362,6 +362,23 @@ fi
 %endif
 
 %changelog
+* Mon Nov 07 2011 Peter Jones <pjones@redhat.com> - 1.99-12
+- Lots of .spec fixes from Mads Kiilerich:
+  Remove comment about update-grub - it isn't run in any scriptlets
+  patch info pages so they can be installed and removed correctly when renamed
+  fix references to grub/grub2 renames in info pages (#743964)
+  update README.Fedora (#734090)
+  fix comments for the hack for upgrading from grub2 < 1.99-4
+  fix sed syntax error preventing use of $RPM_OPT_FLAGS (#704820)
+  make /etc/grub2*.cfg %config(noreplace)
+  make grub.cfg %ghost - an empty file is of no use anyway
+  create /etc/default/grub more like anaconda would create it (#678453)
+  don't create rescue entries by default - grubby will not maintain them anyway
+  set GRUB_SAVEDEFAULT=true so saved defaults works (rbhz#732058)
+  grub2-efi should have its own bash completion
+  don't set gfxpayload in efi mode - backport upstream r3402
+- Handle dmraid better. Resolves: rhbz#742226
+
 * Wed Oct 26 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:1.99-11
 - Rebuilt for glibc bug#747377
 
