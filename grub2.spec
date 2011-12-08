@@ -36,6 +36,7 @@ Patch3:		grub-1.99-Workaround-for-variable-set-but-not-used-issue.patch
 Patch4:		grub2-handle-initramfs-on-xen.patch
 Patch5:		grub2-1.99-handle-more-dmraid.patch
 Patch6:		grub2-gfxpayload-efi.patch
+Patch7:		grub-1.99-fix_grub-probe_call.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -362,6 +363,9 @@ fi
 %endif
 
 %changelog
+* Thu Dec 08 2011 Adam Williamson <awilliam@redhat.com> - 1.99-13
+- fix hardwired call to grub-probe in 30_os-prober (rhbz#737203)
+
 * Mon Nov 07 2011 Peter Jones <pjones@redhat.com> - 1.99-12
 - Lots of .spec fixes from Mads Kiilerich:
   Remove comment about update-grub - it isn't run in any scriptlets
