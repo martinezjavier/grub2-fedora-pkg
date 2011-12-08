@@ -36,6 +36,7 @@ Patch3:		grub-1.99-Workaround-for-variable-set-but-not-used-issue.patch
 Patch4:		grub2-handle-initramfs-on-xen.patch
 Patch5:		grub2-1.99-handle-more-dmraid.patch
 Patch6:		grub2-gfxpayload-efi.patch
+# https://savannah.gnu.org/bugs/index.php?35018
 Patch7:		grub-1.99-fix_grub-probe_call.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
