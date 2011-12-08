@@ -58,6 +58,7 @@ Requires(post): dracut
 
 # TODO: ppc
 # ExclusiveArch:  %{ix86} x86_64 %{sparc}
+ExcludeArch:	s390 s390x
 
 %description
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
@@ -363,6 +364,10 @@ fi
 %endif
 
 %changelog
+* Thu Dec 08 2011 Peter Jones <pjones@redhat.com>
+- ExcludeArch s390*, which is not supported by this package.
+  Resolves: rhbz#758333
+
 * Thu Dec 08 2011 Adam Williamson <awilliam@redhat.com> - 1.99-13
 - fix hardwired call to grub-probe in 30_os-prober (rhbz#737203)
 
