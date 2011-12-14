@@ -18,7 +18,7 @@
 Name:           grub2
 Epoch:          1
 Version:        1.99
-Release:        13%{?dist}
+Release:        14%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -124,9 +124,9 @@ make %{?_smp_mflags}
 %else
 %define grubefiarch %{_arch}-efi
 %endif
-./grub-mkimage -O %{grubefiarch} -o grub.efi -d grub-core part_gpt hfsplus fat \
+./grub-mkimage -O %{grubefiarch} -p /EFI/redhat/%{name}-efi -o grub.efi -d grub-core part_gpt hfsplus fat \
 	ext2 btrfs normal chain boot configfile linux appleldr minicmd \
-	loadbios reboot halt search font gfxterm
+	loadbios reboot halt search font gfxterm echo video efi_gop efi_uga
 cd ..
 %endif
 
@@ -170,11 +170,14 @@ rm -fr $RPM_BUILD_ROOT
 cd grub-efi-%{version}
 make DESTDIR=$RPM_BUILD_ROOT install
 mv $RPM_BUILD_ROOT/etc/bash_completion.d/grub $RPM_BUILD_ROOT/etc/bash_completion.d/grub-efi
+mv $RPM_BUILD_ROOT/usr/lib/grub $RPM_BUILD_ROOT/usr/lib/grub-efi
+sed s,grub/grub-mkconfig_lib,grub-efi/grub-mkconfig_lib, -i $RPM_BUILD_ROOT/sbin/grub2-efi-mkconfig
 
 # Ghost config file
-install -d $RPM_BUILD_ROOT/boot/%{name}-efi
-touch $RPM_BUILD_ROOT/boot/%{name}-efi/grub.cfg
-ln -s ../boot/%{name}-efi/grub.cfg $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-efi.cfg
+install -m 755 -d $RPM_BUILD_ROOT/boot/efi/EFI/redhat/
+install -d $RPM_BUILD_ROOT/boot/efi/EFI/redhat/%{name}-efi
+touch $RPM_BUILD_ROOT/boot/efi/EFI/redhat/%{name}-efi/grub.cfg
+ln -s ../boot/efi/EFI/redhat/%{name}-efi/grub.cfg $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-efi.cfg
 
 # Install ELF files modules and images were created from into
 # the shadow root, where debuginfo generator will grab them from
@@ -189,8 +192,7 @@ do
         TGT=$(echo $MODULE |sed "s,$RPM_BUILD_ROOT,.debugroot,")
 #        install -m 755 -D $BASE$EXT $TGT
 done
-install -m 755 -d $RPM_BUILD_ROOT/boot/efi/EFI/redhat/
-install -m 755 grub.efi $RPM_BUILD_ROOT/boot/efi/EFI/redhat/grub.efi
+install -m 755 grub.efi $RPM_BUILD_ROOT/boot/efi/EFI/redhat/%{name}-efi/grub.efi
 cd ..
 %endif
 
@@ -321,7 +323,7 @@ fi
 %attr(0755,root,root)/boot/efi/EFI/redhat
 /etc/bash_completion.d/grub-efi
 %{_libdir}/grub2-efi
-%{_libdir}/grub/
+%{_libdir}/grub-efi/
 /sbin/grub2-efi-mkconfig
 /sbin/grub2-efi-mkdevicemap
 /sbin/grub2-efi-mknetdir
@@ -354,8 +356,8 @@ fi
 %{_sysconfdir}/grub.d/README
 %config(noreplace) %{_sysconfdir}/grub2-efi.cfg
 %config(noreplace) %{_sysconfdir}/default/grub
-%dir /boot/grub2-efi
-%ghost %config(noreplace) /boot/grub2-efi/grub.cfg
+%dir /boot/efi/EFI/redhat/grub2-efi
+%ghost %config(noreplace) /boot/efi/EFI/redhat/grub2-efi/grub.cfg
 %doc grub-%{version}/COPYING grub-%{version}/INSTALL grub-%{version}/NEWS
 %doc grub-%{version}/README grub-%{version}/THANKS grub-%{version}/TODO
 %doc grub-%{version}/ChangeLog grub-%{version}/README.Fedora
@@ -364,6 +366,9 @@ fi
 %endif
 
 %changelog
+* Wed Dec 14 2011 Matthew Garrett <mjg@redhat.com> - 1.99-14
+- fix up various grub2-efi issues
+
 * Thu Dec 08 2011 Adam Williamson <awilliam@redhat.com> - 1.99-13
 - fix hardwired call to grub-probe in 30_os-prober (rhbz#737203)
 
