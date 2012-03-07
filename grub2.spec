@@ -18,7 +18,11 @@
 Name:           grub2
 Epoch:          1
 Version:        1.99
+<<<<<<< HEAD
 Release:        17%{?dist}
+=======
+Release:        16%{?dist}
+>>>>>>> 1a635d813d926deec0473bd906f46b1fbcb2e0b8
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -376,8 +380,6 @@ fi
 * Tue Mar 06 2012 Peter Jones <pjones@redhat.com> - 1.99-17
 - Add /etc/sysconfig/grub link to /etc/default/grub
   Resolves: rhbz#800152
-
-* Tue Mar 06 2012 Peter Jones <pjones@redhat.com> - 1.99-16
 - ExcludeArch s390*, which is not supported by this package.
   Resolves: rhbz#758333
 
