@@ -18,11 +18,7 @@
 Name:           grub2
 Epoch:          1
 Version:        1.99
-<<<<<<< HEAD
 Release:        17%{?dist}
-=======
-Release:        16%{?dist}
->>>>>>> 1a635d813d926deec0473bd906f46b1fbcb2e0b8
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -42,6 +38,9 @@ Patch5:		grub2-1.99-handle-more-dmraid.patch
 Patch6:		grub2-gfxpayload-efi.patch
 # https://savannah.gnu.org/bugs/index.php?35018
 Patch7:		grub-1.99-fix_grub-probe_call.patch
+Patch8:		grub-1.99-handle-newer-autotools.patch
+Patch9:		grub-1.99-gcc-4.7.0.patch
+
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -123,6 +122,7 @@ cd grub-efi-%{version}
 	TARGET_LDFLAGS=-static					\
         --with-platform=efi					\
         --program-transform-name=s,grub,%{name}-efi,		\
+	--disable-werror					\
         --sbindir=/sbin
 make %{?_smp_mflags}
 %ifarch %{ix86}
@@ -147,6 +147,7 @@ PLATFORM=pc
 %endif
 %configure							\
 	CFLAGS="$(echo $RPM_OPT_FLAGS | sed			\
+		-e 's/-O.//g'					\
 		-e 's/-fstack-protector//g'			\
 		-e 's/--param=ssp-buffer-size=4//g'		\
 		-e 's/-mregparm=3/-mregparm=4/g'		\
@@ -156,6 +157,7 @@ PLATFORM=pc
 	TARGET_LDFLAGS=-static					\
         --with-platform=$PLATFORM				\
         --program-transform-name=s,grub,%{name},		\
+	--disable-werror					\
         --sbindir=/sbin
 
 make %{?_smp_mflags}
@@ -176,7 +178,6 @@ rm -fr $RPM_BUILD_ROOT
 cd grub-efi-%{version}
 make DESTDIR=$RPM_BUILD_ROOT install
 mv $RPM_BUILD_ROOT/etc/bash_completion.d/grub $RPM_BUILD_ROOT/etc/bash_completion.d/grub-efi
-mv $RPM_BUILD_ROOT/usr/lib/grub $RPM_BUILD_ROOT/usr/lib/grub-efi
 sed s,grub/grub-mkconfig_lib,grub-efi/grub-mkconfig_lib, -i $RPM_BUILD_ROOT/sbin/grub2-efi-mkconfig
 
 # Ghost config file
@@ -284,7 +285,7 @@ fi
 %defattr(-,root,root,-)
 /etc/bash_completion.d/grub
 %{_libdir}/%{name}
-%{_libdir}/grub/
+%{_datarootdir}/grub/grub-mkconfig_lib
 /sbin/%{name}-mkconfig
 /sbin/%{name}-mkdevicemap
 /sbin/%{name}-mknetdir
@@ -333,8 +334,8 @@ fi
 %defattr(-,root,root,-)
 %attr(0755,root,root)/boot/efi/EFI/redhat
 /etc/bash_completion.d/grub-efi
-%{_libdir}/grub2-efi
-%{_libdir}/grub-efi/
+%{_libdir}/grub2-efi/
+%{_datarootdir}/grub/grub-mkconfig_lib
 /sbin/grub2-efi-mkconfig
 /sbin/grub2-efi-mkdevicemap
 /sbin/grub2-efi-mknetdir
@@ -367,6 +368,7 @@ fi
 %{_sysconfdir}/grub.d/README
 %config(noreplace) %{_sysconfdir}/grub2-efi.cfg
 %config(noreplace) %{_sysconfdir}/default/grub
+%{_sysconfdir}/sysconfig/grub
 %dir /boot/efi/EFI/redhat/grub2-efi
 %ghost %config(noreplace) /boot/efi/EFI/redhat/grub2-efi/grub.cfg
 %doc grub-%{version}/COPYING grub-%{version}/INSTALL grub-%{version}/NEWS
@@ -377,7 +379,9 @@ fi
 %endif
 
 %changelog
-* Tue Mar 06 2012 Peter Jones <pjones@redhat.com> - 1.99-17
+* Wed Mar 07 2012 Peter Jones <pjones@redhat.com> - 1.99-17
+- Update for newer autotools and gcc 4.7.0
+  Related: rhbz#782144
 - Add /etc/sysconfig/grub link to /etc/default/grub
   Resolves: rhbz#800152
 - ExcludeArch s390*, which is not supported by this package.

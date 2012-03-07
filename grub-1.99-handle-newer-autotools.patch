@@ -1,0 +1,501 @@
+From: Vladimir Serbinenko  <phcoder@gmail.com>
+Subject:  Handle newer autotools. Add some missing quotes while on it.
+Date: 2012-01-24 12:17:36 +0000
+
+* Makefile.am (pkglib_DATA): Remove update-grub_lib.
+(pkglib_DATA): Move grub-mkconfig_lib from here ...
+(pkgdata_DATA): ... here.
+* Makefile.util.def (update-grub_lib): Removed.
+* conf/Makefile.common (pkglib_DATA): Removed.
+(pkglib_SCRIPTS): Likewise.
+(pkgdata_DATA): New variable.
+* tests/util/grub-shell-tester.in: Replace pkglib with pkgdata where
+needed.
+Add missing quotes.
+Remove unused variable while on it.
+* tests/util/grub-shell.in: Likewise.
+* util/grub-install.in: Likewise.
+* util/grub-mkconfig.in: Likewise.
+* util/grub-mknetdir.in: Likewise.
+* util/grub-mkrescue.in: Likewise.
+* util/grub-mkstandalone.in: Likewise.
+* util/grub.d/00_header.in: Likewise.
+* util/grub.d/10_hurd.in: Likewise.
+* util/grub.d/10_illumos.in: Likewise.
+* util/grub.d/10_kfreebsd.in: Likewise.
+* util/grub.d/10_linux.in: Likewise.
+* util/grub.d/10_netbsd.in: Likewise.
+* util/grub.d/10_windows.in: Likewise.
+* util/grub.d/20_linux_xen.in: Likewise.
+* util/grub.d/30_os-prober.in: Likewise.
+* util/update-grub_lib.in: Removed.
+---
+ Makefile.am                     |    3 +--
+ Makefile.util.def               |    6 ------
+ conf/Makefile.common            |    3 +--
+ tests/util/grub-shell-tester.in |   23 +++++++++++------------
+ tests/util/grub-shell.in        |   23 +++++++++++------------
+ util/grub-install.in            |    2 ++
+ util/grub-mkconfig.in           |   27 ++++++++++++++-------------
+ util/grub-mknetdir.in           |   29 ++++++++++++++---------------
+ util/grub-mkrescue.in           |    9 +++++----
+ util/grub.d/00_header.in        |    9 +++++----
+ util/grub.d/10_linux.in         |   10 +++++-----
+ util/grub.d/20_linux_xen.in     |   12 ++++++------
+ util/grub.d/30_os-prober.in     |    9 +++++----
+ util/update-grub_lib.in         |   23 -----------------------
+ 14 files changed, 80 insertions(+), 108 deletions(-)
+ delete mode 100644 util/update-grub_lib.in
+
+diff --git a/Makefile.am b/Makefile.am
+index 9301c91..fd3848d 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -101,8 +101,7 @@ CLEANFILES += widthspec.h
+ # Install config.h into platformdir
+ platform_HEADERS = config.h
+ 
+-pkglib_DATA += grub-mkconfig_lib
+-pkglib_DATA += update-grub_lib
++pkgdata_DATA += grub-mkconfig_lib
+ 
+ 
+ if COND_i386_coreboot
+diff --git a/Makefile.util.def b/Makefile.util.def
+index 058572f..6451999 100644
+--- a/Makefile.util.def
++++ b/Makefile.util.def
+@@ -435,12 +435,6 @@ script = {
+ };
+ 
+ script = {
+-  name = update-grub_lib;
+-  common = util/update-grub_lib.in;
+-  installdir = noinst;
+-};
+-
+-script = {
+   name = grub-kbdcomp;
+   common = util/grub-kbdcomp.in;
+ };
+diff --git a/conf/Makefile.common b/conf/Makefile.common
+index 5aa13cd..2040a2e 100644
+--- a/conf/Makefile.common
++++ b/conf/Makefile.common
+@@ -137,7 +137,7 @@ KERNEL_HEADER_FILES =
+ 
+ man_MANS =
+ noinst_DATA =
+-pkglib_DATA =
++pkgdata_DATA =
+ bin_SCRIPTS =
+ sbin_SCRIPTS =
+ bin_PROGRAMS =
+@@ -147,7 +147,6 @@ check_SCRIPTS =
+ grubconf_DATA =
+ check_PROGRAMS =
+ noinst_SCRIPTS =
+-pkglib_SCRIPTS =
+ noinst_PROGRAMS =
+ grubconf_SCRIPTS =
+ noinst_LIBRARIES =
+diff --git a/tests/util/grub-shell-tester.in b/tests/util/grub-shell-tester.in
+index 02e49d3..eaaab41 100644
+--- a/tests/util/grub-shell-tester.in
++++ b/tests/util/grub-shell-tester.in
+@@ -19,18 +19,17 @@
+ # Initialize some variables.
+ transform="@program_transform_name@"
+ 
+-prefix=@prefix@
+-exec_prefix=@exec_prefix@
+-bindir=@bindir@
+-libdir=@libdir@
+-builddir=@builddir@
++prefix="@prefix@"
++exec_prefix="@exec_prefix@"
++datarootdir="@datarootdir@"
++builddir="@builddir@"
+ PACKAGE_NAME=@PACKAGE_NAME@
+ PACKAGE_TARNAME=@PACKAGE_TARNAME@
+ PACKAGE_VERSION=@PACKAGE_VERSION@
+ target_cpu=@target_cpu@
+ 
+ # Force build directory components
+-PATH=${builddir}:$PATH
++PATH="${builddir}:$PATH"
+ export PATH
+ 
+ # Usage: usage
+@@ -85,23 +84,23 @@ done
+ if [ "x${source}" = x ] ; then
+   tmpfile=`mktemp "${TMPDIR:-/tmp}/tmp.XXXXXXXXXX"` || exit 1
+   while read REPLY; do
+-    echo $REPLY >> ${tmpfile}
++    echo $REPLY >> "${tmpfile}"
+   done
+-  source=${tmpfile}
++  source="${tmpfile}"
+ fi
+ 
+ outfile1=`mktemp "${TMPDIR:-/tmp}/tmp.XXXXXXXXXX"` || exit 1
+-@builddir@/grub-shell --qemu-opts="${qemuopts}" --modules=${modules} ${source} >${outfile1}
++"@builddir@/grub-shell" --qemu-opts="${qemuopts}" --modules=${modules} ${source} >"${outfile1}"
+ 
+ outfile2=`mktemp "${TMPDIR:-/tmp}/tmp.XXXXXXXXXX"` || exit 1
+-bash ${source} >${outfile2}
++bash "${source}" >"${outfile2}"
+ 
+-if ! diff -q ${outfile1} ${outfile2} >/dev/null
++if ! diff -q "${outfile1}" "${outfile2}" >/dev/null
+ then
+   echo "${source}: GRUB and BASH outputs did not match (see diff -u ${outfile1} ${outfile2})"
+   status=1
+ else
+-    rm -f ${outfile1} ${outfile2}
++    rm -f "${outfile1}" "${outfile2}"
+ fi
+ 
+ exit $status
+diff --git a/tests/util/grub-shell.in b/tests/util/grub-shell.in
+index 0213376..461befb 100644
+--- a/tests/util/grub-shell.in
++++ b/tests/util/grub-shell.in
+@@ -19,11 +19,10 @@
+ # Initialize some variables.
+ transform="@program_transform_name@"
+ 
+-prefix=@prefix@
+-exec_prefix=@exec_prefix@
+-bindir=@bindir@
+-libdir=@libdir@
+-builddir=@builddir@
++prefix="@prefix@"
++exec_prefix="@exec_prefix@"
++datarootdir="@datarootdir@"
++builddir="@builddir@"
+ PACKAGE_NAME=@PACKAGE_NAME@
+ PACKAGE_TARNAME=@PACKAGE_TARNAME@
+ PACKAGE_VERSION=@PACKAGE_VERSION@
+@@ -140,9 +139,9 @@ EOF
+ 
+ isofile=`mktemp "${TMPDIR:-/tmp}/tmp.XXXXXXXXXX"` || exit 1
+ if [ x$boot != xnet ]; then
+-    sh @builddir@/grub-mkrescue --grub-mkimage=${builddir}/grub-mkimage --output=${isofile} --override-directory=${builddir}/grub-core \
++    sh "@builddir@/grub-mkrescue" "--grub-mkimage=${builddir}/grub-mkimage" "--output=${isofile}" "--override-directory=${builddir}/grub-core" \
+ 	--rom-directory="${rom_directory}" \
+-	/boot/grub/grub.cfg=${cfgfile} /boot/grub/testcase.cfg=${source} \
++	"/boot/grub/grub.cfg=${cfgfile}" "/boot/grub/testcase.cfg=${source}" \
+ 	${files} >/dev/null 2>&1
+ fi
+ if [ x$boot = xhd ]; then
+@@ -173,12 +172,12 @@ fi
+ 
+ if [ x$boot = xnet ]; then
+     netdir=`mktemp -d "${TMPDIR:-/tmp}/tmp.XXXXXXXXXX"` || exit 1
+-    sh @builddir@/grub-mknetdir --grub-mkimage=${builddir}/grub-mkimage --override-directory=${builddir}/grub-core --net-directory=$netdir
+-    cp ${cfgfile} $netdir/boot/grub/grub.cfg
+-    cp ${source} $netdir/boot/grub/testcase.cfg
+-    ${qemu} ${qemuopts} -nographic -serial file:/dev/stdout -monitor file:/dev/null -boot n -net user,tftp=$netdir,bootfile=/boot/grub/$target_cpu-$platform/core.0  -net nic  | cat | tr -d "\r"
++    sh "@builddir@/grub-mknetdir" "--grub-mkimage=${builddir}/grub-mkimage" "--override-directory=${builddir}/grub-core" "--net-directory=$netdir"
++    cp "${cfgfile}" "$netdir/boot/grub/grub.cfg"
++    cp "${source}" "$netdir/boot/grub/testcase.cfg"
++    "${qemu}" ${qemuopts} -nographic -serial file:/dev/stdout -monitor file:/dev/null -boot n -net "user,tftp=$netdir,bootfile=/boot/grub/$target_cpu-$platform/core.0"  -net nic  | cat | tr -d "\r"
+ else
+-    ${qemu} ${qemuopts} -nographic -serial file:/dev/stdout -monitor file:/dev/null -${device} ${isofile} ${bootdev} | cat | tr -d "\r"
++    "${qemu}" ${qemuopts} -nographic -serial file:/dev/stdout -monitor file:/dev/null -${device} ${isofile} ${bootdev} | cat | tr -d "\r"
+ fi
+ rm -f "${isofile}" "${imgfile}"
+ rm -rf "${rom_directory}"
+diff --git a/util/grub-install.in b/util/grub-install.in
+index ff8bea8..b18d5cc 100644
+--- a/util/grub-install.in
++++ b/util/grub-install.in
+@@ -21,6 +21,7 @@ transform="@program_transform_name@"
+ 
+ prefix="@prefix@"
+ exec_prefix="@exec_prefix@"
++datarootdir="@datarootdir@"
+ sbindir="@sbindir@"
+ bindir="@bindir@"
+ libdir="@libdir@"
+@@ -32,6 +33,7 @@ target_cpu=@target_cpu@
+ platform=@platform@
+ host_os=@host_os@
+ pkglibdir="${libdir}/`echo ${PACKAGE_TARNAME}/${target_cpu}-${platform} | sed ${transform}`"
++datadir="@datadir@"
+ localedir="@datadir@/locale"
+ 
+ self="`basename $0`"
+diff --git a/util/grub-mkconfig.in b/util/grub-mkconfig.in
+index afc66f8..45cc400 100644
+--- a/util/grub-mkconfig.in
++++ b/util/grub-mkconfig.in
+@@ -18,26 +18,27 @@ set -e
+ # along with GRUB.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ transform="@program_transform_name@"
+-
+-prefix=@prefix@
+-exec_prefix=@exec_prefix@
+-sbindir=@sbindir@
+-bindir=@bindir@
+-libdir=@libdir@
+-sysconfdir=@sysconfdir@
++prefix="@prefix@"
++exec_prefix="@exec_prefix@"
++datarootdir="@datarootdir@"
++
++prefix="@prefix@"
++exec_prefix="@exec_prefix@"
++sbindir="@sbindir@"
++bindir="@bindir@"
++sysconfdir="@sysconfdir@"
+ PACKAGE_NAME=@PACKAGE_NAME@
+ PACKAGE_VERSION=@PACKAGE_VERSION@
+ host_os=@host_os@
+-datarootdir=@datarootdir@
+-datadir=@datadir@
+-pkgdatadir=${datadir}/`echo @PACKAGE_TARNAME@ | sed "${transform}"`
++datadir="@datadir@"
++pkgdatadir="${datadir}/`echo @PACKAGE_TARNAME@ | sed "${transform}"`"
+ grub_cfg=""
+-grub_mkconfig_dir=${sysconfdir}/grub.d
++grub_mkconfig_dir="${sysconfdir}"/grub.d
+ 
+ self=`basename $0`
+ 
+-grub_mkdevicemap=${sbindir}/`echo grub-mkdevicemap | sed "${transform}"`
+-grub_probe=${sbindir}/`echo grub-probe | sed "${transform}"`
++grub_mkdevicemap="${sbindir}/`echo grub-mkdevicemap | sed "${transform}"`"
++grub_probe="${sbindir}/`echo grub-probe | sed "${transform}"`"
+ grub_script_check="${bindir}/`echo grub-script-check | sed "${transform}"`"
+ 
+ GRUB_PREFIX=`echo '/@bootdirname@/@grubdirname@' | sed "s,//*,/,g"`
+diff --git a/util/grub-mknetdir.in b/util/grub-mknetdir.in
+index b353e98..860fb6f 100644
+--- a/util/grub-mknetdir.in
++++ b/util/grub-mknetdir.in
+@@ -19,25 +19,24 @@
+ # Initialize some variables.
+ transform="@program_transform_name@"
+ 
+-prefix=@prefix@
+-exec_prefix=@exec_prefix@
+-sbindir=@sbindir@
+-bindir=@bindir@
+-libdir=@libdir@
++prefix="@prefix@"
++exec_prefix="@exec_prefix@"
++datarootdir="@datarootdir@"
++bindir="@bindir@"
++libdir="@libdir@"
+ PACKAGE_NAME=@PACKAGE_NAME@
+ PACKAGE_TARNAME=@PACKAGE_TARNAME@
+ PACKAGE_VERSION=@PACKAGE_VERSION@
+ target_cpu=@target_cpu@
+ platform=@platform@
+ host_os=@host_os@
+-pkglibdir=${libdir}/`echo ${PACKAGE_TARNAME}/${target_cpu}-${platform} | sed ${transform}`
+-localedir=@datadir@/locale
++pkglibdir="${libdir}/`echo ${PACKAGE_TARNAME}/${target_cpu}-${platform} | sed ${transform}`"
+ native_platform=@platform@
+ pkglib_DATA="moddep.lst command.lst fs.lst partmap.lst parttool.lst handler.lst video.lst crypto.lst terminal.lst"
+ 
+ self=`basename $0`
+ 
+-grub_mkimage=${bindir}/`echo grub-mkimage | sed ${transform}`
++grub_mkimage="${bindir}/`echo grub-mkimage | sed ${transform}`"
+ rootdir=/srv/tftp
+ grub_prefix=`echo /boot/grub | sed ${transform}`
+ modules=
+@@ -48,7 +47,7 @@ recheck=no
+ debug=no
+ debug_image=
+ subdir=`echo /boot/grub | sed ${transform}`
+-pc_dir=${libdir}/$(echo ${PACKAGE_TARNAME} | sed ${transform})/i386-pc
++pc_dir="${libdir}/$(echo ${PACKAGE_TARNAME} | sed ${transform})/i386-pc"
+ 
+ # Usage: usage
+ # Print the usage.
+@@ -170,12 +169,12 @@ process_input_dir ()
+     config_opt=
+     mkdir -p "$grubdir" || exit 1
+ 
+-    for file in ${grubdir}/*.mod ${grubdir}/*.lst ${grubdir}/*.img ${grubdir}/efiemu??.o; do
+-	if test -f $file && [ "`basename $file`" != menu.lst ]; then
+-	    rm -f $file || exit 1
++    for file in "${grubdir}"/*.mod "${grubdir}"/*.lst "${grubdir}"/*.img "${grubdir}"/efiemu??.o; do
++	if test -f "$file" && [ "`basename $file`" != menu.lst ]; then
++	    rm -f "$file" || exit 1
+ 	fi
+     done
+-    for file in ${input_dir}/*.mod; do
++    for file in "${input_dir}"/*.mod; do
+         if test -f "$file"; then
+             cp -f "$file" "$grubdir/"
+         fi
+@@ -187,7 +186,7 @@ process_input_dir ()
+     done
+ 
+     mkdir -p "$grubdir/locale"
+-    for file in ${input_dir}/po/*.mo; do
++    for file in "${input_dir}"/po/*.mo; do
+         if test -f "$file"; then
+ 	    cp -f "$file" "$grubdir/locale/"
+ 	fi
+@@ -213,7 +212,7 @@ process_input_dir ()
+ source ${subdir}/grub.cfg
+ EOF
+ 
+-    $grub_mkimage ${config_opt} -d "${input_dir}" -O ${mkimage_target} --output=${grubdir}/core.$ext --prefix=$prefix $modules $netmodules || exit 1
++    "$grub_mkimage" ${config_opt} -d "${input_dir}" -O ${mkimage_target} "--output=${grubdir}/core.$ext" "--prefix=$prefix" $modules $netmodules || exit 1
+     echo "Netboot directory for ${platform} created. Configure your DHCP server to point to ${subdir}/${platform}/core.$ext"
+ }
+ 
+diff --git a/util/grub-mkrescue.in b/util/grub-mkrescue.in
+index f7f7517..383ee7a 100644
+--- a/util/grub-mkrescue.in
++++ b/util/grub-mkrescue.in
+@@ -20,10 +20,11 @@ set -e
+ # Initialize some variables.
+ transform="@program_transform_name@"
+ 
+-prefix=@prefix@
+-exec_prefix=@exec_prefix@
+-bindir=@bindir@
+-libdir=@libdir@
++prefix="@prefix@"
++exec_prefix="@exec_prefix@"
++datarootdir="@datarootdir@"
++bindir="@bindir@"
++libdir="@libdir@"
+ PACKAGE_NAME=@PACKAGE_NAME@
+ PACKAGE_TARNAME=@PACKAGE_TARNAME@
+ PACKAGE_VERSION=@PACKAGE_VERSION@
+diff --git a/util/grub.d/00_header.in b/util/grub.d/00_header.in
+index 9da1511..5c4d9db 100644
+--- a/util/grub.d/00_header.in
++++ b/util/grub.d/00_header.in
+@@ -19,9 +19,10 @@ set -e
+ 
+ transform="@program_transform_name@"
+ 
+-prefix=@prefix@
+-exec_prefix=@exec_prefix@
+-libdir=@libdir@
++prefix="@prefix@"
++exec_prefix="@exec_prefix@"
++libdir="@libdir@"
++datarootdir="@datarootdir@"
+ locale_dir=`echo ${GRUB_PREFIX}/locale | sed ${transform}`
+ grub_lang=`echo $LANG | cut -d . -f 1`
+ 
+@@ -112,7 +113,7 @@ for x in ${GRUB_TERMINAL_INPUT} ${GRUB_TERMINAL_OUTPUT}; do
+ done
+ 
+ if [ "x$serial" = x1 ]; then
+-    if ! test -e ${GRUB_PREFIX}/serial.mod ; then
++    if ! test -e "${GRUB_PREFIX}/serial.mod" ; then
+ 	echo "Serial terminal not available on this platform." >&2 ; exit 1
+     fi
+ 
+diff --git a/util/grub.d/10_linux.in b/util/grub.d/10_linux.in
+index edb1eda..8bc1180 100644
+--- a/util/grub.d/10_linux.in
++++ b/util/grub.d/10_linux.in
+@@ -17,11 +17,11 @@ set -e
+ # You should have received a copy of the GNU General Public License
+ # along with GRUB.  If not, see <http://www.gnu.org/licenses/>.
+ 
+-prefix=@prefix@
+-exec_prefix=@exec_prefix@
+-bindir=@bindir@
+-libdir=@libdir@
+-. ${libdir}/grub/grub-mkconfig_lib
++prefix="@prefix@"
++exec_prefix="@exec_prefix@"
++libdir="@libdir@"
++datarootdir="@datarootdir@"
++. "${libdir}/grub/grub-mkconfig_lib"
+ 
+ export TEXTDOMAIN=@PACKAGE@
+ export TEXTDOMAINDIR=@localedir@
+diff --git a/util/grub.d/20_linux_xen.in b/util/grub.d/20_linux_xen.in
+index f37e365..9104667 100644
+--- a/util/grub.d/20_linux_xen.in
++++ b/util/grub.d/20_linux_xen.in
+@@ -17,14 +17,14 @@ set -e
+ # You should have received a copy of the GNU General Public License
+ # along with GRUB.  If not, see <http://www.gnu.org/licenses/>.
+ 
+-prefix=@prefix@
+-exec_prefix=@exec_prefix@
+-bindir=@bindir@
+-libdir=@libdir@
+-. ${libdir}/grub/grub-mkconfig_lib
++prefix="@prefix@"
++exec_prefix="@exec_prefix@"
++libdir="@libdir@"
++datarootdir="@datarootdir@"
++. "${libdir}/grub/grub-mkconfig_lib"
+ 
+ export TEXTDOMAIN=@PACKAGE@
+-export TEXTDOMAINDIR=@localedir@
++export TEXTDOMAINDIR="@localedir@"
+ 
+ CLASS="--class gnu-linux --class gnu --class os --class xen"
+ 
+diff --git a/util/grub.d/30_os-prober.in b/util/grub.d/30_os-prober.in
+index 9eb7b3e..7336000 100644
+--- a/util/grub.d/30_os-prober.in
++++ b/util/grub.d/30_os-prober.in
+@@ -17,11 +17,12 @@ set -e
+ # You should have received a copy of the GNU General Public License
+ # along with GRUB.  If not, see <http://www.gnu.org/licenses/>.
+ 
+-prefix=@prefix@
+-exec_prefix=@exec_prefix@
+-libdir=@libdir@
++prefix="@prefix@"
++exec_prefix="@exec_prefix@"
++datarootdir="@datarootdir@"
++libdir="@libdir@"
+ 
+-. ${libdir}/grub/grub-mkconfig_lib
++. "${libdir}/grub/grub-mkconfig_lib"
+ 
+ if [ "x${GRUB_DISABLE_OS_PROBER}" = "xtrue" ]; then
+   exit 0
+diff --git a/util/update-grub_lib.in b/util/update-grub_lib.in
+deleted file mode 100644
+index 998452e..0000000
+--- a/util/update-grub_lib.in
++++ /dev/null
+@@ -1,23 +0,0 @@
+-# stub for new grub-mkconfig_lib
+-# Copyright (C) 2007,2008  Free Software Foundation, Inc.
+-#
+-# GRUB is free software: you can redistribute it and/or modify
+-# it under the terms of the GNU General Public License as published by
+-# the Free Software Foundation, either version 3 of the License, or
+-# (at your option) any later version.
+-#
+-# GRUB is distributed in the hope that it will be useful,
+-# but WITHOUT ANY WARRANTY; without even the implied warranty of
+-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-# GNU General Public License for more details.
+-#
+-# You should have received a copy of the GNU General Public License
+-# along with GRUB.  If not, see <http://www.gnu.org/licenses/>.
+-
+-prefix=@prefix@
+-exec_prefix=@exec_prefix@
+-libdir=@libdir@
+-
+-. ${libdir}/grub/grub-mkconfig_lib
+-
+-grub_warn "update-grub_lib is deprecated, use grub-mkconfig_lib instead"
+-- 
+1.7.7.6
+

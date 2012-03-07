@@ -1,0 +1,27 @@
+From cc8d234213baf7108f9c850c84fc98d17e780710 Mon Sep 17 00:00:00 2001
+From: Peter Jones <pjones@redhat.com>
+Date: Wed, 7 Mar 2012 09:53:50 -0500
+Subject: [PATCH] Fix gcc error that kills build.
+
+---
+ conf/Makefile.common         |    2 +-
+ grub-core/Makefile.am        |   12 ++++++------
+ grub-core/commands/usbtest.c |    2 +-
+ 3 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/conf/Makefile.common b/conf/Makefile.common
+index 2040a2e..3a6f45c 100644
+--- a/conf/Makefile.common
++++ b/conf/Makefile.common
+@@ -14,7 +14,7 @@ if COND_i386_efi
+   LDFLAGS_PLATFORM = -melf_i386
+ endif
+ if COND_x86_64_efi
+-  LDFLAGS_PLATFORM = -melf_x86_64
++  LDFLAGS_PLATFORM = -melf
+ endif
+ if COND_i386_qemu
+   CFLAGS_PLATFORM += -mrtd -mregparm=3
+-- 
+1.7.7.6
+
