@@ -40,6 +40,7 @@ Patch6:		grub2-gfxpayload-efi.patch
 Patch7:		grub-1.99-fix_grub-probe_call.patch
 Patch8:		grub-1.99-handle-newer-autotools.patch
 Patch9:		grub-1.99-gcc-4.7.0.patch
+Patch10:        grub2-1.99-remove-serial.mod-test-from-00_header-748964.patch
 
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
