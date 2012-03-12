@@ -417,7 +417,7 @@ index edb1eda..8bc1180 100644
 +exec_prefix="@exec_prefix@"
 +libdir="@libdir@"
 +datarootdir="@datarootdir@"
-+. "${libdir}/grub/grub-mkconfig_lib"
++. "${datarootdir}/grub/grub-mkconfig_lib"
  
  export TEXTDOMAIN=@PACKAGE@
  export TEXTDOMAINDIR=@localedir@
@@ -438,7 +438,7 @@ index f37e365..9104667 100644
 +exec_prefix="@exec_prefix@"
 +libdir="@libdir@"
 +datarootdir="@datarootdir@"
-+. "${libdir}/grub/grub-mkconfig_lib"
++. "${datarootdir}/grub/grub-mkconfig_lib"
  
  export TEXTDOMAIN=@PACKAGE@
 -export TEXTDOMAINDIR=@localedir@
@@ -463,7 +463,7 @@ index 9eb7b3e..7336000 100644
 +libdir="@libdir@"
  
 -. ${libdir}/grub/grub-mkconfig_lib
-+. "${libdir}/grub/grub-mkconfig_lib"
++. "${datarootdir}/grub/grub-mkconfig_lib"
  
  if [ "x${GRUB_DISABLE_OS_PROBER}" = "xtrue" ]; then
    exit 0
