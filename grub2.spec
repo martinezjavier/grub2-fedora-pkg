@@ -15,6 +15,10 @@
 %global efi %{ix86} x86_64 ia64
 %endif
 
+
+%global tarversion 2.00~beta2
+%undefine _missing_build_ids_terminate_build
+
 Name:           grub2
 Epoch:          1
 Version:        1.99
@@ -25,24 +29,15 @@ Group:          System Environment/Base
 License:        GPLv3+
 URL:            http://www.gnu.org/software/grub/
 Obsoletes:	grub < 1:0.98
-Source0:        ftp://ftp.gnu.org/gnu/grub/grub-%{version}.tar.xz
+Source0:        ftp://ftp.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
 Source1:        90_persistent
 Source2:        grub.default
 Source3:        README.Fedora
 Patch0:		grub-1.99-handle-fwrite-return.patch
 Patch1:		grub-1.99-grub_test_assert_printf.patch
 Patch2:		grub-1.99-just-say-linux.patch
-Patch3:		grub-1.99-Workaround-for-variable-set-but-not-used-issue.patch
-Patch4:		grub2-handle-initramfs-on-xen.patch
-Patch5:		grub2-1.99-handle-more-dmraid.patch
-Patch6:		grub2-gfxpayload-efi.patch
-# https://savannah.gnu.org/bugs/index.php?35018
-Patch7:		grub-1.99-fix_grub-probe_call.patch
-Patch8:		grub-1.99-handle-newer-autotools.patch
+Patch3:		grub2-handle-initramfs-on-xen.patch
 Patch9:		grub-1.99-gcc-4.7.0.patch
-Patch10:        grub2-1.99-remove-serial.mod-test-from-00_header-748964.patch
-Patch11:	grub-1.99-prep_install_v2.patch
-
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -64,7 +59,7 @@ Requires(post): dracut
 
 # TODO: ppc
 # ExclusiveArch:  %{ix86} x86_64 %{sparc}
-ExcludeArch:	s390 s390x
+ExcludeArch:	s390 s390x ppc
 
 %description
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
@@ -84,34 +79,36 @@ provides support for EFI systems.
 %endif
 
 %prep
-%setup -T -c -n grub-%{version}
+%setup -T -c -n grub-%{tarversion}
 %ifarch %{efi}
-%setup -D -q -T -a 0 -n grub-%{version}
-cd grub-%{version}
+echo foo
+%setup -D -q -T -a 0 -n grub-%{tarversion}
+echo bar
+cd grub-%{tarversion}
 cp %{SOURCE3} .
 git init
 git config user.email "pjones@fedoraproject.org"
 git config user.name "Fedora Ninjas"
 git add .
-git commit -a -q -m "%{version} baseline."
+git commit -a -q -m "%{tarversion} baseline."
 git am %{patches}
 cd ..
-mv grub-%{version} grub-efi-%{version}
+mv grub-%{tarversion} grub-efi-%{tarversion}
 %endif
-%setup -D -q -T -a 0 -n grub-%{version}
-cd grub-%{version}
+%setup -D -q -T -a 0 -n grub-%{tarversion}
+cd grub-%{tarversion}
 cp %{SOURCE3} .
 git init
 git config user.email "pjones@fedoraproject.org"
 git config user.name "Fedora Ninjas"
 git add .
-git commit -a -q -m "%{version} baseline."
+git commit -a -q -m "%{tarversion} baseline."
 git am %{patches}
 
 
 %build
 %ifarch %{efi}
-cd grub-efi-%{version}
+cd grub-efi-%{tarversion}
 ./autogen.sh
 %configure							\
 	CFLAGS="$(echo $RPM_OPT_FLAGS | sed			\
@@ -138,14 +135,14 @@ make %{?_smp_mflags}
 cd ..
 %endif
 
-cd grub-%{version}
+cd grub-%{tarversion}
 ./autogen.sh
 # -static is needed so that autoconf script is able to link
 # test that looks for _start symbol on 64 bit platforms
-%ifarch %{sparc} ppc ppc64
-PLATFORM=ieee1275
+%ifarch %{sparc} ppc64
+%define platform ieee1275
 %else
-PLATFORM=pc
+%define platform pc
 %endif
 %configure							\
 	CFLAGS="$(echo $RPM_OPT_FLAGS | sed			\
@@ -157,7 +154,7 @@ PLATFORM=pc
 		-e 's/-m64//g'					\
 		-e 's/-fasynchronous-unwind-tables//g' )"	\
 	TARGET_LDFLAGS=-static					\
-        --with-platform=$PLATFORM				\
+        --with-platform=%{platform}				\
         --program-transform-name=s,grub,%{name},		\
 	--disable-werror					\
         --sbindir=/sbin
@@ -177,7 +174,7 @@ set -e
 rm -fr $RPM_BUILD_ROOT
 
 %ifarch %{efi}
-cd grub-efi-%{version}
+cd grub-efi-%{tarversion}
 make DESTDIR=$RPM_BUILD_ROOT install
 mv $RPM_BUILD_ROOT/etc/bash_completion.d/grub $RPM_BUILD_ROOT/etc/bash_completion.d/grub-efi
 sed s,grub/grub-mkconfig_lib,grub-efi/grub-mkconfig_lib, -i $RPM_BUILD_ROOT/sbin/grub2-efi-mkconfig
@@ -205,7 +202,7 @@ install -m 755 grub.efi $RPM_BUILD_ROOT/boot/efi/EFI/redhat/%{name}-efi/grub.efi
 cd ..
 %endif
 
-cd grub-%{version}
+cd grub-%{tarversion}
 make DESTDIR=$RPM_BUILD_ROOT install
 
 # Script that makes part of grub.cfg persist across updates
@@ -286,19 +283,18 @@ fi
 %files
 %defattr(-,root,root,-)
 /etc/bash_completion.d/grub
-%{_libdir}/%{name}
+%{_libdir}/grub/*-%{platform}/
 %{_datarootdir}/grub/grub-mkconfig_lib
 /sbin/%{name}-mkconfig
-/sbin/%{name}-mkdevicemap
 /sbin/%{name}-mknetdir
 /sbin/%{name}-install
 /sbin/%{name}-probe
 /sbin/%{name}-reboot
 /sbin/%{name}-set-default
-%ifarch %{ix86} x86_64 %{sparc}
-/sbin/%{name}-setup
-%endif
-%{_bindir}/%{name}-bin2h
+/sbin/%{name}-bios-setup
+/sbin/%{name}-ofpathname
+/sbin/%{name}-sparc64-setup
+%{_bindir}/%{name}-mkstandalone
 %{_bindir}/%{name}-editenv
 %{_bindir}/%{name}-fstest
 %{_bindir}/%{name}-kbdcomp
@@ -325,28 +321,31 @@ fi
 %{_sysconfdir}/sysconfig/grub
 %dir /boot/%{name}
 %ghost %config(noreplace) /boot/%{name}/grub.cfg
-%doc grub-%{version}/COPYING grub-%{version}/INSTALL grub-%{version}/NEWS
-%doc grub-%{version}/README grub-%{version}/THANKS grub-%{version}/TODO
-%doc grub-%{version}/ChangeLog grub-%{version}/README.Fedora
+%doc grub-%{tarversion}/COPYING grub-%{tarversion}/INSTALL
+%doc grub-%{tarversion}/NEWS grub-%{tarversion}/README
+%doc grub-%{tarversion}/THANKS grub-%{tarversion}/TODO
+%doc grub-%{tarversion}/ChangeLog grub-%{tarversion}/README.Fedora
 %exclude %{_mandir}
 %{_infodir}/grub2*
+%attr(0755,root,root)/%{_datarootdir}/grub/
 
 %ifarch %{efi}
 %files efi
 %defattr(-,root,root,-)
 %attr(0755,root,root)/boot/efi/EFI/redhat
 /etc/bash_completion.d/grub-efi
-%{_libdir}/grub2-efi/
+%{_libdir}/grub/%{_arch}-efi
 %{_datarootdir}/grub/grub-mkconfig_lib
 /sbin/grub2-efi-mkconfig
-/sbin/grub2-efi-mkdevicemap
 /sbin/grub2-efi-mknetdir
 /sbin/grub2-efi-install
 /sbin/grub2-efi-probe
 /sbin/grub2-efi-reboot
 /sbin/grub2-efi-set-default
-#/sbin/grub2-efi-setup
-%{_bindir}/grub2-efi-bin2h
+/sbin/grub2-efi-bios-setup
+/sbin/grub2-efi-ofpathname
+/sbin/grub2-efi-sparc64-setup
+%{_bindir}/grub2-efi-mkstandalone
 %{_bindir}/grub2-efi-editenv
 %{_bindir}/grub2-efi-fstest
 %{_bindir}/grub2-efi-kbdcomp
@@ -371,19 +370,19 @@ fi
 %config(noreplace) %{_sysconfdir}/grub2-efi.cfg
 %config(noreplace) %{_sysconfdir}/default/grub
 %{_sysconfdir}/sysconfig/grub
-%dir /boot/efi/EFI/redhat/grub2-efi
 %ghost %config(noreplace) /boot/efi/EFI/redhat/grub2-efi/grub.cfg
-%doc grub-%{version}/COPYING grub-%{version}/INSTALL grub-%{version}/NEWS
-%doc grub-%{version}/README grub-%{version}/THANKS grub-%{version}/TODO
-%doc grub-%{version}/ChangeLog grub-%{version}/README.Fedora
+%doc grub-%{tarversion}/COPYING grub-%{tarversion}/INSTALL
+%doc grub-%{tarversion}/NEWS grub-%{tarversion}/README
+%doc grub-%{tarversion}/THANKS grub-%{tarversion}/TODO
+%doc grub-%{tarversion}/ChangeLog grub-%{tarversion}/README.Fedora
 %exclude %{_mandir}
 %{_infodir}/grub2*
 %endif
+%attr(0755,root,root)/%{_datarootdir}/grub/
 
 %changelog
-* Mon Mar 12 2012 Peter Jones <pjones@redhat.com> - 1.99-18
-- Handle some missed bits for newer autotools support (patch from khopp)
-- Handle PReP installation on PPC.
+* Wed Mar 14 2012 Peter Jones <pjones@redhat.com> - 1.99-18
+- Rebase from 1.99 to 2.00~beta2
 
 * Wed Mar 07 2012 Peter Jones <pjones@redhat.com> - 1.99-17
 - Update for newer autotools and gcc 4.7.0
