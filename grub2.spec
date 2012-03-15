@@ -22,7 +22,7 @@
 Name:           grub2
 Epoch:          1
 Version:        1.99
-Release:        18%{?dist}
+Release:        19%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -120,6 +120,7 @@ cd grub-efi-%{tarversion}
 		-e 's/-fasynchronous-unwind-tables//g' )"	\
 	TARGET_LDFLAGS=-static					\
         --with-platform=efi					\
+	--with-grubdir=grub2					\
         --program-transform-name=s,grub,%{name}-efi,		\
 	--disable-werror					\
         --sbindir=/sbin
@@ -155,6 +156,7 @@ cd grub-%{tarversion}
 		-e 's/-fasynchronous-unwind-tables//g' )"	\
 	TARGET_LDFLAGS=-static					\
         --with-platform=%{platform}				\
+	--with-grubdir=grub2					\
         --program-transform-name=s,grub,%{name},		\
 	--disable-werror					\
         --sbindir=/sbin
@@ -381,6 +383,9 @@ fi
 %attr(0755,root,root)/%{_datarootdir}/grub/
 
 %changelog
+* Thu Mar 15 2012 Peter Jones <pjones@redhat.com> - 1.99-19
+- Use --with-grubdir= on configure to make it behave like -17 did.
+
 * Wed Mar 14 2012 Peter Jones <pjones@redhat.com> - 1.99-18
 - Rebase from 1.99 to 2.00~beta2
 
