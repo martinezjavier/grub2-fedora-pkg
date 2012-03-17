@@ -29,7 +29,7 @@ Group:          System Environment/Base
 License:        GPLv3+
 URL:            http://www.gnu.org/software/grub/
 Obsoletes:	grub < 1:0.98
-Source0:        ftp://ftp.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
+Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
 Source1:        90_persistent
 Source2:        grub.default
 Source3:        README.Fedora
