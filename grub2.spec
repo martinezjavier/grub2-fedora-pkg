@@ -61,7 +61,7 @@ Requires(post): dracut
 
 # TODO: ppc
 # ExclusiveArch:  %{ix86} x86_64 %{sparc}
-ExcludeArch:	s390 s390x ppc
+ExcludeArch:	s390 s390x ppc64
 
 %description
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
