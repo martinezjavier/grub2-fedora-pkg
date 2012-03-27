@@ -22,7 +22,7 @@
 Name:           grub2
 Epoch:          1
 Version:        1.99
-Release:        19%{?dist}.1
+Release:        19%{?dist}.2
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -39,6 +39,7 @@ Patch2:		grub-1.99-just-say-linux.patch
 Patch3:		grub2-handle-initramfs-on-xen.patch
 Patch9:		grub-1.99-gcc-4.7.0.patch
 Patch10:	grub-1.99-Fix-tests-of-zeroed-partition.patch
+Patch11:	grub-1.99-ppc-terminfo.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -384,6 +385,9 @@ fi
 %attr(0755,root,root)/%{_datarootdir}/grub/
 
 %changelog
+* Tue Mar 27 2012 Dan Horák <dan[at]danny.cz> - 1.99-19.2
+- Add support for serial terminal consoles on PPC by Mark Hamzy
+
 * Sun Mar 25 2012 Dan Horák <dan[at]danny.cz> - 1.99-19.1
 - Use Fix-tests-of-zeroed-partition patch by Mark Hamzy
 
