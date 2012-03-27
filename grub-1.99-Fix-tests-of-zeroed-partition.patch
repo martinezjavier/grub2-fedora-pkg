@@ -1,0 +1,25 @@
+From c8f67c2ee40815c075f1d6e5b3d6b504fbe204f5 Mon Sep 17 00:00:00 2001
+From: Fedora Ninjas <pjones@fedoraproject.org>
+Date: Sun, 25 Mar 2012 09:22:34 -0500
+Subject: [PATCH] Fix tests of zeroed partition
+
+---
+ util/grub-install.in |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/util/grub-install.in b/util/grub-install.in
+index 9c1d133..e8638af 100644
+--- a/util/grub-install.in
++++ b/util/grub-install.in
+@@ -750,7 +750,7 @@ elif [ "${grub_modinfo_target_cpu}-${grub_modinfo_platform}" = "i386-ieee1275" ]
+ 		exit 1
+             fi
+ 
+-            if [ "$(file -s "${install_device}" -b | awk '{ print $1 }')" = ELF ] || [ $(cmp /dev/zero "${install_device}" &>/dev/null) ]; then
++            if [ "$(file -s "${install_device}" -b | awk '{ print $1 }')" != ELF ] && ( cmp -s -n $(blockdev --getsize64 ${install_device}) /dev/zero "${install_device}" &>/dev/null ); then
+             # Change boot device to the harddisk root
+ 		boot_device="$ofpath"
+ 		dd if="${grubdir}/${grub_modinfo_target_cpu}-$grub_modinfo_platform/core.${imgext}" of="${install_device}" status=noxfer || {
+-- 
+1.7.7.2
+

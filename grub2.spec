@@ -22,7 +22,7 @@
 Name:           grub2
 Epoch:          1
 Version:        1.99
-Release:        19%{?dist}
+Release:        19%{?dist}.1
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -38,6 +38,7 @@ Patch1:		grub-1.99-grub_test_assert_printf.patch
 Patch2:		grub-1.99-just-say-linux.patch
 Patch3:		grub2-handle-initramfs-on-xen.patch
 Patch9:		grub-1.99-gcc-4.7.0.patch
+Patch10:	grub-1.99-Fix-tests-of-zeroed-partition.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -383,6 +384,9 @@ fi
 %attr(0755,root,root)/%{_datarootdir}/grub/
 
 %changelog
+* Sun Mar 25 2012 Dan Horák <dan[at]danny.cz> - 1.99-19.1
+- Use Fix-tests-of-zeroed-partition patch by Mark Hamzy
+
 * Thu Mar 15 2012 Peter Jones <pjones@redhat.com> - 1.99-19
 - Use --with-grubdir= on configure to make it behave like -17 did.
 
