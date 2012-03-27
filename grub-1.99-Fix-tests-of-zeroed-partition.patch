@@ -1,5 +1,5 @@
 From c8f67c2ee40815c075f1d6e5b3d6b504fbe204f5 Mon Sep 17 00:00:00 2001
-From: Fedora Ninjas <pjones@fedoraproject.org>
+From: Mark Hamzy <hamzy@us.ibm.com>
 Date: Sun, 25 Mar 2012 09:22:34 -0500
 Subject: [PATCH] Fix tests of zeroed partition
 
