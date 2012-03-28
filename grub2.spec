@@ -21,8 +21,8 @@
 
 Name:           grub2
 Epoch:          1
-Version:        1.99
-Release:        19%{?dist}.2
+Version:        2.0
+Release:        0.20%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -385,6 +385,10 @@ fi
 %attr(0755,root,root)/%{_datarootdir}/grub/
 
 %changelog
+* Wed Mar 28 2012 Peter Jones <pjones@redhat.com> - 2.0-0.20
+- Fix ppc64 vs ppc exclude according to what dwa tells me they need
+- Fix version number to better match policy.
+
 * Tue Mar 27 2012 Dan Horák <dan[at]danny.cz> - 1.99-19.2
 - Add support for serial terminal consoles on PPC by Mark Hamzy
 
