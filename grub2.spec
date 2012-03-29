@@ -22,7 +22,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.0
-Release:        0.21%{?dist}
+Release:        0.22%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -139,7 +139,7 @@ cd grub-%{tarversion}
 ./autogen.sh
 # -static is needed so that autoconf script is able to link
 # test that looks for _start symbol on 64 bit platforms
-%ifarch %{sparc} ppc64
+%ifarch %{sparc} ppc ppc64
 %define platform ieee1275
 %else
 %define platform pc
@@ -376,6 +376,9 @@ fi
 %endif
 
 %changelog
+* Thu Mar 29 2012 David Aquilina <dwa@redhat.com> - 2.0-0.22
+- Fix ieee1275 platform define for ppc
+
 * Thu Mar 29 2012 Peter Jones <pjones@redhat.com> - 2.0-0.21
 - Remove ppc excludearch lines (dwa)
 - Update ppc terminfo patch (hamzy)
