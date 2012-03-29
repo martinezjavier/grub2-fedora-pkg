@@ -21,8 +21,8 @@
 
 Name:           grub2
 Epoch:          1
-Version:        1.99
-Release:        19%{?dist}.2
+Version:        2.0
+Release:        0.21%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -59,9 +59,8 @@ Requires:	gettext os-prober which
 Requires(pre):  dracut
 Requires(post): dracut
 
-# TODO: ppc
 # ExclusiveArch:  %{ix86} x86_64 %{sparc}
-ExcludeArch:	s390 s390x ppc64
+ExcludeArch:	s390 s390x
 
 %description
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
@@ -385,6 +384,14 @@ fi
 %attr(0755,root,root)/%{_datarootdir}/grub/
 
 %changelog
+* Thu Mar 29 2012 Peter Jones <pjones@redhat.com> - 2.0-0.21
+- Remove ppc excludearch lines (dwa)
+- Update ppc terminfo patch (hamzy)
+
+* Wed Mar 28 2012 Peter Jones <pjones@redhat.com> - 2.0-0.20
+- Fix ppc64 vs ppc exclude according to what dwa tells me they need
+- Fix version number to better match policy.
+
 * Tue Mar 27 2012 Dan Horák <dan[at]danny.cz> - 1.99-19.2
 - Add support for serial terminal consoles on PPC by Mark Hamzy
 

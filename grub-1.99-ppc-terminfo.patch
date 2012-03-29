@@ -1,9 +1,10 @@
-From ad101ca2bd8913b989cc759bf36632c94381fc4e Mon Sep 17 00:00:00 2001
+From e263907f50e496e602edd9bd846ccb6e0565a085 Mon Sep 17 00:00:00 2001
 From: Mark Hamzy <hamzy@us.ibm.com>
-Date: Thu, 1 Mar 2012 21:18:20 -0600
+Date: Wed, 28 Mar 2012 14:46:41 -0500
 Subject: [PATCH] Migrate PPC from Yaboot to Grub2
 
-Add configuration support for serial terminal consoles.  This will set the maximum screen size so that text is not overwritten.
+Add configuration support for serial terminal consoles.  This will set the
+maximum screen size so that text is not overwritten.
 
 ---
  Makefile.util.def              |    7 +++
@@ -12,10 +13,10 @@ Add configuration support for serial terminal consoles.  This will set the maxim
  create mode 100644 util/grub.d/20_ppc_terminfo.in
 
 diff --git a/Makefile.util.def b/Makefile.util.def
-index 058572f..1993f9b 100644
+index c41b76e..b349758 100644
 --- a/Makefile.util.def
 +++ b/Makefile.util.def
-@@ -360,6 +360,13 @@ script = {
+@@ -423,6 +423,13 @@ script = {
  };
  
  script = {
@@ -31,7 +32,7 @@ index 058572f..1993f9b 100644
    installdir = grubconf;
 diff --git a/util/grub.d/20_ppc_terminfo.in b/util/grub.d/20_ppc_terminfo.in
 new file mode 100644
-index 0000000..545ad62
+index 0000000..10d6658
 --- /dev/null
 +++ b/util/grub.d/20_ppc_terminfo.in
 @@ -0,0 +1,114 @@
@@ -58,7 +59,7 @@ index 0000000..545ad62
 +exec_prefix=@exec_prefix@
 +bindir=@bindir@
 +libdir=@libdir@
-+. ${libdir}/grub/grub-mkconfig_lib
++. "@datadir@/@PACKAGE@/grub-mkconfig_lib"
 +
 +export TEXTDOMAIN=@PACKAGE@
 +export TEXTDOMAINDIR=@localedir@
@@ -150,5 +151,5 @@ index 0000000..545ad62
 +  terminfo -g ${X}x${Y} ${TERMINAL}
 +EOF
 -- 
-1.7.7.6
+1.7.7.2
 
