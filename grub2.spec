@@ -384,6 +384,10 @@ fi
 %attr(0755,root,root)/%{_datarootdir}/grub/
 
 %changelog
+* Thu Mar 29 2012 Peter Jones <pjones@redhat.com> - 2.0-0.21
+- Remove ppc excludearch lines (dwa)
+- Update ppc terminfo patch (hamzy)
+
 * Wed Mar 28 2012 Peter Jones <pjones@redhat.com> - 2.0-0.20
 - Fix ppc64 vs ppc exclude according to what dwa tells me they need
 - Fix version number to better match policy.
