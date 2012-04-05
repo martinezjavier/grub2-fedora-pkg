@@ -3,7 +3,6 @@ From: Peter Jones <pjones@redhat.com>
 Date: Mon, 14 Mar 2011 14:27:42 -0400
 Subject: [PATCH] Don't say "GNU/Linux" in generated menus.
 
-In Fedora and RHEL we just call it Linux.
 ---
  util/grub.d/10_linux.in     |    4 ++--
  util/grub.d/20_linux_xen.in |    4 ++--
@@ -18,7 +17,7 @@ index a09c3e6..0b0df78 100644
  
  if [ "x${GRUB_DISTRIBUTOR}" = "x" ] ; then
 -  OS=GNU/Linux
-+  OS=Linux
++  OS="$(sed 's, release .*$,,g' /etc/system-release) Linux"
  else
 -  OS="${GRUB_DISTRIBUTOR} GNU/Linux"
 +  OS="${GRUB_DISTRIBUTOR} Linux"
@@ -34,7 +33,7 @@ index ee49cd9..10422b0 100644
  
  if [ "x${GRUB_DISTRIBUTOR}" = "x" ] ; then
 -  OS=GNU/Linux
-+  OS=Linux
++  OS="$(sed 's, release .*$,,g' /etc/system-release) Linux"
  else
 -  OS="${GRUB_DISTRIBUTOR} GNU/Linux"
 +  OS="${GRUB_DISTRIBUTOR} Linux"
