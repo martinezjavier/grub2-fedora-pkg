@@ -123,8 +123,7 @@ cd grub-efi-%{tarversion}
         --with-platform=efi					\
 	--with-grubdir=grub2					\
         --program-transform-name=s,grub,%{name}-efi,		\
-	--disable-werror					\
-        --sbindir=/sbin
+	--disable-werror
 make %{?_smp_mflags}
 %ifarch %{ix86}
 %define grubefiarch i386-efi
@@ -159,8 +158,7 @@ cd grub-%{tarversion}
         --with-platform=%{platform}				\
 	--with-grubdir=grub2					\
         --program-transform-name=s,grub,%{name},		\
-	--disable-werror					\
-        --sbindir=/sbin
+	--disable-werror
 
 make %{?_smp_mflags}
 
@@ -288,15 +286,15 @@ fi
 /etc/bash_completion.d/grub
 %{_libdir}/grub/*-%{platform}/
 %{_datarootdir}/grub/
-/sbin/%{name}-mkconfig
-/sbin/%{name}-mknetdir
-/sbin/%{name}-install
-/sbin/%{name}-probe
-/sbin/%{name}-reboot
-/sbin/%{name}-set-default
-/sbin/%{name}-bios-setup
-/sbin/%{name}-ofpathname
-/sbin/%{name}-sparc64-setup
+%{_sbindir}/%{name}-mkconfig
+%{_sbindir}/%{name}-mknetdir
+%{_sbindir}/%{name}-install
+%{_sbindir}/%{name}-probe
+%{_sbindir}/%{name}-reboot
+%{_sbindir}/%{name}-set-default
+%{_sbindir}/%{name}-bios-setup
+%{_sbindir}/%{name}-ofpathname
+%{_sbindir}/%{name}-sparc64-setup
 %{_bindir}/%{name}-mkstandalone
 %{_bindir}/%{name}-editenv
 %{_bindir}/%{name}-fstest
@@ -313,7 +311,7 @@ fi
 %{_bindir}/%{name}-mkrescue
 %endif
 %ifarch %{sparc}
-/sbin/%{name}-ofpathname
+%{_sbindir}/%{name}-ofpathname
 %endif
 %{_bindir}/%{name}-script-check
 %dir %{_sysconfdir}/grub.d
@@ -338,15 +336,15 @@ fi
 /etc/bash_completion.d/grub-efi
 %{_libdir}/grub/%{_arch}-efi
 %{_datarootdir}/grub/
-/sbin/grub2-efi-mkconfig
-/sbin/grub2-efi-mknetdir
-/sbin/grub2-efi-install
-/sbin/grub2-efi-probe
-/sbin/grub2-efi-reboot
-/sbin/grub2-efi-set-default
-/sbin/grub2-efi-bios-setup
-/sbin/grub2-efi-ofpathname
-/sbin/grub2-efi-sparc64-setup
+%{_sbindir}/grub2-efi-mkconfig
+%{_sbindir}/grub2-efi-mknetdir
+%{_sbindir}/grub2-efi-install
+%{_sbindir}/grub2-efi-probe
+%{_sbindir}/grub2-efi-reboot
+%{_sbindir}/grub2-efi-set-default
+%{_sbindir}/grub2-efi-bios-setup
+%{_sbindir}/grub2-efi-ofpathname
+%{_sbindir}/grub2-efi-sparc64-setup
 %{_bindir}/grub2-efi-mkstandalone
 %{_bindir}/grub2-efi-editenv
 %{_bindir}/grub2-efi-fstest
@@ -363,7 +361,7 @@ fi
 %{_bindir}/grub2-efi-mkrescue
 %endif
 %ifarch %{sparc} ppc ppc64
-/sbin/grub2-efi-ofpathname
+%{_sbindir}/grub2-efi-ofpathname
 %endif
 %{_bindir}/grub2-efi-script-check
 %dir %{_sysconfdir}/grub.d
