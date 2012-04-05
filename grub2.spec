@@ -287,7 +287,7 @@ fi
 %defattr(-,root,root,-)
 /etc/bash_completion.d/grub
 %{_libdir}/grub/*-%{platform}/
-%{_datarootdir}/grub/grub-mkconfig_lib
+%{_datarootdir}/grub/
 %{_sbindir}/%{name}-mkconfig
 %{_sbindir}/%{name}-mknetdir
 %{_sbindir}/%{name}-install
@@ -337,7 +337,7 @@ fi
 %attr(0755,root,root)/boot/efi/EFI/redhat
 /etc/bash_completion.d/grub-efi
 %{_libdir}/grub/%{_arch}-efi
-%{_datarootdir}/grub/grub-mkconfig_lib
+%{_datarootdir}/grub/
 %{_sbindir}/grub2-efi-mkconfig
 %{_sbindir}/grub2-efi-mknetdir
 %{_sbindir}/grub2-efi-install
