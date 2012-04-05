@@ -334,7 +334,6 @@ fi
 %doc grub-%{tarversion}/ChangeLog grub-%{tarversion}/README.Fedora
 %exclude %{_mandir}
 %{_infodir}/grub2*
-%attr(0755,root,root)/%{_datarootdir}/grub/
 
 %ifarch %{efi}
 %files efi
@@ -385,7 +384,6 @@ fi
 %exclude %{_mandir}
 %{_infodir}/grub2*
 %endif
-%attr(0755,root,root)/%{_datarootdir}/grub/
 
 %changelog
 * Thu Apr 19 2012 Peter Jones <pjones@redhat.com> - 2.0-0.23
