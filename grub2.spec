@@ -287,7 +287,7 @@ fi
 %defattr(-,root,root,-)
 /etc/bash_completion.d/grub
 %{_libdir}/grub/*-%{platform}/
-%{_datarootdir}/grub/grub-mkconfig_lib
+%{_datarootdir}/grub/
 /sbin/%{name}-mkconfig
 /sbin/%{name}-mknetdir
 /sbin/%{name}-install
@@ -330,7 +330,6 @@ fi
 %doc grub-%{tarversion}/ChangeLog grub-%{tarversion}/README.Fedora
 %exclude %{_mandir}
 %{_infodir}/grub2*
-%attr(0755,root,root)/%{_datarootdir}/grub/
 
 %ifarch %{efi}
 %files efi
@@ -338,7 +337,7 @@ fi
 %attr(0755,root,root)/boot/efi/EFI/redhat
 /etc/bash_completion.d/grub-efi
 %{_libdir}/grub/%{_arch}-efi
-%{_datarootdir}/grub/grub-mkconfig_lib
+%{_datarootdir}/grub/
 /sbin/grub2-efi-mkconfig
 /sbin/grub2-efi-mknetdir
 /sbin/grub2-efi-install
@@ -381,7 +380,6 @@ fi
 %exclude %{_mandir}
 %{_infodir}/grub2*
 %endif
-%attr(0755,root,root)/%{_datarootdir}/grub/
 
 %changelog
 * Thu Mar 29 2012 Peter Jones <pjones@redhat.com> - 2.0-0.21
