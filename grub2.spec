@@ -30,7 +30,6 @@ License:        GPLv3+
 URL:            http://www.gnu.org/software/grub/
 Obsoletes:	grub < 1:0.98
 Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
-Source1:        90_persistent
 Source2:        grub.default
 Source3:        README.Fedora
 Source4:	http://unifoundry.com/unifont-5.1.20080820.pcf.gz
@@ -211,9 +210,6 @@ cd ..
 
 cd grub-%{tarversion}
 make DESTDIR=$RPM_BUILD_ROOT install
-
-# Script that makes part of grub.cfg persist across updates
-install -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/grub.d/
 
 # Ghost config file
 install -d $RPM_BUILD_ROOT/boot/%{name}
