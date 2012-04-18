@@ -301,18 +301,13 @@ fi
 %{_bindir}/%{name}-fstest
 %{_bindir}/%{name}-kbdcomp
 %{_bindir}/%{name}-menulst2cfg
-# %{_bindir}/%{name}-mkelfimage
 %{_bindir}/%{name}-mkfont
 %{_bindir}/%{name}-mklayout
 %{_bindir}/%{name}-mkimage
-# %{_bindir}/%{name}-mkisofs
 %{_bindir}/%{name}-mkpasswd-pbkdf2
 %{_bindir}/%{name}-mkrelpath
 %ifnarch %{sparc}
 %{_bindir}/%{name}-mkrescue
-%endif
-%ifarch %{sparc}
-%{_sbindir}/%{name}-ofpathname
 %endif
 %{_bindir}/%{name}-script-check
 %dir %{_sysconfdir}/grub.d
@@ -351,18 +346,13 @@ fi
 %{_bindir}/grub2-efi-fstest
 %{_bindir}/grub2-efi-kbdcomp
 %{_bindir}/grub2-efi-menulst2cfg
-# %{_bindir}/grub2-efi-mkelfimage
 %{_bindir}/grub2-efi-mkfont
 %{_bindir}/grub2-efi-mklayout
 %{_bindir}/grub2-efi-mkimage
-# %{_bindir}/grub2-efi-mkisofs
 %{_bindir}/grub2-efi-mkpasswd-pbkdf2
 %{_bindir}/grub2-efi-mkrelpath
 %ifnarch %{sparc} ppc ppc64
 %{_bindir}/grub2-efi-mkrescue
-%endif
-%ifarch %{sparc} ppc ppc64
-%{_sbindir}/grub2-efi-ofpathname
 %endif
 %{_bindir}/grub2-efi-script-check
 %dir %{_sysconfdir}/grub.d
