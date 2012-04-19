@@ -16,13 +16,13 @@
 %endif
 
 
-%global tarversion 2.00~beta2
+%global tarversion 2.00~beta4
 %undefine _missing_build_ids_terminate_build
 
 Name:           grub2
 Epoch:          1
 Version:        2.0
-Release:        0.22%{?dist}
+Release:        0.23%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -33,13 +33,14 @@ Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
 Source1:        90_persistent
 Source2:        grub.default
 Source3:        README.Fedora
+Source4:	http://unifoundry.com/unifont-5.1.20080820.pcf.gz
 Patch0:		grub-1.99-handle-fwrite-return.patch
 Patch1:		grub-1.99-grub_test_assert_printf.patch
 Patch2:		grub-1.99-just-say-linux.patch
 Patch3:		grub2-handle-initramfs-on-xen.patch
-Patch9:		grub-1.99-gcc-4.7.0.patch
-Patch10:	grub-1.99-Fix-tests-of-zeroed-partition.patch
-Patch11:	grub-1.99-ppc-terminfo.patch
+Patch4:		grub-1.99-Fix-tests-of-zeroed-partition.patch
+Patch5:		grub-1.99-ppc-terminfo.patch
+Patch6:		grub-2.00-beta4-wronly.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -87,6 +88,8 @@ echo foo
 echo bar
 cd grub-%{tarversion}
 cp %{SOURCE3} .
+# place unifont in the '.' from which configure is run
+cp %{SOURCE4} unifont.pcf.gz
 git init
 git config user.email "pjones@fedoraproject.org"
 git config user.name "Fedora Ninjas"
@@ -99,6 +102,8 @@ mv grub-%{tarversion} grub-efi-%{tarversion}
 %setup -D -q -T -a 0 -n grub-%{tarversion}
 cd grub-%{tarversion}
 cp %{SOURCE3} .
+# place unifont in the '.' from which configure is run
+cp %{SOURCE4} unifont.pcf.gz
 git init
 git config user.email "pjones@fedoraproject.org"
 git config user.name "Fedora Ninjas"
@@ -123,8 +128,7 @@ cd grub-efi-%{tarversion}
         --with-platform=efi					\
 	--with-grubdir=grub2					\
         --program-transform-name=s,grub,%{name}-efi,		\
-	--disable-werror					\
-        --sbindir=/sbin
+	--disable-werror
 make %{?_smp_mflags}
 %ifarch %{ix86}
 %define grubefiarch i386-efi
@@ -159,8 +163,7 @@ cd grub-%{tarversion}
         --with-platform=%{platform}				\
 	--with-grubdir=grub2					\
         --program-transform-name=s,grub,%{name},		\
-	--disable-werror					\
-        --sbindir=/sbin
+	--disable-werror
 
 make %{?_smp_mflags}
 
@@ -288,15 +291,15 @@ fi
 /etc/bash_completion.d/grub
 %{_libdir}/grub/*-%{platform}/
 %{_datarootdir}/grub/grub-mkconfig_lib
-/sbin/%{name}-mkconfig
-/sbin/%{name}-mknetdir
-/sbin/%{name}-install
-/sbin/%{name}-probe
-/sbin/%{name}-reboot
-/sbin/%{name}-set-default
-/sbin/%{name}-bios-setup
-/sbin/%{name}-ofpathname
-/sbin/%{name}-sparc64-setup
+%{_sbindir}/%{name}-mkconfig
+%{_sbindir}/%{name}-mknetdir
+%{_sbindir}/%{name}-install
+%{_sbindir}/%{name}-probe
+%{_sbindir}/%{name}-reboot
+%{_sbindir}/%{name}-set-default
+%{_sbindir}/%{name}-bios-setup
+%{_sbindir}/%{name}-ofpathname
+%{_sbindir}/%{name}-sparc64-setup
 %{_bindir}/%{name}-mkstandalone
 %{_bindir}/%{name}-editenv
 %{_bindir}/%{name}-fstest
@@ -313,7 +316,7 @@ fi
 %{_bindir}/%{name}-mkrescue
 %endif
 %ifarch %{sparc}
-/sbin/%{name}-ofpathname
+%{_sbindir}/%{name}-ofpathname
 %endif
 %{_bindir}/%{name}-script-check
 %dir %{_sysconfdir}/grub.d
@@ -339,15 +342,15 @@ fi
 /etc/bash_completion.d/grub-efi
 %{_libdir}/grub/%{_arch}-efi
 %{_datarootdir}/grub/grub-mkconfig_lib
-/sbin/grub2-efi-mkconfig
-/sbin/grub2-efi-mknetdir
-/sbin/grub2-efi-install
-/sbin/grub2-efi-probe
-/sbin/grub2-efi-reboot
-/sbin/grub2-efi-set-default
-/sbin/grub2-efi-bios-setup
-/sbin/grub2-efi-ofpathname
-/sbin/grub2-efi-sparc64-setup
+%{_sbindir}/grub2-efi-mkconfig
+%{_sbindir}/grub2-efi-mknetdir
+%{_sbindir}/grub2-efi-install
+%{_sbindir}/grub2-efi-probe
+%{_sbindir}/grub2-efi-reboot
+%{_sbindir}/grub2-efi-set-default
+%{_sbindir}/grub2-efi-bios-setup
+%{_sbindir}/grub2-efi-ofpathname
+%{_sbindir}/grub2-efi-sparc64-setup
 %{_bindir}/grub2-efi-mkstandalone
 %{_bindir}/grub2-efi-editenv
 %{_bindir}/grub2-efi-fstest
@@ -364,7 +367,7 @@ fi
 %{_bindir}/grub2-efi-mkrescue
 %endif
 %ifarch %{sparc} ppc ppc64
-/sbin/grub2-efi-ofpathname
+%{_sbindir}/grub2-efi-ofpathname
 %endif
 %{_bindir}/grub2-efi-script-check
 %dir %{_sysconfdir}/grub.d
@@ -384,6 +387,10 @@ fi
 %attr(0755,root,root)/%{_datarootdir}/grub/
 
 %changelog
+* Thu Apr 19 2012 Peter Jones <pjones@redhat.com> - 2.0-0.23
+- Update to 2.00~beta4
+- Make fonts work so we can do graphics reasonably
+
 * Thu Mar 29 2012 David Aquilina <dwa@redhat.com> - 2.0-0.22
 - Fix ieee1275 platform define for ppc
 
