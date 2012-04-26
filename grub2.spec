@@ -56,7 +56,7 @@ BuildRequires:  autoconf automake autogen device-mapper-devel
 BuildRequires:	freetype-devel gettext-devel git
 BuildRequires:	texinfo
 
-Requires:	gettext os-prober which
+Requires:	gettext os-prober which file
 Requires(pre):  dracut
 Requires(post): dracut
 
