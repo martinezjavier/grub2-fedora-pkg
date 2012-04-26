@@ -41,6 +41,7 @@ Patch3:		grub2-handle-initramfs-on-xen.patch
 Patch4:		grub-1.99-Fix-tests-of-zeroed-partition.patch
 Patch5:		grub-1.99-ppc-terminfo.patch
 Patch6:		grub-2.00-beta4-wronly.patch
+Patch7:		grub-2.00~beta4-add-support-for-PowerMac-HFS-partitions.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
