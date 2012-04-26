@@ -17,10 +17,10 @@ index a09c3e6..0b0df78 100644
  
  if [ "x${GRUB_DISTRIBUTOR}" = "x" ] ; then
 -  OS=GNU/Linux
-+  OS="$(sed 's, release .*$,,g' /etc/system-release) Linux"
++  OS="$(sed 's, release .*$,,g' /etc/system-release)"
  else
 -  OS="${GRUB_DISTRIBUTOR} GNU/Linux"
-+  OS="${GRUB_DISTRIBUTOR} Linux"
++  OS="${GRUB_DISTRIBUTOR}"
    CLASS="--class $(echo ${GRUB_DISTRIBUTOR} | tr 'A-Z' 'a-z' | cut -d' ' -f1) ${CLASS}"
  fi
  
@@ -33,10 +33,10 @@ index ee49cd9..10422b0 100644
  
  if [ "x${GRUB_DISTRIBUTOR}" = "x" ] ; then
 -  OS=GNU/Linux
-+  OS="$(sed 's, release .*$,,g' /etc/system-release) Linux"
++  OS="$(sed 's, release .*$,,g' /etc/system-release)"
  else
 -  OS="${GRUB_DISTRIBUTOR} GNU/Linux"
-+  OS="${GRUB_DISTRIBUTOR} Linux"
++  OS="${GRUB_DISTRIBUTOR}"
    CLASS="--class $(echo ${GRUB_DISTRIBUTOR} | tr 'A-Z' 'a-z' | cut -d' ' -f1) ${CLASS}"
  fi
  
