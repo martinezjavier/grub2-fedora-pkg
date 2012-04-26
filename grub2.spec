@@ -16,13 +16,13 @@
 %endif
 
 
-%global tarversion 2.00~beta2
+%global tarversion 2.00~beta4
 %undefine _missing_build_ids_terminate_build
 
 Name:           grub2
 Epoch:          1
 Version:        2.0
-Release:        0.22%{?dist}
+Release:        0.24%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -32,13 +32,15 @@ Obsoletes:	grub < 1:0.98
 Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
 Source2:        grub.default
 Source3:        README.Fedora
+Source4:	http://unifoundry.com/unifont-5.1.20080820.pcf.gz
 Patch0:		grub-1.99-handle-fwrite-return.patch
 Patch1:		grub-1.99-grub_test_assert_printf.patch
 Patch2:		grub-1.99-just-say-linux.patch
 Patch3:		grub2-handle-initramfs-on-xen.patch
-Patch9:		grub-1.99-gcc-4.7.0.patch
-Patch10:	grub-1.99-Fix-tests-of-zeroed-partition.patch
-Patch11:	grub-1.99-ppc-terminfo.patch
+Patch4:		grub-1.99-Fix-tests-of-zeroed-partition.patch
+Patch5:		grub-1.99-ppc-terminfo.patch
+Patch6:		grub-2.00-beta4-wronly.patch
+Patch7:		grub-2.00~beta4-add-support-for-PowerMac-HFS-partitions.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -86,6 +88,8 @@ echo foo
 echo bar
 cd grub-%{tarversion}
 cp %{SOURCE3} .
+# place unifont in the '.' from which configure is run
+cp %{SOURCE4} unifont.pcf.gz
 git init
 git config user.email "pjones@fedoraproject.org"
 git config user.name "Fedora Ninjas"
@@ -98,6 +102,8 @@ mv grub-%{tarversion} grub-efi-%{tarversion}
 %setup -D -q -T -a 0 -n grub-%{tarversion}
 cd grub-%{tarversion}
 cp %{SOURCE3} .
+# place unifont in the '.' from which configure is run
+cp %{SOURCE4} unifont.pcf.gz
 git init
 git config user.email "pjones@fedoraproject.org"
 git config user.name "Fedora Ninjas"
@@ -177,7 +183,6 @@ rm -fr $RPM_BUILD_ROOT
 cd grub-efi-%{tarversion}
 make DESTDIR=$RPM_BUILD_ROOT install
 mv $RPM_BUILD_ROOT/etc/bash_completion.d/grub $RPM_BUILD_ROOT/etc/bash_completion.d/grub-efi
-sed s,grub/grub-mkconfig_lib,grub-efi/grub-mkconfig_lib, -i $RPM_BUILD_ROOT%{_sbindir}/grub2-efi-mkconfig
 
 # Ghost config file
 install -m 755 -d $RPM_BUILD_ROOT/boot/efi/EFI/redhat/
@@ -376,6 +381,13 @@ fi
 %endif
 
 %changelog
+* Thu Apr 26 2012 Peter Jones <pjones@redhat.com> - 2.0-0.24
+- Various fixes from Mads Kiilerich
+
+* Thu Apr 19 2012 Peter Jones <pjones@redhat.com> - 2.0-0.23
+- Update to 2.00~beta4
+- Make fonts work so we can do graphics reasonably
+
 * Thu Mar 29 2012 David Aquilina <dwa@redhat.com> - 2.0-0.22
 - Fix ieee1275 platform define for ppc
 

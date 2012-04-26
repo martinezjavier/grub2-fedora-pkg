@@ -1,0 +1,29 @@
+From 8e4aea82c6aba6b8b5ca68d74abafa3fe9486c36 Mon Sep 17 00:00:00 2001
+From: Peter Jones <pjones@redhat.com>
+Date: Thu, 19 Apr 2012 14:17:38 -0400
+Subject: [PATCH] Open device O_WRONLY in grub_util_biosdisk_write.
+
+revision 4225 introduced an error wherein the device we intend
+to write to from e.g. grub2-bios-setup is opened read-only. The
+immediate following write(2) call then fails with -EBADF.
+
+---
+ grub-core/kern/emu/hostdisk.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/grub-core/kern/emu/hostdisk.c b/grub-core/kern/emu/hostdisk.c
+index ea7eb3d..19748df 100644
+--- a/grub-core/kern/emu/hostdisk.c
++++ b/grub-core/kern/emu/hostdisk.c
+@@ -1081,7 +1081,7 @@ grub_util_biosdisk_write (grub_disk_t disk, grub_disk_addr_t sector,
+     {
+       int fd;
+       grub_disk_addr_t max = ~0ULL;
+-      fd = open_device (disk, sector, O_RDONLY, &max);
++      fd = open_device (disk, sector, O_WRONLY, &max);
+       if (fd < 0)
+ 	return grub_errno;
+ 
+-- 
+1.7.10
+
