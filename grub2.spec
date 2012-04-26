@@ -22,7 +22,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.0
-Release:        0.23%{?dist}
+Release:        0.24%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -381,6 +381,9 @@ fi
 %endif
 
 %changelog
+* Thu Apr 26 2012 Peter Jones <pjones@redhat.com> - 2.0-0.24
+- Various fixes from Mads Kiilerich
+
 * Thu Apr 19 2012 Peter Jones <pjones@redhat.com> - 2.0-0.23
 - Update to 2.00~beta4
 - Make fonts work so we can do graphics reasonably
