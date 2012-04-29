@@ -84,9 +84,7 @@ provides support for EFI systems.
 %prep
 %setup -T -c -n grub-%{tarversion}
 %ifarch %{efi}
-echo foo
 %setup -D -q -T -a 0 -n grub-%{tarversion}
-echo bar
 cd grub-%{tarversion}
 cp %{SOURCE3} .
 # place unifont in the '.' from which configure is run
