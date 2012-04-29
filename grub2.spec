@@ -235,12 +235,13 @@ rm $RPM_BUILD_ROOT%{_infodir}/dir
 
 # Defaults
 install -m 644 -D %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/default/grub
-# TODO: rename locale files to grub2 and make sure gettext works correctly
-rm $RPM_BUILD_ROOT/usr/share/locale/*/LC_MESSAGES/grub.mo
 
 mkdir ${RPM_BUILD_ROOT}%{_sysconfdir}/sysconfig
 ln -sf %{_sysconfdir}/default/grub \
 	${RPM_BUILD_ROOT}%{_sysconfdir}/sysconfig/grub
+
+cd ..
+%find_lang grub
 
 %clean    
 rm -rf $RPM_BUILD_ROOT
@@ -282,7 +283,7 @@ if [ "$1" = 0 ]; then
 	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/grub2-dev.info.gz || :
 fi
 
-%files
+%files -f grub.lang
 %defattr(-,root,root,-)
 /etc/bash_completion.d/grub
 %{_libdir}/grub/*-%{platform}/
@@ -326,7 +327,7 @@ fi
 %{_infodir}/grub2*
 
 %ifarch %{efi}
-%files efi
+%files efi -f grub.lang
 %defattr(-,root,root,-)
 %attr(0755,root,root)/boot/efi/EFI/redhat
 /etc/bash_completion.d/grub-efi
