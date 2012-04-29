@@ -111,6 +111,8 @@ git add .
 git commit -a -q -m "%{tarversion} baseline."
 git am %{patches}
 
+# Specifying .png in @image doesn't work - leaving it out
+sed -i 's,\.png,,g' docs/grub-dev.texi
 
 %build
 %ifarch %{efi}
@@ -171,9 +173,15 @@ sed -i -e 's,(grub),(%{name}),g' \
 	-e 's,grub.info,%{name}.info,g' \
 	-e 's,\* GRUB:,* GRUB2:,g' \
 	-e 's,/boot/grub/,/boot/%{name}/,g' \
-	-e 's,grub-,%{name}-,g' \
+	-e 's,\([^-]\)grub-\([a-z]\),\1%{name}-\2,g' \
 	docs/grub.info
 sed -i -e 's,grub-dev,%{name}-dev,g' docs/grub-dev.info
+
+/usr/bin/makeinfo --html --no-split -I docs -o grub-dev.html docs/grub-dev.texi
+/usr/bin/makeinfo --html --no-split -I docs -o grub.html docs/grub.texi
+sed -i	-e 's,/boot/grub/,/boot/%{name}/,g' \
+	-e 's,\([^-]\)grub-\([a-z]\),\1%{name}-\2,g' \
+	grub.html
 
 %install
 set -e
@@ -323,6 +331,8 @@ fi
 %doc grub-%{tarversion}/NEWS grub-%{tarversion}/README
 %doc grub-%{tarversion}/THANKS grub-%{tarversion}/TODO
 %doc grub-%{tarversion}/ChangeLog grub-%{tarversion}/README.Fedora
+%doc grub-%{tarversion}/grub.html
+%doc grub-%{tarversion}/grub-dev.html grub-%{tarversion}/docs/font_char_metrics.png
 %exclude %{_mandir}
 %{_infodir}/grub2*
 
@@ -367,6 +377,8 @@ fi
 %doc grub-%{tarversion}/NEWS grub-%{tarversion}/README
 %doc grub-%{tarversion}/THANKS grub-%{tarversion}/TODO
 %doc grub-%{tarversion}/ChangeLog grub-%{tarversion}/README.Fedora
+%doc grub-%{tarversion}/grub.html
+%doc grub-%{tarversion}/grub-dev.html grub-%{tarversion}/docs/font_char_metrics.png
 %exclude %{_mandir}
 %{_infodir}/grub2*
 %endif
