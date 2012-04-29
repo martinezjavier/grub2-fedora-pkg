@@ -128,7 +128,7 @@ cd grub-efi-%{tarversion}
 	TARGET_LDFLAGS=-static					\
         --with-platform=efi					\
 	--with-grubdir=grub2					\
-        --program-transform-name=s,grub,%{name}-efi,		\
+        --program-transform-name=s,grub,%{name},		\
 	--disable-werror
 make %{?_smp_mflags}
 %ifarch %{ix86}
@@ -189,7 +189,6 @@ rm -fr $RPM_BUILD_ROOT
 %ifarch %{efi}
 cd grub-efi-%{tarversion}
 make DESTDIR=$RPM_BUILD_ROOT install
-mv $RPM_BUILD_ROOT/etc/bash_completion.d/grub $RPM_BUILD_ROOT/etc/bash_completion.d/grub-efi
 
 # Ghost config file
 install -m 755 -d $RPM_BUILD_ROOT/boot/efi/EFI/redhat/
@@ -349,32 +348,32 @@ fi
 %files efi -f grub.lang
 %defattr(-,root,root,-)
 %attr(0755,root,root)/boot/efi/EFI/redhat
-/etc/bash_completion.d/grub-efi
-%{_libdir}/grub/%{_arch}-efi
+/etc/bash_completion.d/grub
+%{_libdir}/grub/%{grubefiarch}
 %{_datarootdir}/grub/
-%{_sbindir}/grub2-efi-mkconfig
-%{_sbindir}/grub2-efi-mknetdir
-%{_sbindir}/grub2-efi-install
-%{_sbindir}/grub2-efi-probe
-%{_sbindir}/grub2-efi-reboot
-%{_sbindir}/grub2-efi-set-default
-%{_sbindir}/grub2-efi-bios-setup
-%{_sbindir}/grub2-efi-ofpathname
-%{_sbindir}/grub2-efi-sparc64-setup
-%{_bindir}/grub2-efi-mkstandalone
-%{_bindir}/grub2-efi-editenv
-%{_bindir}/grub2-efi-fstest
-%{_bindir}/grub2-efi-kbdcomp
-%{_bindir}/grub2-efi-menulst2cfg
-%{_bindir}/grub2-efi-mkfont
-%{_bindir}/grub2-efi-mklayout
-%{_bindir}/grub2-efi-mkimage
-%{_bindir}/grub2-efi-mkpasswd-pbkdf2
-%{_bindir}/grub2-efi-mkrelpath
-%ifnarch %{sparc} ppc ppc64
-%{_bindir}/grub2-efi-mkrescue
+%{_sbindir}/%{name}-mkconfig
+%{_sbindir}/%{name}-mknetdir
+%{_sbindir}/%{name}-install
+%{_sbindir}/%{name}-probe
+%{_sbindir}/%{name}-reboot
+%{_sbindir}/%{name}-set-default
+%{_sbindir}/%{name}-bios-setup
+%{_sbindir}/%{name}-ofpathname
+%{_sbindir}/%{name}-sparc64-setup
+%{_bindir}/%{name}-mkstandalone
+%{_bindir}/%{name}-editenv
+%{_bindir}/%{name}-fstest
+%{_bindir}/%{name}-kbdcomp
+%{_bindir}/%{name}-menulst2cfg
+%{_bindir}/%{name}-mkfont
+%{_bindir}/%{name}-mklayout
+%{_bindir}/%{name}-mkimage
+%{_bindir}/%{name}-mkpasswd-pbkdf2
+%{_bindir}/%{name}-mkrelpath
+%ifnarch %{sparc}
+%{_bindir}/%{name}-mkrescue
 %endif
-%{_bindir}/grub2-efi-script-check
+%{_bindir}/%{name}-script-check
 %attr(0700,root,root) %dir %{_sysconfdir}/grub.d
 %config %{_sysconfdir}/grub.d/??_*
 %{_sysconfdir}/grub.d/README
