@@ -310,7 +310,7 @@ fi
 %{_bindir}/%{name}-mkrescue
 %endif
 %{_bindir}/%{name}-script-check
-%dir %{_sysconfdir}/grub.d
+%attr(0700,root,root) %dir %{_sysconfdir}/grub.d
 %config %{_sysconfdir}/grub.d/??_*
 %{_sysconfdir}/grub.d/README
 %config(noreplace) %{_sysconfdir}/%{name}.cfg
@@ -355,7 +355,7 @@ fi
 %{_bindir}/grub2-efi-mkrescue
 %endif
 %{_bindir}/grub2-efi-script-check
-%dir %{_sysconfdir}/grub.d
+%attr(0700,root,root) %dir %{_sysconfdir}/grub.d
 %config %{_sysconfdir}/grub.d/??_*
 %{_sysconfdir}/grub.d/README
 %config(noreplace) %{_sysconfdir}/grub2-efi.cfg
