@@ -390,6 +390,11 @@ fi
 %endif
 
 %changelog
+* Wed May 09 2012 Peter Jones <pjones@redhat.com> - 2.0-0.25.beta4
+- Include theme support (mizmo)
+- Include locale support (kiilerix)
+- Include html docs (kiilerix)
+
 * Thu Apr 26 2012 Peter Jones <pjones@redhat.com> - 2.0-0.24.beta4
 - Various fixes from Mads Kiilerich
 
