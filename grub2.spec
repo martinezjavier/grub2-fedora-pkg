@@ -22,7 +22,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.0
-Release:        0.24.beta4%{?dist}
+Release:        0.25.beta4%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -33,6 +33,7 @@ Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
 Source2:        grub.default
 Source3:        README.Fedora
 Source4:	http://unifoundry.com/unifont-5.1.20080820.pcf.gz
+Source5:	theme.tar.bz2
 Patch0:		grub-1.99-handle-fwrite-return.patch
 Patch1:		grub-1.99-grub_test_assert_printf.patch
 Patch2:		grub-1.99-just-say-linux.patch
@@ -56,7 +57,7 @@ BuildRequires:  autoconf automake autogen device-mapper-devel
 BuildRequires:	freetype-devel gettext-devel git
 BuildRequires:	texinfo
 
-Requires:	gettext os-prober which file
+Requires:	gettext os-prober which file system-logos
 Requires(pre):  dracut
 Requires(post): dracut
 
@@ -251,6 +252,9 @@ ln -sf %{_sysconfdir}/default/grub \
 cd ..
 %find_lang grub
 
+cd $RPM_BUILD_ROOT
+tar xjf %{SOURCE5}
+
 %clean    
 rm -rf $RPM_BUILD_ROOT
 
@@ -335,6 +339,7 @@ fi
 %doc grub-%{tarversion}/grub-dev.html grub-%{tarversion}/docs/font_char_metrics.png
 %exclude %{_mandir}
 %{_infodir}/grub2*
+/boot/grub2/themes/system
 
 %ifarch %{efi}
 %files efi -f grub.lang
@@ -381,6 +386,7 @@ fi
 %doc grub-%{tarversion}/grub-dev.html grub-%{tarversion}/docs/font_char_metrics.png
 %exclude %{_mandir}
 %{_infodir}/grub2*
+/boot/grub2/themes/system
 %endif
 
 %changelog
