@@ -30,7 +30,6 @@ License:        GPLv3+
 URL:            http://www.gnu.org/software/grub/
 Obsoletes:	grub < 1:0.98
 Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
-Source2:        grub.default
 Source3:        README.Fedora
 Source4:	http://unifoundry.com/unifont-5.1.20080820.pcf.gz
 Source5:	theme.tar.bz2
@@ -240,8 +239,6 @@ mv $RPM_BUILD_ROOT%{_infodir}/grub-dev.info $RPM_BUILD_ROOT%{_infodir}/grub2-dev
 rm $RPM_BUILD_ROOT%{_infodir}/dir
 
 # Defaults
-install -m 644 -D %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/default/grub
-
 mkdir ${RPM_BUILD_ROOT}%{_sysconfdir}/sysconfig
 ln -sf %{_sysconfdir}/default/grub \
 	${RPM_BUILD_ROOT}%{_sysconfdir}/sysconfig/grub
@@ -328,7 +325,7 @@ fi
 %config %{_sysconfdir}/grub.d/??_*
 %{_sysconfdir}/grub.d/README
 %config(noreplace) %{_sysconfdir}/%{name}.cfg
-%config(noreplace) %{_sysconfdir}/default/grub
+%ghost %config(noreplace) %{_sysconfdir}/default/grub
 %{_sysconfdir}/sysconfig/grub
 %dir /boot/%{name}
 %ghost %config(noreplace) /boot/%{name}/grub.cfg
