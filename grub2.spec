@@ -41,6 +41,7 @@ Patch4:		grub-1.99-Fix-tests-of-zeroed-partition.patch
 Patch5:		grub-1.99-ppc-terminfo.patch
 Patch6:		grub-2.00-beta4-wronly.patch
 Patch7:		grub-2.00~beta4-add-support-for-PowerMac-HFS-partitions.patch
+Patch8:		grub2-2.0-no-png-in-texi.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -110,9 +111,6 @@ git config user.name "Fedora Ninjas"
 git add .
 git commit -a -q -m "%{tarversion} baseline."
 git am %{patches}
-
-# Specifying .png in @image doesn't work - leaving it out
-sed -i 's,\.png,,g' docs/grub-dev.texi
 
 %build
 %ifarch %{efi}
