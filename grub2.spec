@@ -55,6 +55,7 @@ BuildRequires:  /usr/lib/crt1.o glibc-static
 BuildRequires:  autoconf automake autogen device-mapper-devel
 BuildRequires:	freetype-devel gettext-devel git
 BuildRequires:	texinfo
+BuildRequires:	dejavu-sans-fonts
 
 Requires:	gettext os-prober which file system-logos
 Requires(pre):  dracut
@@ -249,8 +250,13 @@ ln -sf %{_sysconfdir}/default/grub \
 cd ..
 %find_lang grub
 
+# Fedora theme in /boot/grub2/themes/system/
 cd $RPM_BUILD_ROOT
 tar xjf %{SOURCE5}
+rm boot/grub2/themes/system/dejavu.pf2
+$RPM_BUILD_ROOT%{_bindir}/%{name}-mkfont -o boot/grub2/themes/system/DejaVuSans-10.pf2      -s 10 /usr/share/fonts/dejavu/DejaVuSans.ttf # "DejaVu Sans Regular 10"
+$RPM_BUILD_ROOT%{_bindir}/%{name}-mkfont -o boot/grub2/themes/system/DejaVuSans-12.pf2      -s 12 /usr/share/fonts/dejavu/DejaVuSans.ttf # "DejaVu Sans Regular 12"
+$RPM_BUILD_ROOT%{_bindir}/%{name}-mkfont -o boot/grub2/themes/system/DejaVuSans-Bold-14.pf2 -s 14 /usr/share/fonts/dejavu/DejaVuSans-Bold.ttf # "DejaVu Sans Bold 14"
 
 %clean    
 rm -rf $RPM_BUILD_ROOT
@@ -334,6 +340,7 @@ fi
 %doc grub-%{tarversion}/ChangeLog grub-%{tarversion}/README.Fedora
 %doc grub-%{tarversion}/grub.html
 %doc grub-%{tarversion}/grub-dev.html grub-%{tarversion}/docs/font_char_metrics.png
+%doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 %exclude %{_mandir}
 %{_infodir}/grub2*
 /boot/grub2/themes/system
@@ -381,6 +388,7 @@ fi
 %doc grub-%{tarversion}/ChangeLog grub-%{tarversion}/README.Fedora
 %doc grub-%{tarversion}/grub.html
 %doc grub-%{tarversion}/grub-dev.html grub-%{tarversion}/docs/font_char_metrics.png
+%doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 %exclude %{_mandir}
 %{_infodir}/grub2*
 /boot/grub2/themes/system
