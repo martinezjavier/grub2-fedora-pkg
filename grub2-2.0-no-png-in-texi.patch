@@ -1,0 +1,25 @@
+From e3c5e7e3accaced35b3e3ee367068d14bbce91bf Mon Sep 17 00:00:00 2001
+From: Peter Jones <pjones@redhat.com>
+Date: Thu, 10 May 2012 16:31:29 -0400
+Subject: [PATCH] Specifying .png in @image doesn't work - leaving it out
+
+---
+ docs/grub-dev.texi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/docs/grub-dev.texi b/docs/grub-dev.texi
+index 51b4787..ddde5e9 100644
+--- a/docs/grub-dev.texi
++++ b/docs/grub-dev.texi
+@@ -1689,7 +1689,7 @@ right edges of two adjacent glyphs.  The @strong{device width} field determines
+ the effective leading value that is used to render the font.
+ 
+ @end itemize
+-@image{font_char_metrics,,,,.png}
++@image{font_char_metrics,,,,}
+    
+ An illustration of how the various font metrics apply to characters.
+ 
+-- 
+1.7.10.1
+
