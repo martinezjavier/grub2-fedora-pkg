@@ -394,6 +394,10 @@ fi
 %endif
 
 %changelog
+* Thu May 10 2012 Peter Jones <pjones@redhat.com> - 2.0-0.26.beta5
+- Update to beta5.
+- Update how efi building works (kiilerix)
+
 * Wed May 09 2012 Peter Jones <pjones@redhat.com> - 2.0-0.25.beta4
 - Include theme support (mizmo)
 - Include locale support (kiilerix)
