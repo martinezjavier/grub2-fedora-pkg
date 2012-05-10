@@ -22,7 +22,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.0
-Release:        0.26.beta5%{?dist}
+Release:        0.27.beta5%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -388,6 +388,11 @@ fi
 %endif
 
 %changelog
+* Thu May 10 2012 Peter Jones <pjones@redhat.com> - 2.0-0.27.beta5
+- Fix license of theme (mizmo)
+  Resolves: rhbz#820713
+- Fix some unfiled IBM problem.
+
 * Thu May 10 2012 Peter Jones <pjones@redhat.com> - 2.0-0.26.beta5
 - Update to beta5.
 - Update how efi building works (kiilerix)
