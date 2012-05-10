@@ -16,7 +16,7 @@ index 9c1d133..e8638af 100644
              fi
  
 -            if [ "$(file -s "${install_device}" -b | awk '{ print $1 }')" = ELF ] || [ $(cmp /dev/zero "${install_device}" &>/dev/null) ]; then
-+            if [ "$(file -s "${install_device}" -b | awk '{ print $1 }')" != ELF ] && ( cmp -s -n $(blockdev --getsize64 ${install_device}) /dev/zero "${install_device}" &>/dev/null ); then
++            if [ "$(file -s "${install_device}" -b | awk '{ print $1 }')" = ELF ] || (cmp -s -n $(blockdev --getsize64 ${install_device}) /dev/zero "${install_device}"); then
              # Change boot device to the harddisk root
  		boot_device="$ofpath"
  		dd if="${grubdir}/${grub_modinfo_target_cpu}-$grub_modinfo_platform/core.${imgext}" of="${install_device}" status=noxfer || {

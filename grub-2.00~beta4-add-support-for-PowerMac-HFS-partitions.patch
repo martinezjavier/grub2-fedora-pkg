@@ -23,7 +23,7 @@ index 26be9d9..f1f9bae 100644
 -            fi
 -
 +        if [ "$("${grub_probe}" -m "${device_map}" -d "${install_device}" -t msdos_parttype)" = "41" ]; then
-             if [ "$(file -s "${install_device}" -b | awk '{ print $1 }')" != ELF ] && ( cmp -s -n $(blockdev --getsize64 ${install_device}) /dev/zero "${install_device}" &>/dev/null ); then
+             if [ "$(file -s "${install_device}" -b | awk '{ print $1 }')" = ELF ] || (cmp -s -n $(blockdev --getsize64 ${install_device}) /dev/zero "${install_device}"); then
 -            # Change boot device to the harddisk root
 -		boot_device="$ofpath"
 -		dd if="${grubdir}/${grub_modinfo_target_cpu}-$grub_modinfo_platform/core.${imgext}" of="${install_device}" status=noxfer || {
