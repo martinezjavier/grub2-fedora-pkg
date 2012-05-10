@@ -370,7 +370,7 @@ fi
 %config %{_sysconfdir}/grub.d/??_*
 %{_sysconfdir}/grub.d/README
 %config(noreplace) %{_sysconfdir}/grub2-efi.cfg
-%config(noreplace) %{_sysconfdir}/default/grub
+%ghost %config(noreplace) %{_sysconfdir}/default/grub
 %{_sysconfdir}/sysconfig/grub
 %ghost %config(noreplace) /boot/efi/EFI/redhat/grub2-efi/grub.cfg
 %doc grub-%{tarversion}/COPYING grub-%{tarversion}/INSTALL
@@ -388,7 +388,8 @@ fi
 * Thu May 10 2012 Peter Jones <pjones@redhat.com> - 2.0-0.26.beta5
 - Fix license of theme (mizmo)
   Resolves: rhbz#820713
-- Fix some unfiled IBM problem.
+- Fix some PPC bootloader detection IBM problem
+  Resolves: rhbz#820722
 
 * Wed May 09 2012 Peter Jones <pjones@redhat.com> - 2.0-0.25.beta4
 - Include theme support (mizmo)
