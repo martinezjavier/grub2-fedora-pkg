@@ -322,7 +322,7 @@ fi
 %config %{_sysconfdir}/grub.d/??_*
 %{_sysconfdir}/grub.d/README
 %config(noreplace) %{_sysconfdir}/%{name}.cfg
-%ghost %config(noreplace) %{_sysconfdir}/default/grub
+%attr(0644,root,root) %ghost %config(noreplace) %{_sysconfdir}/default/grub
 %{_sysconfdir}/sysconfig/grub
 %dir /boot/%{name}
 %ghost %config(noreplace) /boot/%{name}/grub.cfg
@@ -370,7 +370,7 @@ fi
 %config %{_sysconfdir}/grub.d/??_*
 %{_sysconfdir}/grub.d/README
 %config(noreplace) %{_sysconfdir}/grub2-efi.cfg
-%ghost %config(noreplace) %{_sysconfdir}/default/grub
+%attr(0644,root,root) %ghost %config(noreplace) %{_sysconfdir}/default/grub
 %{_sysconfdir}/sysconfig/grub
 %ghost %config(noreplace) /boot/efi/EFI/redhat/grub2-efi/grub.cfg
 %doc grub-%{tarversion}/COPYING grub-%{tarversion}/INSTALL
