@@ -41,6 +41,7 @@ Patch4:		grub-1.99-Fix-tests-of-zeroed-partition.patch
 Patch5:		grub-1.99-ppc-terminfo.patch
 Patch7:		grub-2.00~beta4-add-support-for-PowerMac-HFS-partitions.patch
 Patch8:		grub2-2.0-no-png-in-texi.patch
+Patch9:		grub-2.00-Fix-module-trampoline-for-ppc.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -388,6 +389,9 @@ fi
 %endif
 
 %changelog
+* Mon May 14 2012 Peter Jones <pjones@redhat.com> - 2.0-0.27.beta5
+- Fix module trampolining on ppc (benh)
+
 * Thu May 10 2012 Peter Jones <pjones@redhat.com> - 2.0-0.27.beta5
 - Fix license of theme (mizmo)
   Resolves: rhbz#820713
