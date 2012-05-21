@@ -131,10 +131,12 @@ cd grub-efi-%{tarversion}
 make %{?_smp_mflags}
 %ifarch %{ix86}
 %define grubefiarch i386-efi
+%define grubefiname grub32.efi
 %else
 %define grubefiarch %{_arch}-efi
+%define grubefiname grub.efi
 %endif
-./grub-mkimage -O %{grubefiarch} -p /EFI/redhat/%{name}-efi -o grub.efi -d grub-core part_gpt hfsplus fat \
+./grub-mkimage -O %{grubefiarch} -p /EFI/redhat/%{name}-efi -o %{grubefiname} -d grub-core part_gpt hfsplus fat \
 	ext2 btrfs normal chain boot configfile linux appleldr minicmd \
 	loadbios reboot halt search font gfxterm echo video efi_gop efi_uga
 cd ..
@@ -207,7 +209,7 @@ do
         TGT=$(echo $MODULE |sed "s,$RPM_BUILD_ROOT,.debugroot,")
 #        install -m 755 -D $BASE$EXT $TGT
 done
-install -m 755 grub.efi $RPM_BUILD_ROOT/boot/efi/EFI/redhat/%{name}-efi/grub.efi
+install -m 755 %{grubefiname} $RPM_BUILD_ROOT/boot/efi/EFI/redhat/%{name}-efi/%{grubefiname}
 cd ..
 %endif
 
