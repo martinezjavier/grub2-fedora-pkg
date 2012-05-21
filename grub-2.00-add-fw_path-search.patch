@@ -22,7 +22,7 @@ index 185230c..26481c6 100644
 +    {
 +      char *fw_path;
 +
-+      fw_path = grub_xasprintf ("(%s)%s", fwdevice, fwpath);
++      fw_path = grub_xasprintf ("(%s)/%s", fwdevice, fwpath);
 +      if (fw_path)
 +	{
 +	  grub_env_set ("fw_path", fw_path);
