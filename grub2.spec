@@ -125,7 +125,7 @@ cd grub-efi-%{tarversion}
 		-e 's/-fasynchronous-unwind-tables//g' )"	\
 	TARGET_LDFLAGS=-static					\
         --with-platform=efi					\
-	--with-grubdir=grub2					\
+	--with-grubdir=%{name}					\
         --program-transform-name=s,grub,%{name},		\
 	--disable-werror
 make %{?_smp_mflags}
@@ -136,7 +136,7 @@ make %{?_smp_mflags}
 %define grubefiarch %{_arch}-efi
 %define grubefiname grub.efi
 %endif
-./grub-mkimage -O %{grubefiarch} -p /EFI/redhat/%{name}-efi -o %{grubefiname} -d grub-core part_gpt hfsplus fat \
+./grub-mkimage -O %{grubefiarch} -p /EFI/redhat/%{name} -o %{grubefiname} -d grub-core part_gpt hfsplus fat \
 	ext2 btrfs normal chain boot configfile linux appleldr minicmd \
 	loadbios reboot halt search font gfxterm echo video efi_gop efi_uga
 cd ..
@@ -162,7 +162,7 @@ cd grub-%{tarversion}
 		-e 's/-fasynchronous-unwind-tables//g' )"	\
 	TARGET_LDFLAGS=-static					\
         --with-platform=%{platform}				\
-	--with-grubdir=grub2					\
+	--with-grubdir=%{name}					\
         --program-transform-name=s,grub,%{name},		\
 	--disable-werror
 
@@ -192,9 +192,9 @@ make DESTDIR=$RPM_BUILD_ROOT install
 
 # Ghost config file
 install -m 755 -d $RPM_BUILD_ROOT/boot/efi/EFI/redhat/
-install -d $RPM_BUILD_ROOT/boot/efi/EFI/redhat/%{name}-efi
-touch $RPM_BUILD_ROOT/boot/efi/EFI/redhat/%{name}-efi/grub.cfg
-ln -s ../boot/efi/EFI/redhat/%{name}-efi/grub.cfg $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-efi.cfg
+install -d $RPM_BUILD_ROOT/boot/efi/EFI/redhat/%{name}
+touch $RPM_BUILD_ROOT/boot/efi/EFI/redhat/%{name}/grub.cfg
+ln -s ../boot/efi/EFI/redhat/%{name}/grub.cfg $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-efi.cfg
 
 # Install ELF files modules and images were created from into
 # the shadow root, where debuginfo generator will grab them from
@@ -209,7 +209,7 @@ do
         TGT=$(echo $MODULE |sed "s,$RPM_BUILD_ROOT,.debugroot,")
 #        install -m 755 -D $BASE$EXT $TGT
 done
-install -m 755 %{grubefiname} $RPM_BUILD_ROOT/boot/efi/EFI/redhat/%{name}-efi/%{grubefiname}
+install -m 755 %{grubefiname} $RPM_BUILD_ROOT/boot/efi/EFI/redhat/%{name}/%{grubefiname}
 cd ..
 %endif
 
@@ -235,8 +235,8 @@ do
 #        install -m 755 -D $BASE$EXT $TGT
 done
 
-mv $RPM_BUILD_ROOT%{_infodir}/grub.info $RPM_BUILD_ROOT%{_infodir}/grub2.info
-mv $RPM_BUILD_ROOT%{_infodir}/grub-dev.info $RPM_BUILD_ROOT%{_infodir}/grub2-dev.info
+mv $RPM_BUILD_ROOT%{_infodir}/grub.info $RPM_BUILD_ROOT%{_infodir}/%{name}.info
+mv $RPM_BUILD_ROOT%{_infodir}/grub-dev.info $RPM_BUILD_ROOT%{_infodir}/%{name}-dev.info
 rm $RPM_BUILD_ROOT%{_infodir}/dir
 
 # Defaults
@@ -259,8 +259,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 if [ "$1" = 1 ]; then
-	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/grub2.info.gz || :
-	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/grub2-dev.info.gz || :
+	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/%{name}.info.gz || :
+	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/%{name}-dev.info.gz || :
 fi
 
 %triggerun -- grub2 < 1:1.99-4
@@ -290,8 +290,8 @@ rm -r /boot/grub2.tmp/ || :
 
 %preun
 if [ "$1" = 0 ]; then
-	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/grub2.info.gz || :
-	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/grub2-dev.info.gz || :
+	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/%{name}.info.gz || :
+	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/%{name}-dev.info.gz || :
 fi
 
 %files -f grub.lang
@@ -338,7 +338,7 @@ fi
 %doc grub-%{tarversion}/grub-dev.html grub-%{tarversion}/docs/font_char_metrics.png
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 %exclude %{_mandir}
-%{_infodir}/grub2*
+%{_infodir}/%{name}*
 /boot/grub2/themes/system
 
 %ifarch %{efi}
@@ -374,10 +374,10 @@ fi
 %attr(0700,root,root) %dir %{_sysconfdir}/grub.d
 %config %{_sysconfdir}/grub.d/??_*
 %{_sysconfdir}/grub.d/README
-%config(noreplace) %{_sysconfdir}/grub2-efi.cfg
+%config(noreplace) %{_sysconfdir}/%{name}-efi.cfg
 %attr(0644,root,root) %ghost %config(noreplace) %{_sysconfdir}/default/grub
 %{_sysconfdir}/sysconfig/grub
-%ghost %config(noreplace) /boot/efi/EFI/redhat/grub2-efi/grub.cfg
+%ghost %config(noreplace) /boot/efi/EFI/redhat/%{name}/grub.cfg
 %doc grub-%{tarversion}/COPYING grub-%{tarversion}/INSTALL
 %doc grub-%{tarversion}/NEWS grub-%{tarversion}/README
 %doc grub-%{tarversion}/THANKS grub-%{tarversion}/TODO
@@ -386,7 +386,7 @@ fi
 %doc grub-%{tarversion}/grub-dev.html grub-%{tarversion}/docs/font_char_metrics.png
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 %exclude %{_mandir}
-%{_infodir}/grub2*
+%{_infodir}/%{name}*
 /boot/grub2/themes/system
 %endif
 
