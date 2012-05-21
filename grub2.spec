@@ -58,7 +58,7 @@ BuildRequires:	freetype-devel gettext-devel git
 BuildRequires:	texinfo
 BuildRequires:	dejavu-sans-fonts
 
-Requires:	gettext os-prober which file system-logos
+Requires:	%{name}-tools = %{version}-%{release}
 Requires(pre):  dracut
 Requires(post): dracut
 
@@ -68,12 +68,14 @@ ExcludeArch:	s390 s390x
 %description
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
 bootloader with modular architecture.  It support rich varietyof kernel formats,
-file systems, computer architectures and hardware devices.
+file systems, computer architectures and hardware devices.  This subpackage
+provides support for PC BIOS systems.
 
 %ifarch %{efi}
 %package efi
 Summary:	GRUB for EFI systems.
 Group:		System Environment/Base
+Requires:	%{name}-tools = %{version}-%{release}
 
 %description efi
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
@@ -81,6 +83,17 @@ bootloader with modular architecture.  It support rich varietyof kernel formats,
 file systems, computer architectures and hardware devices.  This subpackage
 provides support for EFI systems.
 %endif
+
+%package tools
+Summary:	Support tools for GRUB.
+Group:		System Environment/Base
+Requires:	gettext os-prober which file system-logos
+
+%description tools
+The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
+bootloader with modular architecture.  It support rich varietyof kernel formats,
+file systems, computer architectures and hardware devices.  This subpackage
+provides tools for support of all platforms.
 
 %prep
 %setup -T -c -n grub-%{tarversion}
@@ -240,6 +253,8 @@ mv $RPM_BUILD_ROOT%{_infodir}/grub-dev.info $RPM_BUILD_ROOT%{_infodir}/%{name}-d
 rm $RPM_BUILD_ROOT%{_infodir}/dir
 
 # Defaults
+mkdir %{_sysconfdir}/default
+touch %{_sysconfdir}/default/grub
 mkdir ${RPM_BUILD_ROOT}%{_sysconfdir}/sysconfig
 ln -sf %{_sysconfdir}/default/grub \
 	${RPM_BUILD_ROOT}%{_sysconfdir}/sysconfig/grub
@@ -294,10 +309,26 @@ if [ "$1" = 0 ]; then
 	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/%{name}-dev.info.gz || :
 fi
 
-%files -f grub.lang
+%files
 %defattr(-,root,root,-)
-/etc/bash_completion.d/grub
 %{_libdir}/grub/*-%{platform}/
+%config(noreplace) %{_sysconfdir}/%{name}.cfg
+%ghost %config(noreplace) /boot/%{name}/grub.cfg
+%doc grub-%{tarversion}/COPYING
+
+%ifarch %{efi}
+%files efi
+%defattr(-,root,root,-)
+%{_libdir}/grub/%{grubefiarch}
+%config(noreplace) %{_sysconfdir}/%{name}-efi.cfg
+%attr(0755,root,root)/boot/efi/EFI/redhat
+%ghost %config(noreplace) /boot/efi/EFI/redhat/%{name}/grub.cfg
+%doc grub-%{tarversion}/COPYING
+%endif
+
+%files tools -f grub.lang
+%defattr(-,root,root,-)
+%dir %{_libdir}/grub/
 %{_datarootdir}/grub/
 %{_sbindir}/%{name}-mkconfig
 %{_sbindir}/%{name}-mknetdir
@@ -322,14 +353,16 @@ fi
 %{_bindir}/%{name}-mkrescue
 %endif
 %{_bindir}/%{name}-script-check
+%{_sysconfdir}/bash_completion.d/grub
 %attr(0700,root,root) %dir %{_sysconfdir}/grub.d
 %config %{_sysconfdir}/grub.d/??_*
 %{_sysconfdir}/grub.d/README
-%config(noreplace) %{_sysconfdir}/%{name}.cfg
 %attr(0644,root,root) %ghost %config(noreplace) %{_sysconfdir}/default/grub
 %{_sysconfdir}/sysconfig/grub
 %dir /boot/%{name}
-%ghost %config(noreplace) /boot/%{name}/grub.cfg
+/boot/%{name}/themes/
+%{_infodir}/%{name}*
+%exclude %{_mandir}
 %doc grub-%{tarversion}/COPYING grub-%{tarversion}/INSTALL
 %doc grub-%{tarversion}/NEWS grub-%{tarversion}/README
 %doc grub-%{tarversion}/THANKS grub-%{tarversion}/TODO
@@ -337,58 +370,6 @@ fi
 %doc grub-%{tarversion}/grub.html
 %doc grub-%{tarversion}/grub-dev.html grub-%{tarversion}/docs/font_char_metrics.png
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
-%exclude %{_mandir}
-%{_infodir}/%{name}*
-/boot/grub2/themes/system
-
-%ifarch %{efi}
-%files efi -f grub.lang
-%defattr(-,root,root,-)
-%attr(0755,root,root)/boot/efi/EFI/redhat
-/etc/bash_completion.d/grub
-%{_libdir}/grub/%{grubefiarch}
-%{_datarootdir}/grub/
-%{_sbindir}/%{name}-mkconfig
-%{_sbindir}/%{name}-mknetdir
-%{_sbindir}/%{name}-install
-%{_sbindir}/%{name}-probe
-%{_sbindir}/%{name}-reboot
-%{_sbindir}/%{name}-set-default
-%{_sbindir}/%{name}-bios-setup
-%{_sbindir}/%{name}-ofpathname
-%{_sbindir}/%{name}-sparc64-setup
-%{_bindir}/%{name}-mkstandalone
-%{_bindir}/%{name}-editenv
-%{_bindir}/%{name}-fstest
-%{_bindir}/%{name}-kbdcomp
-%{_bindir}/%{name}-menulst2cfg
-%{_bindir}/%{name}-mkfont
-%{_bindir}/%{name}-mklayout
-%{_bindir}/%{name}-mkimage
-%{_bindir}/%{name}-mkpasswd-pbkdf2
-%{_bindir}/%{name}-mkrelpath
-%ifnarch %{sparc}
-%{_bindir}/%{name}-mkrescue
-%endif
-%{_bindir}/%{name}-script-check
-%attr(0700,root,root) %dir %{_sysconfdir}/grub.d
-%config %{_sysconfdir}/grub.d/??_*
-%{_sysconfdir}/grub.d/README
-%config(noreplace) %{_sysconfdir}/%{name}-efi.cfg
-%attr(0644,root,root) %ghost %config(noreplace) %{_sysconfdir}/default/grub
-%{_sysconfdir}/sysconfig/grub
-%ghost %config(noreplace) /boot/efi/EFI/redhat/%{name}/grub.cfg
-%doc grub-%{tarversion}/COPYING grub-%{tarversion}/INSTALL
-%doc grub-%{tarversion}/NEWS grub-%{tarversion}/README
-%doc grub-%{tarversion}/THANKS grub-%{tarversion}/TODO
-%doc grub-%{tarversion}/ChangeLog grub-%{tarversion}/README.Fedora
-%doc grub-%{tarversion}/grub.html
-%doc grub-%{tarversion}/grub-dev.html grub-%{tarversion}/docs/font_char_metrics.png
-%doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
-%exclude %{_mandir}
-%{_infodir}/%{name}*
-/boot/grub2/themes/system
-%endif
 
 %changelog
 * Mon May 14 2012 Peter Jones <pjones@redhat.com> - 2.0-0.27.beta5
