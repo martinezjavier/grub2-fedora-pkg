@@ -59,6 +59,7 @@ Patch5:		grub-1.99-ppc-terminfo.patch
 Patch7:		grub-2.00~beta4-add-support-for-PowerMac-HFS-partitions.patch
 Patch8:		grub2-2.0-no-png-in-texi.patch
 Patch9:		grub-2.00-Fix-module-trampoline-for-ppc.patch
+Patch10:	grub-2.00-add-fw_path-search.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -159,10 +160,10 @@ cd grub-efi-%{tarversion}
         --program-transform-name=s,grub,%{name},		\
 	--disable-werror
 make %{?_smp_mflags}
-./grub-mkimage -O %{grubefiarch} -p /EFI/%{efidir} -o %{grubefiname} \
-	-d grub-core part_gpt hfsplus fat \
-	ext2 btrfs normal chain boot configfile linux appleldr minicmd \
-	loadbios reboot halt search font gfxterm echo video efi_gop efi_uga
+./grub-mkimage -O %{grubefiarch} -o %{grubefiname}  -d grub-core \
+	part_gpt hfsplus fat ext2 btrfs normal chain boot configfile linux \
+	minicmd reboot halt search font gfxterm echo video efi_gop efi_uga \
+	test gfxmenu png
 cd ..
 %endif
 

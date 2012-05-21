@@ -1,0 +1,78 @@
+From d829d54d0f461c7bc6a7d8bd549cfdacfac51082 Mon Sep 17 00:00:00 2001
+From: Matthew Garrett <mjg@redhat.com>
+Date: Mon, 21 May 2012 14:36:39 -0400
+Subject: [PATCH] Add fw_path variable
+
+---
+ grub-core/kern/main.c   |   16 ++++++++++++++--
+ grub-core/normal/main.c |   20 +++++++++++++++++++-
+ 2 files changed, 33 insertions(+), 3 deletions(-)
+
+diff --git a/grub-core/kern/main.c b/grub-core/kern/main.c
+index 185230c..26481c6 100644
+--- a/grub-core/kern/main.c
++++ b/grub-core/kern/main.c
+@@ -114,6 +114,20 @@ grub_set_prefix_and_root (void)
+ 
+   grub_register_variable_hook ("root", 0, grub_env_write_root);
+ 
++  grub_machine_get_bootlocation (&fwdevice, &fwpath);
++
++  if (fwdevice && fwpath)
++    {
++      char *fw_path;
++
++      fw_path = grub_xasprintf ("(%s)%s", fwdevice, fwpath);
++      if (fw_path)
++	{
++	  grub_env_set ("fw_path", fw_path);
++	  grub_free (fw_path);
++	}
++    }
++
+   if (prefix)
+     {
+       char *pptr = NULL;
+@@ -131,8 +145,6 @@ grub_set_prefix_and_root (void)
+       if (pptr[0])
+ 	path = grub_strdup (pptr);
+     }
+-  if ((!device || device[0] == ',' || !device[0]) || !path)
+-    grub_machine_get_bootlocation (&fwdevice, &fwpath);
+ 
+   if (!device && fwdevice)
+     device = fwdevice;
+diff --git a/grub-core/normal/main.c b/grub-core/normal/main.c
+index 1963fe4..64c2a9f 100644
+--- a/grub-core/normal/main.c
++++ b/grub-core/normal/main.c
+@@ -309,7 +309,25 @@ grub_cmd_normal (struct grub_command *cmd __attribute__ ((unused)),
+       /* Guess the config filename. It is necessary to make CONFIG static,
+ 	 so that it won't get broken by longjmp.  */
+       char *config;
+-      const char *prefix;
++      const char *prefix, *fw_path;
++
++      fw_path = grub_env_get ("fw_path");
++      if (fw_path)
++	{
++	  config = grub_xasprintf ("%s/grub.cfg", fw_path);
++	  if (config)
++	    {
++	      grub_file_t file;
++
++	      file = grub_file_open (config);
++	      if (file)
++		{
++		  grub_file_close (file);
++		  grub_enter_normal_mode (config);
++		}
++	      grub_free (config);
++	    }
++	}
+ 
+       prefix = grub_env_get ("prefix");
+       if (prefix)
+-- 
+1.7.10.2
+
