@@ -39,7 +39,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.0
-Release:        0.28.beta5%{?dist}
+Release:        0.29.beta5%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -162,7 +162,7 @@ cd grub-efi-%{tarversion}
 make %{?_smp_mflags}
 ./grub-mkimage -O %{grubefiarch} -o %{grubefiname}  -d grub-core \
 	part_gpt hfsplus fat ext2 btrfs normal chain boot configfile linux \
-	minicmd reboot halt search font gfxterm echo video efi_gop efi_uga \
+	minicmd reboot halt search font gfxterm echo video all_video \
 	test gfxmenu png
 cd ..
 %endif
@@ -383,6 +383,9 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Mon May 21 2012 Peter Jones <pjones@redhat.com> - 2.0-0.29.beta5
+- Get rid of efi_uga and efi_gop, favoring all_video instead.
+
 * Mon May 21 2012 Peter Jones <pjones@redhat.com> - 2.0-0.28.beta5
 - Name grub.efi something that's arch-appropriate (kiilerix, pjones)
 - use EFI/$SOMETHING_DISTRO_BASED/ not always EFI/redhat/grub2-efi/ .
