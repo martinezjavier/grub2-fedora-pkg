@@ -12,9 +12,26 @@
 %endif
 
 %if ! 0%{?efi}
+
 %global efi %{ix86} x86_64 ia64
+
+%ifarch %{ix86}
+%global grubefiarch i386-efi
+%global grubefiname grubia32.efi
+%endif
+%ifarch x86_64
+%global grubefiarch %{_arch}-efi
+%global grubefiname grubx64.efi
 %endif
 
+%if 0%{?rhel}
+%global efidir redhat
+%endif
+%if 0%{?fedora}
+%global efidir fedora
+%endif
+
+%endif
 
 %global tarversion 2.00~beta5
 %undefine _missing_build_ids_terminate_build
@@ -22,7 +39,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.0
-Release:        0.27.beta5%{?dist}
+Release:        0.28.beta5%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -142,14 +159,8 @@ cd grub-efi-%{tarversion}
         --program-transform-name=s,grub,%{name},		\
 	--disable-werror
 make %{?_smp_mflags}
-%ifarch %{ix86}
-%define grubefiarch i386-efi
-%define grubefiname grub32.efi
-%else
-%define grubefiarch %{_arch}-efi
-%define grubefiname grub.efi
-%endif
-./grub-mkimage -O %{grubefiarch} -p /EFI/redhat/%{name} -o %{grubefiname} -d grub-core part_gpt hfsplus fat \
+./grub-mkimage -O %{grubefiarch} -p /EFI/%{efidir} -o %{grubefiname} \
+	-d grub-core part_gpt hfsplus fat \
 	ext2 btrfs normal chain boot configfile linux appleldr minicmd \
 	loadbios reboot halt search font gfxterm echo video efi_gop efi_uga
 cd ..
@@ -204,10 +215,9 @@ cd grub-efi-%{tarversion}
 make DESTDIR=$RPM_BUILD_ROOT install
 
 # Ghost config file
-install -m 755 -d $RPM_BUILD_ROOT/boot/efi/EFI/redhat/
-install -d $RPM_BUILD_ROOT/boot/efi/EFI/redhat/%{name}
-touch $RPM_BUILD_ROOT/boot/efi/EFI/redhat/%{name}/grub.cfg
-ln -s ../boot/efi/EFI/redhat/%{name}/grub.cfg $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-efi.cfg
+install -m 755 -d $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/
+touch $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/grub.cfg
+ln -s ../boot/efi/EFI/%{efidir}/grub.cfg $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-efi.cfg
 
 # Install ELF files modules and images were created from into
 # the shadow root, where debuginfo generator will grab them from
@@ -222,7 +232,7 @@ do
         TGT=$(echo $MODULE |sed "s,$RPM_BUILD_ROOT,.debugroot,")
 #        install -m 755 -D $BASE$EXT $TGT
 done
-install -m 755 %{grubefiname} $RPM_BUILD_ROOT/boot/efi/EFI/redhat/%{name}/%{grubefiname}
+install -m 755 %{grubefiname} $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/%{grubefiname}
 cd ..
 %endif
 
@@ -253,8 +263,8 @@ mv $RPM_BUILD_ROOT%{_infodir}/grub-dev.info $RPM_BUILD_ROOT%{_infodir}/%{name}-d
 rm $RPM_BUILD_ROOT%{_infodir}/dir
 
 # Defaults
-mkdir %{_sysconfdir}/default
-touch %{_sysconfdir}/default/grub
+mkdir ${RPM_BUILD_ROOT}%{_sysconfdir}/default
+touch ${RPM_BUILD_ROOT}%{_sysconfdir}/default/grub
 mkdir ${RPM_BUILD_ROOT}%{_sysconfdir}/sysconfig
 ln -sf %{_sysconfdir}/default/grub \
 	${RPM_BUILD_ROOT}%{_sysconfdir}/sysconfig/grub
@@ -321,8 +331,8 @@ fi
 %defattr(-,root,root,-)
 %{_libdir}/grub/%{grubefiarch}
 %config(noreplace) %{_sysconfdir}/%{name}-efi.cfg
-%attr(0755,root,root)/boot/efi/EFI/redhat
-%ghost %config(noreplace) /boot/efi/EFI/redhat/%{name}/grub.cfg
+%attr(0755,root,root)/boot/efi/EFI/%{efidir}
+%ghost %config(noreplace) /boot/efi/EFI/%{efidir}/grub.cfg
 %doc grub-%{tarversion}/COPYING
 %endif
 
@@ -372,6 +382,12 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Mon May 21 2012 Peter Jones <pjones@redhat.com> - 2.0-0.28.beta5
+- Name grub.efi something that's arch-appropriate (kiilerix, pjones)
+- use EFI/$SOMETHING_DISTRO_BASED/ not always EFI/redhat/grub2-efi/ .
+- move common stuff to -tools (kiilerix)
+- spec file cleanups (kiilerix)
+
 * Mon May 14 2012 Peter Jones <pjones@redhat.com> - 2.0-0.27.beta5
 - Fix module trampolining on ppc (benh)
 
