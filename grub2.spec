@@ -93,7 +93,7 @@ provides support for PC BIOS systems.
 %package efi
 Summary:	GRUB for EFI systems.
 Group:		System Environment/Base
-Requires:	%{name}-tools = %{version}-%{release}
+Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
 
 %description efi
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
