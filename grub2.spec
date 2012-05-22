@@ -39,7 +39,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.0
-Release:        0.29.beta5%{?dist}
+Release:        0.30.beta5%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -76,7 +76,7 @@ BuildRequires:	freetype-devel gettext-devel git
 BuildRequires:	texinfo
 BuildRequires:	dejavu-sans-fonts
 
-Requires:	%{name}-tools = %{version}-%{release}
+Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
 Requires(pre):  dracut
 Requires(post): dracut
 
@@ -383,6 +383,9 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Tue May 22 2012 Peter Jones <pjones@redhat.com> - 2.0-0.30.beta5
+- Fix the /other/ grub2-tools require to include epoch.
+
 * Mon May 21 2012 Peter Jones <pjones@redhat.com> - 2.0-0.29.beta5
 - Get rid of efi_uga and efi_gop, favoring all_video instead.
 
