@@ -60,6 +60,8 @@ Patch7:		grub-2.00~beta4-add-support-for-PowerMac-HFS-partitions.patch
 Patch8:		grub2-2.0-no-png-in-texi.patch
 Patch9:		grub-2.00-Fix-module-trampoline-for-ppc.patch
 Patch10:	grub-2.00-add-fw_path-search.patch
+Patch11:	grub-2.00-Add-fwsetup.patch
+
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -163,7 +165,7 @@ make %{?_smp_mflags}
 ./grub-mkimage -O %{grubefiarch} -o %{grubefiname}  -d grub-core \
 	part_gpt hfsplus fat ext2 btrfs normal chain boot configfile linux \
 	minicmd reboot halt search font gfxterm echo video all_video \
-	test gfxmenu png
+	test gfxmenu png efifwsetup
 cd ..
 %endif
 
