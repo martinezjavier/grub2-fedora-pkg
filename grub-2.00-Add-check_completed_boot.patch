@@ -1,0 +1,161 @@
+From 7b886580f92bf6b766b042b6ef46cb77a5ba7451 Mon Sep 17 00:00:00 2001
+From: Peter Jones <pjones@redhat.com>
+Date: Fri, 25 May 2012 10:49:06 -0400
+Subject: [PATCH] Add check_completed_boot command on EFI systems.
+
+check_completed_boot <guid> [<timeout>]
+
+checks for a 1-byte integer in an EFI variable guid:CompletedBoot and sets
+a command-line specified timeout, with a default of 30s, if the variable is
+not equal to 1.  This can be used to enter the grub menus in the event that
+your OS did not correctly boot on the previous boot.  It also unconditionally
+sets the value to 0.
+---
+ grub-core/Makefile.core.def           |    6 ++
+ grub-core/commands/efi/eficompleted.c |  117 +++++++++++++++++++++++++++++++++
+ 2 files changed, 123 insertions(+)
+ create mode 100644 grub-core/commands/efi/eficompleted.c
+
+diff --git a/grub-core/Makefile.core.def b/grub-core/Makefile.core.def
+index d0c06d5..0a21838 100644
+--- a/grub-core/Makefile.core.def
++++ b/grub-core/Makefile.core.def
+@@ -582,6 +582,12 @@ module = {
+ };
+ 
+ module = {
++  name = eficompleted;
++  efi = commands/efi/eficompleted.c;
++  enable = efi;
++};
++
++module = {
+   name = blocklist;
+   common = commands/blocklist.c;
+ };
+diff --git a/grub-core/commands/efi/eficompleted.c b/grub-core/commands/efi/eficompleted.c
+new file mode 100644
+index 0000000..77a856a
+--- /dev/null
++++ b/grub-core/commands/efi/eficompleted.c
+@@ -0,0 +1,117 @@
++/* completed.c - Check if previous boot was successful. */
++/*
++ *  GRUB  --  GRand Unified Bootloader
++ *  Copyright (C) 2012  Free Software Foundation, Inc.
++ *
++ *  GRUB is free software: you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation, either version 3 of the License, or
++ *  (at your option) any later version.
++ *
++ *  GRUB is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with GRUB.  If not, see <http://www.gnu.org/licenses/>.
++ */
++#include <grub/types.h>
++#include <grub/mm.h>
++#include <grub/misc.h>
++#include <grub/efi/api.h>
++#include <grub/efi/efi.h>
++#include <grub/command.h>
++
++GRUB_MOD_LICENSE ("GPLv3+");
++
++static grub_err_t
++grub_efi_parse_guid(char *arg, grub_efi_guid_t *outguid)
++{
++  grub_err_t status = GRUB_ERR_NONE;
++  grub_efi_guid_t guid;
++  char *s = arg;
++  grub_uint64_t guidcomp;
++  int i;
++
++  guid.data1 = grub_cpu_to_le32 (grub_strtoul(s, &s, 16));
++  if (*s != '-')
++    return grub_error (GRUB_ERR_BAD_ARGUMENT, "invalid guid `%s'", arg);
++  s++;
++
++  guid.data2 = grub_cpu_to_le16 (grub_strtoul(s, &s, 16));
++  if (*s != '-')
++    return grub_error (GRUB_ERR_BAD_ARGUMENT, "invalid guid `%s'", arg);
++  s++;
++
++  guid.data2 = grub_cpu_to_le16 (grub_strtoul(s, &s, 16));
++  if (*s != '-')
++    return grub_error (GRUB_ERR_BAD_ARGUMENT, "invalid guid `%s'", arg);
++  s++;
++
++  guidcomp = grub_strtoull (s, 0, 16);
++  for (i = 0; i < 8; i++)
++    guid.data4[i] = (guidcomp >> (56 - 8 * i)) & 0xff;
++
++  grub_memcpy(outguid, &guid, sizeof (*outguid));
++  return GRUB_ERR_NONE;
++}
++
++static grub_err_t
++grub_cmd_completed (grub_command_t cmd __attribute__ ((unused)),
++		  int argc __attribute__ ((unused)),
++		  char **args __attribute__ ((unused)))
++{
++  grub_efi_uint8_t *old_completed_boot;
++  grub_efi_uint8_t completed_boot = 0;
++  unsigned long timeout = 30;
++  grub_efi_guid_t guid;
++  grub_err_t status;
++  grub_size_t cb_size;
++
++  if (argc < 2)
++    return grub_error (GRUB_ERR_BAD_ARGUMENT, "too few arguments");
++
++  if (argc > 3)
++    return grub_error (GRUB_ERR_BAD_ARGUMENT, "too many arguments");
++
++  status = grub_efi_parse_guid(args[1], &guid);
++  if (status != GRUB_ERR_NONE)
++    return status;
++
++  if (argc > 2)
++    {
++      char *s = args[2];
++      timeout = grub_strtoul(s, &s, 0);
++      if (grub_errno != GRUB_ERR_NONE)
++	return grub_errno;
++    }
++
++  old_completed_boot = grub_efi_get_variable("CompletedBoot", &guid, &cb_size);
++  status = grub_efi_set_variable("CompletedBoot", &guid, &completed_boot,
++				 sizeof (completed_boot));
++
++  if (old_completed_boot == NULL)
++    {
++      /* We assume this means it's our first boot after installation. */
++      return GRUB_ERR_NONE;
++    }
++
++  if (cb_size != sizeof(*old_completed_boot) || *old_completed_boot != 1)
++    grub_env_set("timeout", timeout);
++
++  return GRUB_ERR_NONE;
++}
++
++static grub_command_t cmd = NULL;
++
++GRUB_MOD_INIT(eficompleted)
++{
++  cmd = grub_register_command("check_completed_boot", grub_cmd_completed, "",
++			      "Check if the last boot completed successfully.");
++}
++
++GRUB_MOD_FINI(eficompleted)
++{
++  grub_unregister_command (cmd);
++}
+-- 
+1.7.10.1
+
