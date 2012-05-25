@@ -69,11 +69,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  flex bison binutils python
 BuildRequires:  ncurses-devel xz-devel
 BuildRequires:  freetype-devel libusb-devel
-%ifarch %{sparc} x86_64
-BuildRequires:  /usr/lib64/crt1.o glibc-static
-%else
-BuildRequires:  /usr/lib/crt1.o glibc-static
-%endif
+BuildRequires:  glibc-devel glibc-static
 BuildRequires:  autoconf automake autogen device-mapper-devel
 BuildRequires:	freetype-devel gettext-devel git
 BuildRequires:	texinfo
