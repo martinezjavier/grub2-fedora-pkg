@@ -39,7 +39,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.0
-Release:        0.31.beta5%{?dist}
+Release:        0.32.beta5%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -389,6 +389,9 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Fri May 25 2012 Peter Jones <pjones@redhat.com> - 2.0-0.32.beta5
+- Revert builddep change for crt1.o; it breaks ppc build.
+
 * Fri May 25 2012 Peter Jones <pjones@redhat.com> - 2.0-0.31.beta5
 - Add fwsetup command (pjones)
 - More ppc fixes (IBM)
