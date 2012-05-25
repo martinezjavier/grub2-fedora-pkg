@@ -12,17 +12,34 @@
 %endif
 
 %if ! 0%{?efi}
+
 %global efi %{ix86} x86_64 ia64
+
+%ifarch %{ix86}
+%global grubefiarch i386-efi
+%global grubefiname grubia32.efi
+%endif
+%ifarch x86_64
+%global grubefiarch %{_arch}-efi
+%global grubefiname grubx64.efi
 %endif
 
+%if 0%{?rhel}
+%global efidir redhat
+%endif
+%if 0%{?fedora}
+%global efidir fedora
+%endif
 
-%global tarversion 2.00~beta4
+%endif
+
+%global tarversion 2.00~beta5
 %undefine _missing_build_ids_terminate_build
 
 Name:           grub2
 Epoch:          1
 Version:        2.0
-Release:        0.26.beta4%{?dist}
+Release:        0.31.beta5%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -39,9 +56,13 @@ Patch2:		grub-1.99-just-say-linux.patch
 Patch3:		grub2-handle-initramfs-on-xen.patch
 Patch4:		grub-1.99-Fix-tests-of-zeroed-partition.patch
 Patch5:		grub-1.99-ppc-terminfo.patch
-Patch6:		grub-2.00-beta4-wronly.patch
 Patch7:		grub-2.00~beta4-add-support-for-PowerMac-HFS-partitions.patch
 Patch8:		grub2-2.0-no-png-in-texi.patch
+Patch9:		grub-2.00-Fix-module-trampoline-for-ppc.patch
+Patch10:	grub-2.00-add-fw_path-search.patch
+Patch11:	grub-2.00-Add-fwsetup.patch
+Patch12:	grub-2.00-ppc-no-tree-scanning.patch
+Patch13:	grub-2.00-Dont-set-boot-on-ppc.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -56,8 +77,10 @@ BuildRequires:  /usr/lib/crt1.o glibc-static
 BuildRequires:  autoconf automake autogen device-mapper-devel
 BuildRequires:	freetype-devel gettext-devel git
 BuildRequires:	texinfo
+BuildRequires:	dejavu-sans-fonts
 
 Requires:	gettext os-prober which file system-logos
+Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
 Requires(pre):  dracut
 Requires(post): dracut
 
@@ -67,12 +90,14 @@ ExcludeArch:	s390 s390x
 %description
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
 bootloader with modular architecture.  It support rich varietyof kernel formats,
-file systems, computer architectures and hardware devices.
+file systems, computer architectures and hardware devices.  This subpackage
+provides support for PC BIOS systems.
 
 %ifarch %{efi}
 %package efi
 Summary:	GRUB for EFI systems.
 Group:		System Environment/Base
+Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
 
 %description efi
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
@@ -81,12 +106,21 @@ file systems, computer architectures and hardware devices.  This subpackage
 provides support for EFI systems.
 %endif
 
+%package tools
+Summary:	Support tools for GRUB.
+Group:		System Environment/Base
+Requires:	gettext os-prober which file system-logos
+
+%description tools
+The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
+bootloader with modular architecture.  It support rich varietyof kernel formats,
+file systems, computer architectures and hardware devices.  This subpackage
+provides tools for support of all platforms.
+
 %prep
 %setup -T -c -n grub-%{tarversion}
 %ifarch %{efi}
-echo foo
 %setup -D -q -T -a 0 -n grub-%{tarversion}
-echo bar
 cd grub-%{tarversion}
 cp %{SOURCE3} .
 # place unifont in the '.' from which configure is run
@@ -126,18 +160,14 @@ cd grub-efi-%{tarversion}
 		-e 's/-fasynchronous-unwind-tables//g' )"	\
 	TARGET_LDFLAGS=-static					\
         --with-platform=efi					\
-	--with-grubdir=grub2					\
-        --program-transform-name=s,grub,%{name}-efi,		\
+	--with-grubdir=%{name}					\
+        --program-transform-name=s,grub,%{name},		\
 	--disable-werror
 make %{?_smp_mflags}
-%ifarch %{ix86}
-%define grubefiarch i386-efi
-%else
-%define grubefiarch %{_arch}-efi
-%endif
-./grub-mkimage -O %{grubefiarch} -p /EFI/redhat/%{name}-efi -o grub.efi -d grub-core part_gpt hfsplus fat \
-	ext2 btrfs normal chain boot configfile linux appleldr minicmd \
-	loadbios reboot halt search font gfxterm echo video efi_gop efi_uga
+./grub-mkimage -O %{grubefiarch} -o %{grubefiname}  -d grub-core \
+	part_gpt hfsplus fat ext2 btrfs normal chain boot configfile linux \
+	minicmd reboot halt search font gfxterm echo video all_video \
+	test gfxmenu png efifwsetup
 cd ..
 %endif
 
@@ -161,7 +191,7 @@ cd grub-%{tarversion}
 		-e 's/-fasynchronous-unwind-tables//g' )"	\
 	TARGET_LDFLAGS=-static					\
         --with-platform=%{platform}				\
-	--with-grubdir=grub2					\
+	--with-grubdir=%{name}					\
         --program-transform-name=s,grub,%{name},		\
 	--disable-werror
 
@@ -188,13 +218,11 @@ rm -fr $RPM_BUILD_ROOT
 %ifarch %{efi}
 cd grub-efi-%{tarversion}
 make DESTDIR=$RPM_BUILD_ROOT install
-mv $RPM_BUILD_ROOT/etc/bash_completion.d/grub $RPM_BUILD_ROOT/etc/bash_completion.d/grub-efi
 
 # Ghost config file
-install -m 755 -d $RPM_BUILD_ROOT/boot/efi/EFI/redhat/
-install -d $RPM_BUILD_ROOT/boot/efi/EFI/redhat/%{name}-efi
-touch $RPM_BUILD_ROOT/boot/efi/EFI/redhat/%{name}-efi/grub.cfg
-ln -s ../boot/efi/EFI/redhat/%{name}-efi/grub.cfg $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-efi.cfg
+install -m 755 -d $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/
+touch $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/grub.cfg
+ln -s ../boot/efi/EFI/%{efidir}/grub.cfg $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-efi.cfg
 
 # Install ELF files modules and images were created from into
 # the shadow root, where debuginfo generator will grab them from
@@ -209,7 +237,7 @@ do
         TGT=$(echo $MODULE |sed "s,$RPM_BUILD_ROOT,.debugroot,")
 #        install -m 755 -D $BASE$EXT $TGT
 done
-install -m 755 grub.efi $RPM_BUILD_ROOT/boot/efi/EFI/redhat/%{name}-efi/grub.efi
+install -m 755 %{grubefiname} $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/%{grubefiname}
 cd ..
 %endif
 
@@ -235,11 +263,13 @@ do
 #        install -m 755 -D $BASE$EXT $TGT
 done
 
-mv $RPM_BUILD_ROOT%{_infodir}/grub.info $RPM_BUILD_ROOT%{_infodir}/grub2.info
-mv $RPM_BUILD_ROOT%{_infodir}/grub-dev.info $RPM_BUILD_ROOT%{_infodir}/grub2-dev.info
+mv $RPM_BUILD_ROOT%{_infodir}/grub.info $RPM_BUILD_ROOT%{_infodir}/%{name}.info
+mv $RPM_BUILD_ROOT%{_infodir}/grub-dev.info $RPM_BUILD_ROOT%{_infodir}/%{name}-dev.info
 rm $RPM_BUILD_ROOT%{_infodir}/dir
 
 # Defaults
+mkdir ${RPM_BUILD_ROOT}%{_sysconfdir}/default
+touch ${RPM_BUILD_ROOT}%{_sysconfdir}/default/grub
 mkdir ${RPM_BUILD_ROOT}%{_sysconfdir}/sysconfig
 ln -sf %{_sysconfdir}/default/grub \
 	${RPM_BUILD_ROOT}%{_sysconfdir}/sysconfig/grub
@@ -247,16 +277,20 @@ ln -sf %{_sysconfdir}/default/grub \
 cd ..
 %find_lang grub
 
+# Fedora theme in /boot/grub2/themes/system/
 cd $RPM_BUILD_ROOT
 tar xjf %{SOURCE5}
+$RPM_BUILD_ROOT%{_bindir}/%{name}-mkfont -o boot/grub2/themes/system/DejaVuSans-10.pf2      -s 10 /usr/share/fonts/dejavu/DejaVuSans.ttf # "DejaVu Sans Regular 10"
+$RPM_BUILD_ROOT%{_bindir}/%{name}-mkfont -o boot/grub2/themes/system/DejaVuSans-12.pf2      -s 12 /usr/share/fonts/dejavu/DejaVuSans.ttf # "DejaVu Sans Regular 12"
+$RPM_BUILD_ROOT%{_bindir}/%{name}-mkfont -o boot/grub2/themes/system/DejaVuSans-Bold-14.pf2 -s 14 /usr/share/fonts/dejavu/DejaVuSans-Bold.ttf # "DejaVu Sans Bold 14"
 
 %clean    
 rm -rf $RPM_BUILD_ROOT
 
 %post
 if [ "$1" = 1 ]; then
-	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/grub2.info.gz || :
-	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/grub2-dev.info.gz || :
+	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/%{name}.info.gz || :
+	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/%{name}-dev.info.gz || :
 fi
 
 %triggerun -- grub2 < 1:1.99-4
@@ -286,14 +320,30 @@ rm -r /boot/grub2.tmp/ || :
 
 %preun
 if [ "$1" = 0 ]; then
-	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/grub2.info.gz || :
-	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/grub2-dev.info.gz || :
+	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/%{name}.info.gz || :
+	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/%{name}-dev.info.gz || :
 fi
 
 %files -f grub.lang
 %defattr(-,root,root,-)
-/etc/bash_completion.d/grub
 %{_libdir}/grub/*-%{platform}/
+%config(noreplace) %{_sysconfdir}/%{name}.cfg
+%ghost %config(noreplace) /boot/%{name}/grub.cfg
+%doc grub-%{tarversion}/COPYING
+
+%ifarch %{efi}
+%files efi
+%defattr(-,root,root,-)
+%{_libdir}/grub/%{grubefiarch}
+%config(noreplace) %{_sysconfdir}/%{name}-efi.cfg
+%attr(0755,root,root)/boot/efi/EFI/%{efidir}
+%ghost %config(noreplace) /boot/efi/EFI/%{efidir}/grub.cfg
+%doc grub-%{tarversion}/COPYING
+%endif
+
+%files tools -f grub.lang
+%defattr(-,root,root,-)
+%dir %{_libdir}/grub/
 %{_datarootdir}/grub/
 %{_sbindir}/%{name}-mkconfig
 %{_sbindir}/%{name}-mknetdir
@@ -318,85 +368,61 @@ fi
 %{_bindir}/%{name}-mkrescue
 %endif
 %{_bindir}/%{name}-script-check
+%{_sysconfdir}/bash_completion.d/grub
 %attr(0700,root,root) %dir %{_sysconfdir}/grub.d
 %config %{_sysconfdir}/grub.d/??_*
 %{_sysconfdir}/grub.d/README
-%config(noreplace) %{_sysconfdir}/%{name}.cfg
 %attr(0644,root,root) %ghost %config(noreplace) %{_sysconfdir}/default/grub
 %{_sysconfdir}/sysconfig/grub
 %dir /boot/%{name}
-%ghost %config(noreplace) /boot/%{name}/grub.cfg
+/boot/%{name}/themes/
+%{_infodir}/%{name}*
+%exclude %{_mandir}
 %doc grub-%{tarversion}/COPYING grub-%{tarversion}/INSTALL
 %doc grub-%{tarversion}/NEWS grub-%{tarversion}/README
 %doc grub-%{tarversion}/THANKS grub-%{tarversion}/TODO
 %doc grub-%{tarversion}/ChangeLog grub-%{tarversion}/README.Fedora
 %doc grub-%{tarversion}/grub.html
 %doc grub-%{tarversion}/grub-dev.html grub-%{tarversion}/docs/font_char_metrics.png
-%exclude %{_mandir}
-%{_infodir}/grub2*
-/boot/grub2/themes/system
-
-%ifarch %{efi}
-%files efi -f grub.lang
-%defattr(-,root,root,-)
-%attr(0755,root,root)/boot/efi/EFI/redhat
-/etc/bash_completion.d/grub-efi
-%{_libdir}/grub/%{_arch}-efi
-%{_datarootdir}/grub/
-%{_sbindir}/grub2-efi-mkconfig
-%{_sbindir}/grub2-efi-mknetdir
-%{_sbindir}/grub2-efi-install
-%{_sbindir}/grub2-efi-probe
-%{_sbindir}/grub2-efi-reboot
-%{_sbindir}/grub2-efi-set-default
-%{_sbindir}/grub2-efi-bios-setup
-%{_sbindir}/grub2-efi-ofpathname
-%{_sbindir}/grub2-efi-sparc64-setup
-%{_bindir}/grub2-efi-mkstandalone
-%{_bindir}/grub2-efi-editenv
-%{_bindir}/grub2-efi-fstest
-%{_bindir}/grub2-efi-kbdcomp
-%{_bindir}/grub2-efi-menulst2cfg
-%{_bindir}/grub2-efi-mkfont
-%{_bindir}/grub2-efi-mklayout
-%{_bindir}/grub2-efi-mkimage
-%{_bindir}/grub2-efi-mkpasswd-pbkdf2
-%{_bindir}/grub2-efi-mkrelpath
-%ifnarch %{sparc} ppc ppc64
-%{_bindir}/grub2-efi-mkrescue
-%endif
-%{_bindir}/grub2-efi-script-check
-%attr(0700,root,root) %dir %{_sysconfdir}/grub.d
-%config %{_sysconfdir}/grub.d/??_*
-%{_sysconfdir}/grub.d/README
-%config(noreplace) %{_sysconfdir}/grub2-efi.cfg
-%attr(0644,root,root) %ghost %config(noreplace) %{_sysconfdir}/default/grub
-%{_sysconfdir}/sysconfig/grub
-%ghost %config(noreplace) /boot/efi/EFI/redhat/grub2-efi/grub.cfg
-%doc grub-%{tarversion}/COPYING grub-%{tarversion}/INSTALL
-%doc grub-%{tarversion}/NEWS grub-%{tarversion}/README
-%doc grub-%{tarversion}/THANKS grub-%{tarversion}/TODO
-%doc grub-%{tarversion}/ChangeLog grub-%{tarversion}/README.Fedora
-%doc grub-%{tarversion}/grub.html
-%doc grub-%{tarversion}/grub-dev.html grub-%{tarversion}/docs/font_char_metrics.png
-%exclude %{_mandir}
-%{_infodir}/grub2*
-/boot/grub2/themes/system
-%endif
+%doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
-* Thu May 10 2012 Peter Jones <pjones@redhat.com> - 2.0-0.26.beta5
+* Fri May 25 2012 Peter Jones <pjones@redhat.com> - 2.0-0.31.beta5
+- Add fwsetup command (pjones)
+- More ppc fixes (IBM)
+
+* Tue May 22 2012 Peter Jones <pjones@redhat.com> - 2.0-0.30.beta5
+- Fix the /other/ grub2-tools require to include epoch.
+
+* Mon May 21 2012 Peter Jones <pjones@redhat.com> - 2.0-0.29.beta5
+- Get rid of efi_uga and efi_gop, favoring all_video instead.
+
+* Mon May 21 2012 Peter Jones <pjones@redhat.com> - 2.0-0.28.beta5
+- Name grub.efi something that's arch-appropriate (kiilerix, pjones)
+- use EFI/$SOMETHING_DISTRO_BASED/ not always EFI/redhat/grub2-efi/ .
+- move common stuff to -tools (kiilerix)
+- spec file cleanups (kiilerix)
+
+* Mon May 14 2012 Peter Jones <pjones@redhat.com> - 2.0-0.27.beta5
+- Fix module trampolining on ppc (benh)
+
+* Thu May 10 2012 Peter Jones <pjones@redhat.com> - 2.0-0.27.beta5
 - Fix license of theme (mizmo)
   Resolves: rhbz#820713
 - Fix some PPC bootloader detection IBM problem
   Resolves: rhbz#820722
+
+* Thu May 10 2012 Peter Jones <pjones@redhat.com> - 2.0-0.26.beta5
+- Update to beta5.
+- Update how efi building works (kiilerix)
+- Fix theme support to bring in fonts correctly (kiilerix, pjones)
 
 * Wed May 09 2012 Peter Jones <pjones@redhat.com> - 2.0-0.25.beta4
 - Include theme support (mizmo)
 - Include locale support (kiilerix)
 - Include html docs (kiilerix)
 
-* Thu Apr 26 2012 Peter Jones <pjones@redhat.com> - 2.0-0.24.beta4
+* Thu Apr 26 2012 Peter Jones <pjones@redhat.com> - 2.0-0.24
 - Various fixes from Mads Kiilerich
 
 * Thu Apr 19 2012 Peter Jones <pjones@redhat.com> - 2.0-0.23
