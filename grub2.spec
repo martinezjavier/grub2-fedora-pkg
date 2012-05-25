@@ -39,7 +39,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.0
-Release:        0.30.beta5%{?dist}
+Release:        0.31.beta5%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -61,7 +61,8 @@ Patch8:		grub2-2.0-no-png-in-texi.patch
 Patch9:		grub-2.00-Fix-module-trampoline-for-ppc.patch
 Patch10:	grub-2.00-add-fw_path-search.patch
 Patch11:	grub-2.00-Add-fwsetup.patch
-
+Patch12:	grub-2.00-ppc-no-tree-scanning.patch
+Patch13:	grub-2.00-Dont-set-boot-on-ppc.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -385,6 +386,10 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Fri May 25 2012 Peter Jones <pjones@redhat.com> - 2.0-0.31.beta5
+- Add fwsetup command (pjones)
+- More ppc fixes (IBM)
+
 * Tue May 22 2012 Peter Jones <pjones@redhat.com> - 2.0-0.30.beta5
 - Fix the /other/ grub2-tools require to include epoch.
 
