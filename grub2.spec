@@ -50,7 +50,6 @@ Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
 Source3:        README.Fedora
 Source4:	http://unifoundry.com/unifont-5.1.20080820.pcf.gz
 Source5:	theme.tar.bz2
-Patch1:		grub-1.99-grub_test_assert_printf.patch
 Patch2:		grub-1.99-just-say-linux.patch
 Patch3:		grub2-handle-initramfs-on-xen.patch
 Patch4:		grub-1.99-Fix-tests-of-zeroed-partition.patch
