@@ -55,7 +55,6 @@ Patch5:		grub-1.99-ppc-terminfo.patch
 Patch7:		grub-2.00~beta4-add-support-for-PowerMac-HFS-partitions.patch
 Patch10:	grub-2.00-add-fw_path-search.patch
 Patch11:	grub-2.00-Add-fwsetup.patch
-Patch12:	grub-2.00-ppc-no-tree-scanning.patch
 Patch13:	grub-2.00-Dont-set-boot-on-ppc.patch
 Patch14:	grub-2.00-ignore-gnulib-gets-stupidity.patch
 
