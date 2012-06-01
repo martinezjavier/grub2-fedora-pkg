@@ -6,7 +6,7 @@
 %ifarch x86_64
 %define _target_platform i386-%{_vendor}-%{_target_os}%{?_gnu}
 %endif
-#sparc is always compile 64 bit
+# sparc is always compiled 64 bit
 %ifarch %{sparc}
 %define _target_platform sparc64-%{_vendor}-%{_target_os}%{?_gnu}
 %endif
@@ -67,8 +67,10 @@ BuildRequires:  flex bison binutils python
 BuildRequires:  ncurses-devel xz-devel
 BuildRequires:  freetype-devel libusb-devel
 %ifarch %{sparc} x86_64
+# sparc builds need 64 bit glibc-devel - also for 32 bit userland
 BuildRequires:  /usr/lib64/crt1.o glibc-static
 %else
+# ppc64 builds need the ppc crt1.o
 BuildRequires:  /usr/lib/crt1.o glibc-static
 %endif
 BuildRequires:  autoconf automake autogen device-mapper-devel
@@ -81,7 +83,6 @@ Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
 Requires(pre):  dracut
 Requires(post): dracut
 
-# ExclusiveArch:  %{ix86} x86_64 %{sparc}
 ExcludeArch:	s390 s390x
 
 %description
