@@ -53,7 +53,6 @@ Source5:	theme.tar.bz2
 Patch2:		grub-1.99-just-say-linux.patch
 Patch5:		grub-1.99-ppc-terminfo.patch
 Patch7:		grub-2.00~beta4-add-support-for-PowerMac-HFS-partitions.patch
-Patch9:		grub-2.00-Fix-module-trampoline-for-ppc.patch
 Patch10:	grub-2.00-add-fw_path-search.patch
 Patch11:	grub-2.00-Add-fwsetup.patch
 Patch12:	grub-2.00-ppc-no-tree-scanning.patch
