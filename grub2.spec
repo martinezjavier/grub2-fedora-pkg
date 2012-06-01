@@ -59,6 +59,7 @@ Patch11:	grub-2.00-Add-fwsetup.patch
 Patch13:	grub-2.00-Dont-set-boot-on-ppc.patch
 Patch14:	grub-2.00-ignore-gnulib-gets-stupidity.patch
 Patch15:	grub-2.00-linux-mbr.patch
+Patch16:	grub-2.00-no-huge-video.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
