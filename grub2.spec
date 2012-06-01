@@ -13,7 +13,7 @@
 
 %if ! 0%{?efi}
 
-%global efi %{ix86} x86_64 ia64
+%global efiarchs %{ix86} x86_64 ia64
 
 %ifarch %{ix86}
 %global grubefiarch i386-efi
@@ -91,7 +91,7 @@ bootloader with modular architecture.  It support rich varietyof kernel formats,
 file systems, computer architectures and hardware devices.  This subpackage
 provides support for PC BIOS systems.
 
-%ifarch %{efi}
+%ifarch %{efiarchs}
 %package efi
 Summary:	GRUB for EFI systems.
 Group:		System Environment/Base
@@ -117,7 +117,7 @@ provides tools for support of all platforms.
 
 %prep
 %setup -T -c -n grub-%{tarversion}
-%ifarch %{efi}
+%ifarch %{efiarchs}
 %setup -D -q -T -a 0 -n grub-%{tarversion}
 cd grub-%{tarversion}
 cp %{SOURCE3} .
@@ -145,7 +145,7 @@ git commit -a -q -m "%{tarversion} baseline."
 git am %{patches}
 
 %build
-%ifarch %{efi}
+%ifarch %{efiarchs}
 cd grub-efi-%{tarversion}
 ./autogen.sh
 %configure							\
@@ -213,7 +213,7 @@ sed -i	-e 's,/boot/grub/,/boot/%{name}/,g' \
 set -e
 rm -fr $RPM_BUILD_ROOT
 
-%ifarch %{efi}
+%ifarch %{efiarchs}
 cd grub-efi-%{tarversion}
 make DESTDIR=$RPM_BUILD_ROOT install
 
@@ -329,7 +329,7 @@ fi
 %ghost %config(noreplace) /boot/%{name}/grub.cfg
 %doc grub-%{tarversion}/COPYING
 
-%ifarch %{efi}
+%ifarch %{efiarchs}
 %files efi
 %defattr(-,root,root,-)
 %{_libdir}/grub/%{grubefiarch}
