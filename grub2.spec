@@ -386,6 +386,10 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Mon Jun 04 2012 Peter Jones <pjones@redhat.com> - 2.0-0.32.
+- Update to beta6.
+- Various fixes from mads.
+
 * Fri May 25 2012 Peter Jones <pjones@redhat.com> - 2.0-0.32.beta5
 - Revert builddep change for crt1.o; it breaks ppc build.
 
