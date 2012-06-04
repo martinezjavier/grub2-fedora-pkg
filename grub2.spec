@@ -83,7 +83,7 @@ Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
 Requires(pre):  dracut
 Requires(post): dracut
 
-ExcludeArch:	s390 s390x
+ExcludeArch:	s390 s390x %{arm}
 
 %description
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
