@@ -33,14 +33,13 @@
 
 %endif
 
-%global betaversion beta6
-%global tarversion 2.00~%{betaversion}
+%global tarversion 2.00~beta6
 %undefine _missing_build_ids_terminate_build
 
 Name:           grub2
 Epoch:          1
 Version:        2.0
-Release:        0.32.%{betaversion}%{?dist}
+Release:        0.33.beta6%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -386,7 +385,7 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
-* Mon Jun 04 2012 Peter Jones <pjones@redhat.com> - 2.0-0.32.
+* Mon Jun 04 2012 Peter Jones <pjones@redhat.com> - 2.0-0.33.beta6
 - Update to beta6.
 - Various fixes from mads.
 
