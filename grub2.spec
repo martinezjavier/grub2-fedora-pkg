@@ -50,6 +50,7 @@ Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
 Source3:        README.Fedora
 Source4:	http://unifoundry.com/unifont-5.1.20080820.pcf.gz
 Source5:	theme.tar.bz2
+Patch0:		grub-2.00-ieee1276.patch
 Patch2:		grub-1.99-just-say-linux.patch
 Patch5:		grub-1.99-ppc-terminfo.patch
 Patch10:	grub-2.00-add-fw_path-search.patch
