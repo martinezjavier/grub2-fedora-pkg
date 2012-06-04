@@ -33,13 +33,14 @@
 
 %endif
 
-%global tarversion 2.00~beta5
+%global betaversion beta6
+%global tarversion 2.00~%{betaversion}
 %undefine _missing_build_ids_terminate_build
 
 Name:           grub2
 Epoch:          1
 Version:        2.0
-Release:        0.32.beta5%{?dist}
+Release:        0.32.%{betaversion}%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
