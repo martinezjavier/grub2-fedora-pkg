@@ -29,9 +29,9 @@ index ce52576..29ebcbd 100644
 +	* include/grub/efi/api.h: add define for OsIndications variable
 +	* include/grub/efi/efi.h: export grub_efi_set_variable
 +
- 2012-04-18  Vladimir Serbinenko  <phcoder@gmail.com>
+ 2012-05-31  Vladimir Serbinenko  <phcoder@gmail.com>
  
- 	* configure.ac: Bump to beta5.
+ 	* configure.ac: Bump to beta6.
 diff --git a/grub-core/Makefile.core.def b/grub-core/Makefile.core.def
 index 000cf0d..d0c06d5 100644
 --- a/grub-core/Makefile.core.def

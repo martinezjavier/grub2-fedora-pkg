@@ -6,14 +6,14 @@
 %ifarch x86_64
 %define _target_platform i386-%{_vendor}-%{_target_os}%{?_gnu}
 %endif
-#sparc is always compile 64 bit
+# sparc is always compiled 64 bit
 %ifarch %{sparc}
 %define _target_platform sparc64-%{_vendor}-%{_target_os}%{?_gnu}
 %endif
 
 %if ! 0%{?efi}
 
-%global efi %{ix86} x86_64 ia64
+%global efiarchs %{ix86} x86_64 ia64
 
 %ifarch %{ix86}
 %global grubefiarch i386-efi
@@ -51,21 +51,16 @@ Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
 Source3:        README.Fedora
 Source4:	http://unifoundry.com/unifont-5.1.20080820.pcf.gz
 Source5:	theme.tar.bz2
-Patch0:		grub-1.99-handle-fwrite-return.patch
-Patch1:		grub-1.99-grub_test_assert_printf.patch
+Patch0:		grub-2.00-ieee1276.patch
+Patch1:		grub-2.00-no-canon.patch
 Patch2:		grub-1.99-just-say-linux.patch
-Patch3:		grub2-handle-initramfs-on-xen.patch
-Patch4:		grub-1.99-Fix-tests-of-zeroed-partition.patch
 Patch5:		grub-1.99-ppc-terminfo.patch
-Patch7:		grub-2.00~beta4-add-support-for-PowerMac-HFS-partitions.patch
-Patch8:		grub2-2.0-no-png-in-texi.patch
-Patch9:		grub-2.00-Fix-module-trampoline-for-ppc.patch
 Patch10:	grub-2.00-add-fw_path-search.patch
 Patch11:	grub-2.00-Add-fwsetup.patch
-Patch12:	grub-2.00-ppc-no-tree-scanning.patch
 Patch13:	grub-2.00-Dont-set-boot-on-ppc.patch
 Patch14:	grub-2.00-ignore-gnulib-gets-stupidity.patch
-
+Patch15:	grub-2.00-linux-mbr.patch
+Patch16:	grub-2.00-no-huge-video.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -73,8 +68,10 @@ BuildRequires:  flex bison binutils python
 BuildRequires:  ncurses-devel xz-devel
 BuildRequires:  freetype-devel libusb-devel
 %ifarch %{sparc} x86_64
+# sparc builds need 64 bit glibc-devel - also for 32 bit userland
 BuildRequires:  /usr/lib64/crt1.o glibc-static
 %else
+# ppc64 builds need the ppc crt1.o
 BuildRequires:  /usr/lib/crt1.o glibc-static
 %endif
 BuildRequires:  autoconf automake autogen device-mapper-devel
@@ -87,8 +84,7 @@ Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
 Requires(pre):  dracut
 Requires(post): dracut
 
-# ExclusiveArch:  %{ix86} x86_64 %{sparc}
-ExcludeArch:	s390 s390x
+ExcludeArch:	s390 s390x %{arm}
 
 %description
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
@@ -96,7 +92,7 @@ bootloader with modular architecture.  It support rich varietyof kernel formats,
 file systems, computer architectures and hardware devices.  This subpackage
 provides support for PC BIOS systems.
 
-%ifarch %{efi}
+%ifarch %{efiarchs}
 %package efi
 Summary:	GRUB for EFI systems.
 Group:		System Environment/Base
@@ -122,7 +118,7 @@ provides tools for support of all platforms.
 
 %prep
 %setup -T -c -n grub-%{tarversion}
-%ifarch %{efi}
+%ifarch %{efiarchs}
 %setup -D -q -T -a 0 -n grub-%{tarversion}
 cd grub-%{tarversion}
 cp %{SOURCE3} .
@@ -150,7 +146,7 @@ git commit -a -q -m "%{tarversion} baseline."
 git am %{patches}
 
 %build
-%ifarch %{efi}
+%ifarch %{efiarchs}
 cd grub-efi-%{tarversion}
 ./autogen.sh
 %configure							\
@@ -218,7 +214,7 @@ sed -i	-e 's,/boot/grub/,/boot/%{name}/,g' \
 set -e
 rm -fr $RPM_BUILD_ROOT
 
-%ifarch %{efi}
+%ifarch %{efiarchs}
 cd grub-efi-%{tarversion}
 make DESTDIR=$RPM_BUILD_ROOT install
 
@@ -334,7 +330,7 @@ fi
 %ghost %config(noreplace) /boot/%{name}/grub.cfg
 %doc grub-%{tarversion}/COPYING
 
-%ifarch %{efi}
+%ifarch %{efiarchs}
 %files efi
 %defattr(-,root,root,-)
 %{_libdir}/grub/%{grubefiarch}

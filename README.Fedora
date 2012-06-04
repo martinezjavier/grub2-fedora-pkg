@@ -38,9 +38,14 @@ GRUB 2 in Fedora
 ----------------
 
 The Fedora installer (anaconda) will make sure grub2 is installed for new and
-updated systems. It will write /etc/default/grub and run grub2-mkconfig to
-create /boot/grub2/grub.cfg, and it will run grub2-install to install the boot
-loader in the MBR and in /boot/grub2/ .
+updated systems.  It will run grub2-install to install the boot loader in the
+MBR and in /boot/grub2/, and it will write /etc/default/grub and run
+grub2-mkconfig to create /boot/grub2/grub.cfg.
+
+The active boot loader will not be changed when the GRUB 2 package is updated.
+A new boot loader can be installed with something like:
+
+  grub2-install /dev/sda
 
 grubby will patch grub.cfg (through /etc/grub2.cfg) when new kernels are
 installed. The GRUB 2 configuration system in /etc/default/grub and /etc/grub.d/
@@ -49,26 +54,17 @@ grub.cfg with:
 
   grub2-mkconfig -o /boot/grub2/grub.cfg
 
-The active boot loader will not be changed when the GRUB 2 package is updated.
-A new boot loader can be installed with something like:
-
-  grub2-install /dev/sda
-
 Documentation
 -------------
 
-The GRUB 2 manual can be found on http://www.gnu.org/software/grub/manual/ .
+The GRUB 2 manual can be found in grub.html or on
+http://www.gnu.org/software/grub/manual/ .
 
 Support channels
 ----------------
 
 If you find a bug in this package, report them to the Red Hat Bugzilla [2].
 For talk about using grub2, use IRC channel #grub on freenode Network [3].
-You can meet this package maintainer there (nick lkundrak).
 
 [2] http://bugzilla.redhat.com/
 [3] http://freenode.net/
-
---
-Lubomir Rintel <lkundrak@v3.sk>
-Fedora Project
