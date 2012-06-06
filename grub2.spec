@@ -56,6 +56,7 @@ Patch2:		grub-1.99-just-say-linux.patch
 Patch5:		grub-1.99-ppc-terminfo.patch
 Patch10:	grub-2.00-add-fw_path-search.patch
 Patch11:	grub-2.00-Add-fwsetup.patch
+Patch13:	grub-2.00-Dont-set-boot-on-ppc.patch
 Patch14:	grub-2.00-ignore-gnulib-gets-stupidity.patch
 Patch15:	grub-2.00-linux-mbr.patch
 Patch16:	grub-2.00-no-huge-video.patch
@@ -392,7 +393,6 @@ fi
 * Mon Jun 04 2012 Peter Jones <pjones@redhat.com> - 2.0-0.33.beta6
 - Update to beta6.
 - Various fixes from mads.
-- Handle ppc nvram differently
 
 * Fri May 25 2012 Peter Jones <pjones@redhat.com> - 2.0-0.32.beta5
 - Revert builddep change for crt1.o; it breaks ppc build.
