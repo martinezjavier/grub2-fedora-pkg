@@ -62,7 +62,7 @@ Patch15:	grub-2.00-linux-mbr.patch
 Patch16:	grub-2.00-no-huge-video.patch
 Patch17:	grub-2.00-ppc-hints.patch
 Patch18:	grub-2.00-support-vscsi-on-ibm-ppc.patch
-Patch19:	grub-2.00-ppc-usb-quiesce.patch
+#Patch19:	grub-2.00-ppc-usb-quiesce.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
