@@ -39,7 +39,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.0
-Release:        0.36.beta6%{?dist}
+Release:        0.37.beta6%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -63,6 +63,7 @@ Patch16:	grub-2.00-no-huge-video.patch
 Patch17:	grub-2.00-ppc-hints.patch
 Patch18:	grub-2.00-support-vscsi-on-ibm-ppc.patch
 Patch19:	grub-2.00-ppc-usb-quiesce.patch
+Patch20:	grub-2.00-no-double-free.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -388,6 +389,9 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Mon Jun 18 2012 Peter Jones <pjones@redhat.com> - 2.0-0.37.beta6
+- Fix double-free in grub-probe.
+
 * Wed Jun 06 2012 Peter Jones <pjones@redhat.com> - 2.0-0.36.beta6
 - Build with patch19 applied.
 
