@@ -33,13 +33,13 @@
 
 %endif
 
-%global tarversion 2.00~beta6
+%global tarversion 2.00~rc1
 %undefine _missing_build_ids_terminate_build
 
 Name:           grub2
 Epoch:          1
 Version:        2.0
-Release:        0.37.beta6%{?dist}
+Release:        0.37.rc1%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -50,20 +50,11 @@ Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
 Source3:        README.Fedora
 Source4:	http://unifoundry.com/unifont-5.1.20080820.pcf.gz
 Source5:	theme.tar.bz2
-Patch0:		grub-2.00-ieee1276.patch
-Patch1:		grub-2.00-no-canon.patch
 Patch2:		grub-1.99-just-say-linux.patch
 Patch5:		grub-1.99-ppc-terminfo.patch
 Patch10:	grub-2.00-add-fw_path-search.patch
 Patch11:	grub-2.00-Add-fwsetup.patch
 Patch13:	grub-2.00-Dont-set-boot-on-ppc.patch
-Patch14:	grub-2.00-ignore-gnulib-gets-stupidity.patch
-Patch15:	grub-2.00-linux-mbr.patch
-Patch16:	grub-2.00-no-huge-video.patch
-Patch17:	grub-2.00-ppc-hints.patch
-Patch18:	grub-2.00-support-vscsi-on-ibm-ppc.patch
-Patch19:	grub-2.00-ppc-usb-quiesce.patch
-Patch20:	grub-2.00-no-double-free.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
