@@ -55,6 +55,7 @@ Patch5:		grub-1.99-ppc-terminfo.patch
 Patch10:	grub-2.00-add-fw_path-search.patch
 Patch11:	grub-2.00-Add-fwsetup.patch
 Patch13:	grub-2.00-Dont-set-boot-on-ppc.patch
+Patch18:	grub-2.00-ignore-gnulib-gets-stupidity.patch
 Patch19:	grub-2.00-who-trusts-you-and-who-do-you-trust.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
