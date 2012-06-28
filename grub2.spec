@@ -33,13 +33,13 @@
 
 %endif
 
-%global tarversion 2.00~rc1
+%global tarversion 2.00
 %undefine _missing_build_ids_terminate_build
 
 Name:           grub2
 Epoch:          1
-Version:        2.0
-Release:        0.37.rc1%{?dist}
+Version:        2.00
+Release:        1%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -55,6 +55,7 @@ Patch5:		grub-1.99-ppc-terminfo.patch
 Patch10:	grub-2.00-add-fw_path-search.patch
 Patch11:	grub-2.00-Add-fwsetup.patch
 Patch13:	grub-2.00-Dont-set-boot-on-ppc.patch
+Patch19:	grub-2.00-who-trusts-you-and-who-do-you-trust.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
