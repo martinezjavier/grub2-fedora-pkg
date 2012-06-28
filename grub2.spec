@@ -381,6 +381,9 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Thu Jun 28 2012 Peter Jones <pjones@redhat.com> - 2.00-1
+- Rebase to grub-2.00 release.
+
 * Mon Jun 18 2012 Peter Jones <pjones@redhat.com> - 2.0-0.37.beta6
 - Fix double-free in grub-probe.
 
