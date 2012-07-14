@@ -89,7 +89,7 @@ index c6bd96e..3e83ee8 100644
 +  grub_efi_guid_t guid = GRUB_EFI_GLOBAL_VARIABLE_GUID;
 +  unsigned int x;
 +
-+  data = grub_efi_get_variable ("SecureBoots", &guid, &datasize);
++  data = grub_efi_get_variable ("SecureBoot", &guid, &datasize);
 +  if (!data)
 +    return GRUB_ERR_NONE;
 +
