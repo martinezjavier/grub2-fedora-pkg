@@ -39,7 +39,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        1%{?dist}
+Release:        3%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -50,13 +50,17 @@ Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
 Source3:        README.Fedora
 Source4:	http://unifoundry.com/unifont-5.1.20080820.pcf.gz
 Source5:	theme.tar.bz2
+#Source6:	grub-cd.cfg
 Patch2:		grub-1.99-just-say-linux.patch
 Patch5:		grub-1.99-ppc-terminfo.patch
 Patch10:	grub-2.00-add-fw_path-search.patch
 Patch11:	grub-2.00-Add-fwsetup.patch
 Patch13:	grub-2.00-Dont-set-boot-on-ppc.patch
 Patch18:	grub-2.00-ignore-gnulib-gets-stupidity.patch
-Patch19:	grub-2.00-who-trusts-you-and-who-do-you-trust.patch
+#Patch19:	grub-2.00-who-trusts-you-and-who-do-you-trust.patch
+Patch20:	grub2-linuxefi.patch
+Patch21:	grub2-cdpath.patch
+Patch22:	grub2-use-linuxefi.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -159,10 +163,15 @@ cd grub-efi-%{tarversion}
         --program-transform-name=s,grub,%{name},		\
 	--disable-werror
 make %{?_smp_mflags}
-./grub-mkimage -O %{grubefiarch} -o %{grubefiname}  -d grub-core \
-	part_gpt hfsplus fat ext2 btrfs normal chain boot configfile linux \
-	minicmd reboot halt search font gfxterm echo video all_video \
-	test gfxmenu png efifwsetup
+GRUB_MODULES="	all_video boot btrfs cat chain configfile echo efifwsetup \
+		efinet ext2 fat font gfxmenu gfxterm gzio halt hfsplus iso9660 \
+		jpeg linuxefi minicmd normal part_msdos part_gpt \
+		password_pbkdf2 png reboot search search_fs_uuid \
+		search_fs_file search_label test video"
+./grub-mkimage -O %{grubefiarch} -o %{grubefiname} -p /EFI/${efidir} \
+	       -d grub-core ${GRUB_MODULES}
+./grub-mkimage -O %{grubefiarch} -o grub-cd.efi -p /EFI/BOOT \
+               -d grub-core ${GRUB_MODULES}
 cd ..
 %endif
 
@@ -233,6 +242,8 @@ do
 #        install -m 755 -D $BASE$EXT $TGT
 done
 install -m 755 %{grubefiname} $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/%{grubefiname}
+install -m 755 grub-cd.efi $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/grub-cd.efi
+install -D -m 644 unicode.pf2 $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/fonts/unicode.pf2
 cd ..
 %endif
 
@@ -332,6 +343,7 @@ fi
 %{_libdir}/grub/%{grubefiarch}
 %config(noreplace) %{_sysconfdir}/%{name}-efi.cfg
 %attr(0755,root,root)/boot/efi/EFI/%{efidir}
+%attr(0755,root,root)/boot/efi/EFI/%{efidir}/fonts
 %ghost %config(noreplace) /boot/efi/EFI/%{efidir}/grub.cfg
 %doc grub-%{tarversion}/COPYING
 %endif
@@ -382,6 +394,15 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Wed Jul 25 2012 Peter Jones <pjones@redhat.com> - 2.00-3
+- Add some more code to support Secure Boot, and temporarily disable
+  some other bits that don't work well enough yet.
+  Resolves: rhbz#836695
+
+* Wed Jul 11 2012 Matthew Garrett <mjg@redhat.com> - 2.00-2
+- Set a prefix for the image - needed for installer work
+- Provide the font in the EFI directory for the same reason
+
 * Thu Jun 28 2012 Peter Jones <pjones@redhat.com> - 2.00-1
 - Rebase to grub-2.00 release.
 
