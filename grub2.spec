@@ -39,7 +39,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -168,7 +168,7 @@ GRUB_MODULES="	all_video boot btrfs cat chain configfile echo efifwsetup \
 		jpeg linuxefi minicmd normal part_msdos part_gpt \
 		password_pbkdf2 png reboot search search_fs_uuid \
 		search_fs_file search_label test video"
-./grub-mkimage -O %{grubefiarch} -o %{grubefiname} -p /EFI/${efidir} \
+./grub-mkimage -O %{grubefiarch} -o %{grubefiname} -p /EFI/%{efidir} \
 	       -d grub-core ${GRUB_MODULES}
 ./grub-mkimage -O %{grubefiarch} -o grub-cd.efi -p /EFI/BOOT \
                -d grub-core ${GRUB_MODULES}
@@ -394,6 +394,9 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Tue Aug 07 2012 Josh Boyer <jwboyer@redhat.com> - 2.00-4
+- Correct grub-mkimage invocation to use efidir RPM macro
+
 * Wed Jul 25 2012 Peter Jones <pjones@redhat.com> - 2.00-3
 - Add some more code to support Secure Boot, and temporarily disable
   some other bits that don't work well enough yet.
