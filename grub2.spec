@@ -78,6 +78,7 @@ BuildRequires:  autoconf automake autogen device-mapper-devel
 BuildRequires:	freetype-devel gettext-devel git
 BuildRequires:	texinfo
 BuildRequires:	dejavu-sans-fonts
+BuildRequires:	pesign >= 0.8-1
 
 Requires:	gettext os-prober which file system-logos
 Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
@@ -168,10 +169,12 @@ GRUB_MODULES="	all_video boot btrfs cat chain configfile echo efifwsetup \
 		jpeg linuxefi minicmd normal part_msdos part_gpt \
 		password_pbkdf2 png reboot search search_fs_uuid \
 		search_fs_file search_label test video"
-./grub-mkimage -O %{grubefiarch} -o %{grubefiname} -p /EFI/%{efidir} \
-	       -d grub-core ${GRUB_MODULES}
-./grub-mkimage -O %{grubefiarch} -o grub-cd.efi -p /EFI/BOOT \
-               -d grub-core ${GRUB_MODULES}
+./grub-mkimage -O %{grubefiarch} -o %{grubefiname}.orig -p /EFI/%{efidir} \
+		-d grub-core ${GRUB_MODULES}
+pesign -s -c "Red Hat Test Certificate" -i %{grubefiname}.orig -o %{grubefiname}
+./grub-mkimage -O %{grubefiarch} -o grub-cd.efi.orig -p /EFI/BOOT \
+		-d grub-core ${GRUB_MODULES}
+pesign -s -c "Red Hat Test Certificate" -i grub-cd.efi.orig -o grub-cd.efi
 cd ..
 %endif
 
@@ -394,8 +397,11 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
-* Tue Aug 07 2012 Josh Boyer <jwboyer@redhat.com> - 2.00-4
-- Correct grub-mkimage invocation to use efidir RPM macro
+* Wed Aug 08 2012 Peter Jones <pjones@redhat.com> - 2.00-4
+- Correct grub-mkimage invocation to use efidir RPM macro (jwb)
+- Sign with test keys on UEFI systems.
+- PPC - Handle device paths with commas correctly.
+  Related: rhbz#828740
 
 * Wed Jul 25 2012 Peter Jones <pjones@redhat.com> - 2.00-3
 - Add some more code to support Secure Boot, and temporarily disable
