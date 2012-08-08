@@ -18,10 +18,12 @@
 %ifarch %{ix86}
 %global grubefiarch i386-efi
 %global grubefiname grubia32.efi
+%global grubeficdname gcdia32.efi
 %endif
 %ifarch x86_64
 %global grubefiarch %{_arch}-efi
 %global grubefiname grubx64.efi
+%global grubeficdname gcdx64.efi
 %endif
 
 %if 0%{?rhel}
@@ -164,17 +166,19 @@ cd grub-efi-%{tarversion}
         --program-transform-name=s,grub,%{name},		\
 	--disable-werror
 make %{?_smp_mflags}
-GRUB_MODULES="	all_video boot btrfs cat chain configfile echo efifwsetup \
+CD_MODULES="	all_video boot btrfs cat chain configfile echo efifwsetup \
 		efinet ext2 fat font gfxmenu gfxterm gzio halt hfsplus iso9660 \
 		jpeg linuxefi minicmd normal part_msdos part_gpt \
 		password_pbkdf2 png reboot search search_fs_uuid \
 		search_fs_file search_label test video"
+./grub-mkimage -O %{grubefiarch} -o %{grubeficdname}.orig -p /EFI/BOOT \
+		-d grub-core ${CD_MODULES}
+pesign -s -c "Red Hat Test Certificate" -i %{grubeficdname}.orig \
+					-o %{grubeficdname}
+GRUB_MODULES="${CD_MODULES} mdraid09 mdraid1x"
 ./grub-mkimage -O %{grubefiarch} -o %{grubefiname}.orig -p /EFI/%{efidir} \
 		-d grub-core ${GRUB_MODULES}
 pesign -s -c "Red Hat Test Certificate" -i %{grubefiname}.orig -o %{grubefiname}
-./grub-mkimage -O %{grubefiarch} -o grub-cd.efi.orig -p /EFI/BOOT \
-		-d grub-core ${GRUB_MODULES}
-pesign -s -c "Red Hat Test Certificate" -i grub-cd.efi.orig -o grub-cd.efi
 cd ..
 %endif
 
@@ -245,7 +249,7 @@ do
 #        install -m 755 -D $BASE$EXT $TGT
 done
 install -m 755 %{grubefiname} $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/%{grubefiname}
-install -m 755 grub-cd.efi $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/grub-cd.efi
+install -m 755 %{grubeficdname} $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/%{grubeficdname}
 install -D -m 644 unicode.pf2 $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/fonts/unicode.pf2
 cd ..
 %endif
@@ -292,6 +296,18 @@ tar xjf %{SOURCE5}
 $RPM_BUILD_ROOT%{_bindir}/%{name}-mkfont -o boot/grub2/themes/system/DejaVuSans-10.pf2      -s 10 /usr/share/fonts/dejavu/DejaVuSans.ttf # "DejaVu Sans Regular 10"
 $RPM_BUILD_ROOT%{_bindir}/%{name}-mkfont -o boot/grub2/themes/system/DejaVuSans-12.pf2      -s 12 /usr/share/fonts/dejavu/DejaVuSans.ttf # "DejaVu Sans Regular 12"
 $RPM_BUILD_ROOT%{_bindir}/%{name}-mkfont -o boot/grub2/themes/system/DejaVuSans-Bold-14.pf2 -s 14 /usr/share/fonts/dejavu/DejaVuSans-Bold.ttf # "DejaVu Sans Bold 14"
+
+# Make selinux happy with exec stack binaries.
+mkdir ${RPM_BUILD_ROOT}%{_sysconfdir}/prelink.conf.d/
+cat << EOF > ${RPM_BUILD_ROOT}%{_sysconfdir}/prelink.conf.d/grub2.conf
+# these have execstack, and break under selinux
+-b /usr/bin/grub2-script-check
+-b /usr/bin/grub2-mkrelpath
+-b /usr/bin/grub2-fstest
+-b /usr/sbin/grub2-bios-setup
+-b /usr/sbin/grub2-probe
+-b /usr/sbin/grub2-sparc64-setup
+EOF
 
 %clean    
 rm -rf $RPM_BUILD_ROOT
@@ -379,6 +395,7 @@ fi
 %endif
 %{_bindir}/%{name}-script-check
 %{_sysconfdir}/bash_completion.d/grub
+%{_sysconfdir}/prelink.conf.d/grub2.conf
 %attr(0700,root,root) %dir %{_sysconfdir}/grub.d
 %config %{_sysconfdir}/grub.d/??_*
 %{_sysconfdir}/grub.d/README
@@ -397,6 +414,11 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Wed Aug 08 2012 Peter Jones <pjones@redhat.com>
+- Split module lists for UEFI boot vs UEFI cd images.
+- Add raid modules for UEFI image (related: #750794)
+- Include a prelink whitelist for binaries that need execstack (#839813)
+
 * Wed Aug 08 2012 Peter Jones <pjones@redhat.com> - 2.00-4
 - Correct grub-mkimage invocation to use efidir RPM macro (jwb)
 - Sign with test keys on UEFI systems.
