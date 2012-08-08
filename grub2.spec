@@ -63,6 +63,7 @@ Patch18:	grub-2.00-ignore-gnulib-gets-stupidity.patch
 Patch20:	grub2-linuxefi.patch
 Patch21:	grub2-cdpath.patch
 Patch22:	grub2-use-linuxefi.patch
+Patch23:	grub-2.00-dont-decrease-mmap-size.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -418,6 +419,7 @@ fi
 - Split module lists for UEFI boot vs UEFI cd images.
 - Add raid modules for UEFI image (related: #750794)
 - Include a prelink whitelist for binaries that need execstack (#839813)
+- Include fix efi memory map fix from upstream (#839363)
 
 * Wed Aug 08 2012 Peter Jones <pjones@redhat.com> - 2.00-4
 - Correct grub-mkimage invocation to use efidir RPM macro (jwb)
