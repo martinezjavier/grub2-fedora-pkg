@@ -1,8 +1,7 @@
 commit 032fac327b8db7af06509c730934a5c70bb74122
-Author: Matthew Garrett <mjg@redhat.com>
+From: Matthew Garrett <mjg@redhat.com>
 Date:   Mon Aug 13 14:46:51 2012 -0400
-
-    Don't permit insmod on secure boot
+Subject: Don't permit insmod on secure boot
 
 diff --git a/grub-core/kern/corecmd.c b/grub-core/kern/corecmd.c
 index eec575c..3df9dbd 100644
