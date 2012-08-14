@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -64,6 +64,7 @@ Patch20:	grub2-linuxefi.patch
 Patch21:	grub2-cdpath.patch
 Patch22:	grub2-use-linuxefi.patch
 Patch23:	grub-2.00-dont-decrease-mmap-size.patch
+Patch24:	grub-2.00-no-insmod-on-sb.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -81,7 +82,7 @@ BuildRequires:  autoconf automake autogen device-mapper-devel
 BuildRequires:	freetype-devel gettext-devel git
 BuildRequires:	texinfo
 BuildRequires:	dejavu-sans-fonts
-BuildRequires:	pesign >= 0.8-1
+BuildRequires:	pesign >= 0.10-3
 
 Requires:	gettext os-prober which file system-logos
 Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
@@ -174,12 +175,11 @@ CD_MODULES="	all_video boot btrfs cat chain configfile echo efifwsetup \
 		search_fs_file search_label test video"
 ./grub-mkimage -O %{grubefiarch} -o %{grubeficdname}.orig -p /EFI/BOOT \
 		-d grub-core ${CD_MODULES}
-pesign -s -c "Red Hat Test Certificate" -i %{grubeficdname}.orig \
-					-o %{grubeficdname}
+%pesign -s -i %{grubeficdname}.orig -o %{grubeficdname}
 GRUB_MODULES="${CD_MODULES} mdraid09 mdraid1x"
 ./grub-mkimage -O %{grubefiarch} -o %{grubefiname}.orig -p /EFI/%{efidir} \
 		-d grub-core ${GRUB_MODULES}
-pesign -s -c "Red Hat Test Certificate" -i %{grubefiname}.orig -o %{grubefiname}
+%pesign -s -i %{grubefiname}.orig -o %{grubefiname}
 cd ..
 %endif
 
@@ -415,6 +415,10 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Tue Aug 14 2012 Peter Jones <pjones@redhat.com> - 2.00-5
+- Move to newer pesign macros
+- Don't allow insmod if we're in secure-boot mode.
+
 * Wed Aug 08 2012 Peter Jones <pjones@redhat.com>
 - Split module lists for UEFI boot vs UEFI cd images.
 - Add raid modules for UEFI image (related: #750794)
