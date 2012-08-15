@@ -65,6 +65,7 @@ Patch21:	grub2-cdpath.patch
 Patch22:	grub2-use-linuxefi.patch
 Patch23:	grub-2.00-dont-decrease-mmap-size.patch
 Patch24:	grub-2.00-no-insmod-on-sb.patch
+Patch25:	grub-2.00-efidisk-ahci-workaround.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -416,6 +417,7 @@ fi
 
 %changelog
 * Tue Aug 14 2012 Peter Jones <pjones@redhat.com> - 2.00-5
+- Work around AHCI firmware bug in efidisk driver.
 - Move to newer pesign macros
 - Don't allow insmod if we're in secure-boot mode.
 
