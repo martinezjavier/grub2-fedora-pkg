@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -83,7 +83,9 @@ BuildRequires:  autoconf automake autogen device-mapper-devel
 BuildRequires:	freetype-devel gettext-devel git
 BuildRequires:	texinfo
 BuildRequires:	dejavu-sans-fonts
+%ifarch %{efiarchs}
 BuildRequires:	pesign >= 0.10-3
+%endif
 
 Requires:	gettext os-prober which file system-logos
 Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
@@ -416,6 +418,9 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Thu Aug 23 2012 David Cantrell <dcantrell@redhat.com> - 2.00-6
+- Only require pesign on EFI architectures (#851215)
+
 * Tue Aug 14 2012 Peter Jones <pjones@redhat.com> - 2.00-5
 - Work around AHCI firmware bug in efidisk driver.
 - Move to newer pesign macros
