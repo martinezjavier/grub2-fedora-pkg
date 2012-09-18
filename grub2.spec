@@ -133,7 +133,7 @@ cp %{SOURCE3} .
 # place unifont in the '.' from which configure is run
 cp %{SOURCE4} unifont.pcf.gz
 git init
-git config user.email "pjones@fedoraproject.org"
+git config user.email "grub2-owner@fedoraproject.org"
 git config user.name "Fedora Ninjas"
 git add .
 git commit -a -q -m "%{tarversion} baseline."
@@ -147,7 +147,7 @@ cp %{SOURCE3} .
 # place unifont in the '.' from which configure is run
 cp %{SOURCE4} unifont.pcf.gz
 git init
-git config user.email "pjones@fedoraproject.org"
+git config user.email "grub2-owner@fedoraproject.org"
 git config user.name "Fedora Ninjas"
 git add .
 git commit -a -q -m "%{tarversion} baseline."
