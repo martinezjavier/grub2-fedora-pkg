@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -55,7 +55,7 @@ Source5:	theme.tar.bz2
 #Source6:	grub-cd.cfg
 Patch2:		grub-1.99-just-say-linux.patch
 Patch5:		grub-1.99-ppc-terminfo.patch
-Patch10:	grub-2.00-add-fw_path-search.patch
+Patch10:	grub-2.00-add-fw_path-search_v2.patch
 Patch11:	grub-2.00-Add-fwsetup.patch
 Patch13:	grub-2.00-Dont-set-boot-on-ppc.patch
 Patch18:	grub-2.00-ignore-gnulib-gets-stupidity.patch
@@ -66,6 +66,7 @@ Patch22:	grub2-use-linuxefi.patch
 Patch23:	grub-2.00-dont-decrease-mmap-size.patch
 Patch24:	grub-2.00-no-insmod-on-sb.patch
 Patch25:	grub-2.00-efidisk-ahci-workaround.patch
+Patch26:	grub-2.00-increase-the-ieee1275-device-path-buffer-size.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -418,6 +419,13 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Thu Sep 20 2012 Peter Jones <pjones@redhat.com> - 2.00-8
+- Don't error on insmod on UEFI/SB, but also don't do any insmodding.
+- Increase device path size for ieee1275
+  Resolves: rhbz#857936
+- Make network booting work on ieee1275 machines.
+  Resolves: rhbz#857936
+
 * Wed Sep 05 2012 Matthew Garrett <mjg@redhat.com> - 2.00-7
 - Add Apple partition map support for EFI
 
