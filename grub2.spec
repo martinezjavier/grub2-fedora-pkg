@@ -176,7 +176,7 @@ CD_MODULES="	all_video boot btrfs cat chain configfile echo efifwsetup \
 		efinet ext2 fat font gfxmenu gfxterm gzio halt hfsplus iso9660 \
 		jpeg linuxefi minicmd normal part_apple part_msdos part_gpt \
 		password_pbkdf2 png reboot search search_fs_uuid \
-		search_fs_file search_label test video"
+		search_fs_file search_label sleep test video"
 ./grub-mkimage -O %{grubefiarch} -o %{grubeficdname}.orig -p /EFI/BOOT \
 		-d grub-core ${CD_MODULES}
 %pesign -s -i %{grubeficdname}.orig -o %{grubeficdname}
