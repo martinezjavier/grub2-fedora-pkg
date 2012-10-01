@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -67,6 +67,7 @@ Patch23:	grub-2.00-dont-decrease-mmap-size.patch
 Patch24:	grub-2.00-no-insmod-on-sb.patch
 Patch25:	grub-2.00-efidisk-ahci-workaround.patch
 Patch26:	grub-2.00-increase-the-ieee1275-device-path-buffer-size.patch
+Patch27:	grub-2.00-Handle-escapes-in-labels.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -234,6 +235,7 @@ rm -fr $RPM_BUILD_ROOT
 %ifarch %{efiarchs}
 cd grub-efi-%{tarversion}
 make DESTDIR=$RPM_BUILD_ROOT install
+find $RPM_BUILD_ROOT -iname "*.module" -exec chmod a-x {} \;
 
 # Ghost config file
 install -m 755 -d $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/
@@ -419,6 +421,10 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Mon Oct 01 2012 Peter Jones <pjones@redhat.com> - 1:2.00-9
+- Work around bug with using "\x20" in linux command line.
+  Related: rhbz#855849
+
 * Thu Sep 20 2012 Peter Jones <pjones@redhat.com> - 2.00-8
 - Don't error on insmod on UEFI/SB, but also don't do any insmodding.
 - Increase device path size for ieee1275
