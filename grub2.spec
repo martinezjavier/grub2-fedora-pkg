@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -68,6 +68,10 @@ Patch24:	grub-2.00-no-insmod-on-sb.patch
 Patch25:	grub-2.00-efidisk-ahci-workaround.patch
 Patch26:	grub-2.00-increase-the-ieee1275-device-path-buffer-size.patch
 Patch27:	grub-2.00-Handle-escapes-in-labels.patch
+Patch28:	grub-2.00-fix-http-crash.patch
+Patch29:	grub-2.00-Issue-separate-DNS-queries-for-ipv4-and-ipv6.patch
+Patch30:	grub-2.00-cas-reboot-support.patch
+Patch31:	grub-2.00-for-ppc-include-all-modules-in-the-core-image.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -421,6 +425,13 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Thu Oct 18 2012 Peter Jones <pjones@redhat.com> - 2.00-10
+- Various PPC fixes.
+- Fix crash fetching from http (gustavold, #860834)
+- Issue separate dns queries for ipv4 and ipv6 (gustavold, #860829)
+- Support IBM CAS reboot (pfsmorigo, #859223)
+- Include all modules in the core image on ppc (pfsmorigo, #866559)
+
 * Mon Oct 01 2012 Peter Jones <pjones@redhat.com> - 1:2.00-9
 - Work around bug with using "\x20" in linux command line.
   Related: rhbz#855849
