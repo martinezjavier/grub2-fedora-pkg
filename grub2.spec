@@ -90,7 +90,7 @@ BuildRequires:	freetype-devel gettext-devel git
 BuildRequires:	texinfo
 BuildRequires:	dejavu-sans-fonts
 %ifarch %{efiarchs}
-BuildRequires:	pesign >= 0.10-3
+BuildRequires:	pesign >= 0.99-8
 %endif
 
 Requires:	gettext os-prober which file system-logos
@@ -425,6 +425,9 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Mon Oct 22 2012 Peter Jones <pjones@redhat.com> - 2.00-10
+- Rebuild with newer pesign so we'll get signed with the final signing keys.
+
 * Thu Oct 18 2012 Peter Jones <pjones@redhat.com> - 2.00-10
 - Various PPC fixes.
 - Fix crash fetching from http (gustavold, #860834)

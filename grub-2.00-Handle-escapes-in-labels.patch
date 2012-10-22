@@ -1,19 +1,21 @@
-From d08e2511db353b2db9c5785d3f22079674abd708 Mon Sep 17 00:00:00 2001
+From 20ce60f211cef5f2c553130ba24b049381915252 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 1 Oct 2012 13:24:37 -0400
-Subject: [PATCH] Pass "\x[[:hex:]][[:hex:]]" straight through unmolested.
+Subject: [PATCH] Handle "\x[[:hex:]][[:hex:]]" style escapes as well.
 
+Sometimes we need to escape spaces and such in the config file, and we
+do so by passing them in hex.
 ---
- grub-core/commands/wildcard.c | 16 +++++++++++++++-
- grub-core/lib/cmdline.c       | 34 +++++++++++++++++++++++++++++++--
- grub-core/script/execute.c    | 44 +++++++++++++++++++++++++++++++++++++------
- 3 files changed, 85 insertions(+), 9 deletions(-)
+ grub-core/commands/wildcard.c | 26 +++++++++++++++++++-
+ grub-core/lib/cmdline.c       | 44 ++++++++++++++++++++++++++++++++--
+ grub-core/script/execute.c    | 55 ++++++++++++++++++++++++++++++++++++++-----
+ 3 files changed, 116 insertions(+), 9 deletions(-)
 
 diff --git a/grub-core/commands/wildcard.c b/grub-core/commands/wildcard.c
-index 2b73d9a..d1235dc 100644
+index 2b73d9a..8ea76c9 100644
 --- a/grub-core/commands/wildcard.c
 +++ b/grub-core/commands/wildcard.c
-@@ -420,6 +420,12 @@ check_file (const char *dir, const char *basename)
+@@ -420,6 +420,23 @@ check_file (const char *dir, const char *basename)
    return found;
  }
  
@@ -23,20 +25,30 @@ index 2b73d9a..d1235dc 100644
 +  return ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'));
 +}
 +
++static grub_int32_t
++hex_to_int(char c)
++{
++  int i = c | 0x20;
++  if (i >= '0' && i < '9')
++    return i - '0';
++  if (i >= 'a' && i < 'f')
++    return i - ('a' - 10);
++  return -1;
++}
++
  static void
  unescape (char *out, const char *in, const char *end)
  {
-@@ -428,7 +434,15 @@ unescape (char *out, const char *in, const char *end)
+@@ -428,7 +445,14 @@ unescape (char *out, const char *in, const char *end)
  
    for (optr = out, iptr = in; iptr < end;)
      {
 -      if (*iptr == '\\' && iptr + 1 < end)
 +      if (*iptr == '\\' && iptr + 3 < end && iptr[1] == 'x' && is_hex(iptr[2]) && is_hex(iptr[3]))
 +	{
-+	  *optr++ = *iptr++;
-+	  *optr++ = *iptr++;
-+	  *optr++ = *iptr++;
-+	  *optr++ = *iptr++;
++	  int a = (hex_to_int(iptr[2]) << 4) | (hex_to_int(iptr[3]) & 0xf);
++	  *optr++ = a & 0xff;
++	  iptr += 4;
 +	  continue;
 +	}
 +      else if (*iptr == '\\' && iptr + 1 < end)
@@ -44,7 +56,7 @@ index 2b73d9a..d1235dc 100644
  	  *optr++ = iptr[1];
  	  iptr += 2;
 diff --git a/grub-core/lib/cmdline.c b/grub-core/lib/cmdline.c
-index a702e64..c8605a7 100644
+index a702e64..78a96fa 100644
 --- a/grub-core/lib/cmdline.c
 +++ b/grub-core/lib/cmdline.c
 @@ -20,6 +20,12 @@
@@ -75,27 +87,44 @@ index a702e64..c8605a7 100644
  	size++;
        else if (*c == ' ')
  	space = 1;
-@@ -82,7 +94,25 @@ int grub_create_loader_cmdline (int argc, char *argv[], char *buf,
+@@ -59,6 +71,17 @@ unsigned int grub_loader_cmdline_size (int argc, char *argv[])
+   return size;
+ }
+ 
++static grub_int32_t
++hex_to_int(char c)
++{
++  int i = c | 0x20;
++  if (i >= '0' && i < '9')
++    return i - '0';
++  if (i >= 'a' && i < 'f')
++    return i - ('a' - 10);
++  return -1;
++}
++
+ int grub_create_loader_cmdline (int argc, char *argv[], char *buf,
+ 				grub_size_t size)
+ {
+@@ -82,7 +105,24 @@ int grub_create_loader_cmdline (int argc, char *argv[], char *buf,
  
        while (*c)
  	{
 -	  if (*c == '\\' || *c == '\'' || *c == '"')
-+	  if (*c == ' ')
++	  if (*c < 0x21 || *c > 0x7e)
 +	    {
++	      char int_to_hex[] = "0123456789abcdef";
 +	      *buf++ = '\\';
 +	      *buf++ = 'x';
-+	      *buf++ = '2';
-+	      *buf++ = '0';
++	      *buf++ = int_to_hex[(*c & 0xf0) >> 4];
++	      *buf++ = int_to_hex[*c & 0xf];
 +	      c++;
 +	      continue;
 +	    }
-+	  else if (*c == '\\' && *(c+1) == 'x' &&
-+		   is_hex(*(c+2)) && is_hex(*(c+3)))
++	  else if (c[0] == '\\' && c[1] == 'x' && is_hex(c[2]) && is_hex(c[3]))
 +	    {
-+	      *buf++ = *c++;
-+	      *buf++ = *c++;
-+	      *buf++ = *c++;
-+	      *buf++ = *c++;
++	      int a = (hex_to_int(c[2]) << 4) | (hex_to_int(c[3]) & 0xf);
++	      *buf++ = a & 0xff;
++	      c += 4;
 +	      continue;
 +	    }
 +	  else if (*c == '\\' || *c == '\'' || *c == '"')
@@ -103,10 +132,10 @@ index a702e64..c8605a7 100644
  
  	  *buf++ = *c;
 diff --git a/grub-core/script/execute.c b/grub-core/script/execute.c
-index b5e6eb0..c44eced 100644
+index b5e6eb0..85a4bea 100644
 --- a/grub-core/script/execute.c
 +++ b/grub-core/script/execute.c
-@@ -52,6 +52,12 @@ static struct grub_script_scope *scope = 0;
+@@ -52,6 +52,23 @@ static struct grub_script_scope *scope = 0;
  /* Wildcard translator for GRUB script.  */
  struct grub_script_wildcard_translator *grub_wildcard_translator;
  
@@ -116,47 +145,55 @@ index b5e6eb0..c44eced 100644
 +  return ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'));
 +}
 +
++static grub_int32_t
++hex_to_int(char c)
++{
++  int i = c | 0x20;
++  if (i >= '0' && i < '9')
++    return i - '0';
++  if (i >= 'a' && i < 'f')
++    return i - ('a' - 10);
++  return -1;
++}
++
  static char*
  wildcard_escape (const char *s)
  {
-@@ -68,7 +74,15 @@ wildcard_escape (const char *s)
+@@ -68,7 +85,16 @@ wildcard_escape (const char *s)
    i = 0;
    while ((ch = *s++))
      {
 -      if (ch == '*' || ch == '\\' || ch == '?')
-+      if (ch == '\\' && s[0] == 'x' && is_hex(s[1]) && is_hex(s[2]))
++      if (ch < 0x21 || ch > 0x7e)
 +	{
-+	  p[i++] = ch;
-+	  p[i++] = *s++;
-+	  p[i++] = *s++;
-+	  p[i++] = *s++;
++	  char int_to_hex[] = "0123456789abcdef";
++	  p[i++] = '\\';
++	  p[i++] = 'x';
++	  p[i++] = int_to_hex[(ch & 0xf0) >> 4];
++	  p[i++] = int_to_hex[ch & 0xf];
 +	  continue;
 +	}
 +      else if (ch == '*' || ch == '\\' || ch == '?')
  	p[i++] = '\\';
        p[i++] = ch;
      }
-@@ -92,7 +106,14 @@ wildcard_unescape (const char *s)
+@@ -92,7 +118,14 @@ wildcard_unescape (const char *s)
    i = 0;
    while ((ch = *s++))
      {
 -      if (ch == '\\')
 +      if (ch == '\\' && s[0] == 'x' && is_hex(s[1]) && is_hex(s[2]))
 +	{
-+	  p[i++] = '\\';
-+	  p[i++] = *s++;
-+	  p[i++] = *s++;
-+	  p[i++] = *s++;
++	  int a = (hex_to_int(s[1]) << 4) | (hex_to_int(s[2]) & 0xf);
++	  p[i++] = a & 0xff;
++	  s += 3;
++	  continue;
 +	}
 +      else if (ch == '\\')
  	p[i++] = *s++;
        else
  	p[i++] = ch;
-@@ -381,14 +402,24 @@ parse_string (const char *str,
-   int escaped = 0;
-   const char *optr;
- 
-   for (ptr = str; ptr && *ptr; )
+@@ -385,10 +418,20 @@ parse_string (const char *str,
      switch (*ptr)
        {
        case '\\':
@@ -164,12 +201,12 @@ index b5e6eb0..c44eced 100644
 -	if (!escaped && put)
 -	  *((*put)++) = '\\';
 -	ptr++;
-+	if (!escaped && put && *(ptr+1) == 'x' && is_hex(*(ptr+2)) && is_hex(*(ptr+3)))
++	if (!escaped && put && ptr[1] == 'x' && is_hex(ptr[2]) &&
++						is_hex(ptr[3]))
 +	  {
-+	    *((*put)++) = *ptr++;
-+	    *((*put)++) = *ptr++;
-+	    *((*put)++) = *ptr++;
-+	    *((*put)++) = *ptr++;
++	    int a = (hex_to_int(ptr[2]) << 4) | (hex_to_int(ptr[3]) & 0xf);
++	    *((*put)++) = a & 0xff;
++	    ptr += 4;
 +	  }
 +	else
 +	  {
