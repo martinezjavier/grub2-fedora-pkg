@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -425,7 +425,7 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
-* Mon Oct 22 2012 Peter Jones <pjones@redhat.com> - 2.00-10
+* Mon Oct 22 2012 Peter Jones <pjones@redhat.com> - 2.00-11
 - Rebuild with newer pesign so we'll get signed with the final signing keys.
 
 * Thu Oct 18 2012 Peter Jones <pjones@redhat.com> - 2.00-10
