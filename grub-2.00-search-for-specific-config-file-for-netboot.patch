@@ -190,9 +190,11 @@ diff --git a/include/grub/net.h b/include/grub/net.h
 index 45348dd..09b8d56 100644
 --- a/include/grub/net.h
 +++ b/include/grub/net.h
-@@ -534,4 +534,7 @@ extern char *grub_net_default_server;
+@@ -534,6 +534,9 @@ extern char *grub_net_default_server;
  #define GRUB_NET_TRIES 40
  #define GRUB_NET_INTERVAL 400
+
+ #define VLANTAG_IDENTIFIER 0x8100
  
 +grub_err_t
 +grub_net_search_configfile (char *config);
