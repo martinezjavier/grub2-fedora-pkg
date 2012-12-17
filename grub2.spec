@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        13%{?dist}
+Release:        14%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -77,6 +77,7 @@ Patch33:	follow-the-symbolic-link-ieee1275.patch
 Patch34:	grub-2.00-add-X-option-to-printf-functions.patch
 Patch35:	grub-2.00-dhcp-client-id-and-uuid-options-added.patch
 Patch36:	grub-2.00-search-for-specific-config-file-for-netboot.patch
+Patch37:	grub2-add-bootpath-device-to-the-list.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -430,6 +431,9 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Mon Dec 17 2012 Karsten Hopp <karsten@redhat.com> 2.00-14
+- add bootpath device to the device list (pfsmorigo, #886685)
+
 * Tue Nov 27 2012 Peter Jones <pjones@redhat.com> - 2.00-13
 - Add vlan tag support (pfsmorigo, #871563)
 - Follow symlinks during PReP installation in grub2-install (pfsmorigo, #874234)
