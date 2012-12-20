@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        14%{?dist}
+Release:        15%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -431,6 +431,9 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Thu Dec 20 2012 Dennis Gilmore <dennis@ausil.us> - 2.00-15
+- bump nvr
+
 * Mon Dec 17 2012 Karsten Hopp <karsten@redhat.com> 2.00-14
 - add bootpath device to the device list (pfsmorigo, #886685)
 
