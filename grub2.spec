@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        12%{?dist}
+Release:        15%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -72,6 +72,12 @@ Patch28:	grub-2.00-fix-http-crash.patch
 Patch29:	grub-2.00-Issue-separate-DNS-queries-for-ipv4-and-ipv6.patch
 Patch30:	grub-2.00-cas-reboot-support.patch
 Patch31:	grub-2.00-for-ppc-include-all-modules-in-the-core-image.patch
+Patch32:	add-vlan-tag-support.patch
+Patch33:	follow-the-symbolic-link-ieee1275.patch
+Patch34:	grub-2.00-add-X-option-to-printf-functions.patch
+Patch35:	grub-2.00-dhcp-client-id-and-uuid-options-added.patch
+Patch36:	grub-2.00-search-for-specific-config-file-for-netboot.patch
+Patch37:	grub2-add-bootpath-device-to-the-list.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -181,7 +187,7 @@ CD_MODULES="	all_video boot btrfs cat chain configfile echo efifwsetup \
 		efinet ext2 fat font gfxmenu gfxterm gzio halt hfsplus iso9660 \
 		jpeg linuxefi minicmd normal part_apple part_msdos part_gpt \
 		password_pbkdf2 png reboot search search_fs_uuid \
-		search_fs_file search_label sleep test video"
+		search_fs_file search_label sleep test video xfs"
 ./grub-mkimage -O %{grubefiarch} -o %{grubeficdname}.orig -p /EFI/BOOT \
 		-d grub-core ${CD_MODULES}
 %pesign -s -i %{grubeficdname}.orig -o %{grubeficdname}
@@ -425,6 +431,17 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Thu Dec 20 2012 Dennis Gilmore <dennis@ausil.us> - 2.00-15
+- bump nvr
+
+* Mon Dec 17 2012 Karsten Hopp <karsten@redhat.com> 2.00-14
+- add bootpath device to the device list (pfsmorigo, #886685)
+
+* Tue Nov 27 2012 Peter Jones <pjones@redhat.com> - 2.00-13
+- Add vlan tag support (pfsmorigo, #871563)
+- Follow symlinks during PReP installation in grub2-install (pfsmorigo, #874234)
+- Improve search paths for config files on network boot (pfsmorigo, #873406)
+
 * Tue Oct 23 2012 Peter Jones <pjones@redhat.com> - 2.00-12
 - Don't load modules when grub transitions to "normal" mode on UEFI.
 
