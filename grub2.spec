@@ -78,6 +78,7 @@ Patch34:	grub-2.00-add-X-option-to-printf-functions.patch
 Patch35:	grub-2.00-dhcp-client-id-and-uuid-options-added.patch
 Patch36:	grub-2.00-search-for-specific-config-file-for-netboot.patch
 Patch37:	grub2-add-bootpath-device-to-the-list.patch
+Patch38:	grub-2.00-add-GRUB-DISABLE-SUBMENU-option.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -183,15 +184,15 @@ cd grub-efi-%{tarversion}
         --program-transform-name=s,grub,%{name},		\
 	--disable-werror
 make %{?_smp_mflags}
-CD_MODULES="	all_video boot btrfs cat chain configfile echo efifwsetup \
+GRUB_MODULES="	all_video boot btrfs cat chain configfile echo efifwsetup \
 		efinet ext2 fat font gfxmenu gfxterm gzio halt hfsplus iso9660 \
 		jpeg linuxefi minicmd normal part_apple part_msdos part_gpt \
 		password_pbkdf2 png reboot search search_fs_uuid \
-		search_fs_file search_label sleep test video xfs"
+		search_fs_file search_label sleep test video xfs \
+		mdraid09 mdraid1x"
 ./grub-mkimage -O %{grubefiarch} -o %{grubeficdname}.orig -p /EFI/BOOT \
-		-d grub-core ${CD_MODULES}
+		-d grub-core ${GRUB_MODULES}
 %pesign -s -i %{grubeficdname}.orig -o %{grubeficdname}
-GRUB_MODULES="${CD_MODULES} mdraid09 mdraid1x"
 ./grub-mkimage -O %{grubefiarch} -o %{grubefiname}.orig -p /EFI/%{efidir} \
 		-d grub-core ${GRUB_MODULES}
 %pesign -s -i %{grubefiname}.orig -o %{grubefiname}
@@ -431,6 +432,9 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Tue Feb 12 2013 Peter Jones <pjones@redhat.com> - 2.00-15.pj0
+- Add various config file related changes.
+
 * Thu Dec 20 2012 Dennis Gilmore <dennis@ausil.us> - 2.00-15
 - bump nvr
 
