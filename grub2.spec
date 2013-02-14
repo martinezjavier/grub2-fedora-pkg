@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        15%{?dist}
+Release:        16%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -79,6 +79,7 @@ Patch35:	grub-2.00-dhcp-client-id-and-uuid-options-added.patch
 Patch36:	grub-2.00-search-for-specific-config-file-for-netboot.patch
 Patch37:	grub2-add-bootpath-device-to-the-list.patch
 Patch38:	grub-2.00-add-GRUB-DISABLE-SUBMENU-option.patch
+Patch39:	grub-2.00-support-bls-config.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -189,7 +190,7 @@ GRUB_MODULES="	all_video boot btrfs cat chain configfile echo efifwsetup \
 		jpeg linuxefi minicmd normal part_apple part_msdos part_gpt \
 		password_pbkdf2 png reboot search search_fs_uuid \
 		search_fs_file search_label sleep test video xfs \
-		mdraid09 mdraid1x"
+		mdraid09 mdraid1x blscfg"
 ./grub-mkimage -O %{grubefiarch} -o %{grubeficdname}.orig -p /EFI/BOOT \
 		-d grub-core ${GRUB_MODULES}
 %pesign -s -i %{grubeficdname}.orig -o %{grubeficdname}
@@ -432,6 +433,10 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
+* Thu Feb 14 2013 Peter Jones <pjones@redhat.com> - 2.00-16
+- Allow the user to disable submenu generation
+- (partially) support BLS-style configuration stanzas.
+
 * Tue Feb 12 2013 Peter Jones <pjones@redhat.com> - 2.00-15.pj0
 - Add various config file related changes.
 
