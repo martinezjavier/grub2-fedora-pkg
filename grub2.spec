@@ -80,6 +80,7 @@ Patch36:	grub-2.00-search-for-specific-config-file-for-netboot.patch
 Patch37:	grub2-add-bootpath-device-to-the-list.patch
 Patch38:	grub-2.00-add-GRUB-DISABLE-SUBMENU-option.patch
 Patch39:	grub-2.00-support-bls-config.patch
+Patch40:	grub-2.00-fix-docs.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
