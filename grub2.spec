@@ -418,6 +418,7 @@ Patch0363: 0363-Move-bash-completion-script-922997.patch
 Patch0364: 0002-configure.ac-Don-t-use-extended-registers-on-x86_64.patch
 Patch0365: 0003-configure.ac-Don-t-disable-extended-registers-on-emu.patch
 Patch0366: 0004-conf-Makefile.common-Poison-float-and-double-on-non-.patch
+Patch0367: grub-2.00-quiet-boot.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
