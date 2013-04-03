@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        17%{?dist}
+Release:        17%{?dist}.pj0
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -81,6 +81,7 @@ Patch37:	grub2-add-bootpath-device-to-the-list.patch
 Patch38:	grub-2.00-add-GRUB-DISABLE-SUBMENU-option.patch
 Patch39:	grub-2.00-support-bls-config.patch
 Patch40:	grub-2.00-handle-4k-sectors.patch
+Patch41:	grub-2.00-move-bash-completions.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -414,7 +415,7 @@ fi
 %{_bindir}/%{name}-mkrescue
 %endif
 %{_bindir}/%{name}-script-check
-%{_sysconfdir}/bash_completion.d/grub
+%{_datarootdir}/bash-completion/completions/grub
 %{_sysconfdir}/prelink.conf.d/grub2.conf
 %attr(0700,root,root) %dir %{_sysconfdir}/grub.d
 %config %{_sysconfdir}/grub.d/??_*
@@ -436,6 +437,7 @@ fi
 %changelog
 * Wed Apr 03 2013 Peter Jones <pjones@redhat.com> - 2.00-17
 - Fix booting from drives with 4k sectors on UEFI.
+- Move bash completion to new location (#922997).
 
 * Thu Feb 14 2013 Peter Jones <pjones@redhat.com> - 2.00-16
 - Allow the user to disable submenu generation
