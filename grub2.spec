@@ -435,9 +435,10 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %changelog
-* Wed Apr 03 2013 Peter Jones <pjones@redhat.com> - 2.00-17
+* Thu Apr 04 2013 Peter Jones <pjones@redhat.com> - 2.00-17
 - Fix booting from drives with 4k sectors on UEFI.
-- Move bash completion to new location (#922997).
+- Move bash completion to new location (#922997)
+- Include lvm support for /boot (#906203)
 
 * Thu Feb 14 2013 Peter Jones <pjones@redhat.com> - 2.00-16
 - Allow the user to disable submenu generation
