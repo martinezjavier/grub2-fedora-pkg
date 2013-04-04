@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        17%{?dist}.pj0
+Release:        17%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -189,8 +189,8 @@ cd grub-efi-%{tarversion}
 make %{?_smp_mflags}
 GRUB_MODULES="	all_video boot btrfs cat chain configfile echo efifwsetup \
 		efinet ext2 fat font gfxmenu gfxterm gzio halt hfsplus iso9660 \
-		jpeg linuxefi minicmd normal part_apple part_msdos part_gpt \
-		password_pbkdf2 png reboot search search_fs_uuid \
+		jpeg linuxefi lvm minicmd normal part_apple part_msdos \
+		part_gpt password_pbkdf2 png reboot search search_fs_uuid \
 		search_fs_file search_label sleep test video xfs \
 		mdraid09 mdraid1x blscfg"
 ./grub-mkimage -O %{grubefiarch} -o %{grubeficdname}.orig -p /EFI/BOOT \
