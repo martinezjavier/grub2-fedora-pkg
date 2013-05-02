@@ -1,0 +1,200 @@
+From 14870ff4617fd482054ceb2f307a91582e5e8817 Mon Sep 17 00:00:00 2001
+From: Peter Jones <pjones@redhat.com>
+Date: Thu, 18 Apr 2013 13:10:53 -0400
+Subject: [PATCH] Use memcpy instead of direct assignment for complex values.
+ (#949761)
+
+gcc 4.8.0 will emit SSE copies for such large chunks of data, and that
+means using XMM0, which the UEFI ABI forbids.
+
+So with 4.7.2, you get:
+000000000000000f <canvas_set_bounds>:
+   f:   48 8b 06                mov    (%rsi),%rax
+  12:   48 89 47 38             mov    %rax,0x38(%rdi)
+  16:   48 8b 46 08             mov    0x8(%rsi),%rax
+  1a:   48 89 47 40             mov    %rax,0x40(%rdi)
+  1e:   c3                      retq
+
+And with 4.8.0 you get:
+000000000000000f <canvas_set_bounds>:
+   f:   48 83 ec 18             sub    $0x18,%rsp
+  13:   0f 10 06                movups (%rsi),%xmm0
+  16:   0f 29 04 24             movaps %xmm0,(%rsp)
+  1a:   0f 11 47 38             movups %xmm0,0x38(%rdi)
+  1e:   48 83 c4 18             add    $0x18,%rsp
+  22:   c3                      retq
+
+As soon as we hit the movaps, we hit a trap. Once we do, though, since the
+memory pointed at by the IDT is basically random memory during UEFI execution,
+we find our CPU looping between the entry point for #UD (invalid opcode) and
+the first piece of garbage in RAM after it.
+
+Right now, we have two options.  Either 1) trick the compiler into not
+emitting that sequence of instructions, or 2) turn off SSE instruction
+generation.  Number 2 currently requires making gnulib's printf not use
+double or long double.  It's probably the right thing to do, but I'm not
+sure what the right way to do it is.
+
+So the following is method #1.
+---
+ grub-core/gfxmenu/gui_box.c               | 4 ++--
+ grub-core/gfxmenu/gui_canvas.c            | 4 ++--
+ grub-core/gfxmenu/gui_circular_progress.c | 4 ++--
+ grub-core/gfxmenu/gui_image.c             | 4 ++--
+ grub-core/gfxmenu/gui_label.c             | 4 ++--
+ grub-core/gfxmenu/gui_list.c              | 4 ++--
+ grub-core/gfxmenu/gui_progress_bar.c      | 4 ++--
+ 7 files changed, 14 insertions(+), 14 deletions(-)
+
+diff --git a/grub-core/gfxmenu/gui_box.c b/grub-core/gfxmenu/gui_box.c
+index 38b15f9..702f844 100644
+--- a/grub-core/gfxmenu/gui_box.c
++++ b/grub-core/gfxmenu/gui_box.c
+@@ -264,7 +264,7 @@ static void
+ box_set_bounds (void *vself, const grub_video_rect_t *bounds)
+ {
+   grub_gui_box_t self = vself;
+-  self->bounds = *bounds;
++  memcpy(&self->bounds, bounds, sizeof (*bounds));
+   self->layout_func (self, 1, 0, 0);   /* Relayout the children.  */
+ }
+ 
+@@ -272,7 +272,7 @@ static void
+ box_get_bounds (void *vself, grub_video_rect_t *bounds)
+ {
+   grub_gui_box_t self = vself;
+-  *bounds = self->bounds;
++  memcpy(bounds, &self->bounds, sizeof (*bounds));
+ }
+ 
+ /* The box's preferred size is based on the preferred sizes
+diff --git a/grub-core/gfxmenu/gui_canvas.c b/grub-core/gfxmenu/gui_canvas.c
+index b3919c2..3d4fae9 100644
+--- a/grub-core/gfxmenu/gui_canvas.c
++++ b/grub-core/gfxmenu/gui_canvas.c
+@@ -160,14 +160,14 @@ static void
+ canvas_set_bounds (void *vself, const grub_video_rect_t *bounds)
+ {
+   grub_gui_canvas_t self = vself;
+-  self->bounds = *bounds;
++  memcpy(&self->bounds, bounds, sizeof (*bounds));
+ }
+ 
+ static void
+ canvas_get_bounds (void *vself, grub_video_rect_t *bounds)
+ {
+   grub_gui_canvas_t self = vself;
+-  *bounds = self->bounds;
++  memcpy(bounds, &self->bounds, sizeof (*bounds));
+ }
+ 
+ static grub_err_t
+diff --git a/grub-core/gfxmenu/gui_circular_progress.c b/grub-core/gfxmenu/gui_circular_progress.c
+index e06d40c..f7684cc 100644
+--- a/grub-core/gfxmenu/gui_circular_progress.c
++++ b/grub-core/gfxmenu/gui_circular_progress.c
+@@ -202,14 +202,14 @@ static void
+ circprog_set_bounds (void *vself, const grub_video_rect_t *bounds)
+ {
+   circular_progress_t self = vself;
+-  self->bounds = *bounds;
++  memcpy(&self->bounds, bounds, sizeof (*bounds));
+ }
+ 
+ static void
+ circprog_get_bounds (void *vself, grub_video_rect_t *bounds)
+ {
+   circular_progress_t self = vself;
+-  *bounds = self->bounds;
++  memcpy(bounds, &self->bounds, sizeof (*bounds));
+ }
+ 
+ static void
+diff --git a/grub-core/gfxmenu/gui_image.c b/grub-core/gfxmenu/gui_image.c
+index 29784ed..d864096 100644
+--- a/grub-core/gfxmenu/gui_image.c
++++ b/grub-core/gfxmenu/gui_image.c
+@@ -158,7 +158,7 @@ static void
+ image_set_bounds (void *vself, const grub_video_rect_t *bounds)
+ {
+   grub_gui_image_t self = vself;
+-  self->bounds = *bounds;
++  memcpy(&self->bounds, bounds, sizeof (*bounds));
+   rescale_image (self);
+ }
+ 
+@@ -166,7 +166,7 @@ static void
+ image_get_bounds (void *vself, grub_video_rect_t *bounds)
+ {
+   grub_gui_image_t self = vself;
+-  *bounds = self->bounds;
++  memcpy(bounds, &self->bounds, sizeof (*bounds));
+ }
+ 
+ /* FIXME: inform rendering system it's not forced minimum.  */
+diff --git a/grub-core/gfxmenu/gui_label.c b/grub-core/gfxmenu/gui_label.c
+index 637578f..daf6290 100644
+--- a/grub-core/gfxmenu/gui_label.c
++++ b/grub-core/gfxmenu/gui_label.c
+@@ -134,14 +134,14 @@ static void
+ label_set_bounds (void *vself, const grub_video_rect_t *bounds)
+ {
+   grub_gui_label_t self = vself;
+-  self->bounds = *bounds;
++  memcpy(&self->bounds, bounds, sizeof (*bounds));
+ }
+ 
+ static void
+ label_get_bounds (void *vself, grub_video_rect_t *bounds)
+ {
+   grub_gui_label_t self = vself;
+-  *bounds = self->bounds;
++  memcpy(bounds, &self->bounds, sizeof (*bounds));
+ }
+ 
+ static void
+diff --git a/grub-core/gfxmenu/gui_list.c b/grub-core/gfxmenu/gui_list.c
+index 1982d9a..23b29ba 100644
+--- a/grub-core/gfxmenu/gui_list.c
++++ b/grub-core/gfxmenu/gui_list.c
+@@ -362,14 +362,14 @@ static void
+ list_set_bounds (void *vself, const grub_video_rect_t *bounds)
+ {
+   list_impl_t self = vself;
+-  self->bounds = *bounds;
++  memcpy(&self->bounds, bounds, sizeof (*bounds));
+ }
+ 
+ static void
+ list_get_bounds (void *vself, grub_video_rect_t *bounds)
+ {
+   list_impl_t self = vself;
+-  *bounds = self->bounds;
++  memcpy(bounds, &self->bounds, sizeof (*bounds));
+ }
+ 
+ static void
+diff --git a/grub-core/gfxmenu/gui_progress_bar.c b/grub-core/gfxmenu/gui_progress_bar.c
+index 965c6b3..4e458e9 100644
+--- a/grub-core/gfxmenu/gui_progress_bar.c
++++ b/grub-core/gfxmenu/gui_progress_bar.c
+@@ -232,14 +232,14 @@ static void
+ progress_bar_set_bounds (void *vself, const grub_video_rect_t *bounds)
+ {
+   grub_gui_progress_bar_t self = vself;
+-  self->bounds = *bounds;
++  memcpy(&self->bounds, bounds, sizeof (*bounds));
+ }
+ 
+ static void
+ progress_bar_get_bounds (void *vself, grub_video_rect_t *bounds)
+ {
+   grub_gui_progress_bar_t self = vself;
+-  *bounds = self->bounds;
++  memcpy(bounds, &self->bounds, sizeof (*bounds));
+ }
+ 
+ static void
+-- 
+1.8.2.1
+
