@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        17%{?dist}.pj0
+Release:        18%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -437,7 +437,7 @@ BuildRequires:	dejavu-sans-fonts
 BuildRequires:	pesign >= 0.99-8
 %endif
 
-Requires:	gettext os-prober which file system-logos
+Requires:	gettext os-prober which file
 Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
 Requires(pre):  dracut
 Requires(post): dracut
@@ -473,6 +473,17 @@ The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
 bootloader with modular architecture.  It support rich varietyof kernel formats,
 file systems, computer architectures and hardware devices.  This subpackage
 provides tools for support of all platforms.
+
+%package starfield-theme
+Summary:	An example theme for GRUB.
+Group:		System Environment/Base
+Requires:	system-logos
+
+%description starfield-theme
+The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
+bootloader with modular architecture.  It support rich varietyof kernel formats,
+file systems, computer architectures and hardware devices.  This subpackage
+provides an example theme for the grub screen.
 
 %prep
 %setup -T -c -n grub-%{tarversion}
@@ -725,7 +736,9 @@ fi
 %files tools -f grub.lang
 %defattr(-,root,root,-)
 %dir %{_libdir}/grub/
-%{_datarootdir}/grub/
+dir %{_datarootdir}/grub/
+dir %{_datarootdir}/grub/themes
+%{_datarootdir}/grub/*
 %{_sbindir}/%{name}-mkconfig
 %{_sbindir}/%{name}-install
 %{_sbindir}/%{name}-probe
@@ -745,6 +758,7 @@ fi
 %{_bindir}/%{name}-mkimage
 %{_bindir}/%{name}-mkpasswd-pbkdf2
 %{_bindir}/%{name}-mkrelpath
+%{_bindir}/%{name}-mount
 %{_bindir}/%{name}-glue-efi
 %{_bindir}/%{name}-render-label
 %ifnarch %{sparc}
@@ -770,7 +784,13 @@ fi
 %doc grub-%{tarversion}/grub-dev.html grub-%{tarversion}/docs/font_char_metrics.png
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
+%files starfield-theme
+%{_datarootdir}/grub/themes/starfield
+
 %changelog
+* Fri May 10 2013 Matthias Clasen <mclasen@redhat.com> - 2.00-18
+- Move the starfield theme to a subpackage
+
 * Wed Apr 24 2013 Peter Jones <pjones@redhat.com> - 2.00-17.pj0
 - Rebase to upstream snapshot.
 
