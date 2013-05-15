@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        18%{?dist}
+Release:        19%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -736,8 +736,8 @@ fi
 %files tools -f grub.lang
 %defattr(-,root,root,-)
 %dir %{_libdir}/grub/
-dir %{_datarootdir}/grub/
-dir %{_datarootdir}/grub/themes
+%dir %{_datarootdir}/grub/
+%dir %{_datarootdir}/grub/themes
 %{_datarootdir}/grub/*
 %{_sbindir}/%{name}-mkconfig
 %{_sbindir}/%{name}-install
@@ -788,6 +788,9 @@ dir %{_datarootdir}/grub/themes
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Wed May 15 2013 Matthias Clasen <mclasen@redhat.com> - 2.00-19
+- Fix a typo
+
 * Fri May 10 2013 Matthias Clasen <mclasen@redhat.com> - 2.00-18
 - Move the starfield theme to a subpackage (#962004)
 
