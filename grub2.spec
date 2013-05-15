@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        18%{?dist}
+Release:        18%{?dist}.0
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -435,6 +435,8 @@ BuildRequires:  autoconf automake autogen device-mapper-devel
 BuildRequires:	freetype-devel gettext-devel git
 BuildRequires:	texinfo
 BuildRequires:	dejavu-sans-fonts
+BuildRequires:	fuse-devel
+BuildRequires:	help2man
 %ifarch %{efiarchs}
 BuildRequires:	pesign >= 0.99-8
 %endif
@@ -539,13 +541,15 @@ GRUB_MODULES="	all_video boot btrfs cat chain configfile echo efifwsetup \
 		jpeg linuxefi lvm minicmd normal part_apple part_msdos \
 		part_gpt password_pbkdf2 png reboot search search_fs_uuid \
 		search_fs_file search_label sleep test video xfs \
-		mdraid09 mdraid1x blscfg"
+		mdraid09 mdraid1x blscfg multiboot2 multiboot"
 ./grub-mkimage -O %{grubefiarch} -o %{grubeficdname}.orig -p /EFI/BOOT \
 		-d grub-core ${GRUB_MODULES}
-%pesign -s -i %{grubeficdname}.orig -o %{grubeficdname}
+#%%pesign -s -i %{grubeficdname}.orig -o %{grubeficdname}
+/home/pjones/devel/github.com/pesign/src/client -s -i %{grubeficdname}.orig -o %{grubeficdname} -t "OpenSC Card (Test Signing CA)" -c "/CN=Test CA"
 ./grub-mkimage -O %{grubefiarch} -o %{grubefiname}.orig -p /EFI/%{efidir} \
 		-d grub-core ${GRUB_MODULES}
-%pesign -s -i %{grubefiname}.orig -o %{grubefiname}
+#%%pesign -s -i %{grubefiname}.orig -o %{grubefiname}
+/home/pjones/devel/github.com/pesign/src/client -s -i %{grubefiname}.orig -o %{grubefiname} -t "OpenSC Card (Test Signing CA)" -c "/CN=Test CA"
 cd ..
 %endif
 
