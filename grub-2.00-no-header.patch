@@ -1,0 +1,33 @@
+From ebe8edc5062f2d0cba0a355b827134e01345d727 Mon Sep 17 00:00:00 2001
+From: Fedora Ninjas <grub2-owner@fedoraproject.org>
+Date: Wed, 15 May 2013 13:53:48 -0400
+Subject: [PATCH] Don't print GNU GRUB header
+
+No one cares.
+---
+ grub-core/normal/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/grub-core/normal/main.c b/grub-core/normal/main.c
+index b40d987..ee5d4e2 100644
+--- a/grub-core/normal/main.c
++++ b/grub-core/normal/main.c
+@@ -241,6 +241,7 @@ grub_normal_init_page (struct grub_term_output *term)
+  
+   grub_term_cls (term);
+ 
++#if 0
+   msg_formatted = grub_xasprintf (msg, PACKAGE_VERSION);
+   if (!msg_formatted)
+     return;
+@@ -262,6 +263,7 @@ grub_normal_init_page (struct grub_term_output *term)
+   grub_putcode ('\n', term);
+   grub_putcode ('\n', term);
+   grub_free (unicode_msg);
++#endif
+ }
+ 
+ static void
+-- 
+1.8.2.1
+
