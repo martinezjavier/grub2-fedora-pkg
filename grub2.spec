@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        19%{?dist}
+Release:        18%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -415,7 +415,9 @@ Patch0360: 0360-Add-bootpath-device-to-the-list.patch
 Patch0361: 0361-add-GRUB_DISABLE_SUBMENU-option.patch
 Patch0362: 0362-blscfg-add-blscfg-module-to-parse-Boot-Loader-Specif.patch
 Patch0363: 0363-Move-bash-completion-script-922997.patch
-Patch0364: 0364-Use-memcpy-instead-of-direct-assignment-for-complex-.patch
+Patch0364: 0002-configure.ac-Don-t-use-extended-registers-on-x86_64.patch
+Patch0365: 0003-configure.ac-Don-t-disable-extended-registers-on-emu.patch
+Patch0366: 0004-conf-Makefile.common-Poison-float-and-double-on-non-.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -758,7 +760,6 @@ fi
 %{_bindir}/%{name}-mkimage
 %{_bindir}/%{name}-mkpasswd-pbkdf2
 %{_bindir}/%{name}-mkrelpath
-%{_bindir}/%{name}-mount
 %{_bindir}/%{name}-glue-efi
 %{_bindir}/%{name}-render-label
 %ifnarch %{sparc}
@@ -788,11 +789,9 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
-* Wed May 15 2013 Matthias Clasen <mclasen@redhat.com> - 2.00-19
-- Fix a typo
-
 * Fri May 10 2013 Matthias Clasen <mclasen@redhat.com> - 2.00-18
 - Move the starfield theme to a subpackage (#962004)
+- Don't allow SSE or MMX on UEFI builds (#949761)
 
 * Wed Apr 24 2013 Peter Jones <pjones@redhat.com> - 2.00-17.pj0
 - Rebase to upstream snapshot.
