@@ -738,6 +738,8 @@ install -d $RPM_BUILD_ROOT/boot/%{name}
 touch $RPM_BUILD_ROOT/boot/%{name}/grub.cfg
 ln -s ../boot/%{name}/grub.cfg $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.cfg
 
+cp -a $RPM_BUILD_ROOT%{_datarootdir}/locale/en\@quot $RPM_BUILD_ROOT%{_datarootdir}/locale/en
+
 # Install ELF files modules and images were created from into
 # the shadow root, where debuginfo generator will grab them from
 find $RPM_BUILD_ROOT -name '*.mod' -o -name '*.img' |
