@@ -1,7 +1,7 @@
 From 64ab320166410339edd8ae49b19780f1a793f450 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 10 Dec 2012 09:22:40 +0100
-Subject: [PATCH 059/471] 	* grub-core/fs/ufs.c (grub_ufs_dir): Stop if
+Subject: [PATCH 059/482] 	* grub-core/fs/ufs.c (grub_ufs_dir): Stop if
  direntlen is 0 to avoid 	infinite loop on corrupted FS.
 
 ---

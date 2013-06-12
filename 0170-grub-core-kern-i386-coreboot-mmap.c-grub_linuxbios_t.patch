@@ -1,7 +1,7 @@
 From 1bb8529d22d03246f4049eee9567db161df3fdb5 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 28 Feb 2013 13:16:39 +0100
-Subject: [PATCH 170/471] 	* grub-core/kern/i386/coreboot/mmap.c
+Subject: [PATCH 170/482] 	* grub-core/kern/i386/coreboot/mmap.c
  (grub_linuxbios_table_iterate): 	Fix end of table condition.
 
 ---

@@ -1,7 +1,7 @@
 From 53580ba03c453b315d716fdf6539c4150d0089c3 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Mon, 7 Jan 2013 10:43:00 +0000
-Subject: [PATCH 090/471] * docs/grub.texi (grub_cpu): New subsection.
+Subject: [PATCH 090/482] * docs/grub.texi (grub_cpu): New subsection.
  (grub_platform): Likewise.
 
 ---

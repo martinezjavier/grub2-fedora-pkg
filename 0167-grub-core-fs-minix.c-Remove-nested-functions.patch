@@ -1,7 +1,7 @@
 From 6e7405adb0dacbc8a7424b777cdc1106ac44182e Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 28 Feb 2013 10:50:01 +0100
-Subject: [PATCH 167/471] 	* grub-core/fs/minix.c: Remove nested
+Subject: [PATCH 167/482] 	* grub-core/fs/minix.c: Remove nested
  functions.
 
 ---

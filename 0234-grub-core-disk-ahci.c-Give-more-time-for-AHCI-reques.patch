@@ -1,7 +1,7 @@
 From 5aaeba2813e16d393e7f87b918734044c86743f0 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 25 Mar 2013 10:32:56 +0100
-Subject: [PATCH 234/471] 	* grub-core/disk/ahci.c: Give more time for
+Subject: [PATCH 234/482] 	* grub-core/disk/ahci.c: Give more time for
  AHCI request.
 
 ---

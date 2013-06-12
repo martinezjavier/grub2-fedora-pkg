@@ -1,7 +1,7 @@
 From 12afe18a58fd41bbf739b71c08409283dca2a8d8 Mon Sep 17 00:00:00 2001
 From: Leif Lindholm <leif.lindholm@arm.com>
 Date: Sun, 20 Jan 2013 23:01:47 +0100
-Subject: [PATCH 121/471] 	* include/grub/elf.h: Update ARM definitions
+Subject: [PATCH 121/482] 	* include/grub/elf.h: Update ARM definitions
  based on binutils.
 
 ---

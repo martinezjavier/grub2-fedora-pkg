@@ -1,7 +1,7 @@
 From a4a74e06ccc7868c9dd3a5da8c24d7244fdae50e Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 24 Mar 2013 13:11:19 +0100
-Subject: [PATCH 229/471] 	* util/grub-mkconfig_lib.in
+Subject: [PATCH 229/482] 	* util/grub-mkconfig_lib.in
  (prepare_grub_to_access_device): Fix 	handling of multi-device filesystems.
 
 ---

@@ -1,7 +1,7 @@
 From 22970f8c19587ba78aa36c2370512bf393768d3f Mon Sep 17 00:00:00 2001
 From: Vladimir Testov <vladimir.testov@rosalab.ru>
 Date: Mon, 29 Apr 2013 15:32:56 +0200
-Subject: [PATCH 394/471] =?UTF-8?q?=09*=20grub-core/gfxmenu/circular=5Fpro?=
+Subject: [PATCH 394/482] =?UTF-8?q?=09*=20grub-core/gfxmenu/circular=5Fpro?=
  =?UTF-8?q?gress.c:=20Set=20start=5Fangle=20in=20degrees=20=09with=20synta?=
  =?UTF-8?q?x=20"XXX=20deg"/"XXX=20=C2=B0".?=
 MIME-Version: 1.0

@@ -1,7 +1,7 @@
 From 2fe37186ad9206f74f8435c64bafb39d3085b3f2 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 24 Mar 2013 13:07:51 +0100
-Subject: [PATCH 228/471] 	* grub-core/Makefile.core.def (vbe): Disable
+Subject: [PATCH 228/482] 	* grub-core/Makefile.core.def (vbe): Disable
  on coreboot and multiboot 	platforms.
 
 ---

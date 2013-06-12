@@ -1,7 +1,7 @@
 From 3cc0a7193fb4eb6fcfb9698b6a84c5df57349ab8 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 2 May 2013 14:34:13 +0200
-Subject: [PATCH 400/471] 	* grub-core/commands/videotest.c: Reduce
+Subject: [PATCH 400/482] 	* grub-core/commands/videotest.c: Reduce
  flickering and draw 6 squares 	instead of 2 to have full RGB/CMY test
  pattern.
 

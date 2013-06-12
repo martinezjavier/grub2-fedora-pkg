@@ -1,7 +1,7 @@
 From e8aa1eb895298af57764ec03ff6df44a48b1f7d1 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 3 May 2013 14:08:51 +0200
-Subject: [PATCH 410/471] 	* grub-core/gfxmenu/gfxmenu.c
+Subject: [PATCH 410/482] 	* grub-core/gfxmenu/gfxmenu.c
  (grub_gfxmenu_try): Allow specifying 	the theme path relative to
  $prefix/themes.
 

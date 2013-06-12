@@ -1,7 +1,7 @@
 From b29ffe391d012b3a5b2b4d061f14eaea0f9da0ec Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Fri, 19 Apr 2013 12:08:46 +0400
-Subject: [PATCH 325/471] * util/grub.d/30_os-prober.in: Add onstr to linux
+Subject: [PATCH 325/482] * util/grub.d/30_os-prober.in: Add onstr to linux
  entries in one more place.
 
 ---

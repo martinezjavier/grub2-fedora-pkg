@@ -1,7 +1,7 @@
 From d79401f4ebfcae849c514bfed11e3562651c8a86 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Sun, 20 Jan 2013 23:44:42 +0100
-Subject: [PATCH 122/471] 	* conf/Makefile.common: Fix autogen rules to
+Subject: [PATCH 122/482] 	* conf/Makefile.common: Fix autogen rules to
  pass definition 	files on stdin; Makefile.util.am needs
  Makefile.utilgcry.def
 

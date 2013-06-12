@@ -1,7 +1,7 @@
 From 1f677cec8cae46c415ab432009d5fb5915305a8a Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 28 Apr 2013 13:50:18 +0200
-Subject: [PATCH 374/471] 	* INSTALL: Document linguas.sh.
+Subject: [PATCH 374/482] 	* INSTALL: Document linguas.sh.
 
 ---
  ChangeLog |  4 ++++

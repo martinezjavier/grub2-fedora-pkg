@@ -1,7 +1,7 @@
 From 15b71387d288ad65299daf19a43c6f0d3de1305b Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 7 May 2013 11:47:30 +0200
-Subject: [PATCH 436/471] 	* tests/gettext_strings_test.in: A test to
+Subject: [PATCH 436/482] 	* tests/gettext_strings_test.in: A test to
  check for strings not 	marked for translation.
 
 ---

@@ -1,7 +1,7 @@
 From aaf55113bb7174787ffe8aa6878086943238a63e Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 3 Jan 2013 23:19:19 +0100
-Subject: [PATCH 084/471] 	* util/grub.d/10_kfreebsd.in: Correct the
+Subject: [PATCH 084/482] 	* util/grub.d/10_kfreebsd.in: Correct the
  patch to zpool.cache as it's 	always in /boot/zfs. 	Reported by: Yuta
  Satoh.
 

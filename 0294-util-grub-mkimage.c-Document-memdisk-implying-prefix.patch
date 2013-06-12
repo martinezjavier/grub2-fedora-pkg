@@ -1,7 +1,7 @@
 From 46b79bbd8c9d96174ef793a52aae90cdd58c6f07 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 12 Apr 2013 21:08:53 +0200
-Subject: [PATCH 294/471] 	* util/grub-mkimage.c: Document memdisk
+Subject: [PATCH 294/482] 	* util/grub-mkimage.c: Document memdisk
  implying --prefix.
 
 ---

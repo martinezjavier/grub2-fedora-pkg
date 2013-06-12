@@ -1,7 +1,7 @@
 From 834773665859d4a23553406715d11b3e3328b5ac Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 20 Mar 2013 17:24:39 +0100
-Subject: [PATCH 221/471] 	* grub-core/commands/verify.c (hashes): Add
+Subject: [PATCH 221/482] 	* grub-core/commands/verify.c (hashes): Add
  several hashes 	from the spec.
 
 ---

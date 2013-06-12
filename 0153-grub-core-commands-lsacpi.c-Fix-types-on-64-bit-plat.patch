@@ -1,7 +1,7 @@
 From 4a14b388a009df7d77e2afbce555c2d5d4999b55 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 6 Feb 2013 17:37:29 +0100
-Subject: [PATCH 153/471] 	* grub-core/commands/lsacpi.c: Fix types on
+Subject: [PATCH 153/482] 	* grub-core/commands/lsacpi.c: Fix types on
  64-bit platform.
 
 ---

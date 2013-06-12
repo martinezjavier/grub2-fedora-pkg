@@ -1,7 +1,7 @@
 From f2c269eb161b7b32d52b6c818d8181c1d2b6d993 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 3 May 2013 14:05:57 +0200
-Subject: [PATCH 408/471] 	* include/grub/gui.h
+Subject: [PATCH 408/482] 	* include/grub/gui.h
  (grub_gfxmenu_timeout_unregister): Free cb 	descriptor.
 
 ---

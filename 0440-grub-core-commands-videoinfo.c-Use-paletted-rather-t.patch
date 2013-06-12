@@ -1,7 +1,7 @@
 From 06e77f951e1d316bab1e799b1fed741e59d25ce9 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 7 May 2013 14:44:05 +0200
-Subject: [PATCH 440/471] 	* grub-core/commands/videoinfo.c: Use
+Subject: [PATCH 440/482] 	* grub-core/commands/videoinfo.c: Use
  "paletted" rather than "packed 	pixel".
 
 ---

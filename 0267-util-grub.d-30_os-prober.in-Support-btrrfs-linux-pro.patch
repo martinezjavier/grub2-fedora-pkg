@@ -1,7 +1,7 @@
 From ae5570799e55cdbd6969ac88a20b4039b10b2b16 Mon Sep 17 00:00:00 2001
 From: Fedora Ninjas <grub2-owner@fedoraproject.org>
 Date: Fri, 5 Apr 2013 14:55:37 +0200
-Subject: [PATCH 267/471] 	* util/grub.d/30_os-prober.in: Support btrrfs
+Subject: [PATCH 267/482] 	* util/grub.d/30_os-prober.in: Support btrrfs
  linux-prober extensions.
 
 ---

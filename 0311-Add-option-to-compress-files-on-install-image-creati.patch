@@ -1,7 +1,7 @@
 From a0404f547d5b693dd86a2773f1fd64ca207ad2bf Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 14 Apr 2013 19:24:05 +0200
-Subject: [PATCH 311/471] 	Add option to compress files on install/image
+Subject: [PATCH 311/482] 	Add option to compress files on install/image
  creation.
 
 ---

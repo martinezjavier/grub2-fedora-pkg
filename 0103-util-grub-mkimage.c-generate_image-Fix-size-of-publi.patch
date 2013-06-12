@@ -1,7 +1,7 @@
 From 10d401fa8e217dab7d3bea3bc75ce2ab7248b42a Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Sun, 13 Jan 2013 01:47:46 +0000
-Subject: [PATCH 103/471] * util/grub-mkimage.c (generate_image): Fix "size of
+Subject: [PATCH 103/482] * util/grub-mkimage.c (generate_image): Fix "size of
  public key" info message.
 
 ---

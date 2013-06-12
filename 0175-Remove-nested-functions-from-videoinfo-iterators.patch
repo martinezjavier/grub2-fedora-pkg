@@ -1,7 +1,7 @@
 From 9b2828fc730a0d09ff5934a44bb0e25e7fdf06f2 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 1 Mar 2013 11:11:36 +0100
-Subject: [PATCH 175/471] 	Remove nested functions from videoinfo
+Subject: [PATCH 175/482] 	Remove nested functions from videoinfo
  iterators.
 
 ---

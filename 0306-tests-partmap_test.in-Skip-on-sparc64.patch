@@ -1,7 +1,7 @@
 From da31edd1d535ac2bc14ddd46baab9cc59e225fb9 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 14 Apr 2013 17:16:32 +0200
-Subject: [PATCH 306/471] 	* tests/partmap_test.in: Skip on sparc64.
+Subject: [PATCH 306/482] 	* tests/partmap_test.in: Skip on sparc64.
 
 ---
  ChangeLog             | 4 ++++

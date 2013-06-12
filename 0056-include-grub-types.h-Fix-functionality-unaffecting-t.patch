@@ -1,7 +1,7 @@
 From e2638674dca6e5c31624057734bff69f3bba2e80 Mon Sep 17 00:00:00 2001
 From: Leif Lindholm <leif.lindholm@arm.com>
 Date: Wed, 28 Nov 2012 14:18:45 +0100
-Subject: [PATCH 056/471]         * include/grub/types.h: Fix functionality
+Subject: [PATCH 056/482]         * include/grub/types.h: Fix functionality
  unaffecting typo in         GRUB_TARGET_WORDSIZE conditional macro.
 
 ---

@@ -1,7 +1,7 @@
 From 260a00f345f2d355b151d6a7c1f2018cfad8c0fc Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 14 Apr 2013 17:01:31 +0200
-Subject: [PATCH 303/471] 	Allow IEEE1275 ports on path even if it wasn't
+Subject: [PATCH 303/482] 	Allow IEEE1275 ports on path even if it wasn't
  detected automatically. 	Needed on OpenBIOS due to incomplete device
  tree.
 

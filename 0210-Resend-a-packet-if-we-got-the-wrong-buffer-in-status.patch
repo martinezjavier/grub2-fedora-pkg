@@ -1,7 +1,7 @@
 From a2ada321927efea6453a7488cefac7434c591212 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 17 Mar 2013 13:33:16 +0100
-Subject: [PATCH 210/471] 	Resend a packet if we got the wrong buffer in
+Subject: [PATCH 210/482] 	Resend a packet if we got the wrong buffer in
  status.
 
 ---

@@ -1,7 +1,7 @@
 From 171c7ed5ddba903d30c342c09013decfbe18c992 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 20 Mar 2013 17:21:13 +0100
-Subject: [PATCH 220/471] 	Slight improve in USB-related boot-time
+Subject: [PATCH 220/482] 	Slight improve in USB-related boot-time
  checkpoints.
 
 ---

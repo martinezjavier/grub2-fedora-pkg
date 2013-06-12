@@ -1,7 +1,7 @@
 From ce0e3665b2afdab0e43cf7c0a0aa55149af42a6e Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 10 Dec 2012 16:07:33 +0100
-Subject: [PATCH 062/471] 	* grub-core/term/gfxterm.c
+Subject: [PATCH 062/482] 	* grub-core/term/gfxterm.c
  (grub_virtual_screen_setup): Get font as 	argument rather than font
  name. All users updated. 	(grub_gfxterm_set_window): Likewise.
 

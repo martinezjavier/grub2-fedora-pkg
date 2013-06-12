@@ -1,7 +1,7 @@
 From 903c800bb58246d4cfd68e45288c1a6e2a2b57d5 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 25 Feb 2013 10:45:19 +0100
-Subject: [PATCH 156/471] 	* grub-core/normal/misc.c
+Subject: [PATCH 156/482] 	* grub-core/normal/misc.c
  (grub_normal_print_device_info): Use KiB to display 	sizes and display
  sector size.
 

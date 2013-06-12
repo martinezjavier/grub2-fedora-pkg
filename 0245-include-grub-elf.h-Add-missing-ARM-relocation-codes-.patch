@@ -1,7 +1,7 @@
 From 58e08a1795d63ba85b006c54dc7bbfe0afd624a7 Mon Sep 17 00:00:00 2001
 From: Francesco Lavra <francescolavra.fl@gmail.com>
 Date: Wed, 3 Apr 2013 11:23:22 +0200
-Subject: [PATCH 245/471] 	* include/grub/elf.h: Add missing ARM
+Subject: [PATCH 245/482] 	* include/grub/elf.h: Add missing ARM
  relocation codes and fix 	  existing ones.
 
 ---

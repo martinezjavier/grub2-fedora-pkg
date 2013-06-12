@@ -1,7 +1,7 @@
 From 289cc5b04163f9443f5396e3a951f5e940a18925 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 19 Apr 2013 15:27:09 +0200
-Subject: [PATCH 329/471] 	* grub-core/kern/ieee1275/init.c
+Subject: [PATCH 329/482] 	* grub-core/kern/ieee1275/init.c
  (grub_claim_heap): Improve handling 	of GRUB_IEEE1275_FLAG_FORCE_CLAIM. 
  * grub-core/loader/powerpc/ieee1275/linux.c 	(grub_linux_claimmap_iterate):
  Handle GRUB_IEEE1275_FLAG_FORCE_CLAIM.

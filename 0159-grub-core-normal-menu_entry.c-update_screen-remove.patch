@@ -1,7 +1,7 @@
 From e70b39ab235c0ef7390ea8cec91f05428d2e775a Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Mon, 25 Feb 2013 22:53:40 +0100
-Subject: [PATCH 159/471] 	* grub-core/normal/menu_entry.c
+Subject: [PATCH 159/482] 	* grub-core/normal/menu_entry.c
  (update_screen): remove 	unused variable `off' which caused scroll down
  arrow to be always shown.
 

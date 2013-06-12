@@ -1,7 +1,7 @@
 From 6a9def44c8d873b143c12e572c80575bdd4b8f00 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 7 May 2013 14:38:29 +0200
-Subject: [PATCH 439/471] 	Menu color test.
+Subject: [PATCH 439/482] 	Menu color test.
 
 ---
  ChangeLog                        |  4 +++

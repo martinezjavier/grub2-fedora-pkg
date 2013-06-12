@@ -1,7 +1,7 @@
 From 0e882e0c48a93f7e187fd403ffb32d3ad861ee77 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 15 Apr 2013 00:38:39 +0200
-Subject: [PATCH 313/471] 	* grub-core/disk/ieee1275/ofdisk.c: Fix CD-ROM
+Subject: [PATCH 313/482] 	* grub-core/disk/ieee1275/ofdisk.c: Fix CD-ROM
  and boot device 	detection.
 
 ---

@@ -1,7 +1,7 @@
 From 54dd20578308c07d3c15a6d07638d3abecfb626c Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 2 May 2013 18:10:11 +0200
-Subject: [PATCH 404/471] 	Add missing exports on mips.
+Subject: [PATCH 404/482] 	Add missing exports on mips.
 
 ---
  ChangeLog               |  4 ++++

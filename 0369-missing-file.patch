@@ -1,7 +1,7 @@
 From 8095fabb0e89dad72cfcb337df3637b8ec92b6c3 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 27 Apr 2013 22:55:02 +0200
-Subject: [PATCH 369/471] missing file
+Subject: [PATCH 369/482] missing file
 
 ---
  tests/core_compress_test.in | 36 ++++++++++++++++++++++++++++++++++++

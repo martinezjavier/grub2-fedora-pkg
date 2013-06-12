@@ -1,7 +1,7 @@
 From 44fc4a3f10e315aecc593f0642e1fbccbb466bc9 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Fri, 28 Dec 2012 06:43:35 +0000
-Subject: [PATCH 070/471] Backport gnulib fixes for C11.  Fixes Savannah bug
+Subject: [PATCH 070/482] Backport gnulib fixes for C11.  Fixes Savannah bug
  #37738.
 
 * grub-core/gnulib/stdio.in.h (gets): Warn on use only if

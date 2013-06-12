@@ -1,7 +1,7 @@
 From 95329b0fbbbd6c7258c275a27ed904bdae11caad Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 7 May 2013 12:05:36 +0200
-Subject: [PATCH 437/471] 	New variables 'net_default_*' to determine
+Subject: [PATCH 437/482] 	New variables 'net_default_*' to determine
  MAC/IP of default interface.
 
 ---

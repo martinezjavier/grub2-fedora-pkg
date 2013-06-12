@@ -1,7 +1,7 @@
 From 523621574aff31d7949b241da12884e91e9dac75 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 24 Apr 2013 15:07:24 +0200
-Subject: [PATCH 341/471] 	* grub-core/normal/menu_text.c (print_entry):
+Subject: [PATCH 341/482] 	* grub-core/normal/menu_text.c (print_entry):
  Put an asterisk 	in front of chosen entry to mark it even if
  highlighting is lost.
 

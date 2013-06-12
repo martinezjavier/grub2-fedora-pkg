@@ -1,7 +1,7 @@
 From d05e156bbc8198da89d45410b796a893e264229a Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 22 Mar 2013 22:18:38 +0100
-Subject: [PATCH 225/471] 	* grub-core/fs/zfs/zfs.c: Fix incorrect
+Subject: [PATCH 225/482] 	* grub-core/fs/zfs/zfs.c: Fix incorrect
  handling of special volumes.
 
 ---

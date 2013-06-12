@@ -1,7 +1,7 @@
 From 111eff14a0f98fc525577fa0e85c49a365f4defd Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Rados=C5=82aw=20Szymczyszyn?= <lavrin@gmail.com>
 Date: Mon, 1 Apr 2013 02:55:10 +0200
-Subject: [PATCH 239/471] 	* INSTALL: Mention xorriso requirement.
+Subject: [PATCH 239/482] 	* INSTALL: Mention xorriso requirement.
 
 ---
  ChangeLog | 4 ++++

@@ -1,7 +1,7 @@
 From 1e33a3f3c57c499e8ef08f438b1de69b6da09f9b Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 2 Mar 2013 11:31:00 +0100
-Subject: [PATCH 180/471] 	* grub-core/fs/hfs.c: Remove nested functions.
+Subject: [PATCH 180/482] 	* grub-core/fs/hfs.c: Remove nested functions.
 
 ---
  ChangeLog          |   4 +

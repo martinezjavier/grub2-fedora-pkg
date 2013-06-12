@@ -1,7 +1,7 @@
 From 7789de5b693525b7df0fca50d68000c26bdcfe8c Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 11 Apr 2013 21:09:43 +0200
-Subject: [PATCH 279/471] 	Use ACPI shutdown intests as traditional port
+Subject: [PATCH 279/482] 	Use ACPI shutdown intests as traditional port
  was removed.
 
 ---

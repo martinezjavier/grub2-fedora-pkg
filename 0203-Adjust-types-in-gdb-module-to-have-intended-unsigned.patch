@@ -1,7 +1,7 @@
 From 03976ab690ee925d6bd752c6996856dbf0a40a74 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 10 Mar 2013 18:36:39 +0100
-Subject: [PATCH 203/471] 	Adjust types in gdb module to have intended
+Subject: [PATCH 203/482] 	Adjust types in gdb module to have intended
  unsigned shifts rather than 	signed divisions.
 
 ---

@@ -1,7 +1,7 @@
 From 1424a23f9d76785da41d3f8ccd9f0658abd062da Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Mon, 6 May 2013 22:13:34 +0400
-Subject: [PATCH 428/471]     Reimplement grub-reboot to not depend on
+Subject: [PATCH 428/482]     Reimplement grub-reboot to not depend on
  saved_entry. Use next_entry     variable for one time boot menu entry.
 
 ---

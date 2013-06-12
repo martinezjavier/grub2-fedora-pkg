@@ -1,7 +1,7 @@
 From d7f31079c6511e1c3092338095633ae89c744ad0 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 19 Apr 2013 15:09:15 +0200
-Subject: [PATCH 327/471] 	* grub-core/commands/videotest.c
+Subject: [PATCH 327/482] 	* grub-core/commands/videotest.c
  (grub_cmd_videotest): Fix error 	handling when creating text_layer
  failed. 	* grub-core/video/video.c (grub_video_create_render_target): 
  Set result to 0 on error. 	(grub_video_delete_render_target): Do not

@@ -1,7 +1,7 @@
 From b5e4f9e9f491d6f55c97455535c0635bbe88f132 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 20 Apr 2013 13:46:58 +0200
-Subject: [PATCH 331/471] 	* grub-core/Makefile.core.def (legacycfg):
+Subject: [PATCH 331/482] 	* grub-core/Makefile.core.def (legacycfg):
  Enable on EFI.
 
 ---

@@ -1,7 +1,7 @@
 From 2c1ea139e754820b55f58bdc32f3376671c453db Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 20 Jan 2013 22:45:53 +0100
-Subject: [PATCH 120/471] 	Split long USB transfers into short ones.
+Subject: [PATCH 120/482] 	Split long USB transfers into short ones.
 
 ---
  ChangeLog                    |  4 ++++

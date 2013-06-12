@@ -1,7 +1,7 @@
 From cf81cc89f1aa6d5b00e9ddd06e47836ff8e4e377 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 2 Mar 2013 15:31:17 +0100
-Subject: [PATCH 184/471] 	* grub-core/lib/ia64/longjmp.S: Fix the name
+Subject: [PATCH 184/482] 	* grub-core/lib/ia64/longjmp.S: Fix the name
  of longjmp function. 	* grub-core/lib/ia64/setjmp.S: Fix the name of setjmp
  function.
 

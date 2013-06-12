@@ -1,7 +1,7 @@
 From 5868a0441dd295918687d7751aec3d0435ad3a28 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 28 Apr 2013 15:17:43 +0200
-Subject: [PATCH 378/471] 	* grub-core/disk/ahci.c: Fix compilation for
+Subject: [PATCH 378/482] 	* grub-core/disk/ahci.c: Fix compilation for
  amd64 (format warnings).
 
 ---

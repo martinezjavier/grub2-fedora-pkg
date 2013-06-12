@@ -1,7 +1,7 @@
 From aa3e16df89e62894f53aca3a255bf1b06f5cbe24 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 1 Mar 2013 13:46:24 +0100
-Subject: [PATCH 177/471] 	* grub-core/kern/emu/hostdisk.c
+Subject: [PATCH 177/482] 	* grub-core/kern/emu/hostdisk.c
  (read_device_map): Remove nested 	function.
 
 ---

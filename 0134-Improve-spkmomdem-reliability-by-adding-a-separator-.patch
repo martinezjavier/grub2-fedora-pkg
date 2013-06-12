@@ -1,7 +1,7 @@
 From a16f3422534819db2c9b87648072cf7b6d8f3c10 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 21 Jan 2013 20:03:15 +0100
-Subject: [PATCH 134/471] 	Improve spkmomdem reliability by adding a
+Subject: [PATCH 134/482] 	Improve spkmomdem reliability by adding a
  separator between bytes.
 
 ---

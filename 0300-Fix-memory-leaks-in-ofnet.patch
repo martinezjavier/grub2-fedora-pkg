@@ -1,7 +1,7 @@
 From 9435e9e0e5371624d0c3044e8ce7383b069717c3 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 13 Apr 2013 20:12:11 +0200
-Subject: [PATCH 300/471] 	Fix memory leaks in ofnet. 	Reported by:
+Subject: [PATCH 300/482] 	Fix memory leaks in ofnet. 	Reported by:
  Francesco Lavra.
 
 ---

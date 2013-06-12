@@ -1,7 +1,7 @@
 From 9b8bc0c9e2af96dcc3a50fc02a0b1b76c7f6967f Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 4 Apr 2013 08:56:45 +0200
-Subject: [PATCH 252/471] 	* grub-core/bus/usb/usbtrans.c
+Subject: [PATCH 252/482] 	* grub-core/bus/usb/usbtrans.c
  (grub_usb_bulk_readwrite_packetize): 	Init err.
 
 ---

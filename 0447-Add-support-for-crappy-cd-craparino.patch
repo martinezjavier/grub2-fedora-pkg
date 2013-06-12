@@ -1,7 +1,7 @@
 From abd3c20d447a3c3ed28b9e73b59b5862d3eddf2d Mon Sep 17 00:00:00 2001
 From: Matthew Garrett <mjg@redhat.com>
 Date: Tue, 10 Jul 2012 11:58:52 -0400
-Subject: [PATCH 447/471] Add support for crappy cd craparino
+Subject: [PATCH 447/482] Add support for crappy cd craparino
 
 ---
  grub-core/disk/efi/efidisk.c | 10 ++++++++++

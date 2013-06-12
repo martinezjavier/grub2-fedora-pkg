@@ -1,7 +1,7 @@
 From 076c472649f81a5a57ee52dc2ac775fef6c97a39 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 15 Apr 2013 01:54:23 +0200
-Subject: [PATCH 316/471] 	* tests/grub_cmd_date.in: Skip on sparc64.
+Subject: [PATCH 316/482] 	* tests/grub_cmd_date.in: Skip on sparc64.
 
 ---
  ChangeLog              | 4 ++++

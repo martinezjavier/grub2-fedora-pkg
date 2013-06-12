@@ -1,7 +1,7 @@
 From c8cffbd532a02b6abaf75316b3296f84f40abbd0 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Sun, 20 Jan 2013 13:24:47 +0000
-Subject: [PATCH 115/471] Fix typos for "developer" and "development".
+Subject: [PATCH 115/482] Fix typos for "developer" and "development".
 
 ---
  ChangeLog             | 4 ++++

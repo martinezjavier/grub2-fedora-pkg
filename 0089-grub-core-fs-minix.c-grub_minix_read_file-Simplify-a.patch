@@ -1,7 +1,7 @@
 From 55a1c78a484d48c96291f0f2891745d8b60c2201 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 7 Jan 2013 11:27:18 +0100
-Subject: [PATCH 089/471] 	* grub-core/fs/minix.c (grub_minix_read_file):
+Subject: [PATCH 089/482] 	* grub-core/fs/minix.c (grub_minix_read_file):
  Simplify arithmetics.
 
 ---

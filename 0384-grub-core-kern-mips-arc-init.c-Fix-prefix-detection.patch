@@ -1,7 +1,7 @@
 From 5605655af5a8fbb1d26ad567082c00606b425ae4 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 29 Apr 2013 11:59:18 +0200
-Subject: [PATCH 384/471] 	* grub-core/kern/mips/arc/init.c: Fix prefix
+Subject: [PATCH 384/482] 	* grub-core/kern/mips/arc/init.c: Fix prefix
  detection.
 
 ---

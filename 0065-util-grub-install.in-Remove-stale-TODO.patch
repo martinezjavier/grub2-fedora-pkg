@@ -1,7 +1,7 @@
 From 5ed1ee18ef11a1aa0922ce35f56e44cc0cab5da5 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Mon, 10 Dec 2012 17:00:56 +0100
-Subject: [PATCH 065/471] 	* util/grub-install.in: Remove stale TODO.
+Subject: [PATCH 065/482] 	* util/grub-install.in: Remove stale TODO.
 
 ---
  ChangeLog            | 4 ++++

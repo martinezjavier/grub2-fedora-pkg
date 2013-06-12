@@ -1,7 +1,7 @@
 From f333a71c6c02232151d9af98a8beae3b5e23e102 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Wed, 5 Sep 2012 13:55:54 +0100
-Subject: [PATCH 031/471] * NEWS: Fix typo.
+Subject: [PATCH 031/482] * NEWS: Fix typo.
 
 ---
  ChangeLog | 4 ++++

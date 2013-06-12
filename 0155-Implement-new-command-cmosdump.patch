@@ -1,7 +1,7 @@
 From 69209411d039be9bc278e12c7b6736b7a1101229 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 24 Feb 2013 19:44:17 +0100
-Subject: [PATCH 155/471] 	Implement new command cmosdump.
+Subject: [PATCH 155/482] 	Implement new command cmosdump.
 
 ---
  ChangeLog                          |  4 +++

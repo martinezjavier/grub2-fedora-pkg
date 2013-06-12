@@ -1,7 +1,7 @@
 From 143156f6eb6dc06491c5c4c9a5fad15646fa8c31 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 1 Mar 2013 10:37:11 +0100
-Subject: [PATCH 173/471] 	* grub-core/disk/efi/efidisk.c: Transform
+Subject: [PATCH 173/482] 	* grub-core/disk/efi/efidisk.c: Transform
  iterate_child_devices into 	a FOR_CHILDREN macro.
 
 ---

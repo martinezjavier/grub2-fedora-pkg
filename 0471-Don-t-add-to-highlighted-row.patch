@@ -1,7 +1,7 @@
 From 86ce8133e947621554f185ce50af44a7b599479d Mon Sep 17 00:00:00 2001
 From: William Jon McCann <william.jon.mccann@gmail.com>
 Date: Wed, 15 May 2013 17:49:45 -0400
-Subject: [PATCH 471/471] Don't add '*' to highlighted row
+Subject: [PATCH 471/482] Don't add '*' to highlighted row
 
 It is already highlighted.
 ---
@@ -17,7 +17,7 @@ index faf1d3e..3bf8a53 100644
  
    if (data->geo.num_entries > 1)
 -    grub_putcode (highlight ? '*' : ' ', data->term);
-+    grub_putcode (' ', data->term);
++    grub_putcode (' ', term);
  
    grub_print_ucs4_menu (unicode_title,
  			unicode_title + len,

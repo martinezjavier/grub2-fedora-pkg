@@ -1,7 +1,7 @@
 From 7d0fb871481447b7f8ac06d7bc23ee6a5204ff76 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 3 Apr 2013 15:21:51 +0200
-Subject: [PATCH 248/471] 	* grub-core/term/i386/pc/console.c
+Subject: [PATCH 248/482] 	* grub-core/term/i386/pc/console.c
  (grub_console_getwh): Decrease 	reported width by one to compensate
  for curesor algorithm problem.
 

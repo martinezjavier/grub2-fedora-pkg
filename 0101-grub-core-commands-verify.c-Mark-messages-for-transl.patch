@@ -1,7 +1,7 @@
 From 4ae6c0a73dc061e5cd6510af7fc57c8e87748841 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 12 Jan 2013 16:31:17 +0100
-Subject: [PATCH 101/471] 	* grub-core/commands/verify.c: Mark messages
+Subject: [PATCH 101/482] 	* grub-core/commands/verify.c: Mark messages
  for translating.
 
 ---

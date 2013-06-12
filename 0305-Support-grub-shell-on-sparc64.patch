@@ -1,7 +1,7 @@
 From b0d0c377ac0a4d9700dfc5f942667d4d1fde5ac3 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 14 Apr 2013 17:13:58 +0200
-Subject: [PATCH 305/471] 	Support grub-shell on sparc64.
+Subject: [PATCH 305/482] 	Support grub-shell on sparc64.
 
 ---
  ChangeLog                |  4 ++++

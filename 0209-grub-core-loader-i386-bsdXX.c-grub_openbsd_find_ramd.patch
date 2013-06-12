@@ -1,7 +1,7 @@
 From c8390bb346d14738026c6909767e27c46414da88 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 10 Mar 2013 20:37:41 +0100
-Subject: [PATCH 209/471] 	* grub-core/loader/i386/bsdXX.c
+Subject: [PATCH 209/482] 	* grub-core/loader/i386/bsdXX.c
  (grub_openbsd_find_ramdisk): Use 	multiplication rather than division.
 
 ---

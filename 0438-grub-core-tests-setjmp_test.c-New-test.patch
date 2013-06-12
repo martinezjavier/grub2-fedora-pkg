@@ -1,7 +1,7 @@
 From 7a17fdeafeca824d9dec7c2a57e8f958d58b45eb Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 7 May 2013 12:28:59 +0200
-Subject: [PATCH 438/471] 	* grub-core/tests/setjmp_test.c: New test.
+Subject: [PATCH 438/482] 	* grub-core/tests/setjmp_test.c: New test.
 
 ---
  ChangeLog                             |  4 ++

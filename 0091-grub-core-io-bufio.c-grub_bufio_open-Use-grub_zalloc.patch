@@ -1,7 +1,7 @@
 From 00e72549c724d80285041e5dac8adc310dd2c746 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Mon, 7 Jan 2013 10:45:05 +0000
-Subject: [PATCH 091/471] * grub-core/io/bufio.c (grub_bufio_open): Use
+Subject: [PATCH 091/482] * grub-core/io/bufio.c (grub_bufio_open): Use
  grub_zalloc instead of explicitly zeroing elements. * grub-core/io/gzio.c
  (grub_gzio_open): Likewise. * grub-core/io/lzopio.c (grub_lzopio_open):
  Remove explicit zeroing of elements in a structure already allocated using

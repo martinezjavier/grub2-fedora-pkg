@@ -1,7 +1,7 @@
 From f954b11e777766356885f2958a556ebd3fcf2f25 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 28 Apr 2013 13:35:51 +0200
-Subject: [PATCH 372/471] 	Move --directory/--override-directorry to
+Subject: [PATCH 372/482] 	Move --directory/--override-directorry to
  grub-install_header and unify.
 
 ---

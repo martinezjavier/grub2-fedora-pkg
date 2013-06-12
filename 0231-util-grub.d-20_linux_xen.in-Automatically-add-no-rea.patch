@@ -1,7 +1,7 @@
 From b138cfd473ab65282af07d400fc95a8a5bc7e22e Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 24 Mar 2013 14:03:33 +0100
-Subject: [PATCH 231/471] 	* util/grub.d/20_linux_xen.in: Automatically
+Subject: [PATCH 231/482] 	* util/grub.d/20_linux_xen.in: Automatically
  add no-real-mode edd=off on 	non-BIOS platforms.
 
 ---

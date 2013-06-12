@@ -1,7 +1,7 @@
 From 637ede531e110b92cf5e8fd5be8561c5a5bd3429 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 10 Mar 2013 17:45:38 +0100
-Subject: [PATCH 201/471] 	Avoid costly 64-bit division in
+Subject: [PATCH 201/482] 	Avoid costly 64-bit division in
  grub_get_time_ms on most platforms.
 
 ---

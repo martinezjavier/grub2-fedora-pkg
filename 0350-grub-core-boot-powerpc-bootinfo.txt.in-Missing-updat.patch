@@ -1,7 +1,7 @@
 From c920a72c86f15f36a121ec858df462c700e0c940 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 25 Apr 2013 03:26:41 +0200
-Subject: [PATCH 350/471] 	* grub-core/boot/powerpc/bootinfo.txt.in:
+Subject: [PATCH 350/482] 	* grub-core/boot/powerpc/bootinfo.txt.in:
  Missing update from previous 	commit.
 
 ---

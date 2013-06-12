@@ -1,7 +1,7 @@
 From 019109ed5ab8eb903c99026393c1b7d0ded973f2 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 10 Mar 2013 18:49:05 +0100
-Subject: [PATCH 204/471] 	* grub-core/video/i386/pc/vbe.c 
+Subject: [PATCH 204/482] 	* grub-core/video/i386/pc/vbe.c 
  (grub_video_vbe_print_adapter_specific_info): Replace division by 
  shifts.
 

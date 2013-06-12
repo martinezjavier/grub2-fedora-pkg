@@ -1,7 +1,7 @@
 From a34197c479d81185ada7a64ee680ae4e5157215d Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 29 Apr 2013 12:25:57 +0200
-Subject: [PATCH 390/471] 	Add few new tests.
+Subject: [PATCH 390/482] 	Add few new tests.
 
 ---
  ChangeLog                         |  4 +++

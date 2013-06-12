@@ -1,7 +1,7 @@
 From b5b12db0916b3436e872c23e08ad8627c0e726f1 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 3 Mar 2013 15:24:02 +0100
-Subject: [PATCH 192/471] 	* grub-core/commands/regexp.c (set_matches):
+Subject: [PATCH 192/482] 	* grub-core/commands/regexp.c (set_matches):
  Move setvar out of its 	parent.
 
 ---

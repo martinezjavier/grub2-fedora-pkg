@@ -1,7 +1,7 @@
 From e5947ad0f47058715a588ff2fdfa5487f65f459b Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 28 Apr 2013 13:54:32 +0200
-Subject: [PATCH 375/471] 	* grub-core/commands/probe.c: Add missing
+Subject: [PATCH 375/482] 	* grub-core/commands/probe.c: Add missing
  grub_device_close.
 
 ---

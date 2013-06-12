@@ -1,7 +1,7 @@
 From 2c765f906626985c55aa5fa8f5287374b9b116cb Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 4 May 2013 13:11:57 +0200
-Subject: [PATCH 414/471] 	* grub-core/font/font.c
+Subject: [PATCH 414/482] 	* grub-core/font/font.c
  (grub_font_construct_glyph): Fix memory leak.
 
 ---

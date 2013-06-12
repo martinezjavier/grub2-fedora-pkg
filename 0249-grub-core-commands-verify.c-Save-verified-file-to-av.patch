@@ -1,7 +1,7 @@
 From 389f8af28dcc1f7620fabf5032f680fba0bd28e3 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 3 Apr 2013 17:32:33 +0200
-Subject: [PATCH 249/471] 	* grub-core/commands/verify.c: Save verified
+Subject: [PATCH 249/482] 	* grub-core/commands/verify.c: Save verified
  file to avoid it being 	tampered with after verification was done.
 
 ---

@@ -1,7 +1,7 @@
 From 66d63873e7eeb1cebf49a56e91856d4a9644a8e2 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 17 Jan 2013 20:06:52 +0100
-Subject: [PATCH 113/471] 	Rewrite spkmodem to use PIT for timing. Double
+Subject: [PATCH 113/482] 	Rewrite spkmodem to use PIT for timing. Double
  the speed.
 
 ---

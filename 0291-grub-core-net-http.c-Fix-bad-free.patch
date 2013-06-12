@@ -1,7 +1,7 @@
 From 20f0e206ae3a863c3e9e3a5a198fbac1aa549514 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 12 Apr 2013 20:17:53 +0200
-Subject: [PATCH 291/471] 	* grub-core/net/http.c: Fix bad free.
+Subject: [PATCH 291/482] 	* grub-core/net/http.c: Fix bad free.
 
 ---
  ChangeLog            |  4 ++++

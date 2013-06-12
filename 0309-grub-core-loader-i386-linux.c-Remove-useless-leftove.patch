@@ -1,7 +1,7 @@
 From 49d00849ee5577b151e079524152f9219358588a Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 14 Apr 2013 19:01:23 +0200
-Subject: [PATCH 309/471] 	* grub-core/loader/i386/linux.c: Remove
+Subject: [PATCH 309/482] 	* grub-core/loader/i386/linux.c: Remove
  useless leftover pointer.
 
 ---

@@ -1,7 +1,7 @@
 From 7d0513c0e5552c09b21e66f73b718f51cb8a6afc Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 27 Jan 2013 16:12:05 +0100
-Subject: [PATCH 143/471] 	* grub-core/normal/menu_text.c
+Subject: [PATCH 143/482] 	* grub-core/normal/menu_text.c
  (grub_menu_init_page): Fix behaviour 	when menu highlight color isn't set.
 
 ---

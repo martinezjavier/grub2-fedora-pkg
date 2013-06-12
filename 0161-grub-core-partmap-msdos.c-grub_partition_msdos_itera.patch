@@ -1,7 +1,7 @@
 From 15b9a41db9fc3eb1a976228fc956a9e6561fa37a Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Wed, 27 Feb 2013 10:02:39 +0100
-Subject: [PATCH 161/471] 	* grub-core/partmap/msdos.c
+Subject: [PATCH 161/482] 	* grub-core/partmap/msdos.c
  (grub_partition_msdos_iterate): 	Fix off by one error in enumerating
  extended partitions.
 

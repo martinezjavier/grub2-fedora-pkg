@@ -1,7 +1,7 @@
 From 88929d27c333342a5d4099ab4178a1be19e98d43 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 24 Apr 2013 14:44:15 +0200
-Subject: [PATCH 338/471] 	Add missing video ids to coreboot and ieee1275
+Subject: [PATCH 338/482] 	Add missing video ids to coreboot and ieee1275
  video.
 
 ---

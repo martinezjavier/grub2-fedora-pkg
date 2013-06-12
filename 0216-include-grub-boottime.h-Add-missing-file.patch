@@ -1,7 +1,7 @@
 From 3a4118ef309840ef7a053c299bc0436d5de4171f Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 20 Mar 2013 16:58:07 +0100
-Subject: [PATCH 216/471] 	* include/grub/boottime.h: Add missing file.
+Subject: [PATCH 216/482] 	* include/grub/boottime.h: Add missing file.
 
 ---
  ChangeLog               | 4 ++++

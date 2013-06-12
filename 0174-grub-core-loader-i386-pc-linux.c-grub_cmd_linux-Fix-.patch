@@ -1,7 +1,7 @@
 From a446d9c14fa9e4a10a1ab8f50fa60b9530d8064f Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 1 Mar 2013 10:39:41 +0100
-Subject: [PATCH 174/471] 	* grub-core/loader/i386/pc/linux.c
+Subject: [PATCH 174/482] 	* grub-core/loader/i386/pc/linux.c
  (grub_cmd_linux): Fix compilation 	for 64-bit platforms.
 
 ---

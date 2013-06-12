@@ -1,7 +1,7 @@
 From 9ac4eee966697d77e5e55e02335e6a62c4f85769 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Thu, 11 Apr 2013 15:11:14 +0200
-Subject: [PATCH 278/471] 	* util/grub.d/30_os-prober.in: Add onstr to
+Subject: [PATCH 278/482] 	* util/grub.d/30_os-prober.in: Add onstr to
  entries for visual 	distinction.
 
 ---

@@ -1,7 +1,7 @@
 From 4fd9d372a0ed699b346894e516b46a96e7129c50 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 25 Apr 2013 02:22:20 +0200
-Subject: [PATCH 349/471] 	* tests/partmap_test.in: Add missing double
+Subject: [PATCH 349/482] 	* tests/partmap_test.in: Add missing double
  semicolon.
 
 ---

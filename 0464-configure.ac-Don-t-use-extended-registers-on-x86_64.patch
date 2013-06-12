@@ -1,7 +1,7 @@
 From 71cc19c0677fb7fb073d930dd0bdbbadf1c5ff66 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 7 May 2013 20:42:05 +0200
-Subject: [PATCH 464/471] 	* configure.ac: Don't use extended registers
+Subject: [PATCH 464/482] 	* configure.ac: Don't use extended registers
  on x86_64. 	Reported by: Peter Jones.
 
 ---

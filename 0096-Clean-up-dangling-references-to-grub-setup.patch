@@ -1,7 +1,7 @@
 From d1a9a3ec88483b5f1aa1e4a6c8bc38d47efa73af Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Sat, 12 Jan 2013 13:30:37 +0000
-Subject: [PATCH 096/471] Clean up dangling references to grub-setup. Fixes
+Subject: [PATCH 096/482] Clean up dangling references to grub-setup. Fixes
  Ubuntu bug #1082045.
 
 * docs/grub.texi (Images): Refer generally to grub-install rather

@@ -1,7 +1,7 @@
 From f7afdfb1d4cc6b8843e11069cb1601caaca50c73 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 2 Mar 2013 23:59:05 +0100
-Subject: [PATCH 189/471] 	* include/grub/cmos.h: Handle high CMOS
+Subject: [PATCH 189/482] 	* include/grub/cmos.h: Handle high CMOS
  addresses on sparc64.
 
 ---

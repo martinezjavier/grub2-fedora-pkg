@@ -1,7 +1,7 @@
 From f3c2abf3f840c6ec0430e56aea362afc774f25ae Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 2 May 2013 18:06:39 +0200
-Subject: [PATCH 402/471] 	* grub-core/loader/i386/linux.c
+Subject: [PATCH 402/482] 	* grub-core/loader/i386/linux.c
  (grub_linux_setup_video): Add 	GRUB_VIDEO_ADAPTER_CAPTURE: to handled drived
  ids.
 

@@ -1,7 +1,7 @@
 From babdc8b1ff0e83bb9c03fa7b28240adbdd8bba34 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 12 Jan 2013 16:14:09 +0100
-Subject: [PATCH 097/471] 	* autogen.sh: Do not try to delete nonexistant
+Subject: [PATCH 097/482] 	* autogen.sh: Do not try to delete nonexistant
  files. 	* util/import_gcrypth.sed: Add some missing header removals.
 
 ---

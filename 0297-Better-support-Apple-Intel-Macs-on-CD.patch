@@ -1,7 +1,7 @@
 From 05a8ecea2fd968857f1ec3e8c6111dcc6b9846bb Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 13 Apr 2013 00:38:04 +0200
-Subject: [PATCH 297/471] 	Better support Apple Intel Macs on CD.
+Subject: [PATCH 297/482] 	Better support Apple Intel Macs on CD.
 
 ---
  ChangeLog                 |   4 +

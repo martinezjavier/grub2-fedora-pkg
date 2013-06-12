@@ -1,7 +1,7 @@
 From 42b86368891e0380415148cdc1990604bbf7f807 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 25 Apr 2013 00:45:29 +0200
-Subject: [PATCH 346/471] 	* grub-core/term/ieee1275/console.c
+Subject: [PATCH 346/482] 	* grub-core/term/ieee1275/console.c
  (grub_console_dimensions): Ignore 	bogus SLOF values.
 
 ---

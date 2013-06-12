@@ -1,7 +1,7 @@
 From b0882724a3259a36ee5ee86d53904e9a552ca176 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 25 Apr 2013 02:14:46 +0200
-Subject: [PATCH 348/471] 	* util/grub-mkrescue.in: Fix loongson
+Subject: [PATCH 348/482] 	* util/grub-mkrescue.in: Fix loongson
  filename.
 
 ---

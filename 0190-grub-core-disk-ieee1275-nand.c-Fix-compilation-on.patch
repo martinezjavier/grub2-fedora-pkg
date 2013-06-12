@@ -1,7 +1,7 @@
 From cc5a726891122e51c14803d81a7142205dd5e98f Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 3 Mar 2013 01:30:55 +0100
-Subject: [PATCH 190/471] 	* grub-core/disk/ieee1275/nand.c: Fix
+Subject: [PATCH 190/482] 	* grub-core/disk/ieee1275/nand.c: Fix
  compilation on 	i386-ieee1275.
 
 ---

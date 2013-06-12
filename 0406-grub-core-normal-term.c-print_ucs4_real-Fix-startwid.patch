@@ -1,7 +1,7 @@
 From d5e9a65c59adfe1fee4027a611ec8e9e74145f4c Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 3 May 2013 13:56:45 +0200
-Subject: [PATCH 406/471] 	* grub-core/normal/term.c (print_ucs4_real):
+Subject: [PATCH 406/482] 	* grub-core/normal/term.c (print_ucs4_real):
  Fix startwidth in dry run.
 
 ---

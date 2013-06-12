@@ -1,7 +1,7 @@
 From 57a7fa5e58d024dbae7650121e25e561e6193a26 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 28 Feb 2013 10:30:35 +0100
-Subject: [PATCH 166/471] 	* grub-core/fs/iso9660.c: Remove nested
+Subject: [PATCH 166/482] 	* grub-core/fs/iso9660.c: Remove nested
  functions.
 
 ---

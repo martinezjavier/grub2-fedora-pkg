@@ -1,7 +1,7 @@
 From 02cf7c5e6af716ee3442d387780024c43cf84c5e Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 27 Apr 2013 02:00:16 +0200
-Subject: [PATCH 360/471] 	Make 'make check' work on emu.
+Subject: [PATCH 360/482] 	Make 'make check' work on emu.
 
 ---
  ChangeLog                     |  4 +++

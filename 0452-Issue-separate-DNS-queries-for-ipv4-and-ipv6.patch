@@ -1,7 +1,7 @@
 From 590290e07fe45f5fee7cd15e507fe90e54046732 Mon Sep 17 00:00:00 2001
 From: Gustavo Luiz Duarte <gustavold@linux.vnet.ibm.com>
 Date: Fri, 28 Sep 2012 19:42:07 -0400
-Subject: [PATCH 452/471] Issue separate DNS queries for ipv4 and ipv6
+Subject: [PATCH 452/482] Issue separate DNS queries for ipv4 and ipv6
 
 Adding multiple questions on a single DNS query is not supportted by
 most DNS servers. This patch issues two separate DNS queries

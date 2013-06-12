@@ -1,7 +1,7 @@
 From 5092c4144b402744481e435bedca2bcbda3839e4 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Sun, 20 Jan 2013 15:52:15 +0000
-Subject: [PATCH 116/471] Remove nested functions from device iterators.
+Subject: [PATCH 116/482] Remove nested functions from device iterators.
 
 * include/grub/arc/arc.h (grub_arc_iterate_devs_hook_t): New type.
 (grub_arc_iterate_devs): Add hook_data argument.

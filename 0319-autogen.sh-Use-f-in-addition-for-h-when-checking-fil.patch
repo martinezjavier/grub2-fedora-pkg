@@ -1,7 +1,7 @@
 From 9230f57ece9a9541a3db8246cde3aeab9cd10a04 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Tue, 16 Apr 2013 16:18:12 +0200
-Subject: [PATCH 319/471] 	* autogen.sh: Use "-f" in addition for "-h"
+Subject: [PATCH 319/482] 	* autogen.sh: Use "-f" in addition for "-h"
  when checking file presence.
 
 ---

@@ -1,7 +1,7 @@
 From 41621bfe8ae1dc7845a7a9cc6e0b484ea2288f1c Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 14 Apr 2013 17:19:04 +0200
-Subject: [PATCH 307/471] 	* tests/grub_cmd_date.in: Add missing exit 1.
+Subject: [PATCH 307/482] 	* tests/grub_cmd_date.in: Add missing exit 1.
 
 ---
  ChangeLog              | 4 ++++

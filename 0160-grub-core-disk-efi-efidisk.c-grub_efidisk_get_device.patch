@@ -1,7 +1,7 @@
 From 3416608ab2fe1766fe912bb51d7f56e76fd286d9 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Tue, 26 Feb 2013 22:45:00 +0100
-Subject: [PATCH 160/471] 	*
+Subject: [PATCH 160/482] 	*
  grub-core/disk/efi/efidisk.c(grub_efidisk_get_device_name): Fix 	memory
  leak if device name is not found.
 

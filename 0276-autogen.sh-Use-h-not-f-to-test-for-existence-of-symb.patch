@@ -1,7 +1,7 @@
 From 2d3ccedf0ae9aeb340622628c74a1d58132d35f2 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Wed, 10 Apr 2013 15:57:40 +0200
-Subject: [PATCH 276/471] 	* autogen.sh: Use "-h", not "-f", to test for
+Subject: [PATCH 276/482] 	* autogen.sh: Use "-h", not "-f", to test for
  existence of symbolic 	links under grub-core/lib/libgcrypt-grub/mpi.
 
 ---

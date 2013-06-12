@@ -1,7 +1,7 @@
 From 54f2bdbfd75f25d6a109d92b25879dd30e88b227 Mon Sep 17 00:00:00 2001
 From: Bean <bean123ch@gmail.com>
 Date: Sun, 5 May 2013 18:16:48 +0200
-Subject: [PATCH 427/471] 	* grub-core/commands/testspeed.c: New command
+Subject: [PATCH 427/482] 	* grub-core/commands/testspeed.c: New command
  testspeed.
 
 ---

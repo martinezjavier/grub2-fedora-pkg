@@ -1,7 +1,7 @@
 From 575b44b648a5007217689a857f82129a56cabc7c Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 11 Apr 2013 23:15:26 +0200
-Subject: [PATCH 282/471] 	Merge powerpc grub-mkrescue flavour with
+Subject: [PATCH 282/482] 	Merge powerpc grub-mkrescue flavour with
  common. Use xorriso HFS+ 	feature for it.
 
 ---

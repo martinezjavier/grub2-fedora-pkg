@@ -1,7 +1,7 @@
 From 4f258868283bf563138c854d65df1e5f34eea2af Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 2 Mar 2013 23:51:19 +0100
-Subject: [PATCH 187/471] 	Move to more hookless approach in IEEE1275
+Subject: [PATCH 187/482] 	Move to more hookless approach in IEEE1275
  devices handling.
 
 ---

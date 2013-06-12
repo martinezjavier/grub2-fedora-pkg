@@ -1,7 +1,7 @@
 From 1e70833b4206de6b356cc5f6052228d66c283761 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 7 Mar 2013 08:17:24 +0100
-Subject: [PATCH 196/471] 	Lift up core size limits on some platforms.
+Subject: [PATCH 196/482] 	Lift up core size limits on some platforms.
  Fix potential memory 	corruption with big core on small memory systems.
  Document remaining 	limits.
 

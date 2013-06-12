@@ -1,7 +1,7 @@
 From 79cd77365b72e4fc4131b1b2f87b10875536495f Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 5 Apr 2013 11:13:37 +0200
-Subject: [PATCH 265/471] 	* util/grub-mkfont.c: Prefer enum to #define.
+Subject: [PATCH 265/482] 	* util/grub-mkfont.c: Prefer enum to #define.
 
 ---
  ChangeLog          |  4 ++++

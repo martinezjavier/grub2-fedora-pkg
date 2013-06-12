@@ -1,7 +1,7 @@
 From 01d4ed9c65da7fa95ec6c7ef952bc50064db2235 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Fri, 25 May 2012 14:57:38 -0400
-Subject: [PATCH 445/471] Don't set boot device on ppc-ieee1275
+Subject: [PATCH 445/482] Don't set boot device on ppc-ieee1275
 
 This started with the problem that powerkvm doesn't have /dev/nvram and so
 there is no way to set boot-device.

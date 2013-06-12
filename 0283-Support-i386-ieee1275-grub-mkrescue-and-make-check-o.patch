@@ -1,7 +1,7 @@
 From 260299d1466df594ec9e53e8de234143a5977158 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 12 Apr 2013 01:29:45 +0200
-Subject: [PATCH 283/471] 	Support i386-ieee1275 grub-mkrescue and make
+Subject: [PATCH 283/482] 	Support i386-ieee1275 grub-mkrescue and make
  check on it.
 
 ---

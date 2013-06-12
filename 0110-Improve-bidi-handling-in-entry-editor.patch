@@ -1,7 +1,7 @@
 From 1ce5f411b75c2bcd899e1a838d1d6292d6c76972 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 16 Jan 2013 13:41:16 +0100
-Subject: [PATCH 110/471] 	Improve bidi handling in entry editor.
+Subject: [PATCH 110/482] 	Improve bidi handling in entry editor.
 
 ---
  ChangeLog                     |   4 +

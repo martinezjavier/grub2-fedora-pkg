@@ -1,7 +1,7 @@
 From 0f1725945089691326aaa827ac6338eca584b802 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 20 Mar 2013 17:13:31 +0100
-Subject: [PATCH 218/471] 	New commands cbmemc, lscoreboot,
+Subject: [PATCH 218/482] 	New commands cbmemc, lscoreboot,
  coreboot_boottime to inspect 	coreboot tables content. Support for cbmemc.
 
 ---

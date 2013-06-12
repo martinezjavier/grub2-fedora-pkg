@@ -1,7 +1,7 @@
 From 8e014243b08f8aa9515f2e9e94e379c049bbf6d7 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 1 Feb 2013 21:32:17 +0100
-Subject: [PATCH 146/471] 	* grub-core/bus/usb/serial/common.c
+Subject: [PATCH 146/482] 	* grub-core/bus/usb/serial/common.c
  (grub_usbserial_attach): Fix missing 	zero-out of port structure.
 
 ---

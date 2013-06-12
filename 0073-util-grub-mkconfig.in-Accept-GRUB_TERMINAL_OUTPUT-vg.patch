@@ -1,7 +1,7 @@
 From 66f89845c04cc5cc358c6bb2cd9c4ac512136698 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Fri, 28 Dec 2012 07:21:17 +0000
-Subject: [PATCH 073/471] * util/grub-mkconfig.in: Accept
+Subject: [PATCH 073/482] * util/grub-mkconfig.in: Accept
  GRUB_TERMINAL_OUTPUT=vga_text. Fixes Savannah bug #37821.
 
 ---

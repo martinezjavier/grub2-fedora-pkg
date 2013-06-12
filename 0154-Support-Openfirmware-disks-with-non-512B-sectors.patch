@@ -1,7 +1,7 @@
 From 2274f0f3de80c1f36668815ce3f79f73716eda73 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 19 Feb 2013 09:10:26 +0100
-Subject: [PATCH 154/471] 	Support Openfirmware disks with non-512B
+Subject: [PATCH 154/482] 	Support Openfirmware disks with non-512B
  sectors.
 
 	* grub-core/disk/ieee1275/ofdisk.c (grub_ofdisk_open): Get the block

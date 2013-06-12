@@ -1,7 +1,7 @@
 From d47a9c22d29f5237a0ecf981c70e55bb9c6a73c6 Mon Sep 17 00:00:00 2001
 From: Leif Lindholm <leif.lindholm@arm.com>
 Date: Sun, 20 Jan 2013 23:16:34 +0000
-Subject: [PATCH 124/471] * util/grub-mkimage.c (main): Postpone freeing
+Subject: [PATCH 124/482] * util/grub-mkimage.c (main): Postpone freeing
  arguments.output until after its use in generate_image.
 
 ---

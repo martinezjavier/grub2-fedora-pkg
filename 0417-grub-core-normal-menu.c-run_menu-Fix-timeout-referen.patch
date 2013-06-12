@@ -1,7 +1,7 @@
 From 0053990e0ed35bc3f438628a5b6b5aa6134b2d4b Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 4 May 2013 13:43:07 +0200
-Subject: [PATCH 417/471] 	* grub-core/normal/menu.c (run_menu): Fix
+Subject: [PATCH 417/482] 	* grub-core/normal/menu.c (run_menu): Fix
  timeout reference point.
 
 ---

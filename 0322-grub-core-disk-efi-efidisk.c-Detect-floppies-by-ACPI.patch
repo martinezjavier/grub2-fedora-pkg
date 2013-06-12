@@ -1,7 +1,7 @@
 From aed55cdaacdb3f254f6b568803ab86c5d103e9e4 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 17 Apr 2013 19:05:57 +0200
-Subject: [PATCH 322/471] 	* grub-core/disk/efi/efidisk.c: Detect
+Subject: [PATCH 322/482] 	* grub-core/disk/efi/efidisk.c: Detect
  floppies by ACPI ID. 	It improves performance in qemu.
 
 ---

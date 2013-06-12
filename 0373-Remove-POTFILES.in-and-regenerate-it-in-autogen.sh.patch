@@ -1,7 +1,7 @@
 From 69e943a4f7f0f9a0c573950f709d46d1ab0b4485 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 28 Apr 2013 13:49:21 +0200
-Subject: [PATCH 373/471] 	Remove POTFILES.in and regenerate it in
+Subject: [PATCH 373/482] 	Remove POTFILES.in and regenerate it in
  autogen.sh.
 
 ---

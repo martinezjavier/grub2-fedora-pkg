@@ -1,7 +1,7 @@
 From 5fe555f22c36e6e03ee1e44bb2cd1d013489f8e9 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 28 Apr 2013 18:53:59 +0200
-Subject: [PATCH 382/471] 	* docs/grub.texi: Add a comment about
+Subject: [PATCH 382/482] 	* docs/grub.texi: Add a comment about
  usefullness of nativedisk.
 
 ---

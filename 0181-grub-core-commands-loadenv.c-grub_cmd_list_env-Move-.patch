@@ -1,7 +1,7 @@
 From cda677f0e4db75bd50c339706331e4dd36b88926 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 2 Mar 2013 11:45:01 +0100
-Subject: [PATCH 181/471] 	* grub-core/commands/loadenv.c
+Subject: [PATCH 181/482] 	* grub-core/commands/loadenv.c
  (grub_cmd_list_env): Move print_var 	out of its parent.
 
 ---

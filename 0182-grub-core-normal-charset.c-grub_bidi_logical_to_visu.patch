@@ -1,7 +1,7 @@
 From a8cf486e737e91b508d9a5135b887eb93062b7a1 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 2 Mar 2013 11:47:59 +0100
-Subject: [PATCH 182/471] 	* grub-core/normal/charset.c
+Subject: [PATCH 182/482] 	* grub-core/normal/charset.c
  (grub_bidi_logical_to_visual): Add 	hook pass-through parameter. All users
  updated and unnested.
 

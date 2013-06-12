@@ -1,7 +1,7 @@
 From 1776464a786731863fd93bf4ce8171063673dec1 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 12 Apr 2013 19:25:16 +0200
-Subject: [PATCH 290/471] 	* grub-core/net/drivers/ieee1275/ofnet.c:
+Subject: [PATCH 290/482] 	* grub-core/net/drivers/ieee1275/ofnet.c:
  Don't attempt to send more 	than buffer size.
 
 ---

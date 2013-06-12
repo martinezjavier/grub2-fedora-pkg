@@ -1,7 +1,7 @@
 From b880c54029696992290b7a0a635343762a4675c9 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 5 Apr 2013 10:56:43 +0200
-Subject: [PATCH 262/471] 	Add new defines GRUB_RSDP_SIGNATURE_SIZE and
+Subject: [PATCH 262/482] 	Add new defines GRUB_RSDP_SIGNATURE_SIZE and
  GRUB_RSDP_SIGNATURE.
 
 ---

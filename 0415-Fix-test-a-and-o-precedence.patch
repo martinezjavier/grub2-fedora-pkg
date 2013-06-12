@@ -1,7 +1,7 @@
 From 568a5bef7e6b7309a652b328d65a9964b6d415e5 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 4 May 2013 13:38:59 +0200
-Subject: [PATCH 415/471] 	Fix test -a and -o precedence. 	Reported by:
+Subject: [PATCH 415/482] 	Fix test -a and -o precedence. 	Reported by:
  adrian15.
 
 ---

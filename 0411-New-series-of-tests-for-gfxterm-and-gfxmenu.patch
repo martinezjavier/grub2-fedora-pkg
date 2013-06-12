@@ -1,7 +1,7 @@
 From 5a030df7b1a5e9a15689be38a09c7ff37d874fbc Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 3 May 2013 14:09:55 +0200
-Subject: [PATCH 411/471] 	New series of tests for gfxterm and gfxmenu.
+Subject: [PATCH 411/482] 	New series of tests for gfxterm and gfxmenu.
 
 ---
  ChangeLog                             |   4 +

@@ -1,7 +1,7 @@
 From 0ac44e6aa6e42da168eac6595cdb439b343a8a22 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 29 Apr 2013 19:14:46 +0200
-Subject: [PATCH 395/471] 	* configure.ac: Use -mcmodel=large on
+Subject: [PATCH 395/482] 	* configure.ac: Use -mcmodel=large on
  x86_64-emu as well. 	Reported by: qwertial.
 
 ---

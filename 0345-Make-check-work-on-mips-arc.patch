@@ -1,7 +1,7 @@
 From 8dd3765f0e6a13637d43e4fb2990eee748bfe961 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 24 Apr 2013 22:24:28 +0200
-Subject: [PATCH 345/471] 	Make check work on mips-arc.
+Subject: [PATCH 345/482] 	Make check work on mips-arc.
 
 ---
  ChangeLog                |  4 ++++

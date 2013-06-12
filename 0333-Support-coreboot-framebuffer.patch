@@ -1,7 +1,7 @@
 From f387540a52ff93c10fca1e765adaeb829c44e688 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 21 Apr 2013 13:02:10 +0200
-Subject: [PATCH 333/471] 	Support coreboot framebuffer.
+Subject: [PATCH 333/482] 	Support coreboot framebuffer.
 
 	* grub-core/video/i386/coreboot/cbfb.c: New file.
 ---

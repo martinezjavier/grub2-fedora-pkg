@@ -1,7 +1,7 @@
 From 1e02bf7761a443ce164dfad531c62d069fe4a14d Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 14 Apr 2013 16:52:49 +0200
-Subject: [PATCH 301/471] 	* grub-core/kern/ieee1275/cmain.c
+Subject: [PATCH 301/482] 	* grub-core/kern/ieee1275/cmain.c
  (grub_ieee1275_find_options): 	Inline name defines used only once.
 
 ---

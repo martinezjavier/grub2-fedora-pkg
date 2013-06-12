@@ -1,7 +1,7 @@
 From 97478894ed1ee9cad7e40ff8d9cd12247747b899 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Sun, 30 Dec 2012 09:57:58 +0000
-Subject: [PATCH 074/471] * grub-core/bus/usb/ehci.c (grub_ehci_pci_iter):
+Subject: [PATCH 074/482] * grub-core/bus/usb/ehci.c (grub_ehci_pci_iter):
  Remove incorrect __attribute__ ((unused)). * grub-core/video/bochs.c
  (find_card): Likewise. * grub-core/video/cirrus.c (find_card): Likewise. *
  grub-core/video/radeon_fuloong2e.c (find_card): Likewise. *

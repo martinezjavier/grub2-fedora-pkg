@@ -1,7 +1,7 @@
 From 76257d602eeded1439d5910a99bec69d3898fce3 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 5 Apr 2013 10:33:53 +0200
-Subject: [PATCH 260/471] 	* include/grub/bsdlabel.h: Use enums.
+Subject: [PATCH 260/482] 	* include/grub/bsdlabel.h: Use enums.
 
 ---
  ChangeLog               |  4 +++

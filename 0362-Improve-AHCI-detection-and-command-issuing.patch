@@ -1,7 +1,7 @@
 From 021e35ff098ea0f022ebd56f3373fa17b0877dfe Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 27 Apr 2013 17:18:02 +0200
-Subject: [PATCH 362/471] 	Improve AHCI detection and command issuing.
+Subject: [PATCH 362/482] 	Improve AHCI detection and command issuing.
 
 ---
  ChangeLog             |   4 +

@@ -1,7 +1,7 @@
 From 421249fda0ae1b6138ccf14b34fa4c58fd3296d4 Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Mon, 10 Dec 2012 17:07:01 +0100
-Subject: [PATCH 066/471] 	* util/grub-install.in: Follow the symbolic
+Subject: [PATCH 066/482] 	* util/grub-install.in: Follow the symbolic
  link parameter added 	to the file command.
 
 ---

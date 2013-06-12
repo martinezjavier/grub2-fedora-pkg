@@ -1,7 +1,7 @@
 From 922c5f5bac2699f8fb4273e9e542fc8cb416535a Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 8 May 2013 11:05:37 +0200
-Subject: [PATCH 466/471] 	* conf/Makefile.common: Poison float and
+Subject: [PATCH 466/482] 	* conf/Makefile.common: Poison float and
  double on non-emu.
 
 ---

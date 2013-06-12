@@ -1,7 +1,7 @@
 From 6b83cf4249d933950a7d6b1cf3b0baea881f691f Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Fri, 5 Apr 2013 10:08:20 +0200
-Subject: [PATCH 257/471] 	* docs/grub.texi: Document menuentry --id
+Subject: [PATCH 257/482] 	* docs/grub.texi: Document menuentry --id
  option.
 
 ---

@@ -1,7 +1,7 @@
 From 6b0582fa0af9c5b2c3537198b3b142222137978c Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 2 Mar 2013 16:45:57 +0100
-Subject: [PATCH 185/471] 	Make elfload not use hooks. Opt for flags and
+Subject: [PATCH 185/482] 	Make elfload not use hooks. Opt for flags and
  iterators instead.
 
 ---

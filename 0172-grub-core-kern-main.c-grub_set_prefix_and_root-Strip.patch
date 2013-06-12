@@ -1,7 +1,7 @@
 From 7a75aadaef0e9d8d36e4c24e906b36336854db7e Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 1 Mar 2013 10:35:51 +0100
-Subject: [PATCH 172/471] 	* grub-core/kern/main.c
+Subject: [PATCH 172/482] 	* grub-core/kern/main.c
  (grub_set_prefix_and_root): Strip trailing 	platform from firmware path.
 
 ---

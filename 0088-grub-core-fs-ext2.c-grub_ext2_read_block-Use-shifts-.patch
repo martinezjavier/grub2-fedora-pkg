@@ -1,7 +1,7 @@
 From 40eeced3fb25780be27799b2a72a2264ef64163b Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 5 Jan 2013 18:37:34 +0100
-Subject: [PATCH 088/471] 	* grub-core/fs/ext2.c (grub_ext2_read_block):
+Subject: [PATCH 088/482] 	* grub-core/fs/ext2.c (grub_ext2_read_block):
  Use shifts rather than 	divisions.
 
 ---

@@ -1,7 +1,7 @@
 From d6ab257f56d41f230ba4a5697177ba9c0e8c685a Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 12 Apr 2013 14:52:05 +0200
-Subject: [PATCH 288/471] 	* tests/util/grub-shell.in: Fix it on powerpc.
+Subject: [PATCH 288/482] 	* tests/util/grub-shell.in: Fix it on powerpc.
 
 ---
  ChangeLog                | 4 ++++

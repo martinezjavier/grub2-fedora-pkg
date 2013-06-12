@@ -1,7 +1,7 @@
 From a3da4fed0728b2ed108fd7b02047e5ea568e8d89 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 5 Apr 2013 11:01:19 +0200
-Subject: [PATCH 264/471] 	* grub-core/commands/acpi.c: Use sizeof rather
+Subject: [PATCH 264/482] 	* grub-core/commands/acpi.c: Use sizeof rather
  than hardcoding the size.
 
 ---

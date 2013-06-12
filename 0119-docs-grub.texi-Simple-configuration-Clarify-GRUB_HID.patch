@@ -1,7 +1,7 @@
 From 5aeecd9f2ac75a500e74f96256371b501f9d2d24 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Sun, 20 Jan 2013 22:42:08 +0100
-Subject: [PATCH 119/471] 	* docs/grub.texi (Simple configuration):
+Subject: [PATCH 119/482] 	* docs/grub.texi (Simple configuration):
  Clarify GRUB_HIDDEN_TIMEOUT 	is interrupted by ESC.
 
 ---

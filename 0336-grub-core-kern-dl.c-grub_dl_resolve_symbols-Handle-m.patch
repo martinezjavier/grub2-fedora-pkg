@@ -1,7 +1,7 @@
 From b6e147adfbeadc1f9b581e9d0124d72a7c488f60 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 24 Apr 2013 13:58:31 +0200
-Subject: [PATCH 336/471] 	* grub-core/kern/dl.c
+Subject: [PATCH 336/482] 	* grub-core/kern/dl.c
  (grub_dl_resolve_symbols): Handle malloc failure.
 
 ---

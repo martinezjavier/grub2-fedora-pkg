@@ -1,7 +1,7 @@
 From 0397c8a6d1c65c7e7216324f0c63e386e9b6c5ed Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 20 Apr 2013 17:39:49 +0200
-Subject: [PATCH 332/471] 	* grub-core/kern/mm.c (grub_mm_init_region):
+Subject: [PATCH 332/482] 	* grub-core/kern/mm.c (grub_mm_init_region):
  Fix condition for 	detecting too small regions.
 
 ---

@@ -1,7 +1,7 @@
 From 60c4d08965790dd35eb8abaf274bf3b6b3c7e85d Mon Sep 17 00:00:00 2001
 From: Vladimir Testov <vladimir.testov@rosalab.ru>
 Date: Wed, 3 Apr 2013 09:20:29 +0200
-Subject: [PATCH 243/471] 	* grub-core/gfxmenu/gui_circular_progress.c:
+Subject: [PATCH 243/482] 	* grub-core/gfxmenu/gui_circular_progress.c:
  Take both width and height 	into account when calculating radius.
 
 ---

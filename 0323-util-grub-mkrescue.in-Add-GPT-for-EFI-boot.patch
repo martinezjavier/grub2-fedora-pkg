@@ -1,7 +1,7 @@
 From 7b53ff6a484ee7409cf951ccedbb44962b4d69d2 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 17 Apr 2013 19:08:31 +0200
-Subject: [PATCH 323/471] 	* util/grub-mkrescue.in: Add GPT for EFI boot.
+Subject: [PATCH 323/482] 	* util/grub-mkrescue.in: Add GPT for EFI boot.
 
 ---
  ChangeLog             | 4 ++++

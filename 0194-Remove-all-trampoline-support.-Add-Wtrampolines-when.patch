@@ -1,7 +1,7 @@
 From 03cd56052af22492179742054c0e6c0382f85afb Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 3 Mar 2013 15:57:30 +0100
-Subject: [PATCH 194/471] 	Remove all trampoline support. Add
+Subject: [PATCH 194/482] 	Remove all trampoline support. Add
  -Wtrampolines when 	present. Remove symbols used for trampolines to make 
  link fail if trampolines are present.
 

@@ -1,7 +1,7 @@
 From 02d70c1a8f1f21728461d44e157e605957588eff Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 1 Feb 2013 21:48:01 +0100
-Subject: [PATCH 149/471] Missing part of last commit
+Subject: [PATCH 149/482] Missing part of last commit
 
 ---
  include/grub/acpi.h | 31 ++++++++++++++++++++++++++++++-

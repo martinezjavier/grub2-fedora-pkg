@@ -1,7 +1,7 @@
 From 255ae4e8d60ad22ec0f88b33d29331b08b9b3140 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 13 Apr 2013 02:26:34 +0200
-Subject: [PATCH 299/471] 	* docs/man/grub-glue-efi.h2m: Add missing
+Subject: [PATCH 299/482] 	* docs/man/grub-glue-efi.h2m: Add missing
  file.
 
 ---

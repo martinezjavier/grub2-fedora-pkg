@@ -1,7 +1,7 @@
 From fa35f13018c92b66f4a68e1f32ede2b0327f993b Mon Sep 17 00:00:00 2001
 From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 Date: Thu, 7 Mar 2013 08:52:29 +0100
-Subject: [PATCH 198/471] 	* grub-core/commands/acpi.c
+Subject: [PATCH 198/482] 	* grub-core/commands/acpi.c
  (grub_acpi_create_ebda): Don't 	dereference null pointer. While the
  code is technically correct, gcc 	may eliminate a null check if pointer
  is already dereferenced.

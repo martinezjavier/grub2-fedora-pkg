@@ -1,7 +1,7 @@
 From 0ea461de225231105cbc561d3088b208e90377fa Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 28 Apr 2013 15:18:50 +0200
-Subject: [PATCH 379/471] 	* grub-core/io/lzopio.c: Use
+Subject: [PATCH 379/482] 	* grub-core/io/lzopio.c: Use
  GRUB_PROPERLY_ALIGNED_ARRAY. 	* grub-core/loader/i386/bsd.c: Likewise.
 
 ---

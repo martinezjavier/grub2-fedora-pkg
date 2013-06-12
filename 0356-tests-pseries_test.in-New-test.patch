@@ -1,7 +1,7 @@
 From 94e54563a91a631e83b4e504adec11c8841d8860 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 26 Apr 2013 19:09:55 +0200
-Subject: [PATCH 356/471] 	* tests/pseries_test.in: New test.
+Subject: [PATCH 356/482] 	* tests/pseries_test.in: New test.
 
 ---
  ChangeLog             |  4 ++++

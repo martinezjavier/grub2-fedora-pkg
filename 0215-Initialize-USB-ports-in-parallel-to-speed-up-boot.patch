@@ -1,7 +1,7 @@
 From b528ebd33741511b054926e6076b23ab0637f6da Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 19 Mar 2013 23:06:44 +0100
-Subject: [PATCH 215/471] 	Initialize USB ports in parallel to speed-up
+Subject: [PATCH 215/482] 	Initialize USB ports in parallel to speed-up
  boot.
 
 ---

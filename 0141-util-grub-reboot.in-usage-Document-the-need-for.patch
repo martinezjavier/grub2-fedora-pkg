@@ -1,7 +1,7 @@
 From 6066d6ec61ebed7aeded9b412dfc541ba5ae2827 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Tue, 22 Jan 2013 14:28:32 +0000
-Subject: [PATCH 141/471] * util/grub-reboot.in (usage): Document the need for
+Subject: [PATCH 141/482] * util/grub-reboot.in (usage): Document the need for
  GRUB_DEFAULT=saved. * util/grub-set-default.in (usage): Likewise. Reported
  by: Brian Candler.  Fixes Ubuntu bug #1102925.
 

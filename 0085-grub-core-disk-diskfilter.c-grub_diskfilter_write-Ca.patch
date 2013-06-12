@@ -1,7 +1,7 @@
 From ba8109f7402ff763cbed5607841d438aab56e2cf Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 5 Jan 2013 15:10:46 +0100
-Subject: [PATCH 085/471] 	* grub-core/disk/diskfilter.c
+Subject: [PATCH 085/482] 	* grub-core/disk/diskfilter.c
  (grub_diskfilter_write): Call 	grub_error properly. 	*
  grub-core/disk/ieee1275/nand.c (grub_nand_write): Likewise. 	*
  grub-core/disk/loopback.c (grub_loopback_write): Likewise.

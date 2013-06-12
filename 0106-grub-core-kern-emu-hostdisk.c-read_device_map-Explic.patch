@@ -1,7 +1,7 @@
 From df5ceb21a0574898799f6571555b8bf7da539b2b Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 13 Jan 2013 22:45:16 +0100
-Subject: [PATCH 106/471] 	* grub-core/kern/emu/hostdisk.c
+Subject: [PATCH 106/482] 	* grub-core/kern/emu/hostdisk.c
  (read_device_map): Explicitly 	delimit path in strings using quotes. 	*
  util/getroot.c (grub_guess_root_devices): Likewise. 
  (grub_make_system_path_relative_to_its_root): Likewise. 	*

@@ -1,7 +1,7 @@
 From 077f5078ad094f096e623008b0e94cf86bd6e703 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 30 Jan 2013 09:22:43 +0100
-Subject: [PATCH 145/471] 	* grub-core/fs/xfs.c (grub_xfs_read_block):
+Subject: [PATCH 145/482] 	* grub-core/fs/xfs.c (grub_xfs_read_block):
  Fix computation in presence 	of extended attributes.
 
 ---

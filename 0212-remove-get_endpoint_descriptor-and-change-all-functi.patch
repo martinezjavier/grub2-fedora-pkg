@@ -1,7 +1,7 @@
 From f6ca5450858cedbe0fc18c973fc19e1242f71f45 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 19 Mar 2013 11:19:36 +0100
-Subject: [PATCH 212/471] 	remove get_endpoint_descriptor and change all
+Subject: [PATCH 212/482] 	remove get_endpoint_descriptor and change all
  functions needing 	descriptor to just receive it as argument rather than
  endpoint 	address.
 

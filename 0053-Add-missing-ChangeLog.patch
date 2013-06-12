@@ -1,7 +1,7 @@
 From 3fdb3a7b38a0cd0179a48790eb1272f9c8e60cd1 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 3 Jun 2013 14:12:46 -0400
-Subject: [PATCH 053/471] Add missing ChangeLog
+Subject: [PATCH 053/482] Add missing ChangeLog
 
 ---
  ChangeLog | 5 +++++

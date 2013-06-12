@@ -1,7 +1,7 @@
 From c3bc7c1995df1313f47ef8e7cc9852ac13e958d0 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 19 Apr 2013 00:36:23 +0200
-Subject: [PATCH 324/471] 	Add support for pseries and other bootinfo
+Subject: [PATCH 324/482] 	Add support for pseries and other bootinfo
  machines to grub-mkrescue.
 
 	Tested by: Paulo Flabiano Smorigo.

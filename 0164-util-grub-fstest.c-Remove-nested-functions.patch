@@ -1,7 +1,7 @@
 From 1d4fd1febde6768099515759de61cbea61291cec Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 28 Feb 2013 09:36:55 +0100
-Subject: [PATCH 164/471] 	* util/grub-fstest.c: Remove nested functions.
+Subject: [PATCH 164/482] 	* util/grub-fstest.c: Remove nested functions.
 
 ---
  ChangeLog          |   4 ++

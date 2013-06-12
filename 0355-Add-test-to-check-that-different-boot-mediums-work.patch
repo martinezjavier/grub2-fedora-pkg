@@ -1,7 +1,7 @@
 From b8845d9e7e3df55d36d9a3440a147f293feb7e81 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 26 Apr 2013 14:33:31 +0200
-Subject: [PATCH 355/471] 	Add test to check that different boot mediums
+Subject: [PATCH 355/482] 	Add test to check that different boot mediums
  work.
 
 ---

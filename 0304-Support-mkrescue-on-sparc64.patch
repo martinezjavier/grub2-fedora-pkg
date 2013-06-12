@@ -1,7 +1,7 @@
 From 3a7d6132a65d34ee8fe1fc6cf83f0f545a03eebd Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 14 Apr 2013 17:10:55 +0200
-Subject: [PATCH 304/471] 	Support mkrescue on sparc64.
+Subject: [PATCH 304/482] 	Support mkrescue on sparc64.
 
 ---
  ChangeLog                              |  4 ++

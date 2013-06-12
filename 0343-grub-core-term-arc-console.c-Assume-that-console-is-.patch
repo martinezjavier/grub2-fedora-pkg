@@ -1,7 +1,7 @@
 From 03e23ea91dfeb59bfcdf6545275e6bea68b6f6a8 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 24 Apr 2013 18:39:00 +0200
-Subject: [PATCH 343/471] 	* grub-core/term/arc/console.c: Assume that
+Subject: [PATCH 343/482] 	* grub-core/term/arc/console.c: Assume that
  console is 80x24 vt100 if 	it's serial.
 
 ---

@@ -1,7 +1,7 @@
 From 4dc1cb37683d657957cb385878d72ca41bde056f Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Mon, 21 Jan 2013 00:05:41 +0000
-Subject: [PATCH 125/471] * docs/grub.texi (Multi-boot manual config): Fix typo
+Subject: [PATCH 125/482] * docs/grub.texi (Multi-boot manual config): Fix typo
  for "recommended".
 
 ---

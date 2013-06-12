@@ -1,7 +1,7 @@
 From b6887b1a809fdd22b2a28b5b0ec5a6462ca9a870 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 2 Mar 2013 23:23:51 +0100
-Subject: [PATCH 186/471] 	* grub-core/kern/term.c
+Subject: [PATCH 186/482] 	* grub-core/kern/term.c
  (grub_term_normal_color), 	(grub_term_highlight_color): Add back lost
  defaults.
 

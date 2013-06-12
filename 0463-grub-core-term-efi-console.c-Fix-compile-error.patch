@@ -1,7 +1,7 @@
 From f7c5895ae7757d790c3c0efea514523775b50c66 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 7 May 2013 20:40:00 +0200
-Subject: [PATCH 463/471] 	* grub-core/term/efi/console.c: Fix compile
+Subject: [PATCH 463/482] 	* grub-core/term/efi/console.c: Fix compile
  error.
 
 ---

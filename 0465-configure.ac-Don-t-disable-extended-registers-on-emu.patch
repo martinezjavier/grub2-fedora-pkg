@@ -1,7 +1,7 @@
 From 69c5d972c80f796e61cdc3f6cdd88c227070872e Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 8 May 2013 11:01:11 +0200
-Subject: [PATCH 465/471] 	* configure.ac: Don't disable extended
+Subject: [PATCH 465/482] 	* configure.ac: Don't disable extended
  registers on emu.
 
 ---

@@ -1,7 +1,7 @@
 From 8109764f605afbc888760e323d19110ccef84e7b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Gr=C3=A9goire=20Sutre?= <gregoire.sutre@gmail.com>
 Date: Sun, 28 Oct 2012 11:55:22 +0100
-Subject: [PATCH 054/471] Fix ordering and tab indentation of NetBSD boot menu
+Subject: [PATCH 054/482] Fix ordering and tab indentation of NetBSD boot menu
  entries.
 
 ---

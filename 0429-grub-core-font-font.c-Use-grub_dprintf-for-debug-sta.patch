@@ -1,7 +1,7 @@
 From d6dce4fe955c1672456d0651c20c7b810e9b36c9 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 7 May 2013 11:26:15 +0200
-Subject: [PATCH 429/471] 	* grub-core/font/font.c: Use grub_dprintf for
+Subject: [PATCH 429/482] 	* grub-core/font/font.c: Use grub_dprintf for
  debug statements rather 	than printf.
 
 ---

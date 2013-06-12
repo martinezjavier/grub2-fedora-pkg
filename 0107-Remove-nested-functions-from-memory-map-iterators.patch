@@ -1,7 +1,7 @@
 From 8cfbc2324ec86aa465ec9a70d61aafe5ae38c2ab Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Tue, 15 Jan 2013 12:02:35 +0000
-Subject: [PATCH 107/471] Remove nested functions from memory map iterators.
+Subject: [PATCH 107/482] Remove nested functions from memory map iterators.
 
 * grub-core/efiemu/mm.c (grub_efiemu_mmap_iterate): Add hook_data
 argument, passed to hook.

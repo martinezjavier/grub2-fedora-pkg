@@ -1,7 +1,7 @@
 From a2780be06f7de35a0dd4cc19a68b151176707ae7 Mon Sep 17 00:00:00 2001
 From: Fedora Ninjas <grub2-owner@fedoraproject.org>
 Date: Fri, 14 Dec 2012 20:10:21 -0200
-Subject: [PATCH 458/471] Add bootpath device to the list
+Subject: [PATCH 458/482] Add bootpath device to the list
 
 When scanning the devices, always check (and add) the bootpath device if it
 isn't in the device list.

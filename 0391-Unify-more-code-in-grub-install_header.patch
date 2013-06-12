@@ -1,7 +1,7 @@
 From 5ece7791529296e557e7b38aa66ffb4262a96a31 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 29 Apr 2013 12:26:43 +0200
-Subject: [PATCH 391/471] 	Unify more code in grub-install_header.
+Subject: [PATCH 391/482] 	Unify more code in grub-install_header.
 
 ---
  ChangeLog                 |  4 ++++

@@ -1,7 +1,7 @@
 From 7c6640d26459b059d1f6854907351e90070e643e Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 5 Jan 2013 16:53:04 +0100
-Subject: [PATCH 086/471] 	* grub-core/fs/nilfs2.c
+Subject: [PATCH 086/482] 	* grub-core/fs/nilfs2.c
  (-grub_nilfs2_palloc_groups_per_desc_block): 	Rename to ... 
  (grub_nilfs2_palloc_log_groups_per_desc_block): ... this. Return log 	of
  groups_per_block. All users updated.

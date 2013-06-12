@@ -1,7 +1,7 @@
 From 25ec194a39ae32af2000600ee2e6e1d28230fa98 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 29 Apr 2013 12:14:57 +0200
-Subject: [PATCH 388/471] 	* grub-core/commands/nativedisk.c: Customize
+Subject: [PATCH 388/482] 	* grub-core/commands/nativedisk.c: Customize
  the list of modules on 	platform. Don't try to search for disks
  already using native drivers.
 

@@ -1,7 +1,7 @@
 From e64acf0c9e709e2f2fc4908f2123ad908371839b Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Wed, 28 Nov 2012 14:14:20 +0100
-Subject: [PATCH 055/471] 	* grub-core/net/bootp.c (parse_dhcp_vendor):
+Subject: [PATCH 055/482] 	* grub-core/net/bootp.c (parse_dhcp_vendor):
  Fix double increment.
 
 ---

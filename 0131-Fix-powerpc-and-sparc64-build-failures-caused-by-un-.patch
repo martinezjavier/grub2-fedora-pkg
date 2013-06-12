@@ -1,7 +1,7 @@
 From 617d656f2e310da90dd5d4f426cb7f7c9d7a3069 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Mon, 21 Jan 2013 14:41:06 +0000
-Subject: [PATCH 131/471] Fix powerpc and sparc64 build failures caused by
+Subject: [PATCH 131/482] Fix powerpc and sparc64 build failures caused by
  un-nesting memory map iterators.
 
 ---

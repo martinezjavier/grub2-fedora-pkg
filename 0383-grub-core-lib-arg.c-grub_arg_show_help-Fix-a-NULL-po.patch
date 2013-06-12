@@ -1,7 +1,7 @@
 From 6313937e7275a3117ceee46a3030a7e9c08720e9 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 29 Apr 2013 11:57:51 +0200
-Subject: [PATCH 383/471] 	* grub-core/lib/arg.c (grub_arg_show_help):
+Subject: [PATCH 383/482] 	* grub-core/lib/arg.c (grub_arg_show_help):
  Fix a NULL pointer 	dereference. 	Reported by: qwertial.
 
 ---

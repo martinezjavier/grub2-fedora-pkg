@@ -1,7 +1,7 @@
 From d08c1b02d9227c5ac0e335736f93e4e06b305b80 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 16 Jan 2013 20:44:11 +0100
-Subject: [PATCH 112/471] 	Add new command pcidump.
+Subject: [PATCH 112/482] 	Add new command pcidump.
 
 ---
  ChangeLog                    |   4 ++

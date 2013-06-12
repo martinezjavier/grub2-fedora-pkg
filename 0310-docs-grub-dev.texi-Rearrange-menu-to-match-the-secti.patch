@@ -1,7 +1,7 @@
 From 3da36a727da7a92c0c1d85213be234abcf8774af Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 14 Apr 2013 19:07:55 +0200
-Subject: [PATCH 310/471] 	* docs/grub-dev.texi: Rearrange menu to match
+Subject: [PATCH 310/482] 	* docs/grub-dev.texi: Rearrange menu to match
  the section order. 	Reported by: Bryan Hundven.
 
 ---

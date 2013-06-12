@@ -1,7 +1,7 @@
 From 1cdeab20151734836049af9353c344ba3f803c26 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 12 Apr 2013 01:44:14 +0200
-Subject: [PATCH 284/471] 	* tests/partmap_test.in: Fix missing qemudisk
+Subject: [PATCH 284/482] 	* tests/partmap_test.in: Fix missing qemudisk
  setting.
 
 ---

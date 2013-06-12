@@ -1,7 +1,7 @@
 From 80253b05980830416244cc190158435d7fc306b2 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 3 Mar 2013 15:26:29 +0100
-Subject: [PATCH 193/471] 	* grub-core/script/execute.c
+Subject: [PATCH 193/482] 	* grub-core/script/execute.c
  (grub_script_arglist_to_argv): Move 	append out of its parent.
 
 ---

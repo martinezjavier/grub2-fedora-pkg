@@ -1,7 +1,7 @@
 From 6faaef8e1cb03785b2baea19e8ada1fd23382e68 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 30 Apr 2013 17:34:29 +0200
-Subject: [PATCH 396/471] 	* grub-core/partmap/amiga.c: Fix size of
+Subject: [PATCH 396/482] 	* grub-core/partmap/amiga.c: Fix size of
  checksummed block.
 
 ---

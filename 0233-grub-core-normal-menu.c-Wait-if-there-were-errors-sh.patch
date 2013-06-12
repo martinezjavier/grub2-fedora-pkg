@@ -1,7 +1,7 @@
 From f6301725f6a55b194640ed2ebf7c182b2cb079ed Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 25 Mar 2013 10:32:06 +0100
-Subject: [PATCH 233/471] 	* grub-core/normal/menu.c: Wait if there were
+Subject: [PATCH 233/482] 	* grub-core/normal/menu.c: Wait if there were
  errors shown at "boot" 	command.
 
 ---

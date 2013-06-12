@@ -1,7 +1,7 @@
 From a87f3af8a497842210564db7fa5d922c4a2be9c8 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Wed, 2 Jan 2013 16:42:48 +0000
-Subject: [PATCH 078/471] * grub-core/tests/lib/test.c (grub_test_run): Return
+Subject: [PATCH 078/482] * grub-core/tests/lib/test.c (grub_test_run): Return
  non-zero on test failures, so that a failing unit test correctly causes 'make
  check' to fail.
 

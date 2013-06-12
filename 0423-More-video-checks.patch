@@ -1,7 +1,7 @@
 From 4dafde8d6cf598182b80089235d26cc32c46cb8c Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 4 May 2013 14:00:14 +0200
-Subject: [PATCH 423/471] 	More video checks.
+Subject: [PATCH 423/482] 	More video checks.
 
 ---
  ChangeLog                        |   4 +

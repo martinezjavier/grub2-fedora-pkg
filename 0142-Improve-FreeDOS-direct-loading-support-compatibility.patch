@@ -1,7 +1,7 @@
 From be56f8f0420fa5efc55ac9789d41c6307a84bef0 Mon Sep 17 00:00:00 2001
 From: "C. Masloch" <pushbx@38.de>
 Date: Sun, 27 Jan 2013 16:07:25 +0100
-Subject: [PATCH 142/471] 	Improve FreeDOS direct loading support
+Subject: [PATCH 142/482] 	Improve FreeDOS direct loading support
  compatibility.
 
 	* include/grub/i386/relocator.h (grub_relocator16_state):

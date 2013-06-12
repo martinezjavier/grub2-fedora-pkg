@@ -1,7 +1,7 @@
 From b4dc7c544885995fe4b33549216495cced7b87e4 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 11 Apr 2013 21:12:46 +0200
-Subject: [PATCH 280/471] 	Import new gnulib.
+Subject: [PATCH 280/482] 	Import new gnulib.
 
 ---
  ChangeLog                            |    4 +

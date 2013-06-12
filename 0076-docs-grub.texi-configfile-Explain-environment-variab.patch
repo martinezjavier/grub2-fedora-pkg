@@ -1,7 +1,7 @@
 From ea42a4554351f4a695bf24f208ec0ad769f05e5c Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Wed, 2 Jan 2013 09:29:48 +0000
-Subject: [PATCH 076/471] * docs/grub.texi (configfile): Explain environment
+Subject: [PATCH 076/482] * docs/grub.texi (configfile): Explain environment
  variable handling. (source): New section. Reported by: Arbiel Perlacremaz. 
  Fixes Savannah bug #35564.
 

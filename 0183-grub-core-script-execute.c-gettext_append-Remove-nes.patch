@@ -1,7 +1,7 @@
 From fd9da4fd011c2df3b6c78795fe3ffe023e571db9 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 2 Mar 2013 12:17:52 +0100
-Subject: [PATCH 183/471] 	* grub-core/script/execute.c (gettext_append):
+Subject: [PATCH 183/482] 	* grub-core/script/execute.c (gettext_append):
  Remove nested functions.
 
 ---

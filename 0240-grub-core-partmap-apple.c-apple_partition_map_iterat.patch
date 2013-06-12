@@ -1,7 +1,7 @@
 From 47d846664c3791668cdff2c1d307e193687be1aa Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Rados=C5=82aw=20Szymczyszyn?= <lavrin@gmail.com>
 Date: Mon, 1 Apr 2013 02:58:47 +0200
-Subject: [PATCH 240/471] 	* grub-core/partmap/apple.c
+Subject: [PATCH 240/482] 	* grub-core/partmap/apple.c
  (apple_partition_map_iterate): Add 	missing closing bracket.
 
 ---

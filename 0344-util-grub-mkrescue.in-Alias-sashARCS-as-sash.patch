@@ -1,7 +1,7 @@
 From 46692dc0b5469f5e14becefe48f5e329caf33bd3 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 24 Apr 2013 18:56:47 +0200
-Subject: [PATCH 344/471] 	* util/grub-mkrescue.in: Alias sashARCS as
+Subject: [PATCH 344/482] 	* util/grub-mkrescue.in: Alias sashARCS as
  sash.
 
 ---

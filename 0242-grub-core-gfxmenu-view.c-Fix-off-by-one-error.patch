@@ -1,7 +1,7 @@
 From 208140ce98ff032d1b6c16403a06b99ef701937a Mon Sep 17 00:00:00 2001
 From: Vladimir Testov <vladimir.testov@rosalab.ru>
 Date: Wed, 3 Apr 2013 08:53:58 +0200
-Subject: [PATCH 242/471] 	* grub-core/gfxmenu/view.c: Fix off-by-one
+Subject: [PATCH 242/482] 	* grub-core/gfxmenu/view.c: Fix off-by-one
  error.
 
 ---

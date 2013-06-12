@@ -1,7 +1,7 @@
 From d1fbca9cf80bc38ca6c758a6663c947293f6a237 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Mon, 8 Apr 2013 19:57:56 +0200
-Subject: [PATCH 274/471] 	* grub-core/Makefile.core.def: Add
+Subject: [PATCH 274/482] 	* grub-core/Makefile.core.def: Add
  kern/elfXX.c to elf module 	as extra_dist.
 
 ---

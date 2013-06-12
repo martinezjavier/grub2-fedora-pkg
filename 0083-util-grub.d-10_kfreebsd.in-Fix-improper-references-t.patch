@@ -1,7 +1,7 @@
 From ce13f1ebba58c7d78dea2b63843eb77818baf566 Mon Sep 17 00:00:00 2001
 From: Yuta Satoh <nigoro>
 Date: Thu, 3 Jan 2013 23:06:07 +0100
-Subject: [PATCH 083/471] 	* util/grub.d/10_kfreebsd.in: Fix improper
+Subject: [PATCH 083/482] 	* util/grub.d/10_kfreebsd.in: Fix improper
  references to grub-probe by 	${grub_probe}
 
 ---

@@ -1,7 +1,7 @@
 From 6a5471c23274d40eec0226793a1dd09fd0a16b5b Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 8 Apr 2013 14:35:26 +0200
-Subject: [PATCH 271/471] 	* grub-core/normal/term.c: Few more fixes for
+Subject: [PATCH 271/482] 	* grub-core/normal/term.c: Few more fixes for
  menu entry editor 	rendering. 	Reported by: Andrey Borzenkov
  <arvidjaar@gmail.com>
 

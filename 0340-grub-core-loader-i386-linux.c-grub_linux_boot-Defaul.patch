@@ -1,7 +1,7 @@
 From 4863c23cc1d36ba71606159ab282553ad662a07c Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 24 Apr 2013 14:53:00 +0200
-Subject: [PATCH 340/471] 	* grub-core/loader/i386/linux.c
+Subject: [PATCH 340/482] 	* grub-core/loader/i386/linux.c
  (grub_linux_boot): Default to 	gfxpayload=keep if cbfb is active.
 
 ---

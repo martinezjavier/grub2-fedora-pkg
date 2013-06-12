@@ -1,7 +1,7 @@
 From e8cf8971da1fc1932b04e642104db9606fd0414e Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Tue, 26 Mar 2013 11:29:52 +0100
-Subject: [PATCH 236/471] 	* grub-core/commands/acpihalt.c (skip_ext_op):
+Subject: [PATCH 236/482] 	* grub-core/commands/acpihalt.c (skip_ext_op):
  Add support for 	  skipping Event, Device, Processor, PowerRes,
  ThermalZone, and 	  BankField extended opcodes. 	  (get_sleep_type):
  Add minimal scope handling (just enough to 	  handle setting the scope to

@@ -1,7 +1,7 @@
 From e3e32021b775ea8066f4c76d03e803e2d50716ce Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 20 Mar 2013 17:07:08 +0100
-Subject: [PATCH 217/471] 	Fix a conflict between ports structures with 2
+Subject: [PATCH 217/482] 	Fix a conflict between ports structures with 2
  controllers of 	same kind.
 
 ---

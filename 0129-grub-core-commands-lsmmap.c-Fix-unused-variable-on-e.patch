@@ -1,7 +1,7 @@
 From 7104dd04809457081b323d166d54945d8c2e2219 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 21 Jan 2013 14:57:35 +0100
-Subject: [PATCH 129/471] 	* grub-core/commands/lsmmap.c: Fix unused
+Subject: [PATCH 129/482] 	* grub-core/commands/lsmmap.c: Fix unused
  variable on emu.
 
 ---

@@ -1,7 +1,7 @@
 From b21d161bc61fc8b411f21df0f25598090a5b66cc Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 10 Mar 2013 19:27:50 +0100
-Subject: [PATCH 206/471] 	* grub-core/loader/i386/pc/plan9.c
+Subject: [PATCH 206/482] 	* grub-core/loader/i386/pc/plan9.c
  (fill_disk): Fix types to use 	intended shifts rather than division.
 
 ---

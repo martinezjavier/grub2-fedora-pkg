@@ -1,7 +1,7 @@
 From 9609731b185923ba8ce177b0c8a0679b876c8f1a Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 28 Apr 2013 15:15:57 +0200
-Subject: [PATCH 377/471] 	* include/grub/efi/api.h
+Subject: [PATCH 377/482] 	* include/grub/efi/api.h
  (GRUB_EFI_DEVICE_PATH_LENGTH): Use 	grub_get_unaligned16 rather than
  shifts.
 

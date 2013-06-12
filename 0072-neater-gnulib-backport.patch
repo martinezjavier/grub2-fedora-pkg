@@ -1,7 +1,7 @@
 From e933ab46a2f423c4c0f62283404a7d7787efd30f Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Fri, 28 Dec 2012 07:13:34 +0000
-Subject: [PATCH 072/471] neater gnulib backport
+Subject: [PATCH 072/482] neater gnulib backport
 
 ---
  m4/stdio_h.m4 | 2 +-

@@ -1,7 +1,7 @@
 From 6b2f4673544608621b9c527983037f446caa201d Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Tue, 15 Jan 2013 12:03:25 +0000
-Subject: [PATCH 108/471] Remove nested functions from script reading and
+Subject: [PATCH 108/482] Remove nested functions from script reading and
  parsing.
 
 * grub-core/kern/parser.c (grub_parser_split_cmdline): Add

@@ -1,7 +1,7 @@
 From 84643f33b9711f4b3195bec54e1ef674fd12d073 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Sat, 6 Apr 2013 20:14:29 +0200
-Subject: [PATCH 268/471] 	* util/grub-install_header: Use @PACKAGE@.mo
+Subject: [PATCH 268/482] 	* util/grub-install_header: Use @PACKAGE@.mo
  in message catalog name 	instead of hardcoding grub.mo.
 
 ---

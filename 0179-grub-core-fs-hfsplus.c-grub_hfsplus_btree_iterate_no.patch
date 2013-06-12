@@ -1,7 +1,7 @@
 From b84a77fb369ad36eb12126ca42d6b0d31259f71e Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 1 Mar 2013 14:02:27 +0100
-Subject: [PATCH 179/471] 	* grub-core/fs/hfsplus.c
+Subject: [PATCH 179/482] 	* grub-core/fs/hfsplus.c
  (grub_hfsplus_btree_iterate_node): Pass 	the context through. 
  (grub_hfsplus_iterate_dir): Move nested function out of its parent.
 

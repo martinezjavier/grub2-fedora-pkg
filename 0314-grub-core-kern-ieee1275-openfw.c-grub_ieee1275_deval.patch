@@ -1,7 +1,7 @@
 From 49c649e13d580a76c2b26987a204ef4a859a1f0f Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 15 Apr 2013 00:40:19 +0200
-Subject: [PATCH 314/471] 	* grub-core/kern/ieee1275/openfw.c
+Subject: [PATCH 314/482] 	* grub-core/kern/ieee1275/openfw.c
  (grub_ieee1275_devalias_next): Make 	source and destination differ.
 
 ---

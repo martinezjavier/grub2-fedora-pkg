@@ -1,7 +1,7 @@
 From e95df86d49c55f3c5ffd27161eddba81202220d7 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 24 Mar 2013 14:01:51 +0100
-Subject: [PATCH 230/471] 	* grub-core/Makefile.core.def (vga): Disable
+Subject: [PATCH 230/482] 	* grub-core/Makefile.core.def (vga): Disable
  on coreboot and multiboot 	platforms.
 
 ---

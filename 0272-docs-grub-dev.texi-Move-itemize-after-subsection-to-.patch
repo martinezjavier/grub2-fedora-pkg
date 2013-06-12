@@ -1,7 +1,7 @@
 From d7dd0e368672fca3430b6c7d5c5c4a753a62e8a2 Mon Sep 17 00:00:00 2001
 From: Bryan Hundven <bryanhundven@gmail.com>
 Date: Mon, 8 Apr 2013 15:23:07 +0200
-Subject: [PATCH 272/471] 	* docs/grub-dev.texi: Move @itemize after
+Subject: [PATCH 272/482] 	* docs/grub-dev.texi: Move @itemize after
  @subsection to satisfy 	texinfo-5.1.
 
 ---

@@ -1,7 +1,7 @@
 From bcf0809ca0ce82d3f4608ddddfb6996dda99a4f1 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 7 May 2013 11:30:48 +0200
-Subject: [PATCH 430/471] 	* tests/priority_queue_unit_test.cc: New test.
+Subject: [PATCH 430/482] 	* tests/priority_queue_unit_test.cc: New test.
 
 ---
  ChangeLog                         |   4 ++

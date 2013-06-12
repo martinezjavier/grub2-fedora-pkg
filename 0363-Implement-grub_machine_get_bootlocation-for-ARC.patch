@@ -1,7 +1,7 @@
 From 081e3821a7800ef03e67788efd60fc86f18e645d Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 27 Apr 2013 19:12:11 +0200
-Subject: [PATCH 363/471] 	Implement grub_machine_get_bootlocation for
+Subject: [PATCH 363/482] 	Implement grub_machine_get_bootlocation for
  ARC.
 
 ---

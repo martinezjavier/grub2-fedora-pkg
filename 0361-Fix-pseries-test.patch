@@ -1,7 +1,7 @@
 From 942ce2482508609d311410d6bc79316435512d16 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 27 Apr 2013 14:11:12 +0200
-Subject: [PATCH 361/471] 	Fix pseries test.
+Subject: [PATCH 361/482] 	Fix pseries test.
 
 ---
  ChangeLog                     | 4 ++++

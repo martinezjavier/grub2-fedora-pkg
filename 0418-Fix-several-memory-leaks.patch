@@ -1,7 +1,7 @@
 From 598550db95b1ca9419a9fb61900fbfa64d468bda Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 4 May 2013 13:47:10 +0200
-Subject: [PATCH 418/471] 	Fix several memory leaks.
+Subject: [PATCH 418/482] 	Fix several memory leaks.
 
 ---
  ChangeLog                            |  4 +++

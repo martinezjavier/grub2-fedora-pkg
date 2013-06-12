@@ -1,7 +1,7 @@
 From 45b13f9d1572538ea6dc89017767abb9676e9426 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 19 Mar 2013 08:17:51 +0100
-Subject: [PATCH 211/471] 	Better estimate the maximum USB transfer size.
+Subject: [PATCH 211/482] 	Better estimate the maximum USB transfer size.
 
 ---
  ChangeLog                    |  4 ++

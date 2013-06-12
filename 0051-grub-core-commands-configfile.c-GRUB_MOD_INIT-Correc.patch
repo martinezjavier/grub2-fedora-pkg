@@ -1,7 +1,7 @@
 From a940b1492cc0c066725e5e49882602fb0e5c7399 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Fri, 12 Oct 2012 15:34:33 +0100
-Subject: [PATCH 051/471] * grub-core/commands/configfile.c (GRUB_MOD_INIT):
+Subject: [PATCH 051/482] * grub-core/commands/configfile.c (GRUB_MOD_INIT):
  Correct description of extract_entries_configfile.
 
 ---

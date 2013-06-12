@@ -1,7 +1,7 @@
 From acc679d013ced54cd51b285443bbadbb64ddc545 Mon Sep 17 00:00:00 2001
 From: Francesco Lavra <francescolavra.fl@gmail.com>
 Date: Thu, 4 Apr 2013 20:07:44 +0200
-Subject: [PATCH 256/471] 	* util/grub-mkimage.c: Introduce new define
+Subject: [PATCH 256/482] 	* util/grub-mkimage.c: Introduce new define
  EFI32_HEADER_SIZE.
 
 ---

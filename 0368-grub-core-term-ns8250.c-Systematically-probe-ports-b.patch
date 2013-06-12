@@ -1,7 +1,7 @@
 From 38f3f1c0902e344a92a7a8994cd25c13b544b7e9 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 27 Apr 2013 22:47:57 +0200
-Subject: [PATCH 368/471] 	* grub-core/term/ns8250.c: Systematically
+Subject: [PATCH 368/482] 	* grub-core/term/ns8250.c: Systematically
  probe ports by writing 	to SR before using them.
 
 ---

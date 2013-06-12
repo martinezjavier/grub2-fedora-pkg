@@ -1,7 +1,7 @@
 From cfd149ef7abd7dedcfc558c2b3ba905a9ec87c43 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 24 Apr 2013 15:10:29 +0200
-Subject: [PATCH 342/471] 	* util/grub-install.in: Fix target fo
+Subject: [PATCH 342/482] 	* util/grub-install.in: Fix target fo
  qemu_mips. 	Fix extension on EFI.
 
 ---

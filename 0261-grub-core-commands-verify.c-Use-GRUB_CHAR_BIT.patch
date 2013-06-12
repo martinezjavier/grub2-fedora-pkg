@@ -1,7 +1,7 @@
 From 05a23e591725c80f04edf07207ac37157c76ddfb Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 5 Apr 2013 10:52:13 +0200
-Subject: [PATCH 261/471] 	* grub-core/commands/verify.c: Use
+Subject: [PATCH 261/482] 	* grub-core/commands/verify.c: Use
  GRUB_CHAR_BIT.
 
 ---

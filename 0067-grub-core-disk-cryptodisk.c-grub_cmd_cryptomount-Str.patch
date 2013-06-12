@@ -1,7 +1,7 @@
 From dc089e5e9c9bf5ba1fa00cf8166f9628804741d9 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 10 Dec 2012 19:15:51 +0100
-Subject: [PATCH 067/471] 	* grub-core/disk/cryptodisk.c
+Subject: [PATCH 067/482] 	* grub-core/disk/cryptodisk.c
  (grub_cmd_cryptomount): Strip brackets 	around device name if
  necessarry.
 

@@ -1,7 +1,7 @@
 From a4ff5d5fe50365bd4ba31addc3fa67b59aa59d78 Mon Sep 17 00:00:00 2001
 From: Vladimir Testov <vladimir.testov@rosalab.ru>
 Date: Mon, 29 Apr 2013 13:40:11 +0200
-Subject: [PATCH 392/471] 	* grub-core/gfxmenu/gui_list.c: Refresh
+Subject: [PATCH 392/482] 	* grub-core/gfxmenu/gui_list.c: Refresh
  first_shown_entry value when 	cached view is reused. 	*
  grub-core/gfxmenu/view.c: Call the refresh procedure for all 	open boot
  menus.

@@ -1,7 +1,7 @@
 From 4e7071ba5f26c0de531f071eeb3b8ebc517d4a2a Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 10 Mar 2013 14:27:04 +0100
-Subject: [PATCH 200/471] 	* grub-core/fs/fshelp.c
+Subject: [PATCH 200/482] 	* grub-core/fs/fshelp.c
  (grub_fshelp_log2blksize): Remove now unused 	function.
 
 ---

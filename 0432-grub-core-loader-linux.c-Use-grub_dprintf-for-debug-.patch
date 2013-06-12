@@ -1,7 +1,7 @@
 From 8e042532c805c9e850eaa92c5713c461b4f4e36c Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 7 May 2013 11:38:49 +0200
-Subject: [PATCH 432/471] 	* grub-core/loader/linux.c: Use grub_dprintf
+Subject: [PATCH 432/482] 	* grub-core/loader/linux.c: Use grub_dprintf
  for debug statements 	rather than printf.
 
 ---

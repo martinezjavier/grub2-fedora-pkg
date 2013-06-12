@@ -1,7 +1,7 @@
 From b5787296b70e61c93502181d5ca0f23502eeaebb Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 10 Mar 2013 19:39:14 +0100
-Subject: [PATCH 207/471] 	* grub-core/commands/verify.c
+Subject: [PATCH 207/482] 	* grub-core/commands/verify.c
  (grub_verify_signature): Use unsigned 	operations to have intended shifts and
  not divisions.
 

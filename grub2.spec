@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        18%{?dist}
+Release:        19%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -525,7 +525,17 @@ Patch0468: 0468-Don-t-write-messages-to-the-screen.patch
 Patch0469: 0469-Don-t-print-GNU-GRUB-header.patch
 Patch0470: 0470-Don-t-draw-a-border-around-the-menu.patch
 Patch0471: 0471-Don-t-add-to-highlighted-row.patch
-
+Patch0472: 0472-Don-t-add-to-highlighted-row.patch
+Patch0473: 0473-Use-the-standard-margin-for-the-timeout-string.patch
+Patch0474: 0474-Message-string-cleanups.patch
+Patch0475: 0475-Fix-border-spacing-now-that-we-aren-t-displaying-it.patch
+Patch0476: 0476-Use-the-correct-indentation-for-the-term-help-text.patch
+Patch0477: 0477-Indent-menu-entries.patch
+Patch0478: 0478-Fix-margins.patch
+Patch0479: 0479-Add-support-for-UEFI-operating-systems-returned-by-o.patch
+Patch0480: 0480-Disable-GRUB-video-support-for-IBM-power-machines.patch
+Patch0481: 0481-Revert-Add-bootpath-device-to-the-list-967862.patch
+Patch0482: 0482-Fix-net_bootp-cmd-crash-when-there-isn-t-network-car.patch
 BuildRequires:  flex bison binutils python
 BuildRequires:  ncurses-devel xz-devel
 BuildRequires:  freetype-devel libusb-devel
@@ -899,8 +909,16 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
-* Fri Jun 07 2013 Peter Jones <pjones@redhat.com> - 2.00-18
+* Wed Jun 12 2013 Peter Jones <pjones@redhat.com> - 2.00-19
 - Rebase to upstream snapshot.
+- Fix PPC build error (#967862)
+- Fix crash on net_bootp command (#960624)
+- Reset colors on ppc when appropriate (#908519)
+- Left align "Loading..." messages (#908492)
+- Fix probing of SAS disks on PPC (#953954)
+- Add support for UEFI OSes returned by os-prober
+- Disable "video" mode on PPC for now (#973205)
+- Make grub fit better into the boot sequence, visually (#966719)
 
 * Fri May 10 2013 Matthias Clasen <mclasen@redhat.com> - 2.00-18
 - Move the starfield theme to a subpackage (#962004)

@@ -1,7 +1,7 @@
 From 78def2574a02429cb43d5f6a44a607315cdcee68 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Mon, 31 Dec 2012 17:31:38 +0000
-Subject: [PATCH 075/471] Remove several trivially-unnecessary uses of nested
+Subject: [PATCH 075/482] Remove several trivially-unnecessary uses of nested
  functions.
 
 * grub-core/commands/i386/pc/sendkey.c

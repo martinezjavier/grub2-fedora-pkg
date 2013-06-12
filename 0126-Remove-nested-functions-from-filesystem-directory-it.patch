@@ -1,7 +1,7 @@
 From 1eb3760d2821962f09cbbe2e4fa0d75a4e1a761c Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Mon, 21 Jan 2013 01:33:46 +0000
-Subject: [PATCH 126/471] Remove nested functions from filesystem directory
+Subject: [PATCH 126/482] Remove nested functions from filesystem directory
  iterators.
 
 * include/grub/fs.h (grub_fs_dir_hook_t): New type.

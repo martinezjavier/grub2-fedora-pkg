@@ -1,7 +1,7 @@
 From c59392f94ef1544cc8d24cecfbca69798ba7e556 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Wed, 3 Apr 2013 11:28:16 +0200
-Subject: [PATCH 246/471] 	* util/grub-mount.c (fuse_init): Return error
+Subject: [PATCH 246/482] 	* util/grub-mount.c (fuse_init): Return error
  if fuse_main 	failed.
 
 ---

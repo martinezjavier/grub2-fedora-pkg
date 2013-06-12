@@ -1,7 +1,7 @@
 From 86c4fc4886bd81f14451cc823787232a546eea2a Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 13 Apr 2013 02:02:19 +0200
-Subject: [PATCH 298/471] 	* util/grub-mkrescue.in: Fix wrong
+Subject: [PATCH 298/482] 	* util/grub-mkrescue.in: Fix wrong
  architecture for ppc dir.
 
 ---

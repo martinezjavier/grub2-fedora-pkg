@@ -1,7 +1,7 @@
 From b878041a451a90c4d75c66d7c7ba9d570e19f271 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 21 Jan 2013 17:46:24 +0100
-Subject: [PATCH 132/471] 	* grub-core/commands/ls.c
+Subject: [PATCH 132/482] 	* grub-core/commands/ls.c
  (grub_ls_print_devices): Add missing 	asterisk.
 
 ---

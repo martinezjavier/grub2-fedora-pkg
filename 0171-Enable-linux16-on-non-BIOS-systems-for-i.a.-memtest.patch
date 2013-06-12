@@ -1,7 +1,7 @@
 From d8d7d9fd00cfac60bb26d66c2a1ce07275c35b8b Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 28 Feb 2013 22:48:41 +0100
-Subject: [PATCH 171/471] 	Enable linux16 on non-BIOS systems for i.a.
+Subject: [PATCH 171/482] 	Enable linux16 on non-BIOS systems for i.a.
  memtest.
 
 	* grub-core/loader/i386/pc/linux.c (grub_cmd_linux): Handle hole at 0

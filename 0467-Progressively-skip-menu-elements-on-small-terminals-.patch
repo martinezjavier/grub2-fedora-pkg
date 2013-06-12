@@ -1,7 +1,7 @@
 From d75dd78fc6e1f57f4c5f46ce38360cfa7a6f33b8 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 14 May 2013 08:57:18 +0200
-Subject: [PATCH 467/471] 	Progressively skip menu elements on small
+Subject: [PATCH 467/482] 	Progressively skip menu elements on small
  terminals rather 	than crashing.
 
 Conflicts:

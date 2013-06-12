@@ -1,7 +1,7 @@
 From 14cbdee1aa0b21b73611823a7d9a9eb8466a7dc2 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 29 Apr 2013 12:16:46 +0200
-Subject: [PATCH 389/471] 	Enforce disabling of firmware disk drivers
+Subject: [PATCH 389/482] 	Enforce disabling of firmware disk drivers
  when native drivers kick in.
 
 ---

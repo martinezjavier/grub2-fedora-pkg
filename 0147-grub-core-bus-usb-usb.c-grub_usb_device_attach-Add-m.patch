@@ -1,7 +1,7 @@
 From 3ebe52d52ce44412edb87037d4d7378b04a3ad17 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 1 Feb 2013 21:43:49 +0100
-Subject: [PATCH 147/471] 	* grub-core/bus/usb/usb.c
+Subject: [PATCH 147/482] 	* grub-core/bus/usb/usb.c
  (grub_usb_device_attach): Add missing 	grub_print_error.
 
 ---

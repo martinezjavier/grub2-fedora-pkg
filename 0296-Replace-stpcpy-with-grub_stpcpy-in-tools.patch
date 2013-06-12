@@ -1,7 +1,7 @@
 From 43105af56c8e4304f0cd8ffeafdba81726cfbb3f Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 12 Apr 2013 22:37:59 +0200
-Subject: [PATCH 296/471] 	Replace stpcpy with grub_stpcpy in tools.
+Subject: [PATCH 296/482] 	Replace stpcpy with grub_stpcpy in tools.
 
 ---
  ChangeLog          | 4 ++++

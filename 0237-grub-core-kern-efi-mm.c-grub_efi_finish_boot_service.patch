@@ -1,7 +1,7 @@
 From 22b474d62ab256dda084737fe608f1c9411c3dae Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 26 Mar 2013 11:34:56 +0100
-Subject: [PATCH 237/471] 	* grub-core/kern/efi/mm.c
+Subject: [PATCH 237/482] 	* grub-core/kern/efi/mm.c
  (grub_efi_finish_boot_services): 	Try terminating EFI services several
  times due to quirks in some 	implementations.
 

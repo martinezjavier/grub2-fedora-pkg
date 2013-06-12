@@ -1,7 +1,7 @@
 From 899fcf9761f2da87c95e42d614a21c808f2da894 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 29 Apr 2013 12:02:26 +0200
-Subject: [PATCH 386/471] 	* grub-core/script/execute.c
+Subject: [PATCH 386/482] 	* grub-core/script/execute.c
  (grub_script_arglist_to_argv): Fix 	handling of variables containing
  backslash.
 

@@ -1,7 +1,7 @@
 From 6964813fb87e25a58dc629bb7f9256cf149db1da Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 15 Apr 2013 01:53:33 +0200
-Subject: [PATCH 315/471] 	* tests/grub_script_expansion.in: Use
+Subject: [PATCH 315/482] 	* tests/grub_script_expansion.in: Use
  fixed-string grep to skip over 	firmware error messages.
 
 ---

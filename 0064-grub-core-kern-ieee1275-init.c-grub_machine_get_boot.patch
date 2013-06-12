@@ -1,7 +1,7 @@
 From 188fddf6f99533505a0f8c7c4f8223ba19d8ef6a Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Mon, 10 Dec 2012 16:23:16 +0100
-Subject: [PATCH 064/471] 	* grub-core/kern/ieee1275/init.c
+Subject: [PATCH 064/482] 	* grub-core/kern/ieee1275/init.c
  (grub_machine_get_bootlocation): Use 	dynamic allocation for the bootpath
  buffer.
 

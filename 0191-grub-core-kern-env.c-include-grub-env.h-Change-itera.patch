@@ -1,7 +1,7 @@
 From 3ac82fb82508c811ded4ff43c023c0b571b24fed Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 3 Mar 2013 01:34:27 +0100
-Subject: [PATCH 191/471] 	* grub-core/kern/env.c, include/grub/env.h:
+Subject: [PATCH 191/482] 	* grub-core/kern/env.c, include/grub/env.h:
  Change iterator through 	all vars to a macro. All users updated.
 
 ---

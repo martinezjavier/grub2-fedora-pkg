@@ -1,7 +1,7 @@
 From 16489277b4f51c97e8fe631dc4ea67e689e5c70b Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 19 Apr 2013 15:14:28 +0200
-Subject: [PATCH 328/471] 	* grub-core/kern/ieee1275/cmain.c
+Subject: [PATCH 328/482] 	* grub-core/kern/ieee1275/cmain.c
  (grub_ieee1275_find_options): 	Look for /boot-rom as well as /rom/boot-rom.
 
 ---

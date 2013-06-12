@@ -1,7 +1,7 @@
 From cdb3e2bd06aacff0c75034d360753dae90e7f104 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 20 Jan 2013 22:05:55 +0100
-Subject: [PATCH 118/471] 	* util/grub-script-check.c (main): Uniform the
+Subject: [PATCH 118/482] 	* util/grub-script-check.c (main): Uniform the
  error message.
 
 ---

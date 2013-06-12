@@ -1,7 +1,7 @@
 From e64d71f2706db5a3a99c174a3ee7bf3885fb6e35 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 11 Jan 2013 21:32:42 +0100
-Subject: [PATCH 095/471] 	Import gcrypt public-key cryptography and
+Subject: [PATCH 095/482] 	Import gcrypt public-key cryptography and
  implement signature checking.
 
 ---

@@ -1,7 +1,7 @@
 From cfdae836643ea68d85b8d0aa37df635600d8d102 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 1 Feb 2013 21:51:09 +0100
-Subject: [PATCH 151/471] 	* grub-core/fs/fshelp.c (find_file): Set
+Subject: [PATCH 151/482] 	* grub-core/fs/fshelp.c (find_file): Set
  oldnode to zero after 	freeing it.
 
 ---

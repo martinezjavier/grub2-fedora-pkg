@@ -1,7 +1,7 @@
 From 2fa8f0208a907ec3e59e75a5ad970739d308d286 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 19 Mar 2013 20:25:09 +0100
-Subject: [PATCH 213/471] 	Implement boot time analysis framework.
+Subject: [PATCH 213/482] 	Implement boot time analysis framework.
 
 ---
  ChangeLog                     |  6 +++-

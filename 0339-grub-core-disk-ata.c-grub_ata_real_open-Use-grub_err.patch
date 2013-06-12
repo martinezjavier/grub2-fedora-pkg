@@ -1,7 +1,7 @@
 From c92902fa913a04672e640a0b68353258a3f2d3a1 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 24 Apr 2013 14:47:14 +0200
-Subject: [PATCH 339/471] 	* grub-core/disk/ata.c (grub_ata_real_open):
+Subject: [PATCH 339/482] 	* grub-core/disk/ata.c (grub_ata_real_open):
  Use grub_error properly.
 
 ---

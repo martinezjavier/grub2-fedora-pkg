@@ -1,7 +1,7 @@
 From 186c206f29e4ce0c6645c51dd477a8ce93952d51 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 25 Mar 2013 10:23:04 +0100
-Subject: [PATCH 232/471] 	Replace the region at 0 from coreboot tables
+Subject: [PATCH 232/482] 	Replace the region at 0 from coreboot tables
  to available in BSD 	memory map.
 
 ---

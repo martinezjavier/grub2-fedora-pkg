@@ -1,7 +1,7 @@
 From a3221152fcd1056ad93b0ec4d4a6bb7954e19349 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Sun, 27 Jan 2013 16:17:21 +0100
-Subject: [PATCH 144/471] 	* util/grub-install.in: change misleading
+Subject: [PATCH 144/482] 	* util/grub-install.in: change misleading
  comment about 	device.map creation
 
 ---

@@ -1,7 +1,7 @@
 From f3d557cb000022e4d163f2e566e243aa73632675 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 2 May 2013 22:30:20 +0200
-Subject: [PATCH 405/471] 	Several fixes to ieee1275 and big-endian
+Subject: [PATCH 405/482] 	Several fixes to ieee1275 and big-endian
  video.
 
 ---

@@ -1,7 +1,7 @@
 From 189c134b407a9addc5f8cc4b7c95042820103c0e Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 26 Apr 2013 23:41:13 +0200
-Subject: [PATCH 357/471] 	* util/getroot.c (exec_pipe): Put proper #if's
+Subject: [PATCH 357/482] 	* util/getroot.c (exec_pipe): Put proper #if's
  so that its users don't 	compile when not needed.
 
 ---

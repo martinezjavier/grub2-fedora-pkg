@@ -1,7 +1,7 @@
 From 7e4711a6dcd3375aa4ee4342c05b38f6f7ad3965 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 4 Apr 2013 08:54:02 +0200
-Subject: [PATCH 250/471] 	* grub-core/lib/posix_wrap/locale.h
+Subject: [PATCH 250/482] 	* grub-core/lib/posix_wrap/locale.h
  [GRUB_UTIL]: Include host locale.h.
 
 ---

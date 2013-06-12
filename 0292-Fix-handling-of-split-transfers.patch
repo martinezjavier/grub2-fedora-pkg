@@ -1,7 +1,7 @@
 From 16e60d9443ebe87df0cecac9a22df6e0440b805d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Ale=C5=A1=20Nesrsta?= <starous@volny.cz>
 Date: Fri, 12 Apr 2013 20:42:46 +0200
-Subject: [PATCH 292/471] 	Fix handling of split transfers.
+Subject: [PATCH 292/482] 	Fix handling of split transfers.
 
 ---
  ChangeLog                  |  4 ++++

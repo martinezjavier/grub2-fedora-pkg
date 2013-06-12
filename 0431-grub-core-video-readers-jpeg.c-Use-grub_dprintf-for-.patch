@@ -1,7 +1,7 @@
 From 830ca107511b53803fbefa89b7c7af0b06c4e337 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 7 May 2013 11:37:11 +0200
-Subject: [PATCH 431/471] 	* grub-core/video/readers/jpeg.c: Use
+Subject: [PATCH 431/482] 	* grub-core/video/readers/jpeg.c: Use
  grub_dprintf for debug statements 	rather than printf. 	*
  grub-core/video/readers/tga.c: Likewise.
 

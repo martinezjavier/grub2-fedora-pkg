@@ -1,7 +1,7 @@
 From 58ed755e7e3b0c0a44ea16ad51fc862c6cda1b32 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 12 Apr 2013 01:47:38 +0200
-Subject: [PATCH 285/471] 	* tests/grub_cmd_date.in: New test for
+Subject: [PATCH 285/482] 	* tests/grub_cmd_date.in: New test for
  datetime.
 
 ---

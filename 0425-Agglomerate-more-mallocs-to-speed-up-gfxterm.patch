@@ -1,7 +1,7 @@
 From d2d36cebce2ae1c1ded7debadaf509044554c319 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 4 May 2013 22:23:23 +0200
-Subject: [PATCH 425/471] 	Agglomerate more mallocs to speed-up gfxterm.
+Subject: [PATCH 425/482] 	Agglomerate more mallocs to speed-up gfxterm.
 
 ---
  ChangeLog                            |   4 +

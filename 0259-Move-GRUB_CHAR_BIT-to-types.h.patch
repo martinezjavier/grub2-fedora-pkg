@@ -1,7 +1,7 @@
 From e7e304cc384896eeb5204d9792f8f014ee4179e5 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 5 Apr 2013 10:31:12 +0200
-Subject: [PATCH 259/471] 	Move GRUB_CHAR_BIT to types.h.
+Subject: [PATCH 259/482] 	Move GRUB_CHAR_BIT to types.h.
 
 ---
  ChangeLog            | 4 ++++

@@ -1,7 +1,7 @@
 From 99e847792b982949b9a4824dd4aa50e414881fc2 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 2 Mar 2013 23:57:34 +0100
-Subject: [PATCH 188/471] 	* include/grub/mips/loongson/cmos.h: Fix high
+Subject: [PATCH 188/482] 	* include/grub/mips/loongson/cmos.h: Fix high
  CMOS addresses.
 
 ---

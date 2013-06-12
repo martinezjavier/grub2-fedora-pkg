@@ -1,7 +1,7 @@
 From 8164f12df6412b35e28ee24bd06d4da975590c9b Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 4 May 2013 13:52:21 +0200
-Subject: [PATCH 420/471] 	* grub-core/normal/menu_text.c
+Subject: [PATCH 420/482] 	* grub-core/normal/menu_text.c
  (menu_clear_timeout): Clear second 	line of timeout as it may contain the
  rest of long line.
 

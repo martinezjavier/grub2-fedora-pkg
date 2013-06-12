@@ -1,7 +1,7 @@
 From 510ac1b166c642ccf6a57515922730c73f492f55 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Mon, 25 Feb 2013 22:42:25 +0100
-Subject: [PATCH 158/471] 	* grub-core/normal/menu_entry.c
+Subject: [PATCH 158/482] 	* grub-core/normal/menu_entry.c
  (insert_string): fix off by one 	access to unallocated memory.
 
 ---

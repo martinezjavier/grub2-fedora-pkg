@@ -1,7 +1,7 @@
 From b37a32bb89c476b0ead4c40900de29fe8d73d27e Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Sat, 22 Sep 2012 21:19:58 +0100
-Subject: [PATCH 045/471] Fix grub-emu build on FreeBSD.
+Subject: [PATCH 045/482] Fix grub-emu build on FreeBSD.
 
 * Makefile.util.def (grub-mount): Add LIBGEOM to ldadd.
 * grub-core/net/drivers/emu/emunet.c: Only include Linux-specific

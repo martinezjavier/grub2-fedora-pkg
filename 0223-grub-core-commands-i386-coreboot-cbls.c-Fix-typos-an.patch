@@ -1,7 +1,7 @@
 From c34f460b7eb8625156597c388dec0da50bfa6a79 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 22 Mar 2013 14:06:48 +0100
-Subject: [PATCH 223/471] 	* grub-core/commands/i386/coreboot/cbls.c: Fix
+Subject: [PATCH 223/482] 	* grub-core/commands/i386/coreboot/cbls.c: Fix
  typos and wrong 	description.
 
 ---

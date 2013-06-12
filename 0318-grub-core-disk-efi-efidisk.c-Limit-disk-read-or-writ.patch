@@ -1,7 +1,7 @@
 From f63be03880f3667f2fb75acaa02f633e265e01e5 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 15 Apr 2013 09:12:14 +0200
-Subject: [PATCH 318/471] 	* grub-core/disk/efi/efidisk.c: Limit disk
+Subject: [PATCH 318/482] 	* grub-core/disk/efi/efidisk.c: Limit disk
  read or write chunk to 0x500 	sectors. 	Based on patch by Peter Jones.
 
 ---

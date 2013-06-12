@@ -1,7 +1,7 @@
 From fad6a3928fd73156c9a861e6b8b81b4099e450a3 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 4 Apr 2013 08:55:06 +0200
-Subject: [PATCH 251/471] 	* util/grub-setup.c (setup): Handle some
+Subject: [PATCH 251/482] 	* util/grub-setup.c (setup): Handle some
  corner cases.
 
 ---

@@ -1,7 +1,7 @@
 From 4e07feae1975db4c63edc00734287d53d3a5fc72 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 25 Apr 2013 22:42:35 +0200
-Subject: [PATCH 352/471] 	Enable mipsel-arc.
+Subject: [PATCH 352/482] 	Enable mipsel-arc.
 
 ---
  ChangeLog                      |  4 ++++

@@ -1,7 +1,7 @@
 From 2c4eef8547deac274f15a90781548d74227a78f0 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 1 Mar 2013 13:52:05 +0100
-Subject: [PATCH 178/471] 	* util/grub-editenv.c (list_variables): Move
+Subject: [PATCH 178/482] 	* util/grub-editenv.c (list_variables): Move
  print_var out of its 	parent.
 
 ---

@@ -1,7 +1,7 @@
 From c061433a9a81b4114e4ed2b9c5c7784917b5e0d4 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 7 May 2013 11:41:47 +0200
-Subject: [PATCH 433/471] 	Mark few forgotten strings for translation.
+Subject: [PATCH 433/482] 	Mark few forgotten strings for translation.
 
 ---
  ChangeLog                          | 4 ++++

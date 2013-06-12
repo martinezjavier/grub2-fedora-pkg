@@ -1,7 +1,7 @@
 From 1314381c929134bfe80ecf100571875dcc35adff Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 27 Apr 2013 00:02:23 +0200
-Subject: [PATCH 359/471] 	Replace libcurses with our own vt100 handling
+Subject: [PATCH 359/482] 	Replace libcurses with our own vt100 handling
  for the ease of testing 	and decreasing prerequisites.
 
 ---

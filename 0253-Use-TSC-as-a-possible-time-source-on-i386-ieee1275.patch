@@ -1,7 +1,7 @@
 From 983f68a83a2200719a45c0974bb0505431904da5 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 4 Apr 2013 09:55:44 +0200
-Subject: [PATCH 253/471] 	Use TSC as a possible time source on
+Subject: [PATCH 253/482] 	Use TSC as a possible time source on
  i386-ieee1275.
 
 ---

@@ -1,7 +1,7 @@
 From 405b6d1cdc0d3fba50b0ba846c811a6ec1939ff3 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 30 Apr 2013 17:37:37 +0200
-Subject: [PATCH 397/471] 	* grub-core/kern/mips/loongson/init.c: Support
+Subject: [PATCH 397/482] 	* grub-core/kern/mips/loongson/init.c: Support
  halt for loongson 2E.
 
 ---

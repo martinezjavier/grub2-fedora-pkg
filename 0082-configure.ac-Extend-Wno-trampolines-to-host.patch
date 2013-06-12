@@ -1,7 +1,7 @@
 From 496d8726590f4ad432d40ed8e3aad7e92bb3147c Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 3 Jan 2013 21:34:34 +0100
-Subject: [PATCH 082/471] 	* configure.ac: Extend -Wno-trampolines to
+Subject: [PATCH 082/482] 	* configure.ac: Extend -Wno-trampolines to
  host.
 
 ---

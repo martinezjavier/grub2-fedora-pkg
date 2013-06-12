@@ -1,7 +1,7 @@
 From cdfccef227436ae09bb0999597c575ec568eaffc Mon Sep 17 00:00:00 2001
 From: Vladimir Testov <vladimir.testov@rosalab.ru>
 Date: Wed, 3 Apr 2013 08:51:13 +0200
-Subject: [PATCH 241/471] 	* grub-core/gfxmenu/gui_circular_progress.c:
+Subject: [PATCH 241/482] 	* grub-core/gfxmenu/gui_circular_progress.c:
  Fix off-by-one error.
 
 ---

@@ -1,7 +1,7 @@
 From 45a73dcb6d7a100a14d9d9d54f3ab60278a05ca1 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 17 Apr 2013 07:00:37 +0200
-Subject: [PATCH 321/471] 	* build-aux/snippet: Add missing gnulib files.
+Subject: [PATCH 321/482] 	* build-aux/snippet: Add missing gnulib files.
 
 ---
  ChangeLog                       |   4 +

@@ -1,7 +1,7 @@
 From 54bcc777d8392980436b4ce859e7fb92ba0655d3 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 28 Feb 2013 09:43:25 +0100
-Subject: [PATCH 165/471] 	* grub-core/commands/parttool.c
+Subject: [PATCH 165/482] 	* grub-core/commands/parttool.c
  (grub_cmd_parttool): Move show_help out 	of parent function.
 
 ---

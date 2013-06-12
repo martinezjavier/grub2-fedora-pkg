@@ -1,7 +1,7 @@
 From d0d1029ea33d43710c48bd24d3905d2bbcc0d671 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 20 Mar 2013 17:16:35 +0100
-Subject: [PATCH 219/471] 	* grub-core/commands/boottime.c: Fix copyright
+Subject: [PATCH 219/482] 	* grub-core/commands/boottime.c: Fix copyright
  header.
 
 ---

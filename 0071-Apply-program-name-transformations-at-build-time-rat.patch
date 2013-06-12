@@ -1,7 +1,7 @@
 From 899f59e4357a2a3bfb5a2e58ad83700f16d347a7 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Fri, 28 Dec 2012 06:57:17 +0000
-Subject: [PATCH 071/471] Apply program name transformations at build-time
+Subject: [PATCH 071/482] Apply program name transformations at build-time
  rather than at run-time.  Fixes Debian bug #696465.
 
 * acinclude.m4 (grub_TRANSFORM): New macro.

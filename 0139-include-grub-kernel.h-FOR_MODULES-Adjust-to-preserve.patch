@@ -1,7 +1,7 @@
 From a074aa6ad158c90a065d5b9f7727a07254f0e6b2 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 21 Jan 2013 22:44:20 +0100
-Subject: [PATCH 139/471] 	* include/grub/kernel.h (FOR_MODULES): Adjust
+Subject: [PATCH 139/482] 	* include/grub/kernel.h (FOR_MODULES): Adjust
  to preserve alignment 	invariants.
 
 ---

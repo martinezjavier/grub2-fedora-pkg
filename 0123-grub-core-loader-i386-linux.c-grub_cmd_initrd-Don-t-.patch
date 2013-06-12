@@ -1,7 +1,7 @@
 From e98482f5ae472fb1f27a589dfb769c03121992ba Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Sun, 20 Jan 2013 23:03:35 +0000
-Subject: [PATCH 123/471] * grub-core/loader/i386/linux.c (grub_cmd_initrd):
+Subject: [PATCH 123/482] * grub-core/loader/i386/linux.c (grub_cmd_initrd):
  Don't add the initrd size to addr_min, since the initrd will be allocated
  after this address.
 

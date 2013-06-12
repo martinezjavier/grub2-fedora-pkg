@@ -1,7 +1,7 @@
 From f07aaa099fe586b6df049097f62704cc5081a63a Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 4 Apr 2013 19:59:59 +0200
-Subject: [PATCH 255/471] 	Unify file copying setup across different
+Subject: [PATCH 255/482] 	Unify file copying setup across different
  install scripts. Add 	options for performing partial install.
 
 ---

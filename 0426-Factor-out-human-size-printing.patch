@@ -1,7 +1,7 @@
 From d58051e416c525401a2cd86a0fe7750a7f9c1a62 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 5 May 2013 11:31:53 +0200
-Subject: [PATCH 426/471] 	Factor-out human-size printing.
+Subject: [PATCH 426/482] 	Factor-out human-size printing.
 
 ---
  ChangeLog               |  4 ++++

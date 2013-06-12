@@ -1,7 +1,7 @@
 From 9f9f731f87ebef9d95f9065a2bf0ae6f22b57d74 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 4 Feb 2013 15:36:03 +0100
-Subject: [PATCH 152/471] 	* grub-core/disk/cryptodisk.c
+Subject: [PATCH 152/482] 	* grub-core/disk/cryptodisk.c
  (grub_cryptodisk_scan_device): Don't stop 	on first error.
 
 ---

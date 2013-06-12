@@ -1,7 +1,7 @@
 From 30f0ba576620a7016899533e3ebb8ae66cc418cf Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Mon, 21 Jan 2013 13:59:28 +0000
-Subject: [PATCH 130/471] * grub-core/disk/arc/arcdisk.c
+Subject: [PATCH 130/482] * grub-core/disk/arc/arcdisk.c
  (grub_arcdisk_iterate): Fix parameter declarations.
 
 ---

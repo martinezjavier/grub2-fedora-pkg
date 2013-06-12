@@ -1,7 +1,7 @@
 From 78daaf6e506ac36dca5d6ff92618e83723d8ed23 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 28 Apr 2013 13:27:51 +0200
-Subject: [PATCH 371/471] 	* grub-core/term/morse.c: Macroify dih and
+Subject: [PATCH 371/482] 	* grub-core/term/morse.c: Macroify dih and
  dah.
 
 ---

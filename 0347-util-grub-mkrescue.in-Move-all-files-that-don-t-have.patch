@@ -1,7 +1,7 @@
 From 2473d1ec61475362f1395512c50ec66289dd46bc Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 25 Apr 2013 01:36:20 +0200
-Subject: [PATCH 347/471] 	* util/grub-mkrescue.in: Move all files that
+Subject: [PATCH 347/482] 	* util/grub-mkrescue.in: Move all files that
  don't have a location 	set in stone under /boot/grub. Use ISO hard links
  rather than copies 	to save some space.
 

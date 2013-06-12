@@ -1,7 +1,7 @@
 From f18b04893c6f40415fb577a286982a3046fcecd2 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 24 Mar 2013 13:05:59 +0100
-Subject: [PATCH 227/471] 	Add new 'proc' filesystem framework and put
+Subject: [PATCH 227/482] 	Add new 'proc' filesystem framework and put
  luks_script into it.
 
 ---

@@ -1,7 +1,7 @@
 From 6e8d1dda03d29aae8ae79b62a40ed95fbf85bbd2 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 16 Jan 2013 09:06:11 +0100
-Subject: [PATCH 109/471] 	* grub-core/script/lexer.c
+Subject: [PATCH 109/482] 	* grub-core/script/lexer.c
  (grub_script_lexer_init): Rename getline 	argument to prevent name
  collision.
 

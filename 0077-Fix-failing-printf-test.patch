@@ -1,7 +1,7 @@
 From 36cf49ba9881811dec77be5564bf001b2667220b Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Wed, 2 Jan 2013 12:48:31 +0000
-Subject: [PATCH 077/471] Fix failing printf test.
+Subject: [PATCH 077/482] Fix failing printf test.
 
 * grub-core/kern/misc.c (grub_vsnprintf_real): Parse '-', '.', and
 '$' in the correct order when collecting type information.

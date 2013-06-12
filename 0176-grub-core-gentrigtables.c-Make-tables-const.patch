@@ -1,7 +1,7 @@
 From 1e5f024ecad805f5abad75459689b1a03ac3da81 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 1 Mar 2013 11:15:09 +0100
-Subject: [PATCH 176/471] 	* grub-core/gentrigtables.c: Make tables
+Subject: [PATCH 176/482] 	* grub-core/gentrigtables.c: Make tables
  const.
 
 ---

@@ -1,7 +1,7 @@
 From d964d1d7d0a8805e9a2cdf63b5124846e5301897 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Thu, 3 Jan 2013 10:32:57 +0000
-Subject: [PATCH 079/471] * docs/grub.texi (Invoking grub-mount): New section.
+Subject: [PATCH 079/482] * docs/grub.texi (Invoking grub-mount): New section.
  Reported by: Filipus Klutiero.  Fixes Debian bug #666427.
 
 ---

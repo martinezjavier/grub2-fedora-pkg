@@ -1,7 +1,7 @@
 From 33749fa51f00213bab2a1db2b79a9539c8980731 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 1 Oct 2012 13:24:37 -0400
-Subject: [PATCH 450/471] Pass "\x[[:hex:]][[:hex:]]" straight through
+Subject: [PATCH 450/482] Pass "\x[[:hex:]][[:hex:]]" straight through
  unmolested.
 
 ---

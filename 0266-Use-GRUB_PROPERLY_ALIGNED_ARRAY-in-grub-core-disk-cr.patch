@@ -1,7 +1,7 @@
 From 830a8f214176981d1947534daa362a1fcb28e540 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 5 Apr 2013 13:26:10 +0200
-Subject: [PATCH 266/471] 	Use GRUB_PROPERLY_ALIGNED_ARRAY in
+Subject: [PATCH 266/482] 	Use GRUB_PROPERLY_ALIGNED_ARRAY in
  grub-core/disk/cryptodisk.c and 	grub-core/disk/geli.c.
 
 ---

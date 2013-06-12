@@ -1,7 +1,7 @@
 From 08d16ac5e3849e2c0b73aa57adc745dbc3a73aad Mon Sep 17 00:00:00 2001
 From: Prarit Bhargava <prarit@redhat.com>
 Date: Thu, 7 Feb 2013 11:53:41 -0500
-Subject: [PATCH 459/471] add GRUB_DISABLE_SUBMENU option
+Subject: [PATCH 459/482] add GRUB_DISABLE_SUBMENU option
 
 This patch adds the ability to disable the grub2 submenus from
 /etc/default/grub

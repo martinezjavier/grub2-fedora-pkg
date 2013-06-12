@@ -1,7 +1,7 @@
 From c01c5f4a571b66bd330f4312f643f283bc8161c8 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Mon, 21 Jan 2013 21:02:24 +0000
-Subject: [PATCH 137/471] Remove nested functions from USB iterators.
+Subject: [PATCH 137/482] Remove nested functions from USB iterators.
 
 * include/grub/usb.h (grub_usb_iterate_hook_t): New type.
 (grub_usb_controller_iterate_hook_t): Likewise.

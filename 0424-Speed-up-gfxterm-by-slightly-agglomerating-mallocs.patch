@@ -1,7 +1,7 @@
 From b6fba8115cc492d54f185f37080817b05871785f Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 4 May 2013 15:07:13 +0200
-Subject: [PATCH 424/471] 	Speed-up gfxterm by slightly agglomerating
+Subject: [PATCH 424/482] 	Speed-up gfxterm by slightly agglomerating
  mallocs.
 
 ---

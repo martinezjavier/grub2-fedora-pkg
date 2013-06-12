@@ -1,7 +1,7 @@
 From 816fd37ee87127911c61b5464dfdd25145b36e1c Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 10 Mar 2013 18:27:53 +0100
-Subject: [PATCH 202/471] 	* grub-core/fs/hfs.c (grub_hfs_read_file):
+Subject: [PATCH 202/482] 	* grub-core/fs/hfs.c (grub_hfs_read_file):
  Avoid divmod64 since the 	maximum size is 4G - 1 on hfs
 
 ---

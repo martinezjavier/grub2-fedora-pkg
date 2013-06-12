@@ -1,7 +1,7 @@
 From 8bfc7bf55ca478fe743f70b8699eca27383e2045 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 12 Apr 2013 14:03:52 +0200
-Subject: [PATCH 286/471] 	* docs/grub.texi: Update coreboot status info.
+Subject: [PATCH 286/482] 	* docs/grub.texi: Update coreboot status info.
 
 ---
  ChangeLog      |  4 ++++

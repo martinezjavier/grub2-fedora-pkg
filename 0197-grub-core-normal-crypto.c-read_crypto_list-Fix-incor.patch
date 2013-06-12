@@ -1,7 +1,7 @@
 From b3e3387c94fa080342c9dadd32cf83155e4ce85b Mon Sep 17 00:00:00 2001
 From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 Date: Thu, 7 Mar 2013 08:41:27 +0100
-Subject: [PATCH 197/471] 	* grub-core/normal/crypto.c
+Subject: [PATCH 197/482] 	* grub-core/normal/crypto.c
  (read_crypto_list): Fix incorrect 	OOM check. 	*
  grub-core/normal/term.c (read_terminal_list): Likewise.
 

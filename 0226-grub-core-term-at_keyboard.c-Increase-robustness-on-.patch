@@ -1,7 +1,7 @@
 From 22a5b3e8041be8b3abdfe52ebf155136218489bb Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 23 Mar 2013 16:54:36 +0100
-Subject: [PATCH 226/471] 	* grub-core/term/at_keyboard.c: Increase
+Subject: [PATCH 226/482] 	* grub-core/term/at_keyboard.c: Increase
  robustness on coreboot 	and qemu.
 
 ---

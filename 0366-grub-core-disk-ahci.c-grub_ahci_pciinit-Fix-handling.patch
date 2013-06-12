@@ -1,7 +1,7 @@
 From cc5de4333e4d45063ef5c62e424fa9c3ca01caae Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 27 Apr 2013 21:49:14 +0200
-Subject: [PATCH 366/471] 	* grub-core/disk/ahci.c (grub_ahci_pciinit):
+Subject: [PATCH 366/482] 	* grub-core/disk/ahci.c (grub_ahci_pciinit):
  Fix handling of empty 	ports.
 
 ---

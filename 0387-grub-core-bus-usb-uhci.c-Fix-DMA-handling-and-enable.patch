@@ -1,7 +1,7 @@
 From f94f8f792c37fe2abd7db8d6eaf70929580bf62f Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 29 Apr 2013 12:05:19 +0200
-Subject: [PATCH 387/471] 	* grub-core/bus/usb/uhci.c: Fix DMA handling
+Subject: [PATCH 387/482] 	* grub-core/bus/usb/uhci.c: Fix DMA handling
  and enable on all PCI 	platforms.
 
 ---

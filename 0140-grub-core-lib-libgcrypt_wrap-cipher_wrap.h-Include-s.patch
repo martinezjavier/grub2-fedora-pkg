@@ -1,7 +1,7 @@
 From 416beb4f9c97d91d06f5844339113c5be9350834 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 22 Jan 2013 07:46:29 +0100
-Subject: [PATCH 140/471] 	* grub-core/lib/libgcrypt_wrap/cipher_wrap.h:
+Subject: [PATCH 140/482] 	* grub-core/lib/libgcrypt_wrap/cipher_wrap.h:
  Include sys/types.h rather 	than defining WORDS_BIGENDIAN manually.
 
 ---

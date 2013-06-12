@@ -1,7 +1,7 @@
 From 601e4870ed17abe682d5581c8ece9adc61184713 Mon Sep 17 00:00:00 2001
 From: Vladimir Testov <vladimir.testov@rosalab.ru>
 Date: Mon, 10 Dec 2012 11:45:00 +0100
-Subject: [PATCH 061/471] 	* util/grub-mkfont.c (argp_parser): Fix a typo
+Subject: [PATCH 061/482] 	* util/grub-mkfont.c (argp_parser): Fix a typo
  which prevented --asce 	from working.
 
 ---

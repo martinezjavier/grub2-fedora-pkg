@@ -1,7 +1,7 @@
 From ded439de5b72d33474f96fbc08b9687a76c938ac Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 16 Jan 2013 20:39:54 +0100
-Subject: [PATCH 111/471] 	New terminal outputs using serial: morse and
+Subject: [PATCH 111/482] 	New terminal outputs using serial: morse and
  spkmodem.
 
 ---

@@ -1,7 +1,7 @@
 From 740c6a92176346d85fa1e32ea9b7f1fc4bb914a8 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 14 Apr 2013 19:57:15 +0200
-Subject: [PATCH 312/471] 	* grub-core/lib/posix_wrap/sys/types.h: Make
+Subject: [PATCH 312/482] 	* grub-core/lib/posix_wrap/sys/types.h: Make
  WORDS_BIGENDIAN definition 	match config-util.h to avoid warnings and
  increase compatibility.
 

@@ -1,7 +1,7 @@
 From 0be9bd30234b5dad6303a9d3a4747fca36f6e903 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 11 Apr 2013 21:46:21 +0200
-Subject: [PATCH 281/471] 	* docs/grub.texi: Fix description of
+Subject: [PATCH 281/482] 	* docs/grub.texi: Fix description of
  GRUB_CMDLINE_XEN and 	GRUB_CMDLINE_XEN_DEFAULT. 	Reported by: 	Marc
  Warne (GigaTux) <gigatux>
 

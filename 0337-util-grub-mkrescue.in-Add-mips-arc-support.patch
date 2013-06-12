@@ -1,7 +1,7 @@
 From 4918af06ff0742df83ae70ce57e7fabc99761177 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 24 Apr 2013 14:02:58 +0200
-Subject: [PATCH 337/471] 	* util/grub-mkrescue.in: Add mips-arc support.
+Subject: [PATCH 337/482] 	* util/grub-mkrescue.in: Add mips-arc support.
 
 ---
  ChangeLog             |  4 ++++

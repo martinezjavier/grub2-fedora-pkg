@@ -1,7 +1,7 @@
 From 84f37bce3a842058d6f33839e541d79cec384fab Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Mon, 21 Jan 2013 21:03:26 +0000
-Subject: [PATCH 138/471] * grub-core/font/font.c (blit_comb: do_blit): Make
+Subject: [PATCH 138/482] * grub-core/font/font.c (blit_comb: do_blit): Make
  static instead of nested. (blit_comb: add_device_width): Likewise.
 
 ---

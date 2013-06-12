@@ -1,7 +1,7 @@
 From 36c2c2e18dd471bdfd886021afb0d5e8365b2c8e Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 29 Apr 2013 12:00:31 +0200
-Subject: [PATCH 385/471] 	* include/grub/list.h
+Subject: [PATCH 385/482] 	* include/grub/list.h
  (FOR_LIST_ELEMENTS_SAFE):Fix a NULL pointer 	dereference. 	Reported by:
  qwertial.
 

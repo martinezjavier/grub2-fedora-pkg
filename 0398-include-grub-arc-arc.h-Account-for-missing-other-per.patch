@@ -1,7 +1,7 @@
 From f4b8e9c9249112964441d582283761ada51198a7 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 30 Apr 2013 17:40:31 +0200
-Subject: [PATCH 398/471] 	* include/grub/arc/arc.h: Account for missing
+Subject: [PATCH 398/482] 	* include/grub/arc/arc.h: Account for missing
  "other" peripheral on 	ARCS. All users updated.
 
 ---

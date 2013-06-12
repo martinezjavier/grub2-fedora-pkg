@@ -1,7 +1,7 @@
 From 3c16d2a0969c34faa8d2a0fba94f4535effef5fc Mon Sep 17 00:00:00 2001
 From: Vladimir Testov <vladimir.testov@rosalab.ru>
 Date: Tue, 26 Mar 2013 08:26:01 +0100
-Subject: [PATCH 235/471] 	* grub-core/gfxmenu/font.c
+Subject: [PATCH 235/482] 	* grub-core/gfxmenu/font.c
  (grub_font_get_string_width): Fix 	memory leak.
 
 ---

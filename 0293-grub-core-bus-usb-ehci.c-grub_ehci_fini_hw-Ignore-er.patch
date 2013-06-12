@@ -1,7 +1,7 @@
 From 37444041eb9063e3c4cdccefdb3f3574f0ced4ec Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 12 Apr 2013 20:51:11 +0200
-Subject: [PATCH 293/471] 	* grub-core/bus/usb/ehci.c
+Subject: [PATCH 293/482] 	* grub-core/bus/usb/ehci.c
  (grub_ehci_fini_hw): Ignore errors, not 	much we can do about it
  anyway.
 

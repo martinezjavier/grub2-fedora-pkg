@@ -1,7 +1,7 @@
 From 56b79f793db3488f8efa3bc345cd71b179c03c29 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Tue, 7 May 2013 11:45:47 +0200
-Subject: [PATCH 435/471] 	* autogen.sh: Exclude unused libgcrypt files
+Subject: [PATCH 435/482] 	* autogen.sh: Exclude unused libgcrypt files
  from translation.
 
 ---

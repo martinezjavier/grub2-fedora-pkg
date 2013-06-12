@@ -1,7 +1,7 @@
 From cbd871dae8b7dac7d7d5ca5c3d3fbeaf1cafb244 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 26 Apr 2013 11:27:24 +0200
-Subject: [PATCH 354/471] 	* util/grub-mkrescue.in: Rename i386-ieee1275
+Subject: [PATCH 354/482] 	* util/grub-mkrescue.in: Rename i386-ieee1275
  core image due to 	ofw limited ISO support.
 
 ---

@@ -1,7 +1,7 @@
 From d164941306b06f408c3b2fb6a3176d1b8e2412d1 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Mon, 29 Apr 2013 15:09:39 +0200
-Subject: [PATCH 393/471] 	Make PCI init in i386-qemu port more robust.
+Subject: [PATCH 393/482] 	Make PCI init in i386-qemu port more robust.
 
 ---
  ChangeLog                           |   6 +-

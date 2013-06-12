@@ -1,7 +1,7 @@
 From b7267fc19bc52b86e21615aede30b31c8348de81 Mon Sep 17 00:00:00 2001
 From: Vladimir Testov <vladimir.testov@rosalab.ru>
 Date: Wed, 3 Apr 2013 09:34:08 +0200
-Subject: [PATCH 244/471] 	* grub-core/gfxmenu/gui_progress_bar.c: Handle
+Subject: [PATCH 244/482] 	* grub-core/gfxmenu/gui_progress_bar.c: Handle
  padding sizes.
 
 ---

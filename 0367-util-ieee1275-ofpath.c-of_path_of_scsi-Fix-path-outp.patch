@@ -1,7 +1,7 @@
 From a1de3862b9c2acd1afdcbd42f79b8b7694a0a794 Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Sat, 27 Apr 2013 22:03:13 +0200
-Subject: [PATCH 367/471] 	* util/ieee1275/ofpath.c (of_path_of_scsi):
+Subject: [PATCH 367/482] 	* util/ieee1275/ofpath.c (of_path_of_scsi):
  Fix path output for sas 	disks. 	(check_sas): Get sas_adress info.
 
 ---

@@ -1,7 +1,7 @@
 From dde79d96f8e70ebbb540ba20ff57e6b6a215cf04 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 28 Feb 2013 10:51:32 +0100
-Subject: [PATCH 168/471] 	* grub-core/fs/jfs.c: Remove nested functions.
+Subject: [PATCH 168/482] 	* grub-core/fs/jfs.c: Remove nested functions.
 
 ---
  ChangeLog          |   4 ++

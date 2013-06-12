@@ -1,7 +1,7 @@
 From 1246dfa7e45257c44f175112ab70bcf8d0c84c82 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 1 Feb 2013 21:45:39 +0100
-Subject: [PATCH 148/471] 	* grub-core/commands/lsacpi.c: Show more info.
+Subject: [PATCH 148/482] 	* grub-core/commands/lsacpi.c: Show more info.
  Hide some boring parts 	unless they have unexpected values.
 
 ---

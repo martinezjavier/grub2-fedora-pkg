@@ -1,7 +1,7 @@
 From 6ec699808b2c156f52ec3867b2cc20c8a66116d3 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 11 Jan 2013 07:41:05 +0100
-Subject: [PATCH 094/471] 	* grub-core/fs/ntfs.c: Ue more appropriate
+Subject: [PATCH 094/482] 	* grub-core/fs/ntfs.c: Ue more appropriate
  types. 	* grub-core/fs/ntfscomp.c: Likewise. 	* include/grub/ntfs.h:
  Likewise.
 

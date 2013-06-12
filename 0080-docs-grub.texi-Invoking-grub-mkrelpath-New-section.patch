@@ -1,7 +1,7 @@
 From 24c95595badc668ca9444155261d67b290b87c84 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Thu, 3 Jan 2013 10:53:53 +0000
-Subject: [PATCH 080/471] * docs/grub.texi (Invoking grub-mkrelpath): New
+Subject: [PATCH 080/482] * docs/grub.texi (Invoking grub-mkrelpath): New
  section. (Invoking grub-script-check): Likewise.
 
 ---

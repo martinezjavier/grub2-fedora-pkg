@@ -1,7 +1,7 @@
 From 4cdf790013d4c087da018961e5081562df307bbf Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 12 Jan 2013 16:27:37 +0100
-Subject: [PATCH 100/471] 	* grub-core/lib/libgcrypt_wrap/mem.c
+Subject: [PATCH 100/482] 	* grub-core/lib/libgcrypt_wrap/mem.c
  (gcry_x*alloc): Make out of memory 	fatal.
 
 ---

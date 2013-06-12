@@ -1,7 +1,7 @@
 From afa175e51f263d3090d1ba078bed97c7204ed986 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Mon, 25 Feb 2013 22:11:06 +0100
-Subject: [PATCH 157/471] 	* Makefile.util.def: Add partmap/msdos.c to
+Subject: [PATCH 157/482] 	* Makefile.util.def: Add partmap/msdos.c to
  common library. 	* include/grub/msdos_partition.h: Add
  GRUB_PC_PARTITION_TYPE_LDM 	* grub-core/disk/ldm.c: Check for existence of
  	GRUB_PC_PARTITION_TYPE_LDM.

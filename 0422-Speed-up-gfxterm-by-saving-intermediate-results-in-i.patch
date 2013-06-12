@@ -1,7 +1,7 @@
 From 18f0215d54546b2d4ccb1ff4877c48d5de00e1b3 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 4 May 2013 13:58:30 +0200
-Subject: [PATCH 422/471] 	Speed-up gfxterm by saving intermediate
+Subject: [PATCH 422/482] 	Speed-up gfxterm by saving intermediate
  results in index+alpha 	format.
 
 ---

@@ -1,7 +1,7 @@
 From f51e0c966f51523abcc5856a5667537d1dcf62ca Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 3 Apr 2013 15:19:34 +0200
-Subject: [PATCH 247/471] 	Fix screen corruption in menu entry editor and
+Subject: [PATCH 247/482] 	Fix screen corruption in menu entry editor and
  simplify the code 	flow while on it.
 
 ---

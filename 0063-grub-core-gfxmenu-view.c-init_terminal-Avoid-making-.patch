@@ -1,7 +1,7 @@
 From 92e7e2d5571844ef1604386f442eaf1e4085ed64 Mon Sep 17 00:00:00 2001
 From: "Dr. Tilmann Bubeck" <t.bubeck@reinform.de>
 Date: Mon, 10 Dec 2012 16:14:12 +0100
-Subject: [PATCH 063/471] 	* grub-core/gfxmenu/view.c (init_terminal):
+Subject: [PATCH 063/482] 	* grub-core/gfxmenu/view.c (init_terminal):
  Avoid making terminal 	window too small.
 
 ---

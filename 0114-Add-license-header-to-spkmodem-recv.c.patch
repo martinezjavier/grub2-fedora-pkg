@@ -1,7 +1,7 @@
 From 1ba9c912459e367cf685a95aed87ab0179733eab Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 18 Jan 2013 11:54:28 +0100
-Subject: [PATCH 114/471] 	Add license header to spkmodem-recv.c.
+Subject: [PATCH 114/482] 	Add license header to spkmodem-recv.c.
 
 ---
  ChangeLog            |  4 ++++

@@ -1,7 +1,7 @@
 From 232b501f28ef5a2b6c67a73a4b3babe8a3457330 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 13 Jan 2013 17:49:05 +0100
-Subject: [PATCH 104/471] 	New command list_trusted.
+Subject: [PATCH 104/482] 	New command list_trusted.
 
 	* grub-core/commands/verify.c (grub_cmd_list): New function.
 ---

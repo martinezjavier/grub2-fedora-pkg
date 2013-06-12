@@ -1,7 +1,7 @@
 From 96aea00a1794415ecc4f01d3e05569927df19420 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Tue, 4 Sep 2012 18:33:33 +0100
-Subject: [PATCH 021/471] * .bzrignore: Add grub-bios-setup, grub-ofpathname,
+Subject: [PATCH 021/482] * .bzrignore: Add grub-bios-setup, grub-ofpathname,
  and grub-sparc64-setup.
 
 ---

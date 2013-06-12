@@ -1,7 +1,7 @@
 From 9042354c7f7656b6d21cc99241dc637e702e1962 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 12 Jan 2013 16:21:06 +0100
-Subject: [PATCH 099/471] 	* grub-core/lib/libgcrypt_wrap/mem.c
+Subject: [PATCH 099/482] 	* grub-core/lib/libgcrypt_wrap/mem.c
  (_gcry_log_bug): Make gcrypt bugs 	fatal.
 
 ---

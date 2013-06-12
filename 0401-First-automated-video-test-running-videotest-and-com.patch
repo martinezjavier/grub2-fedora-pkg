@@ -1,7 +1,7 @@
 From 4b187937acb52b5ee5da7c687ded09e7b2c1825a Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Thu, 2 May 2013 14:39:03 +0200
-Subject: [PATCH 401/471] 	First automated video test (running videotest
+Subject: [PATCH 401/482] 	First automated video test (running videotest
  and comparing results)
 
 ---

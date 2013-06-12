@@ -1,7 +1,7 @@
 From 795dd1f8388ba8472781a001ab1c832091dffc54 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 27 Apr 2013 19:44:00 +0200
-Subject: [PATCH 364/471] 	Core compression test.
+Subject: [PATCH 364/482] 	Core compression test.
 
 ---
  ChangeLog                |  4 ++++

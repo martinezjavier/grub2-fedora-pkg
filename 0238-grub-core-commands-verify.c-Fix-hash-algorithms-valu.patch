@@ -1,7 +1,7 @@
 From 11df2f23b04ed345abae66b4d428c401eac7acd3 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Mon, 1 Apr 2013 01:43:04 +0200
-Subject: [PATCH 238/471] 	* grub-core/commands/verify.c: Fix hash
+Subject: [PATCH 238/482] 	* grub-core/commands/verify.c: Fix hash
  algorithms values for 	the first three hashes - they start with 1, not with
  0.
 

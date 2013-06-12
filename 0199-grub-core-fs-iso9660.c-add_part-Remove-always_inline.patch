@@ -1,7 +1,7 @@
 From 45025027ddbcf13fb5a5ee3a42f5318219f78fb4 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Thu, 7 Mar 2013 09:11:36 +0100
-Subject: [PATCH 199/471] 	* grub-core/fs/iso9660.c (add_part): Remove
+Subject: [PATCH 199/482] 	* grub-core/fs/iso9660.c (add_part): Remove
  always_inline attribute 	causing gcc error with gcc 4.7.1.
 
 ---

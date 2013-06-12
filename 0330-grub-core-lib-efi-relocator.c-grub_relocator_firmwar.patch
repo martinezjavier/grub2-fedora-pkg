@@ -1,7 +1,7 @@
 From 8e89166d92a09ac82788747a6b3da734d97dae3f Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sat, 20 Apr 2013 13:39:04 +0200
-Subject: [PATCH 330/471] 	* grub-core/lib/efi/relocator.c
+Subject: [PATCH 330/482] 	* grub-core/lib/efi/relocator.c
  (grub_relocator_firmware_alloc_region): 	Remove dprintf. 	*
  grub-core/lib/relocator.c (malloc_in_range): Likewise.
 

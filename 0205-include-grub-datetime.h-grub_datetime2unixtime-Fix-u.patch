@@ -1,7 +1,7 @@
 From 9024078c32dd74ba0e376d422cba33f587f7756d Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 10 Mar 2013 19:19:21 +0100
-Subject: [PATCH 205/471] 	* include/grub/datetime.h
+Subject: [PATCH 205/482] 	* include/grub/datetime.h
  (grub_datetime2unixtime): Fix unixtime 	computation for some years
  before epoch. Avode confusing division 	while on it.
 

@@ -1,7 +1,7 @@
 From 1a14b474415a15b4c75400eda67c9ef00895f0d1 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 14 Apr 2013 18:53:14 +0200
-Subject: [PATCH 308/471] 	Move GRUB out of system area when using
+Subject: [PATCH 308/482] 	Move GRUB out of system area when using
  xorriso 1.2.9 or later.
 
 ---

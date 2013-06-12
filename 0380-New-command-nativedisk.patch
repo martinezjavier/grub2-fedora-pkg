@@ -1,7 +1,7 @@
 From 97f30af3b3b4bbfe51efa1f8bb0cd344280a028e Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Sun, 28 Apr 2013 15:31:33 +0200
-Subject: [PATCH 380/471] 	New command `nativedisk'.
+Subject: [PATCH 380/482] 	New command `nativedisk'.
 
 ---
  ChangeLog                       |   4 +

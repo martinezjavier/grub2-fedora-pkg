@@ -1,7 +1,7 @@
 From ea051678fa221e5c4e527bd97c408605ecaca3a0 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 26 Apr 2013 23:47:46 +0200
-Subject: [PATCH 358/471] 	* grub-core/Makefile.core.def: Fix grub-emu
+Subject: [PATCH 358/482] 	* grub-core/Makefile.core.def: Fix grub-emu
  and grub-emu-lite sources.
 
 ---

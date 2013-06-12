@@ -1,7 +1,7 @@
 From 0cd3f74d3dd9f2be5d819a802d0579e5ff2256ab Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 12 Apr 2013 14:49:33 +0200
-Subject: [PATCH 287/471] 	Turn off QEMU ACPI-way since new releases
+Subject: [PATCH 287/482] 	Turn off QEMU ACPI-way since new releases
  don't have shutdown port 	anymore.
 
 ---

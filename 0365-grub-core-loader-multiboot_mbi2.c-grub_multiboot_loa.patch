@@ -1,7 +1,7 @@
 From 87dd8f877802d0e60f03369e563e833a14bc9f0f Mon Sep 17 00:00:00 2001
 From: Leon Drugi <eyak>
 Date: Sat, 27 Apr 2013 21:16:55 +0200
-Subject: [PATCH 365/471] 	* grub-core/loader/multiboot_mbi2.c
+Subject: [PATCH 365/482] 	* grub-core/loader/multiboot_mbi2.c
  (grub_multiboot_load): Fix cast in 	BSS clearing.
 
 ---

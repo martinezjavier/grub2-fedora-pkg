@@ -1,7 +1,7 @@
 From ce1cd200024547db7be52f08d80ccb2a3ece94c3 Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Wed, 27 Feb 2013 20:56:23 +0100
-Subject: [PATCH 163/471] 	* grub-core/loader/machoXX.c: Remove nested
+Subject: [PATCH 163/482] 	* grub-core/loader/machoXX.c: Remove nested
  functions.
 
 ---

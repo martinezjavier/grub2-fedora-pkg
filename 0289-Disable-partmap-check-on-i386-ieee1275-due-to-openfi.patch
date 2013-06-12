@@ -1,7 +1,7 @@
 From 6ce24e7ceb07f674d037d0838eb50794bfadb59a Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 12 Apr 2013 17:51:43 +0200
-Subject: [PATCH 289/471] 	Disable partmap check on i386-ieee1275 due to
+Subject: [PATCH 289/482] 	Disable partmap check on i386-ieee1275 due to
  openfirmware issues.
 
 ---

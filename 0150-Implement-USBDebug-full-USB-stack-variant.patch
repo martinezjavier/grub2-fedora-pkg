@@ -1,7 +1,7 @@
 From 771516d92320eccf7c517ec6481c257b564bf5dd Mon Sep 17 00:00:00 2001
 From: Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>
 Date: Fri, 1 Feb 2013 21:49:29 +0100
-Subject: [PATCH 150/471] 	Implement USBDebug (full USB stack variant).
+Subject: [PATCH 150/482] 	Implement USBDebug (full USB stack variant).
 
 ---
  ChangeLog                                |  4 ++
