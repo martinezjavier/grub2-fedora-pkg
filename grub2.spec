@@ -536,6 +536,8 @@ Patch0479: 0479-Add-support-for-UEFI-operating-systems-returned-by-o.patch
 Patch0480: 0480-Disable-GRUB-video-support-for-IBM-power-machines.patch
 Patch0481: 0481-Revert-Add-bootpath-device-to-the-list-967862.patch
 Patch0482: 0482-Fix-net_bootp-cmd-crash-when-there-isn-t-network-car.patch
+Patch0483: 0483-Initialize-grub_file_filters_-all-enabled.patch
+
 BuildRequires:  flex bison binutils python
 BuildRequires:  ncurses-devel xz-devel
 BuildRequires:  freetype-devel libusb-devel
