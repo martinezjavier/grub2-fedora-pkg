@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        19%{?dist}
+Release:        20%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -896,7 +896,10 @@ fi
 %attr(0644,root,root) %ghost %config(noreplace) %{_sysconfdir}/default/grub
 %{_sysconfdir}/sysconfig/grub
 %dir /boot/%{name}
-/boot/%{name}/themes/
+%dir /boot/%{name}/themes/
+%dir /boot/%{name}/themes/system
+%exclude /boot/%{name}/themes/system/*
+%exclude %{_datarootdir}/grub/themes/
 %{_infodir}/%{name}*
 %exclude %{_mandir}
 %doc grub-%{tarversion}/COPYING grub-%{tarversion}/INSTALL
@@ -908,9 +911,16 @@ fi
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %files starfield-theme
-%{_datarootdir}/grub/themes/starfield
+%dir /boot/%{name}/themes/
+%dir %{_datarootdir}/grub/themes
+%dir %{_datarootdir}/grub/themes/starfield
+/boot/%{name}/themes/
+%{_datarootdir}/grub/themes/
 
 %changelog
+* Fri Jun 14 2013 Peter Jones <pjones@redhat.com> - 2.00-20
+- Put the theme entirely ento the subpackage where it belongs (#974667)
+
 * Wed Jun 12 2013 Peter Jones <pjones@redhat.com> - 2.00-19
 - Rebase to upstream snapshot.
 - Fix PPC build error (#967862)
