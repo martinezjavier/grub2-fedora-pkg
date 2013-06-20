@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        20%{?dist}
+Release:        21%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -563,6 +563,7 @@ Requires(pre):  dracut
 Requires(post): dracut
 
 ExcludeArch:	s390 s390x %{arm}
+Obsoletes:	grub2 <= 2.00-20%{?dist}
 
 %description
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
@@ -575,6 +576,7 @@ provides support for PC BIOS systems.
 Summary:	GRUB for EFI systems.
 Group:		System Environment/Base
 Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
+Obsoletes:	grub2-efi <= 2.00-20%{?dist}
 
 %description efi
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
@@ -598,6 +600,8 @@ provides tools for support of all platforms.
 Summary:	An example theme for GRUB.
 Group:		System Environment/Base
 Requires:	system-logos
+Obsoletes:	grub2 <= 2.00-20%{?dist}
+Obsoletes:	grub2-efi <= 2.00-20%{?dist}
 
 %description starfield-theme
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
@@ -918,6 +922,9 @@ fi
 %{_datarootdir}/grub/themes/
 
 %changelog
+* Thu Jun 20 2013 Peter Jones <pjones@redhat.com> - 2.00-21
+- Fix obsoletes to pull in -starfield-theme subpackage when it should.
+
 * Fri Jun 14 2013 Peter Jones <pjones@redhat.com> - 2.00-20
 - Put the theme entirely ento the subpackage where it belongs (#974667)
 
