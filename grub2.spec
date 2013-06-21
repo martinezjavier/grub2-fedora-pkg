@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        21%{?dist}
+Release:        22%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -923,7 +923,7 @@ fi
 %{_datarootdir}/grub/themes/
 
 %changelog
-* Fri Jun 21 2013 Peter Jones <pjones@redhat.com> - 2.00-21
+* Fri Jun 21 2013 Peter Jones <pjones@redhat.com> - 2.00-22
 - Fix linewrapping in edit menu.
   Resolves: rhbz #976643
 
