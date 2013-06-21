@@ -537,6 +537,7 @@ Patch0480: 0480-Disable-GRUB-video-support-for-IBM-power-machines.patch
 Patch0481: 0481-Revert-Add-bootpath-device-to-the-list-967862.patch
 Patch0482: 0482-Fix-net_bootp-cmd-crash-when-there-isn-t-network-car.patch
 Patch0483: 0483-Initialize-grub_file_filters_-all-enabled.patch
+Patch0484: 0484-Use-2-instead-of-1-for-our-right-hand-margin-so-line.patch
 
 BuildRequires:  flex bison binutils python
 BuildRequires:  ncurses-devel xz-devel
@@ -922,6 +923,10 @@ fi
 %{_datarootdir}/grub/themes/
 
 %changelog
+* Fri Jun 21 2013 Peter Jones <pjones@redhat.com> - 2.00-21
+- Fix linewrapping in edit menu.
+  Resolves: rhbz #976643
+
 * Thu Jun 20 2013 Peter Jones <pjones@redhat.com> - 2.00-21
 - Fix obsoletes to pull in -starfield-theme subpackage when it should.
 
