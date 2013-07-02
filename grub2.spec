@@ -563,7 +563,7 @@ Requires(pre):  dracut
 Requires(post): dracut
 
 ExcludeArch:	s390 s390x %{arm}
-Obsoletes:	grub2 <= 2.00-20%{?dist}
+Obsoletes:	grub2 <= 1:2.00-20%{?dist}
 
 %description
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
@@ -576,7 +576,7 @@ provides support for PC BIOS systems.
 Summary:	GRUB for EFI systems.
 Group:		System Environment/Base
 Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
-Obsoletes:	grub2-efi <= 2.00-20%{?dist}
+Obsoletes:	grub2-efi <= 1:2.00-20%{?dist}
 
 %description efi
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
@@ -600,8 +600,8 @@ provides tools for support of all platforms.
 Summary:	An example theme for GRUB.
 Group:		System Environment/Base
 Requires:	system-logos
-Obsoletes:	grub2 <= 2.00-20%{?dist}
-Obsoletes:	grub2-efi <= 2.00-20%{?dist}
+Obsoletes:	grub2 <= 1:2.00-20%{?dist}
+Obsoletes:	grub2-efi <= 1:2.00-20%{?dist}
 
 %description starfield-theme
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
