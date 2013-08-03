@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        23%{?dist}
+Release:        24%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -923,6 +923,9 @@ fi
 %{_datarootdir}/grub/themes/
 
 %changelog
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:2.00-24
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 
 * Tue Jul 02 2013 Dennis Gilmore <dennis@ausil.us> - 2.00-23
 - add epoch to obsoletes
