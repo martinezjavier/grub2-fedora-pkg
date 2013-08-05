@@ -646,7 +646,7 @@ cd grub-efi-%{tarversion}
 %configure							\
 	CFLAGS="$(echo $RPM_OPT_FLAGS | sed			\
 		-e 's/-O.//g'					\
-		-e 's/-fstack-protector//g'			\
+		-e 's/-fstack-protector\(-[[:alnum:]]\+\)*//g'	\
 		-e 's/--param=ssp-buffer-size=4//g'		\
 		-e 's/-mregparm=3/-mregparm=4/g'		\
 		-e 's/-fexceptions//g'				\
@@ -923,6 +923,9 @@ fi
 %{_datarootdir}/grub/themes/
 
 %changelog
+* Mon Aug 05 2013 Peter Jones <pjones@redhat.com> - 2.00-24
+- Fix compiler flags to deal with -fstack-protector-strong
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:2.00-24
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
