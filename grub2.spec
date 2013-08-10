@@ -41,7 +41,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.00
-Release:        24%{?dist}
+Release:        25%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -925,6 +925,9 @@ fi
 %{_datarootdir}/grub/themes/
 
 %changelog
+* Sat Aug 10 2013 Peter Jones <pjones@redhat.com> - 2.00-25
+- Last build failed because of a hardware error on the builder.
+
 * Mon Aug 05 2013 Peter Jones <pjones@redhat.com> - 2.00-24
 - Fix compiler flags to deal with -fstack-protector-strong
 
