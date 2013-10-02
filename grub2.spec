@@ -584,6 +584,18 @@ The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
 bootloader with modular architecture.  It support rich varietyof kernel formats,
 file systems, computer architectures and hardware devices.  This subpackage
 provides support for EFI systems.
+
+%package efi-modules
+Summary:	Modules used to build custom grub.efi images
+Group:		System Environment/Base
+Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
+Obsoletes:	grub2-efi <= 1:2.00-20%{?dist}
+
+%description efi-modules
+The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
+bootloader with modular architecture.  It support rich varietyof kernel formats,
+file systems, computer architectures and hardware devices.  This subpackage
+provides support for rebuilding your own grub.efi on EFI systems.
 %endif
 
 %package tools
@@ -856,12 +868,15 @@ fi
 %ifarch %{efiarchs}
 %files efi
 %defattr(-,root,root,-)
-%{_libdir}/grub/%{grubefiarch}
 %config(noreplace) %{_sysconfdir}/%{name}-efi.cfg
 %attr(0755,root,root)/boot/efi/EFI/%{efidir}
 %attr(0755,root,root)/boot/efi/EFI/%{efidir}/fonts
 %ghost %config(noreplace) /boot/efi/EFI/%{efidir}/grub.cfg
 %doc grub-%{tarversion}/COPYING
+
+%files efi-modules
+%defattr(-,root,root,-)
+%{_libdir}/grub/%{grubefiarch}
 %endif
 
 %files tools -f grub.lang
