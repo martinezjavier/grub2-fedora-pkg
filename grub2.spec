@@ -180,7 +180,6 @@ provides an example theme for the grub screen.
 %ifarch %{efiarchs}
 %setup -D -q -T -a 0 -n grub-%{tarversion}
 cd grub-%{tarversion}
-cp %{SOURCE3} .
 # place unifont in the '.' from which configure is run
 cp %{SOURCE4} unifont.pcf.gz
 git init
@@ -194,7 +193,6 @@ mv grub-%{tarversion} grub-efi-%{tarversion}
 %endif
 %setup -D -q -T -a 0 -n grub-%{tarversion}
 cd grub-%{tarversion}
-cp %{SOURCE3} .
 # place unifont in the '.' from which configure is run
 cp %{SOURCE4} unifont.pcf.gz
 git init
@@ -216,7 +214,8 @@ cd grub-efi-%{tarversion}
 		-e 's/--param=ssp-buffer-size=4//g'		\
 		-e 's/-mregparm=3/-mregparm=4/g'		\
 		-e 's/-fexceptions//g'				\
-		-e 's/-fasynchronous-unwind-tables//g' )"	\
+		-e 's/-fasynchronous-unwind-tables//g'		\
+		-e 's/^/ -fno-strict-aliasing/' )"		\
 	TARGET_LDFLAGS=-static					\
         --with-platform=efi					\
 	--with-grubdir=%{name}					\
@@ -229,7 +228,7 @@ GRUB_MODULES="	all_video boot btrfs cat chain configfile echo efifwsetup \
 		jpeg linuxefi lvm minicmd normal part_apple part_msdos \
 		part_gpt password_pbkdf2 png reboot search search_fs_uuid \
 		search_fs_file search_label sleep test video xfs \
-		mdraid09 mdraid1x blscfg multiboot2 multiboot"
+		mdraid09 mdraid1x blscfg multiboot2 multiboot tftp"
 ./grub-mkimage -O %{grubefiarch} -o %{grubeficdname}.orig -p /EFI/BOOT \
 		-d grub-core ${GRUB_MODULES}
 %pesign -s -i %{grubeficdname}.orig -o %{grubeficdname}
@@ -257,7 +256,9 @@ cd grub-%{tarversion}
 		-e 's/-mregparm=3/-mregparm=4/g'		\
 		-e 's/-fexceptions//g'				\
 		-e 's/-m64//g'					\
-		-e 's/-fasynchronous-unwind-tables//g' )"	\
+		-e 's/-fasynchronous-unwind-tables//g'		\
+		-e 's/-mcpu=power7/-mcpu=power6/g'		\
+		-e 's/^/ -fno-strict-aliasing/' )"		\
 	TARGET_LDFLAGS=-static					\
         --with-platform=%{platform}				\
 	--with-grubdir=%{name}					\
@@ -483,7 +484,6 @@ fi
 %doc grub-%{tarversion}/COPYING grub-%{tarversion}/INSTALL
 %doc grub-%{tarversion}/NEWS grub-%{tarversion}/README
 %doc grub-%{tarversion}/THANKS grub-%{tarversion}/TODO
-%doc grub-%{tarversion}/ChangeLog grub-%{tarversion}/README.Fedora
 %doc grub-%{tarversion}/grub.html
 %doc grub-%{tarversion}/grub-dev.html grub-%{tarversion}/docs/font_char_metrics.png
 %doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
@@ -507,7 +507,6 @@ fi
 
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:2.00-24
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
-
 
 * Tue Jul 02 2013 Dennis Gilmore <dennis@ausil.us> - 2.00-23
 - add epoch to obsoletes
