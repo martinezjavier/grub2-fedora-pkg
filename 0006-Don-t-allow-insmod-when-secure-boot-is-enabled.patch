@@ -1,7 +1,7 @@
-From a4172844afe46b71dd999de13cc03dcafb4b193b Mon Sep 17 00:00:00 2001
+From 926684b8498a820b2e1446b697ab9c746f5302ba Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Tue, 23 Oct 2012 10:40:49 -0400
-Subject: [PATCH 06/37] Don't allow insmod when secure boot is enabled.
+Subject: [PATCH 06/34] Don't allow insmod when secure boot is enabled.
 
 Hi,
 

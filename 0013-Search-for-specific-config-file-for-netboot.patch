@@ -1,7 +1,7 @@
-From b90ea8ede5b4b817a80a92fe11fca64535a6ce44 Mon Sep 17 00:00:00 2001
+From 981b0dc6adaf2686f84fd90afcea28e841661ed2 Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Tue, 27 Nov 2012 17:22:07 -0200
-Subject: [PATCH 13/37] Search for specific config file for netboot
+Subject: [PATCH 13/34] Search for specific config file for netboot
 
 This patch implements a search for a specific configuration when the config
 file is on a remoteserver. It uses the following order:

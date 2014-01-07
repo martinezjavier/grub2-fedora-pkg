@@ -1,7 +1,7 @@
-From 2ddca048faf3d14cac3137693f05baa43814ddab Mon Sep 17 00:00:00 2001
+From 71aab2b998c1c0c7e4b599f90f01adf754829c76 Mon Sep 17 00:00:00 2001
 From: William Jon McCann <william.jon.mccann@gmail.com>
 Date: Wed, 15 May 2013 13:53:48 -0400
-Subject: [PATCH 19/37] Don't print GNU GRUB header
+Subject: [PATCH 18/34] Don't print GNU GRUB header
 
 No one cares.
 ---

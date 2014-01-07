@@ -1,7 +1,7 @@
-From 4d4c8f3afa586aa09632ad02f5d89c9717f7878f Mon Sep 17 00:00:00 2001
+From fbcb0b99d3a4ee0c1d38c965b0dc7cda22d04f28 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 28 Oct 2013 10:05:07 -0400
-Subject: [PATCH 32/37] Use linux16 when appropriate (#880840)
+Subject: [PATCH 29/34] Use linux16 when appropriate (#880840)
 
 The kernel group really would prefer that we use the 16 bit entry point
 on x86 bios machines.
@@ -14,16 +14,16 @@ Signed-off-by: Peter Jones <pjones@redhat.com>
  1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/util/grub.d/10_linux.in b/util/grub.d/10_linux.in
-index e762e1f..6befbd1 100644
+index e762e1f..600bfd2 100644
 --- a/util/grub.d/10_linux.in
 +++ b/util/grub.d/10_linux.in
 @@ -74,6 +74,11 @@ linux_entry ()
    type="$3"
    args="$4"
  
-+  16bit=""
++  sixteenbit=""
 +  case "$machine" in
-+    i?86) 16bit="16" ;;
++    i?86|x86_64) sixteenbit="16" ;;
 +  esac
 +
    if [ -z "$boot_device_id" ]; then
@@ -34,7 +34,7 @@ index e762e1f..6befbd1 100644
    else
      sed "s/^/$submenu_indentation/" << EOF
 -	linux	${rel_dirname}/${basename} root=${linux_root_device_thisversion} ro ${args}
-+	linux${16bit} ${rel_dirname}/${basename} root=${linux_root_device_thisversion} ro ${args}
++	linux${sixteenbit} ${rel_dirname}/${basename} root=${linux_root_device_thisversion} ro ${args}
  EOF
    fi
    if test -n "${initrd}" ; then
@@ -43,7 +43,7 @@ index e762e1f..6befbd1 100644
      else
        sed "s/^/$submenu_indentation/" << EOF
 -	initrd	${rel_dirname}/${initrd}
-+	initrd${16bit} ${rel_dirname}/${initrd}
++	initrd${sixteenbit} ${rel_dirname}/${initrd}
  EOF
      fi
    fi

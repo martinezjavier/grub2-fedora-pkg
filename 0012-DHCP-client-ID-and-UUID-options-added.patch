@@ -1,7 +1,7 @@
-From 9f1046ff402e991679bbe00d2bec34d12580a497 Mon Sep 17 00:00:00 2001
+From 1c9b8bec85cd2600da2f8a16ed08820300c02bee Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Tue, 27 Nov 2012 17:18:53 -0200
-Subject: [PATCH 12/37] DHCP client ID and UUID options added.
+Subject: [PATCH 12/34] DHCP client ID and UUID options added.
 
 ---
  grub-core/net/bootp.c | 52 +++++++++++++++++++++++++++++++++++++++++++--------

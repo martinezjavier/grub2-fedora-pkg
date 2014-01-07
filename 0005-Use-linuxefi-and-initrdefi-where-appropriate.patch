@@ -1,7 +1,7 @@
-From 421ff909d0735ae5b761b7b6707af3b3cdd50603 Mon Sep 17 00:00:00 2001
+From 9309e5ea7f0c65e9c575508de59c09a0ff732fcb Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 16 Jul 2012 18:57:11 -0400
-Subject: [PATCH 05/37] Use "linuxefi" and "initrdefi" where appropriate.
+Subject: [PATCH 05/34] Use "linuxefi" and "initrdefi" where appropriate.
 
 ---
  util/grub.d/10_linux.in | 18 ++++++++++++++++--

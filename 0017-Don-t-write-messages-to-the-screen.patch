@@ -1,7 +1,7 @@
-From 36b986f8d93282b139e3d0785fd16ddfd4b6759c Mon Sep 17 00:00:00 2001
+From dbd8d3b9c616bf5a9e2b825a25bc441f092a11a2 Mon Sep 17 00:00:00 2001
 From: William Jon McCann <william.jon.mccann@gmail.com>
 Date: Wed, 15 May 2013 13:30:20 -0400
-Subject: [PATCH 18/37] Don't write messages to the screen
+Subject: [PATCH 17/34] Don't write messages to the screen
 
 Writing messages to the screen before the menus or boot splash
 happens so quickly it looks like something is wrong and isn't
