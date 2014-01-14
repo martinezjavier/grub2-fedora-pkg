@@ -13,7 +13,8 @@
 
 %if ! 0%{?efi}
 
-%global efiarchs %{ix86} x86_64 ia64
+%global efi_only aarch64
+%global efiarchs %{ix86} x86_64 ia64 %{efi_only}
 
 %ifarch %{ix86}
 %global grubefiarch i386-efi
@@ -24,6 +25,11 @@
 %global grubefiarch %{_arch}-efi
 %global grubefiname grubx64.efi
 %global grubeficdname gcdx64.efi
+%endif
+%ifarch aarch64
+%global grubefiarch arm64-efi
+%global grubefiname grubaa64.efi
+%global grubeficdname gcdaa64.efi
 %endif
 
 %if 0%{?rhel}
@@ -54,45 +60,48 @@ Source3:        README.Fedora
 Source4:	http://unifoundry.com/unifont-5.1.20080820.pcf.gz
 Source5:	theme.tar.bz2
 #Source6:	grub-cd.cfg
-Patch0001: 0001-configure.ac-Set-version-to-2.02-beta2.patch
-Patch0002: 0002-Migrate-PPC-from-Yaboot-to-Grub2.patch
-Patch0003: 0003-Add-fw_path-variable-revised.patch
-Patch0004: 0004-Add-support-for-linuxefi.patch
-Patch0005: 0005-Use-linuxefi-and-initrdefi-where-appropriate.patch
-Patch0006: 0006-Don-t-allow-insmod-when-secure-boot-is-enabled.patch
-Patch0007: 0007-Pass-x-hex-hex-straight-through-unmolested.patch
-Patch0008: 0008-Fix-crash-on-http.patch
-Patch0009: 0009-IBM-client-architecture-CAS-reboot-support.patch
-Patch0010: 0010-Add-vlan-tag-support.patch
-Patch0011: 0011-Add-X-option-to-printf-functions.patch
-Patch0012: 0012-DHCP-client-ID-and-UUID-options-added.patch
-Patch0013: 0013-Search-for-specific-config-file-for-netboot.patch
-Patch0014: 0014-blscfg-add-blscfg-module-to-parse-Boot-Loader-Specif.patch
-Patch0015: 0015-Move-bash-completion-script-922997.patch
-Patch0016: 0016-for-ppc-reset-console-display-attr-when-clear-screen.patch
-Patch0017: 0017-Don-t-write-messages-to-the-screen.patch
-Patch0018: 0018-Don-t-print-GNU-GRUB-header.patch
+Patch0001: 0001-Migrate-PPC-from-Yaboot-to-Grub2.patch
+Patch0002: 0002-Add-fw_path-variable-revised.patch
+Patch0003: 0003-Add-support-for-linuxefi.patch
+Patch0004: 0004-Use-linuxefi-and-initrdefi-where-appropriate.patch
+Patch0005: 0005-Don-t-allow-insmod-when-secure-boot-is-enabled.patch
+Patch0006: 0006-Pass-x-hex-hex-straight-through-unmolested.patch
+Patch0007: 0007-Fix-crash-on-http.patch
+Patch0008: 0008-IBM-client-architecture-CAS-reboot-support.patch
+Patch0009: 0009-Add-vlan-tag-support.patch
+Patch0010: 0010-Add-X-option-to-printf-functions.patch
+Patch0011: 0011-DHCP-client-ID-and-UUID-options-added.patch
+Patch0012: 0012-Search-for-specific-config-file-for-netboot.patch
+Patch0013: 0013-blscfg-add-blscfg-module-to-parse-Boot-Loader-Specif.patch
+Patch0014: 0014-Move-bash-completion-script-922997.patch
+Patch0015: 0015-for-ppc-reset-console-display-attr-when-clear-screen.patch
+Patch0016: 0016-Don-t-write-messages-to-the-screen.patch
+Patch0017: 0017-Don-t-print-GNU-GRUB-header.patch
+Patch0018: 0018-Don-t-add-to-highlighted-row.patch
 Patch0019: 0019-Don-t-add-to-highlighted-row.patch
-Patch0020: 0020-Don-t-add-to-highlighted-row.patch
-Patch0021: 0021-Message-string-cleanups.patch
-Patch0022: 0022-Fix-border-spacing-now-that-we-aren-t-displaying-it.patch
-Patch0023: 0023-Use-the-correct-indentation-for-the-term-help-text.patch
-Patch0024: 0024-Indent-menu-entries.patch
-Patch0025: 0025-Fix-margins.patch
-Patch0026: 0026-Add-support-for-UEFI-operating-systems-returned-by-o.patch
-Patch0027: 0027-Disable-GRUB-video-support-for-IBM-power-machines.patch
-Patch0028: 0028-Use-2-instead-of-1-for-our-right-hand-margin-so-line.patch
-Patch0029: 0029-Use-linux16-when-appropriate-880840.patch
-Patch0030: 0030-Enable-pager-by-default.-985860.patch
-Patch0031: 0031-F10-doesn-t-work-on-serial-so-don-t-tell-the-user-to.patch
-Patch0032: 0032-Don-t-say-GNU-Linux-in-generated-menus.patch
-Patch0033: 0033-Don-t-draw-a-border-around-the-menu.patch
-Patch0034: 0034-Use-the-standard-margin-for-the-timeout-string.patch
+Patch0020: 0020-Message-string-cleanups.patch
+Patch0021: 0021-Fix-border-spacing-now-that-we-aren-t-displaying-it.patch
+Patch0022: 0022-Use-the-correct-indentation-for-the-term-help-text.patch
+Patch0023: 0023-Indent-menu-entries.patch
+Patch0024: 0024-Fix-margins.patch
+Patch0025: 0025-Add-support-for-UEFI-operating-systems-returned-by-o.patch
+Patch0026: 0026-Disable-GRUB-video-support-for-IBM-power-machines.patch
+Patch0027: 0027-Use-2-instead-of-1-for-our-right-hand-margin-so-line.patch
+Patch0028: 0028-Use-linux16-when-appropriate-880840.patch
+Patch0029: 0029-Enable-pager-by-default.-985860.patch
+Patch0030: 0030-F10-doesn-t-work-on-serial-so-don-t-tell-the-user-to.patch
+Patch0031: 0031-Don-t-say-GNU-Linux-in-generated-menus.patch
+Patch0032: 0032-Don-t-draw-a-border-around-the-menu.patch
+Patch0033: 0033-Use-the-standard-margin-for-the-timeout-string.patch
+Patch0034: 0034-Fix-grub_script_execute_sourcecode-usage-on-ppc.patch
+Patch0035: 0035-Add-.eh_frame-to-list-of-relocations-stripped.patch
+Patch0036: 0036-arm64-set-correct-length-of-device-path-end-entry.patch
+Patch0037: 0037-Make-10_linux-work-with-our-changes-for-linux16-and-.patch
 
 BuildRequires:  flex bison binutils python
 BuildRequires:  ncurses-devel xz-devel
 BuildRequires:  freetype-devel libusb-devel
-%ifarch %{sparc} x86_64
+%ifarch %{sparc} x86_64 aarch64
 # sparc builds need 64 bit glibc-devel - also for 32 bit userland
 BuildRequires:  /usr/lib64/crt1.o glibc-static
 %else
@@ -105,7 +114,9 @@ BuildRequires:	texinfo
 BuildRequires:	dejavu-sans-fonts
 BuildRequires:	help2man
 %ifarch %{efiarchs}
+%ifnarch aarch64
 BuildRequires:	pesign >= 0.99-8
+%endif
 %endif
 
 Requires:	gettext os-prober which file
@@ -188,6 +199,10 @@ git am %{patches}
 cd ..
 mv grub-%{tarversion} grub-efi-%{tarversion}
 %endif
+
+%ifarch %{efi_only}
+ln -s grub-efi-%{tarversion} grub-%{tarversion}
+%else
 %setup -D -q -T -a 0 -n grub-%{tarversion}
 cd grub-%{tarversion}
 # place unifont in the '.' from which configure is run
@@ -198,6 +213,7 @@ git config user.name "Fedora Ninjas"
 git add .
 git commit -a -q -m "%{tarversion} baseline."
 git am %{patches}
+%endif
 
 %build
 %ifarch %{efiarchs}
@@ -222,20 +238,30 @@ cd grub-efi-%{tarversion}
 make %{?_smp_mflags}
 GRUB_MODULES="	all_video boot btrfs cat chain configfile echo efifwsetup \
 		efinet ext2 fat font gfxmenu gfxterm gzio halt hfsplus iso9660 \
-		jpeg linuxefi lvm minicmd normal part_apple part_msdos \
-		part_gpt password_pbkdf2 png reboot search search_fs_uuid \
-		search_fs_file search_label sleep test video xfs \
-		mdraid09 mdraid1x blscfg multiboot2 multiboot tftp"
+		jpeg lvm mdraid09 mdraid1x minicmd normal part_apple \
+		part_msdos part_gpt password_pbkdf2 png reboot search \
+		search_fs_uuid search_fs_file search_label sleep test tftp \
+		video xfs mdraid09 mdraid1x"
+%ifarch aarch64
+GRUB_MODULES="${GRUB_MODULES} linux"
+%else
+GRUB_MODULES+="${GRUB_MODULES} linuxefi multiboot2 multiboot"
+%endif
+./grub-mkimage -O %{grubefiarch} -o %{grubefiname}.orig -p /EFI/%{efidir} \
+		-d grub-core ${GRUB_MODULES}
+%ifarch aarch64
+mv %{grubefiname}.orig %{grubefiname}
+%else
 ./grub-mkimage -O %{grubefiarch} -o %{grubeficdname}.orig -p /EFI/BOOT \
 		-d grub-core ${GRUB_MODULES}
 %pesign -s -i %{grubeficdname}.orig -o %{grubeficdname}
-./grub-mkimage -O %{grubefiarch} -o %{grubefiname}.orig -p /EFI/%{efidir} \
-		-d grub-core ${GRUB_MODULES}
 %pesign -s -i %{grubefiname}.orig -o %{grubefiname}
+%endif
 cd ..
 %endif
 
 cd grub-%{tarversion}
+%ifnarch %{efi_only}
 ./autogen.sh
 # -static is needed so that autoconf script is able to link
 # test that looks for _start symbol on 64 bit platforms
@@ -264,6 +290,7 @@ cd grub-%{tarversion}
 	--disable-werror
 
 make %{?_smp_mflags}
+%endif
 
 sed -i -e 's,(grub),(%{name}),g' \
 	-e 's,grub.info,%{name}.info,g' \
@@ -307,18 +334,22 @@ do
 #        install -m 755 -D $BASE$EXT $TGT
 done
 install -m 755 %{grubefiname} $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/%{grubefiname}
+%ifnarch aarch64
 install -m 755 %{grubeficdname} $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/%{grubeficdname}
+%endif
 install -D -m 644 unicode.pf2 $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/fonts/unicode.pf2
 cd ..
 %endif
 
 cd grub-%{tarversion}
+%ifnarch %{efi_only}
 make DESTDIR=$RPM_BUILD_ROOT install
 
 # Ghost config file
 install -d $RPM_BUILD_ROOT/boot/%{name}
 touch $RPM_BUILD_ROOT/boot/%{name}/grub.cfg
 ln -s ../boot/%{name}/grub.cfg $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.cfg
+%endif
 
 cp -a $RPM_BUILD_ROOT%{_datarootdir}/locale/en\@quot $RPM_BUILD_ROOT%{_datarootdir}/locale/en
 
@@ -409,12 +440,14 @@ if [ "$1" = 0 ]; then
 	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/%{name}-dev.info.gz || :
 fi
 
+%ifnarch %{efi_only}
 %files -f grub.lang
 %defattr(-,root,root,-)
 %{_libdir}/grub/*-%{platform}/
 %config(noreplace) %{_sysconfdir}/%{name}.cfg
 %ghost %config(noreplace) /boot/%{name}/grub.cfg
 %doc grub-%{tarversion}/COPYING
+%endif
 
 %ifarch %{efiarchs}
 %files efi
