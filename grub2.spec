@@ -56,7 +56,6 @@ URL:            http://www.gnu.org/software/grub/
 Obsoletes:	grub < 1:0.98
 Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
 #Source0:	ftp://ftp.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
-Source3:        README.Fedora
 Source4:	http://unifoundry.com/unifont-5.1.20080820.pcf.gz
 Source5:	theme.tar.bz2
 #Source6:	grub-cd.cfg
@@ -222,19 +221,19 @@ cd grub-efi-%{tarversion}
 %configure							\
 	CFLAGS="$(echo $RPM_OPT_FLAGS | sed			\
 		-e 's/-O.//g'					\
-		-e 's/-fstack-protector\(-[[:alnum:]]\+\)*//g'	\
-		-e 's/-Wp,-D_FORTIFY_SOURCE=[[:digit:]]//g'	\
+		-e 's/-fstack-protector[[:alpha:]-]\+//g'	\
 		-e 's/--param=ssp-buffer-size=4//g'		\
 		-e 's/-mregparm=3/-mregparm=4/g'		\
 		-e 's/-fexceptions//g'				\
 		-e 's/-fasynchronous-unwind-tables//g'		\
-		-e 's/^/ -fno-strict-aliasing/' )"		\
+		-e 's/^/ -fno-strict-aliasing /' )"		\
 	TARGET_LDFLAGS=-static					\
         --with-platform=efi					\
 	--with-grubdir=%{name}					\
         --program-transform-name=s,grub,%{name},		\
 	--disable-grub-mount					\
 	--disable-werror
+
 make %{?_smp_mflags}
 GRUB_MODULES="	all_video boot btrfs cat chain configfile echo efifwsetup \
 		efinet ext2 fat font gfxmenu gfxterm gzio halt hfsplus iso9660 \
@@ -273,15 +272,14 @@ cd grub-%{tarversion}
 %configure							\
 	CFLAGS="$(echo $RPM_OPT_FLAGS | sed			\
 		-e 's/-O.//g'					\
-		-e 's/-fstack-protector\(-[[:alnum:]]\+\)*//g'	\
-		-e 's/-Wp,-D_FORTIFY_SOURCE=[[:digit:]]//g'	\
+		-e 's/-fstack-protector[[:alpha:]-]\+//g'	\
 		-e 's/--param=ssp-buffer-size=4//g'		\
 		-e 's/-mregparm=3/-mregparm=4/g'		\
 		-e 's/-fexceptions//g'				\
 		-e 's/-m64//g'					\
 		-e 's/-fasynchronous-unwind-tables//g'		\
 		-e 's/-mcpu=power7/-mcpu=power6/g'		\
-		-e 's/^/ -fno-strict-aliasing/' )"		\
+		-e 's/^/ -fno-strict-aliasing /' )"		\
 	TARGET_LDFLAGS=-static					\
         --with-platform=%{platform}				\
 	--with-grubdir=%{name}					\
