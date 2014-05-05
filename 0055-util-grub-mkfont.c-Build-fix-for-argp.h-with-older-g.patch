@@ -1,0 +1,42 @@
+From e4aba2a9e4a0e2f7966c8225fc4f500a65c81361 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Mon, 3 Feb 2014 14:34:27 +0100
+Subject: [PATCH 055/103] 	* util/grub-mkfont.c: Build fix for argp.h
+ with older gcc.
+
+---
+ ChangeLog          | 4 ++++
+ util/grub-mkfont.c | 4 ++++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/ChangeLog b/ChangeLog
+index 9d0b00b..f5472af 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,7 @@
++2014-02-03  Vladimir Serbinenko  <phcoder@gmail.com>
++
++	* util/grub-mkfont.c: Build fix for argp.h with older gcc.
++
+ 2014-01-29  Vladimir Serbinenko  <phcoder@gmail.com>
+ 
+ 	* grub-core/disk/ahci.c: Increase timeout. Some SSDs take up to
+diff --git a/util/grub-mkfont.c b/util/grub-mkfont.c
+index 3de07ee..e6485b4 100644
+--- a/util/grub-mkfont.c
++++ b/util/grub-mkfont.c
+@@ -33,7 +33,11 @@
+ 
+ #ifndef GRUB_BUILD
+ #define _GNU_SOURCE	1
++#pragma GCC diagnostic ignored "-Wmissing-prototypes"
++#pragma GCC diagnostic ignored "-Wmissing-declarations"
+ #include <argp.h>
++#pragma GCC diagnostic error "-Wmissing-prototypes"
++#pragma GCC diagnostic error "-Wmissing-declarations"
+ #endif
+ #include <assert.h>
+ 
+-- 
+1.9.0
+
