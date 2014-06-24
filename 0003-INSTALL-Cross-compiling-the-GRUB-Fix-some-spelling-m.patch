@@ -1,11 +1,9 @@
-From b3a04ee7745f9db87475ed926569ca1b3ba63994 Mon Sep 17 00:00:00 2001
-From: Peter Jones <pjones@redhat.com>
-Date: Tue, 6 May 2014 10:47:21 -0400
-Subject: [PATCH 003/103] * INSTALL (Cross-compiling the GRUB): Fix some
+From 8ebe593c564edc8ae62086df8a1448e898ef259b Mon Sep 17 00:00:00 2001
+From: Colin Watson <cjwatson@ubuntu.com>
+Date: Fri, 27 Dec 2013 03:03:32 +0000
+Subject: [PATCH 003/125] * INSTALL (Cross-compiling the GRUB): Fix some
  spelling mistakes. * docs/grub.texi (Getting the source code): Likewise.
 
-Conflicts:
-	ChangeLog
 ---
  ChangeLog          |  5 +++++
  INSTALL            | 10 +++++-----
