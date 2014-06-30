@@ -47,7 +47,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.4%{?dist}
+Release:        0.5%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -185,6 +185,7 @@ Patch0122: 0122-Add-.eh_frame-to-list-of-relocations-stripped.patch
 Patch0123: 0123-Make-10_linux-work-with-our-changes-for-linux16-and-.patch
 Patch0124: 0124-Don-t-print-during-fdt-loading-method.patch
 Patch0125: 0125-Honor-a-symlink-when-generating-configuration-by-gru.patch
+Patch0126: 0126-Don-t-munge-raw-spaces-when-we-re-doing-our-cmdline-.patch
 
 BuildRequires:  flex bison binutils python
 BuildRequires:  ncurses-devel xz-devel bzip2-devel
@@ -613,6 +614,10 @@ fi
 %{_datarootdir}/grub/themes/
 
 %changelog
+* Mon Jun 30 2014 Peter Jones <pjones@redhat.com> - 2.02-0.5
+- Avoid munging raw spaces when we're escaping command line arguments.
+  Resolves: rhbz#923374
+
 * Tue Jun 24 2014 Peter Jones <pjones@redhat.com> - 2.02-0.4
 - Update to latest upstream.
 
