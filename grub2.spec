@@ -47,7 +47,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.5%{?dist}
+Release:        0.6%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -186,6 +186,20 @@ Patch0123: 0123-Make-10_linux-work-with-our-changes-for-linux16-and-.patch
 Patch0124: 0124-Don-t-print-during-fdt-loading-method.patch
 Patch0125: 0125-Honor-a-symlink-when-generating-configuration-by-gru.patch
 Patch0126: 0126-Don-t-munge-raw-spaces-when-we-re-doing-our-cmdline-.patch
+Patch0127: 0127-Don-t-require-a-password-to-boot-entries-generated-b.patch
+Patch0128: 0128-Don-t-emit-Booting-.-message.patch
+Patch0129: 0129-Make-CTRL-and-ALT-keys-work-as-expected-on-EFI-syste.patch
+Patch0130: 0130-May-as-well-try-it.patch
+Patch0131: 0131-use-fw_path-prefix-when-fallback-searching-for-grub-.patch
+Patch0132: 0132-Try-mac-guid-etc-before-grub.cfg-on-tftp-config-file.patch
+Patch0133: 0133-trim-arp-packets-with-abnormal-size.patch
+Patch0134: 0134-Fix-convert-function-to-support-NVMe-devices.patch
+Patch0135: 0135-Fix-bad-test-on-GRUB_DISABLE_SUBMENU.patch
+Patch0136: 0136-Switch-to-use-APM-Mustang-device-tree-for-hardware-t.patch
+Patch0137: 0137-Use-the-default-device-tree-from-the-grub-default-fi.patch
+Patch0138: 0138-reopen-SNP-protocol-for-exclusive-use-by-grub.patch
+Patch0139: 0139-Reduce-timer-event-frequency-by-10.patch
+Patch0140: 0140-always-return-error-to-UEFI.patch
 
 BuildRequires:  flex bison binutils python
 BuildRequires:  ncurses-devel xz-devel bzip2-devel
@@ -614,6 +628,9 @@ fi
 %{_datarootdir}/grub/themes/
 
 %changelog
+* Wed Jul 02 2014 Peter Jones <pjones@redhat.com> - 2.02-0.6
+- Re-merge RHEL 7 changes and ARM works in progress.
+
 * Mon Jun 30 2014 Peter Jones <pjones@redhat.com> - 2.02-0.5
 - Avoid munging raw spaces when we're escaping command line arguments.
   Resolves: rhbz#923374

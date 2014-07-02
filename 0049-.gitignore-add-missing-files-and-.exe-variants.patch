@@ -1,7 +1,7 @@
 From 58ca3abc65a64d950d6da8b473e91f16d410f1ac Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Wed, 29 Jan 2014 13:26:00 -0200
-Subject: [PATCH 049/125] .gitignore: add missing files and .exe variants.
+Subject: [PATCH 049/140] .gitignore: add missing files and .exe variants.
 
 ---
  .gitignore | 7 +++++++
@@ -30,5 +30,5 @@ index d37d4a6..a49f5f1 100644
  
  2013-12-14  Vladimir Serbinenko  <phcoder@gmail.com>
 -- 
-1.9.0
+1.9.3
 
