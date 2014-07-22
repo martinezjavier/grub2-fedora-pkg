@@ -343,8 +343,8 @@ GRUB_MODULES="	all_video boot btrfs cat chain configfile echo efifwsetup \
 		efinet ext2 fat font gfxmenu gfxterm gzio halt hfsplus iso9660 \
 		jpeg lvm mdraid09 mdraid1x minicmd normal part_apple \
 		part_msdos part_gpt password_pbkdf2 png reboot search \
-		search_fs_uuid search_fs_file search_label sleep test tftp \
-		video xfs mdraid09 mdraid1x"
+		search_fs_uuid search_fs_file search_label sleep syslinuxcfg \
+		test tftp video xfs mdraid09 mdraid1x"
 %ifarch aarch64
 GRUB_MODULES="${GRUB_MODULES} linux"
 %else
