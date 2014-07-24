@@ -47,7 +47,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.6%{?dist}
+Release:        0.7%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -628,6 +628,9 @@ fi
 %{_datarootdir}/grub/themes/
 
 %changelog
+* Thu Jul 24 2014 Peter Jones <pjones@redhat.com> - 2.02-0.7
+- Enabled syslinuxcfg module.
+
 * Wed Jul 02 2014 Peter Jones <pjones@redhat.com> - 2.02-0.6
 - Re-merge RHEL 7 changes and ARM works in progress.
 
