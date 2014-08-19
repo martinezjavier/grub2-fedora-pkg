@@ -1,7 +1,7 @@
 From 9cbb9fc3d79e449affe7ed5e104aa828b72ad2cd Mon Sep 17 00:00:00 2001
 From: Vladimir Serbinenko <phcoder@gmail.com>
 Date: Sat, 18 Jan 2014 19:26:40 +0100
-Subject: [PATCH 028/140] 	* grub-core/commands/macbless.c: Rename FILE
+Subject: [PATCH 028/143] 	* grub-core/commands/macbless.c: Rename FILE
  and DIR to avoid 	conflicts.
 
 	Reported by: Andrey Borzenkov.

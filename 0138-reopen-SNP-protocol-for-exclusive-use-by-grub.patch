@@ -1,7 +1,7 @@
 From f4bbb76f70ceca4e089e926ee44d8d3fe919f040 Mon Sep 17 00:00:00 2001
 From: Fedora Ninjas <grub2-owner@fedoraproject.org>
 Date: Sat, 15 Feb 2014 15:10:22 -0500
-Subject: [PATCH 138/140] reopen SNP protocol for exclusive use by grub
+Subject: [PATCH 138/143] reopen SNP protocol for exclusive use by grub
 
 ---
  grub-core/net/drivers/efi/efinet.c | 16 ++++++++++++++++

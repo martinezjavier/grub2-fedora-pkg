@@ -1,7 +1,7 @@
 From fa9e3a9aa30988c2339e9d05c81b5d91534f4049 Mon Sep 17 00:00:00 2001
 From: Vladimir Serbinenko <phcoder@gmail.com>
 Date: Sat, 18 Jan 2014 16:43:29 +0100
-Subject: [PATCH 021/140] 	* util/grub-mount.c: Extend GCC warning
+Subject: [PATCH 021/143] 	* util/grub-mount.c: Extend GCC warning
  workaround to grub-mount.
 
 ---

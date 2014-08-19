@@ -1,7 +1,7 @@
 From 36a34ede9dfa34840c59c7b331c1bc8d8ae7442e Mon Sep 17 00:00:00 2001
 From: Fedora Ninjas <grub2-owner@fedoraproject.org>
 Date: Wed, 26 Feb 2014 21:49:12 -0500
-Subject: [PATCH 140/140] always return error to UEFI
+Subject: [PATCH 140/143] always return error to UEFI
 
 ---
  grub-core/kern/efi/efi.c | 2 +-

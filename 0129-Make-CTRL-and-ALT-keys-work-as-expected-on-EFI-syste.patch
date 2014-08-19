@@ -1,7 +1,7 @@
 From fe42ce5fc9eec355027a533861dfe7f2eeefc63c Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 3 Feb 2014 15:21:46 -0500
-Subject: [PATCH 129/140] Make CTRL and ALT keys work as expected on EFI
+Subject: [PATCH 129/143] Make CTRL and ALT keys work as expected on EFI
  systems (version 5).
 
 This is version 4.

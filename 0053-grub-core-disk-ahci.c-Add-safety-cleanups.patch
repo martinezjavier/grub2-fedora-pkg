@@ -1,7 +1,7 @@
 From 3f00de9c207fb4b3f9e45fd775650404ce087aac Mon Sep 17 00:00:00 2001
 From: Vladimir Serbinenko <phcoder@gmail.com>
 Date: Wed, 29 Jan 2014 23:46:17 +0100
-Subject: [PATCH 053/140] 	* grub-core/disk/ahci.c: Add safety cleanups.
+Subject: [PATCH 053/143] 	* grub-core/disk/ahci.c: Add safety cleanups.
 
 ---
  ChangeLog             |  4 ++++

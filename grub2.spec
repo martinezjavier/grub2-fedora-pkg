@@ -47,7 +47,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.7%{?dist}
+Release:        0.8%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -58,6 +58,7 @@ Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
 #Source0:	ftp://ftp.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
 Source4:	http://unifoundry.com/unifont-5.1.20080820.pcf.gz
 Source5:	theme.tar.bz2
+Source6:	gitignore
 #Source6:	grub-cd.cfg
 
 Patch0001: 0001-fix-EFI-detection-on-Windows.patch
@@ -200,11 +201,14 @@ Patch0137: 0137-Use-the-default-device-tree-from-the-grub-default-fi.patch
 Patch0138: 0138-reopen-SNP-protocol-for-exclusive-use-by-grub.patch
 Patch0139: 0139-Reduce-timer-event-frequency-by-10.patch
 Patch0140: 0140-always-return-error-to-UEFI.patch
+Patch0141: 0141-Add-powerpc-little-endian-ppc64le-flags.patch
+Patch0142: 0142-Files-reorganization-and-include-some-libgcc-fuction.patch
+Patch0143: 0143-Suport-for-bi-endianess-in-elf-file.patch
 
 BuildRequires:  flex bison binutils python
 BuildRequires:  ncurses-devel xz-devel bzip2-devel
 BuildRequires:  freetype-devel libusb-devel
-%ifarch %{sparc} x86_64 aarch64
+%ifarch %{sparc} x86_64 aarch64 ppc64le
 # sparc builds need 64 bit glibc-devel - also for 32 bit userland
 BuildRequires:  /usr/lib64/crt1.o glibc-static
 %else
@@ -293,6 +297,7 @@ provides an example theme for the grub screen.
 cd grub-%{tarversion}
 # place unifont in the '.' from which configure is run
 cp %{SOURCE4} unifont.pcf.gz
+cp %{SOURCE6} .gitignore
 git init
 git config user.email "grub2-owner@fedoraproject.org"
 git config user.name "Fedora Ninjas"
@@ -310,6 +315,7 @@ ln -s grub-efi-%{tarversion} grub-%{tarversion}
 cd grub-%{tarversion}
 # place unifont in the '.' from which configure is run
 cp %{SOURCE4} unifont.pcf.gz
+cp %{SOURCE6} .gitignore
 git init
 git config user.email "grub2-owner@fedoraproject.org"
 git config user.name "Fedora Ninjas"
@@ -368,7 +374,7 @@ cd grub-%{tarversion}
 ./autogen.sh
 # -static is needed so that autoconf script is able to link
 # test that looks for _start symbol on 64 bit platforms
-%ifarch %{sparc} ppc ppc64
+%ifarch %{sparc} ppc ppc64 ppc64le
 %define platform ieee1275
 %else
 %define platform pc
@@ -628,6 +634,10 @@ fi
 %{_datarootdir}/grub/themes/
 
 %changelog
+* Tue Aug 19 2014 Peter Jones <pjones@redhat.com> - 2.02-0.8
+- Add ppc64le support.
+  Resolves: rhbz#1125540
+
 * Thu Jul 24 2014 Peter Jones <pjones@redhat.com> - 2.02-0.7
 - Enabled syslinuxcfg module.
 

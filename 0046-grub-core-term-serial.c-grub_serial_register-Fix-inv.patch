@@ -1,7 +1,7 @@
 From c18e39b667adb11624f3f4162c1342b76712d655 Mon Sep 17 00:00:00 2001
 From: Vladimir Serbinenko <phcoder@gmail.com>
 Date: Sun, 26 Jan 2014 02:36:05 +0100
-Subject: [PATCH 046/140] 	* grub-core/term/serial.c
+Subject: [PATCH 046/143] 	* grub-core/term/serial.c
  (grub_serial_register): Fix invalid free. 	Ensure that pointers are
  inited to NULL and that pointers are not 	accessed after free.
 

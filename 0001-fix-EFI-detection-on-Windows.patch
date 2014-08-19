@@ -1,7 +1,7 @@
 From a6e7719bbe05993613a8de69dba14fa092144925 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Wed, 25 Dec 2013 22:36:28 +0400
-Subject: [PATCH 001/140] fix EFI detection on Windows
+Subject: [PATCH 001/143] fix EFI detection on Windows
 
 We are on legacy BIOS if GetFirmwareEnvironmentVariable fails (returns
 zero) *and* extended error information is ERROR_INVALID_FUNCTION.

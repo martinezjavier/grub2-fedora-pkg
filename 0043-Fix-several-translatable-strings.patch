@@ -1,7 +1,7 @@
 From 2cd73ec6b2efeaff2bdcd40cce0cd3145d9e07d0 Mon Sep 17 00:00:00 2001
 From: Vladimir Serbinenko <phcoder@gmail.com>
 Date: Fri, 24 Jan 2014 18:20:27 +0100
-Subject: [PATCH 043/140] 	Fix several translatable strings.
+Subject: [PATCH 043/143] 	Fix several translatable strings.
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit

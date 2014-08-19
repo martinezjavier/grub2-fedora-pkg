@@ -1,7 +1,7 @@
 From 45dd39fb467d061a550113fd5e5431209f0db73c Mon Sep 17 00:00:00 2001
 From: Vladimir Serbinenko <phcoder@gmail.com>
 Date: Wed, 29 Jan 2014 23:50:49 +0100
-Subject: [PATCH 055/140] 	* grub-core/disk/ahci.c: Increase timeout.
+Subject: [PATCH 055/143] 	* grub-core/disk/ahci.c: Increase timeout.
  Some SSDs take up to 	7 seconds to recover if last poweroff was bad.
 
 ---

@@ -1,7 +1,7 @@
 From 9ee79da5bf54babe11178ced48470b5f09d3dda3 Mon Sep 17 00:00:00 2001
 From: Vladimir Serbinenko <phcoder@gmail.com>
 Date: Fri, 27 Dec 2013 11:20:37 +0100
-Subject: [PATCH 005/140] Merge branch 'master' of git.sv.gnu.org:/srv/git/grub
+Subject: [PATCH 005/143] Merge branch 'master' of git.sv.gnu.org:/srv/git/grub
 
 Conflicts:
     ChangeLog
