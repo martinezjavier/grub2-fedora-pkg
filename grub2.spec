@@ -59,7 +59,6 @@ Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
 Source4:	http://unifoundry.com/unifont-5.1.20080820.pcf.gz
 Source5:	theme.tar.bz2
 Source6:	gitignore
-#Source6:	grub-cd.cfg
 
 Patch0001: 0001-fix-EFI-detection-on-Windows.patch
 Patch0002: 0002-grub-core-kern-arm-cache_armv6.S-Remove-.arch-direct.patch
@@ -430,19 +429,6 @@ install -m 755 -d $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/
 touch $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/grub.cfg
 ln -s ../boot/efi/EFI/%{efidir}/grub.cfg $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-efi.cfg
 
-# Install ELF files modules and images were created from into
-# the shadow root, where debuginfo generator will grab them from
-find $RPM_BUILD_ROOT -name '*.mod' -o -name '*.img' |
-while read MODULE
-do
-        BASE=$(echo $MODULE |sed -r "s,.*/([^/]*)\.(mod|img),\1,")
-        # Symbols from .img files are in .exec files, while .mod
-        # modules store symbols in .elf. This is just because we
-        # have both boot.img and boot.mod ...
-        EXT=$(echo $MODULE |grep -q '.mod' && echo '.elf' || echo '.exec')
-        TGT=$(echo $MODULE |sed "s,$RPM_BUILD_ROOT,.debugroot,")
-#        install -m 755 -D $BASE$EXT $TGT
-done
 install -m 755 %{grubefiname} $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/%{grubefiname}
 %ifnarch aarch64
 install -m 755 %{grubeficdname} $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/%{grubeficdname}
@@ -462,20 +448,6 @@ ln -s ../boot/%{name}/grub.cfg $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.cfg
 %endif
 
 cp -a $RPM_BUILD_ROOT%{_datarootdir}/locale/en\@quot $RPM_BUILD_ROOT%{_datarootdir}/locale/en
-
-# Install ELF files modules and images were created from into
-# the shadow root, where debuginfo generator will grab them from
-find $RPM_BUILD_ROOT -name '*.mod' -o -name '*.img' |
-while read MODULE
-do
-        BASE=$(echo $MODULE |sed -r "s,.*/([^/]*)\.(mod|img),\1,")
-        # Symbols from .img files are in .exec files, while .mod
-        # modules store symbols in .elf. This is just because we
-        # have both boot.img and boot.mod ...
-        EXT=$(echo $MODULE |grep -q '.mod' && echo '.elf' || echo '.exec')
-        TGT=$(echo $MODULE |sed "s,$RPM_BUILD_ROOT,.debugroot,")
-#        install -m 755 -D $BASE$EXT $TGT
-done
 
 mv $RPM_BUILD_ROOT%{_infodir}/grub.info $RPM_BUILD_ROOT%{_infodir}/%{name}.info
 mv $RPM_BUILD_ROOT%{_infodir}/grub-dev.info $RPM_BUILD_ROOT%{_infodir}/%{name}-dev.info
@@ -514,6 +486,21 @@ EOF
 mkdir -p boot/efi/EFI/%{efidir}/
 ln -s /boot/efi/EFI/%{efidir}/grubenv boot/grub2/grubenv
 %endif
+
+# Don't run debuginfo on all the grub modules and whatnot; it just
+# rejects them, complains, and slows down extraction.
+%global finddebugroot "%{_builddir}/%{?buildsubdir}/debug"
+mkdir -p %{finddebugroot}/usr
+cp -a ${RPM_BUILD_ROOT}/usr/bin %{finddebugroot}/usr/bin
+cp -a ${RPM_BUILD_ROOT}/usr/sbin %{finddebugroot}/usr/sbin
+
+%global dip RPM_BUILD_ROOT=%{finddebugroot} %{__debug_install_post}
+%define __debug_install_post %{dip}					\
+	install -m 0755 -d %{buildroot}/usr/lib/ %{buildroot}/usr/src/	\
+	cp -al %{finddebugroot}/usr/lib/debug/				\\\
+		%{buildroot}/usr/lib/debug/				\
+	cp -al %{finddebugroot}/usr/src/debug/				\\\
+		%{buildroot}/usr/src/debug/
 
 %clean    
 rm -rf $RPM_BUILD_ROOT
