@@ -204,6 +204,8 @@ Patch0140: 0140-always-return-error-to-UEFI.patch
 Patch0141: 0141-Add-powerpc-little-endian-ppc64le-flags.patch
 Patch0142: 0142-Files-reorganization-and-include-some-libgcc-fuction.patch
 Patch0143: 0143-Suport-for-bi-endianess-in-elf-file.patch
+Patch0144: 0144-Add-grub_util_readlink.patch
+Patch0145: 0145-Make-editenv-chase-symlinks-including-those-across-d.patch
 
 BuildRequires:  flex bison binutils python
 BuildRequires:  ncurses-devel xz-devel bzip2-devel
@@ -347,7 +349,7 @@ make %{?_smp_mflags}
 
 GRUB_MODULES="	all_video boot btrfs cat chain configfile echo efifwsetup \
 		efinet ext2 fat font gfxmenu gfxterm gzio halt hfsplus iso9660 \
-		jpeg lvm mdraid09 mdraid1x minicmd normal part_apple \
+		jpeg loadenv lvm mdraid09 mdraid1x minicmd normal part_apple \
 		part_msdos part_gpt password_pbkdf2 png reboot search \
 		search_fs_uuid search_fs_file search_label sleep syslinuxcfg \
 		test tftp video xfs"
@@ -508,6 +510,11 @@ cat << EOF > ${RPM_BUILD_ROOT}%{_sysconfdir}/prelink.conf.d/grub2.conf
 -b /usr/sbin/grub2-sparc64-setup
 EOF
 
+%ifarch %{efiarchs}
+mkdir -p boot/efi/EFI/%{efidir}/
+ln -s /boot/efi/EFI/%{efidir}/grubenv boot/grub2/grubenv
+%endif
+
 %clean    
 rm -rf $RPM_BUILD_ROOT
 
@@ -555,6 +562,7 @@ fi
 %config(noreplace) %{_sysconfdir}/%{name}.cfg
 %ghost %config(noreplace) /boot/%{name}/grub.cfg
 %doc grub-%{tarversion}/COPYING
+%config(noreplace) %ghost /boot/grub2/grubenv
 %endif
 
 %ifarch %{efiarchs}
@@ -565,6 +573,10 @@ fi
 %attr(0755,root,root)/boot/efi/EFI/%{efidir}/fonts
 %ghost %config(noreplace) /boot/efi/EFI/%{efidir}/grub.cfg
 %doc grub-%{tarversion}/COPYING
+/boot/grub2/grubenv
+# I know 0700 seems strange, but it lives on FAT so that's what it'll
+# get no matter what we do.
+%config(noreplace) %ghost %attr(0700,root,root)/boot/efi/EFI/%{efidir}/grubenv
 
 %files efi-modules
 %defattr(-,root,root,-)
