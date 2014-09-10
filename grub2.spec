@@ -333,6 +333,7 @@ cd grub-efi-%{tarversion}
 	CFLAGS="$(echo $RPM_OPT_FLAGS | sed			\
 		-e 's/-O.//g'					\
 		-e 's/-fstack-protector[[:alpha:]-]\+//g'	\
+		-e 's/-Wp,-D_FORTIFY_SOURCE=[[:digit:]]\+//g'	\
 		-e 's/--param=ssp-buffer-size=4//g'		\
 		-e 's/-mregparm=3/-mregparm=4/g'		\
 		-e 's/-fexceptions//g'				\
@@ -384,6 +385,7 @@ cd grub-%{tarversion}
 	CFLAGS="$(echo $RPM_OPT_FLAGS | sed			\
 		-e 's/-O.//g'					\
 		-e 's/-fstack-protector[[:alpha:]-]\+//g'	\
+		-e 's/-Wp,-D_FORTIFY_SOURCE=[[:digit:]]\+//g'	\
 		-e 's/--param=ssp-buffer-size=4//g'		\
 		-e 's/-mregparm=3/-mregparm=4/g'		\
 		-e 's/-fexceptions//g'				\
