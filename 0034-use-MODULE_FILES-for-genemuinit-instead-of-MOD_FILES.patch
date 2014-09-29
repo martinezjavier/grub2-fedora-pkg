@@ -1,7 +1,7 @@
 From 85cc4b1abfed85fd8504da4acc391d5936de2812 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Sat, 18 Jan 2014 23:15:40 +0400
-Subject: [PATCH 034/143] use MODULE_FILES for genemuinit* instead of MOD_FILES
+Subject: [PATCH 034/152] use MODULE_FILES for genemuinit* instead of MOD_FILES
 
 MinGW native nm does not support ELF binaries.
 ---

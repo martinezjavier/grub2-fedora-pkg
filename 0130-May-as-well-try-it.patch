@@ -1,7 +1,7 @@
 From bd4b1ae40c743174fc0236851855dfaf6094f875 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 4 Mar 2014 11:00:23 -0500
-Subject: [PATCH 130/143] May as well try it.
+Subject: [PATCH 130/152] May as well try it.
 
 ---
  conf/Makefile.extra-dist          |   1 -

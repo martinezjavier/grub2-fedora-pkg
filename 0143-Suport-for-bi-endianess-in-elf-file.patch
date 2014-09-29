@@ -1,7 +1,7 @@
-From 9facac630985467ee1ad40beaed07d50ee18062c Mon Sep 17 00:00:00 2001
+From 15a559aa62cba70b714c066b1075bacfa72cb180 Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@linux.vnet.ibm.com>
 Date: Fri, 15 Aug 2014 14:39:53 -0300
-Subject: [PATCH 143/143] Suport for bi-endianess in elf file
+Subject: [PATCH 143/152] Suport for bi-endianess in elf file
 
 * grub-core/kern/elf.c: check and switch endianess with grub_{be,le}_to
   cpu functions.

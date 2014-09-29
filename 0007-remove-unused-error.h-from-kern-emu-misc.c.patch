@@ -1,7 +1,7 @@
 From 904bd6b3cb12977def4f940e90aca3fe557c3bb5 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@gmail.com>
 Date: Sat, 28 Dec 2013 09:01:20 +0400
-Subject: [PATCH 007/143] remove unused error.h from kern/emu/misc.c
+Subject: [PATCH 007/152] remove unused error.h from kern/emu/misc.c
 
 Fixes compilation on mingw32, where include is apparently missing.
 ---

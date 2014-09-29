@@ -1,7 +1,7 @@
 From 91152c6e2944e9ad3583482140f8991b972fec08 Mon Sep 17 00:00:00 2001
 From: Vladimir Serbinenko <phcoder@gmail.com>
 Date: Fri, 4 Apr 2014 08:02:38 +0200
-Subject: [PATCH 074/143] * include/grub/libgcc.h: Remove ctzsi2 and ctzdi2.
+Subject: [PATCH 074/152] * include/grub/libgcc.h: Remove ctzsi2 and ctzdi2.
  They're no longer pulled from libgcc.
 
 ---

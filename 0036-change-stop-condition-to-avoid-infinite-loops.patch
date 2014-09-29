@@ -1,7 +1,7 @@
 From 547d1e84df5d57c7600ead4556d43d5dbbe33c4b Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Tue, 21 Jan 2014 10:49:39 -0200
-Subject: [PATCH 036/143] change stop condition to avoid infinite loops
+Subject: [PATCH 036/152] change stop condition to avoid infinite loops
 
 In net/net.c there is a while (1) that only exits if there is a stop
 condition and more then 10 packages or if there is no package received.

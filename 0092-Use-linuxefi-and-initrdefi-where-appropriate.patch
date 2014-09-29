@@ -1,7 +1,7 @@
 From acc83cfa76a6457be73b1e748a80deb3967e2364 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 16 Jul 2012 18:57:11 -0400
-Subject: [PATCH 092/143] Use "linuxefi" and "initrdefi" where appropriate.
+Subject: [PATCH 092/152] Use "linuxefi" and "initrdefi" where appropriate.
 
 ---
  util/grub.d/10_linux.in | 18 ++++++++++++++++--

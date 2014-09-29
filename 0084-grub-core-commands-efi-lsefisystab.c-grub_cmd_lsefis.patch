@@ -1,7 +1,7 @@
 From 9de53cc99ce4c8e404e645443d07324bd9cfc157 Mon Sep 17 00:00:00 2001
 From: Stephane Rochoy <sheda>
 Date: Sun, 22 Jun 2014 01:34:57 +0200
-Subject: [PATCH 084/143] 	* grub-core/commands/efi/lsefisystab.c
+Subject: [PATCH 084/152] 	* grub-core/commands/efi/lsefisystab.c
  (grub_cmd_lsefisystab): Show 	EFI system table physical address.
 
 ---

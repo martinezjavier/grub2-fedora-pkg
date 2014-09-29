@@ -1,7 +1,7 @@
 From a4492dc21cd26878cc5f4a7766275b17b1f0340c Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Wed, 3 Sep 2014 10:01:03 -0400
-Subject: [PATCH 144/145] Add grub_util_readlink()
+Subject: [PATCH 144/152] Add grub_util_readlink()
 
 Add grub_util_readlink().  This requires pulling in stat and readlink from
 gnulib, which pulls in stat and related headers, but after that the

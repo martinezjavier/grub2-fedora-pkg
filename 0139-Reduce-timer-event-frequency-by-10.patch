@@ -1,7 +1,7 @@
 From 3aed1012cb8f559a0241569d6ec6b1be23844b05 Mon Sep 17 00:00:00 2001
 From: Mark Salter <msalter@redhat.com>
 Date: Thu, 20 Feb 2014 12:54:52 -0500
-Subject: [PATCH 139/143] Reduce timer event frequency by 10
+Subject: [PATCH 139/152] Reduce timer event frequency by 10
 
 Timer event to keep grub msec counter was running at 1000HZ. This was too
 fast for UEFI timer driver and resulted in a 10x slowdown in grub time

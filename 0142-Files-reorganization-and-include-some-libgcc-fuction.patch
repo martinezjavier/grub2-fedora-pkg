@@ -1,7 +1,7 @@
-From a4ea9134214da4801400129cdf7108a5f9e98a10 Mon Sep 17 00:00:00 2001
+From 8bbf108c19b8e9d42f538941a3ae5db49d4c53cd Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@linux.vnet.ibm.com>
 Date: Wed, 13 Aug 2014 19:00:19 +0000
-Subject: [PATCH 142/143] Files reorganization and include some libgcc fuctions
+Subject: [PATCH 142/152] Files reorganization and include some libgcc fuctions
 
 As we avoid libgcc dependency for powerpc64el, we moved some functions
 to other files and add the necessary ones.

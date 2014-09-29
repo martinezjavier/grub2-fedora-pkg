@@ -1,7 +1,7 @@
 From 23cd074c57ee6f35776fd5122a050bcef6c9eef5 Mon Sep 17 00:00:00 2001
 From: Vladimir Serbinenko <phcoder@gmail.com>
 Date: Sat, 28 Dec 2013 17:25:14 +0100
-Subject: [PATCH 008/143] 	Don't abort() on unavailable coreboot tables
+Subject: [PATCH 008/152] 	Don't abort() on unavailable coreboot tables
  if not running on coreboot.
 
 ---

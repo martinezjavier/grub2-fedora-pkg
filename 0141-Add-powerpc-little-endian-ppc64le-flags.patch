@@ -1,7 +1,7 @@
-From 8014cad21bb2cc986f10f0a927036851f490a8ec Mon Sep 17 00:00:00 2001
+From 34df700b6984c730beef2ba9174883d835b360c9 Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@linux.vnet.ibm.com>
 Date: Wed, 13 Aug 2014 18:59:58 +0000
-Subject: [PATCH 141/143] Add powerpc little-endian (ppc64le) flags
+Subject: [PATCH 141/152] Add powerpc little-endian (ppc64le) flags
 
 libgcc dependency was removed *just* for this target because
 the distros that use ppc64el doesn't have 32-bit support on it.

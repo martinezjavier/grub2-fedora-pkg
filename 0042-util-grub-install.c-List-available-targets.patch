@@ -1,7 +1,7 @@
 From d25ddbcafa537525f606938df0e500c50a5e93e1 Mon Sep 17 00:00:00 2001
 From: Vladimir Serbinenko <phcoder@gmail.com>
 Date: Fri, 24 Jan 2014 18:09:25 +0100
-Subject: [PATCH 042/143] 	* util/grub-install.c: List available targets.
+Subject: [PATCH 042/152] 	* util/grub-install.c: List available targets.
 
 ---
  ChangeLog                   |  4 ++++

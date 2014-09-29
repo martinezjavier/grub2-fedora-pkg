@@ -1,7 +1,7 @@
 From 5bda44d7f98c36f87144869ec58b518f80a69b56 Mon Sep 17 00:00:00 2001
 From: Vladimir Serbinenko <phcoder@gmail.com>
 Date: Wed, 25 Dec 2013 23:31:42 +0100
-Subject: [PATCH 002/143] 	* grub-core/kern/arm/cache_armv6.S: Remove
+Subject: [PATCH 002/152] 	* grub-core/kern/arm/cache_armv6.S: Remove
  .arch directive.
 
 	As these functions are used on pre-ARMv6 CPUs as well we don't want
