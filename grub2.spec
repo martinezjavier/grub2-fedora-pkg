@@ -47,7 +47,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.9%{?dist}
+Release:        0.10%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -212,6 +212,8 @@ Patch0149: 0149-Add-GRUB_DISABLE_UUID.patch
 Patch0150: 0150-Allow-fallback-to-include-entries-by-title-not-just-.patch
 Patch0151: 0151-Initialized-initrd_ctx-so-we-don-t-free-a-random-poi.patch
 Patch0152: 0152-Load-arm-with-SB-enabled.patch
+Patch0153: 0153-Try-prefix-if-fw_path-doesn-t-work.patch
+Patch0154: 0154-Try-to-emit-linux16-initrd16-and-linuxefi-initrdefi-.patch
 
 BuildRequires:  flex bison binutils python
 BuildRequires:  ncurses-devel xz-devel bzip2-devel
@@ -234,8 +236,9 @@ BuildRequires:	pesign >= 0.99-8
 %endif
 %endif
 
-Requires:	gettext os-prober which file
+Requires:	gettext which file
 Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
+Requires:	os-prober >= 1.58-11
 Requires(pre):  dracut
 Requires(post): dracut
 
@@ -644,6 +647,13 @@ fi
 %{_datarootdir}/grub/themes/
 
 %changelog
+* Mon Oct 27 2014 Peter Jones <pjones@redhat.com> - 2.02-0.10
+- Try to emit linux16/initrd16 and linuxefi/initrdefi when appropriate
+  in 30_os-prober.
+  Resolves: rhbz#1108296
+- If $fw_path doesn't work to find the config file, try $prefix as well
+  Resolves: rhbz#1148652
+
 * Mon Sep 29 2014 Peter Jones <pjones@redhat.com> - 2.02-0.9
 - Clean up the build a bit to make it faster
 - Make grubenv work right on UEFI machines
