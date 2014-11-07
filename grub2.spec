@@ -47,7 +47,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.10%{?dist}
+Release:        0.11%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -328,11 +328,14 @@ cd grub-%{tarversion}
 cp %{SOURCE4} unifont.pcf.gz
 cp %{SOURCE6} .gitignore
 git init
-git config user.email "grub2-owner@fedoraproject.org"
+git config user.email "%{name}-owner@fedoraproject.org"
 git config user.name "Fedora Ninjas"
+git config gc.auto 0
 git add .
 git commit -a -q -m "%{tarversion} baseline."
-git am %{patches}
+git am %{patches} </dev/null
+git config --unset user.email
+git config --unset user.name
 %endif
 
 %build
@@ -647,6 +650,10 @@ fi
 %{_datarootdir}/grub/themes/
 
 %changelog
+* Fri Nov 07 2014 Peter Jones <pjones@redhat.com> - 2.02-0.11
+- fix a copy-paste error in patch 0154.
+  Resolves: rhbz#964828
+
 * Mon Oct 27 2014 Peter Jones <pjones@redhat.com> - 2.02-0.10
 - Try to emit linux16/initrd16 and linuxefi/initrdefi when appropriate
   in 30_os-prober.

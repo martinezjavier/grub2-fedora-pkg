@@ -15,13 +15,14 @@ diff --git a/util/grub.d/30_os-prober.in b/util/grub.d/30_os-prober.in
 index 9f955ab..908a09d 100644
 --- a/util/grub.d/30_os-prober.in
 +++ b/util/grub.d/30_os-prober.in
-@@ -135,6 +135,28 @@ for OS in ${OSPROBED} ; do
+@@ -135,6 +135,29 @@ for OS in ${OSPROBED} ; do
      LONGNAME="${LABEL}"
    fi
  
 +  sixteenbit=""
 +  linuxefi="linux"
 +  initrdefi="initrd"
++  machine=`uname -m`
 +  case "$machine" in
 +    i?86|x86_64)
 +      sixteenbit="16"
@@ -44,7 +45,7 @@ index 9f955ab..908a09d 100644
    gettext_printf "Found %s on %s\n" "${LONGNAME}" "${DEVICE}" >&2
  
    case ${BOOT} in
-@@ -235,11 +257,11 @@ EOF
+@@ -235,11 +258,11 @@ EOF
  	    save_default_entry | grub_add_tab
  	    printf '%s\n' "${prepare_boot_cache}"
  	    cat <<  EOF
@@ -58,7 +59,7 @@ index 9f955ab..908a09d 100644
  EOF
              fi
          cat << EOF
-@@ -255,11 +277,11 @@ EOF
+@@ -255,11 +278,11 @@ EOF
  	save_default_entry | sed -e "s/^/$grub_tab$grub_tab/"
  	printf '%s\n' "${prepare_boot_cache}" | grub_add_tab
  	cat <<  EOF
