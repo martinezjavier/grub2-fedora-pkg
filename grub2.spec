@@ -47,7 +47,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.11%{?dist}
+Release:        0.12%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -360,17 +360,18 @@ cd grub-efi-%{tarversion}
 	--disable-werror
 make %{?_smp_mflags}
 
-GRUB_MODULES="	all_video backtrace boot btrfs cat chain configfile echo \
+GRUB_MODULES="	all_video boot btrfs cat chain configfile echo \
 		efifwsetup efinet ext2 fat font gfxmenu gfxterm gzio halt \
 		hfsplus iso9660 jpeg loadenv lvm mdraid09 mdraid1x minicmd \
 		normal part_apple part_msdos part_gpt password_pbkdf2 png \
 		reboot search search_fs_uuid search_fs_file search_label \
-		serial sleep syslinuxcfg test tftp usb usbserial_common \
-		usbserial_pl2303 usbserial_ftdi usbserial_usbdebug video xfs"
+		serial sleep syslinuxcfg test tftp video xfs"
 %ifarch aarch64
-GRUB_MODULES="${GRUB_MODULES} linux"
+GRUB_MODULES+=" linux "
 %else
-GRUB_MODULES+="${GRUB_MODULES} linuxefi multiboot2 multiboot"
+GRUB_MODULES+=" backtrace usb usbserial_common "
+GRUB_MODULES+=" usbserial_pl2303 usbserial_ftdi usbserial_usbdebug "
+GRUB_MODULES+=" linuxefi multiboot2 multiboot "
 %endif
 ./grub-mkimage -O %{grubefiarch} -o %{grubefiname}.orig -p /EFI/%{efidir} \
 		-d grub-core ${GRUB_MODULES}
@@ -447,9 +448,7 @@ touch $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/grub.cfg
 ln -s ../boot/efi/EFI/%{efidir}/grub.cfg $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-efi.cfg
 
 install -m 755 %{grubefiname} $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/%{grubefiname}
-%ifnarch aarch64
 install -m 755 %{grubeficdname} $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/%{grubeficdname}
-%endif
 install -D -m 644 unicode.pf2 $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/fonts/unicode.pf2
 cd ..
 %endif
@@ -650,6 +649,11 @@ fi
 %{_datarootdir}/grub/themes/
 
 %changelog
+* Thu Nov 13 2014 Peter Jones <pjones@redhat.com> - 2.02-0.12
+- Make backtrace and usb conditional on !arm
+- Make sure gcdaa64.efi is packaged.
+  Resolves: rhbz#1163481
+
 * Fri Nov 07 2014 Peter Jones <pjones@redhat.com> - 2.02-0.11
 - fix a copy-paste error in patch 0154.
   Resolves: rhbz#964828
