@@ -47,7 +47,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.12%{?dist}
+Release:        0.13%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -214,6 +214,7 @@ Patch0151: 0151-Initialized-initrd_ctx-so-we-don-t-free-a-random-poi.patch
 Patch0152: 0152-Load-arm-with-SB-enabled.patch
 Patch0153: 0153-Try-prefix-if-fw_path-doesn-t-work.patch
 Patch0154: 0154-Try-to-emit-linux16-initrd16-and-linuxefi-initrdefi-.patch
+Patch0155: 0001-Update-to-minilzo-2.08.patch
 
 BuildRequires:  flex bison binutils python
 BuildRequires:  ncurses-devel xz-devel bzip2-devel
@@ -649,6 +650,10 @@ fi
 %{_datarootdir}/grub/themes/
 
 %changelog
+* Thu Dec 04 2014 Peter Jones <pjones@redhat.com> - 2.02-0.13
+- Update minilzo to 2.08 for CVE-2014-4607
+  Resolves: rhbz#1131793
+
 * Thu Nov 13 2014 Peter Jones <pjones@redhat.com> - 2.02-0.12
 - Make backtrace and usb conditional on !arm
 - Make sure gcdaa64.efi is packaged.
