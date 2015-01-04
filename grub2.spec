@@ -47,7 +47,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.13%{?dist}
+Release:        0.14%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -512,17 +512,17 @@ cp -a ${RPM_BUILD_ROOT}/usr/bin %{finddebugroot}/usr/bin
 cp -a ${RPM_BUILD_ROOT}/usr/sbin %{finddebugroot}/usr/sbin
 
 %global dip RPM_BUILD_ROOT=%{finddebugroot} %{__debug_install_post}
-%define __debug_install_post %{dip}					\
+%define __debug_install_post ( %{dip}					\
 	install -m 0755 -d %{buildroot}/usr/lib/ %{buildroot}/usr/src/	\
 	cp -al %{finddebugroot}/usr/lib/debug/				\\\
 		%{buildroot}/usr/lib/debug/				\
 	cp -al %{finddebugroot}/usr/src/debug/				\\\
-		%{buildroot}/usr/src/debug/
+		%{buildroot}/usr/src/debug/ )
 
 %clean    
 rm -rf $RPM_BUILD_ROOT
 
-%post
+%post tools
 if [ "$1" = 1 ]; then
 	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/%{name}.info.gz || :
 	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/%{name}-dev.info.gz || :
@@ -553,7 +553,7 @@ mv -f /boot/grub2.tmp/*.mod \
       /boot/grub2/ &&
 rm -r /boot/grub2.tmp/ || :
 
-%preun
+%preun tools
 if [ "$1" = 0 ]; then
 	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/%{name}.info.gz || :
 	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/%{name}-dev.info.gz || :
@@ -644,12 +644,16 @@ fi
 
 %files starfield-theme
 %dir /boot/%{name}/themes/
+/boot/%{name}/themes/system
 %dir %{_datarootdir}/grub/themes
-%dir %{_datarootdir}/grub/themes/starfield
-/boot/%{name}/themes/
-%{_datarootdir}/grub/themes/
+%{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Sun Jan 04 2015 Ralf Corsépius <corsepiu@fedoraproject.org> - 2.02-0.14
+- Move grub2.info/grub2-dev.info install-info scriptlets into *-tools package.
+- Use sub-shell in %%__debug_install_post (RHBZ#1168732).
+- Cleanup grub2-starfield-theme packaging.
+
 * Thu Dec 04 2014 Peter Jones <pjones@redhat.com> - 2.02-0.13
 - Update minilzo to 2.08 for CVE-2014-4607
   Resolves: rhbz#1131793
