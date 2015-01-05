@@ -47,7 +47,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.14%{?dist}
+Release:        0.15%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -649,6 +649,9 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Mon Jan 05 2015 Peter Jones <pjones@redhat.com> - 2.02-0.15
+- Bump release to rebuild with Ralf Corsépius's fixes.
+
 * Sun Jan 04 2015 Ralf Corsépius <corsepiu@fedoraproject.org> - 2.02-0.14
 - Move grub2.info/grub2-dev.info install-info scriptlets into *-tools package.
 - Use sub-shell in %%__debug_install_post (RHBZ#1168732).
