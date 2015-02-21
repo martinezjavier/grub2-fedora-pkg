@@ -47,7 +47,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.15%{?dist}
+Release:        0.16%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -649,6 +649,10 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Sat Feb 21 2015 Till Maas <opensource@till.name> - 1:2.02-0.16
+- Rebuilt for Fedora 23 Change
+  https://fedoraproject.org/wiki/Changes/Harden_all_packages_with_position-independent_code
+
 * Mon Jan 05 2015 Peter Jones <pjones@redhat.com> - 2.02-0.15
 - Bump release to rebuild with Ralf Corsépius's fixes.
 
