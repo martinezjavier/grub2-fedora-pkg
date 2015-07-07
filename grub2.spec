@@ -34,12 +34,8 @@
 %global grubeficdname gcdaa64.efi
 %endif
 
-%if 0%{?rhel}
-%global efidir redhat
-%endif
-%if 0%{?fedora}
-%global efidir fedora
-%endif
+# Figure out the right file path to use
+%global efidir %(eval echo $(grep ^ID= /etc/os-release | sed -e 's/^ID=//' -e 's/rhel/redhat/'))
 
 %endif
 
