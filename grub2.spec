@@ -215,6 +215,7 @@ Patch0154: 0154-Try-to-emit-linux16-initrd16-and-linuxefi-initrdefi-.patch
 Patch0155: 0001-Update-to-minilzo-2.08.patch
 Patch0156: 0001-Make-grub2-mkconfig-construct-titles-that-look-like-.patch
 Patch0157: 0002-Make-rescue-and-debug-entries-sort-right-again-in-gr.patch
+Patch0158: 0001-Make-.gitignore-suck-way-less.patch
 
 BuildRequires:  flex bison binutils python
 BuildRequires:  ncurses-devel xz-devel bzip2-devel
@@ -311,11 +312,16 @@ cd grub-%{tarversion}
 cp %{SOURCE4} unifont.pcf.gz
 cp %{SOURCE6} .gitignore
 git init
-git config user.email "grub2-owner@fedoraproject.org"
+echo '![[:digit:]][[:digit:]]_*.in' > util/grub.d/.gitignore
+echo '!*.[[:digit:]]' > util/.gitignore
+git config user.email "%{name}-owner@fedoraproject.org"
 git config user.name "Fedora Ninjas"
+git config gc.auto 0
 git add .
 git commit -a -q -m "%{tarversion} baseline."
-git am %{patches}
+git am %{patches} </dev/null
+git config --unset user.email
+git config --unset user.name
 cd ..
 mv grub-%{tarversion} grub-efi-%{tarversion}
 %endif
@@ -329,6 +335,8 @@ cd grub-%{tarversion}
 cp %{SOURCE4} unifont.pcf.gz
 cp %{SOURCE6} .gitignore
 git init
+echo '![[:digit:]][[:digit:]]_*.in' > util/grub.d/.gitignore
+echo '!*.[[:digit:]]' > util/.gitignore
 git config user.email "%{name}-owner@fedoraproject.org"
 git config user.name "Fedora Ninjas"
 git config gc.auto 0
