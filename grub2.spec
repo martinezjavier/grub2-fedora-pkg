@@ -1,3 +1,5 @@
+%undefine _hardened_build
+
 # Modules always contain just 32-bit code
 %define _libdir %{_exec_prefix}/lib
 
@@ -47,7 +49,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.16%{?dist}
+Release:        0.17%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -652,6 +654,9 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Sun Jul 19 2015 Peter Robinson <pbrobinson@fedoraproject.org> 2.02-0.17
+- Don't build hardened (fixes FTBFS)
+
 * Tue Apr 28 2015 Peter Jones <pjones@redhat.com> - 2.02-0.16
 - Make grub2-mkconfig produce the kernel titles we actually want.
   Resolves: rhbz#1215839
