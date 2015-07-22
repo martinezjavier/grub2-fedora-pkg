@@ -1,0 +1,26 @@
+From 73b1e8383906910e9da82fb3c79c590e450d598f Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Mon, 26 Jan 2015 09:48:46 +0100
+Subject: [PATCH 230/506] normal/main: Fix error handling.
+
+Found by: Coverity scan.
+---
+ grub-core/normal/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/grub-core/normal/main.c b/grub-core/normal/main.c
+index c41f175..623b93b 100644
+--- a/grub-core/normal/main.c
++++ b/grub-core/normal/main.c
+@@ -130,7 +130,7 @@ read_config_file (const char *config)
+   file = grub_bufio_open (rawfile, 0);
+   if (! file)
+     {
+-      grub_file_close (file);
++      grub_file_close (rawfile);
+       return 0;
+     }
+ 
+-- 
+2.4.3
+

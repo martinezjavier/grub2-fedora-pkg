@@ -1,0 +1,29 @@
+From 6704abade6674a91d8c652a7e4596ca3421411b6 Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Mon, 26 Jan 2015 21:38:40 +0300
+Subject: [PATCH 242/506] linux/getroot: fix descriptor leak.
+
+Found by: Coverity scan.
+---
+ grub-core/osdep/linux/getroot.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/grub-core/osdep/linux/getroot.c b/grub-core/osdep/linux/getroot.c
+index f48b81a..a2e360f 100644
+--- a/grub-core/osdep/linux/getroot.c
++++ b/grub-core/osdep/linux/getroot.c
+@@ -360,8 +360,10 @@ get_btrfs_fs_prefix (const char *mount_path)
+ 	ret[1+namelen] = '\0';
+     }
+   if (!ret)
+-    return xstrdup ("/");
++    ret = xstrdup ("/");
++  close (fd);
+   return ret;
++
+  fail:
+   free (ret);
+   close (fd);
+-- 
+2.4.3
+

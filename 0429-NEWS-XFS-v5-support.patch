@@ -1,0 +1,24 @@
+From df2aaf94b8d76b1ff7479ad5dc990f3efa30e419 Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Fri, 12 Jun 2015 09:40:00 +0300
+Subject: [PATCH 429/506] NEWS: XFS v5 support
+
+---
+ NEWS | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/NEWS b/NEWS
+index e417eba..ad572ff 100644
+--- a/NEWS
++++ b/NEWS
+@@ -17,6 +17,7 @@ New in 2.02:
+     files.
+   * ZFS features support.
+   * ZFS LZ4 support.
++  * XFS V5 format support.
+ 
+ * New/improved terminal and video support:
+   * Monochrome text (matching `hercules' in GRUB Legacy).
+-- 
+2.4.3
+

@@ -1,0 +1,26 @@
+From 9d999852a223b9b00b5f417cb49d3334773408d8 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 24 Jan 2015 20:52:02 +0100
+Subject: [PATCH 185/506] gptsync: Add missing device_close.
+
+Found by: Coverity scan
+---
+ grub-core/commands/gptsync.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/grub-core/commands/gptsync.c b/grub-core/commands/gptsync.c
+index 16592e9..444e248 100644
+--- a/grub-core/commands/gptsync.c
++++ b/grub-core/commands/gptsync.c
+@@ -235,6 +235,8 @@ grub_cmd_gptsync (grub_command_t cmd __attribute__ ((unused)),
+       return grub_errno;
+     }
+ 
++  grub_device_close (dev);
++
+   grub_printf_ (N_("New MBR is written to `%s'\n"), args[0]);
+ 
+   return GRUB_ERR_NONE;
+-- 
+2.4.3
+

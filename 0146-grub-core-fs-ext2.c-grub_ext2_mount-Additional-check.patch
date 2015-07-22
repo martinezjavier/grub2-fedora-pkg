@@ -1,0 +1,47 @@
+From 47cd2645ddc885e7821b4a86a5ccf549dd4d5fcc Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Tue, 20 Jan 2015 14:40:27 +0100
+Subject: [PATCH 146/506] * grub-core/fs/ext2.c (grub_ext2_mount): Additional
+ checks for superblock validity.
+
+---
+ ChangeLog           | 5 +++++
+ grub-core/fs/ext2.c | 7 ++++++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/ChangeLog b/ChangeLog
+index d7d5c40..f69541e 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,10 @@
+ 2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
+ 
++	* grub-core/fs/ext2.c (grub_ext2_mount): Additional
++	checks for superblock validity.
++
++2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
++
+ 	* grub-core/fs/ufs.c (grub_ufs_mount): Check
+ 	that sblock.ino_per_group is not 0.
+ 
+diff --git a/grub-core/fs/ext2.c b/grub-core/fs/ext2.c
+index 217771d..44c7974 100644
+--- a/grub-core/fs/ext2.c
++++ b/grub-core/fs/ext2.c
+@@ -577,7 +577,12 @@ grub_ext2_mount (grub_disk_t disk)
+ 
+   /* Make sure this is an ext2 filesystem.  */
+   if (data->sblock.magic != grub_cpu_to_le16_compile_time (EXT2_MAGIC)
+-      || grub_le_to_cpu32 (data->sblock.log2_block_size) >= 16)
++      || grub_le_to_cpu32 (data->sblock.log2_block_size) >= 16
++      || data->sblock.inodes_per_group == 0
++      /* 20 already means 1GiB blocks. We don't want to deal with blocks overflowing int32. */
++      || grub_le_to_cpu32 (data->sblock.log2_block_size) > 20
++      || EXT2_INODE_SIZE (data) == 0
++      || EXT2_BLOCK_SIZE (data) / EXT2_INODE_SIZE (data) == 0)
+     {
+       grub_error (GRUB_ERR_BAD_FS, "not an ext2 filesystem");
+       goto fail;
+-- 
+2.4.3
+

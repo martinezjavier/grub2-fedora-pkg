@@ -1,0 +1,26 @@
+From 21f22c71077a4d460049107a946ceca8b514ffb3 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Mon, 26 Jan 2015 09:38:11 +0100
+Subject: [PATCH 222/506] i386/pc/mmap: Fix memset size.
+
+Found by: Coverity scan.
+---
+ grub-core/kern/i386/pc/mmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/grub-core/kern/i386/pc/mmap.c b/grub-core/kern/i386/pc/mmap.c
+index f1375f3..c0c3c35 100644
+--- a/grub-core/kern/i386/pc/mmap.c
++++ b/grub-core/kern/i386/pc/mmap.c
+@@ -148,7 +148,7 @@ grub_machine_mmap_iterate (grub_memory_hook_t hook, void *hook_data)
+ 
+   while (1)
+     {
+-      grub_memset (entry, 0, sizeof (entry));
++      grub_memset (entry, 0, sizeof (*entry));
+ 
+       cont = grub_get_mmap_entry (entry, cont);
+ 
+-- 
+2.4.3
+

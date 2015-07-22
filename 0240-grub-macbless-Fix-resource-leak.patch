@@ -1,0 +1,26 @@
+From 5d61a6a6120954380a46a3c1a46a01fdf763e037 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Mon, 26 Jan 2015 09:55:58 +0100
+Subject: [PATCH 240/506] grub-macbless: Fix resource leak.
+
+Found by: Coverity scan.
+---
+ util/grub-macbless.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/util/grub-macbless.c b/util/grub-macbless.c
+index 742353a..e57e13d 100644
+--- a/util/grub-macbless.c
++++ b/util/grub-macbless.c
+@@ -92,6 +92,8 @@ bless (const char *path, int x86)
+   free (filebuf_via_grub);
+   free (filebuf_via_sys);
+   free (drive_name);
++  free (devices);
++  grub_device_close (dev);
+ }
+ 
+ static struct argp_option options[] = {
+-- 
+2.4.3
+

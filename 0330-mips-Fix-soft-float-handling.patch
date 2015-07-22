@@ -1,0 +1,137 @@
+From 6a4ecd276ed39f66be0ad6ff0f8ff67598098605 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Mon, 23 Feb 2015 22:33:28 +0100
+Subject: [PATCH 330/506] mips: Fix soft-float handling.
+
+Add -msoft-float alongside clang arguments to specify ABI.
+Specify ABI in asm files explicitly.
+This trigers asm warning due to gcc failing to propagate -msoft-float
+but it's tolerable.
+---
+ configure.ac                       | 5 +++--
+ grub-core/boot/mips/startup_raw.S  | 2 ++
+ grub-core/kern/mips/cache.S        | 4 +++-
+ grub-core/kern/mips/startup.S      | 2 ++
+ grub-core/lib/mips/relocator_asm.S | 2 ++
+ include/grub/mips/kernel.h         | 4 ++++
+ 6 files changed, 16 insertions(+), 3 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 8f9ab81..908bb81 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -695,7 +695,8 @@ if test x"$platform" != xemu ; then
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[]])],
+ 		         [grub_cv_target_cc_soft_float="-mno-inline-float-divide -mno-inline-sqrt"], [])
+     fi
+-    for cand in "-Xclang -msoft-float -Xclang -no-implicit-float" \
++    for cand in "-msoft-float -Xclang -msoft-float -Xclang -no-implicit-float" \
++		"-Xclang -msoft-float -Xclang -no-implicit-float" \
+ 		"-Xclang -msoft-float" "-msoft-float"; do
+       if test x"$grub_cv_target_cc_soft_float" != xno ; then
+         break
+@@ -711,7 +712,7 @@ if test x"$platform" != xemu ; then
+   fi
+ 
+   case x"$grub_cv_target_cc_soft_float" in
+-    x"-Xclang"*)
++    x*"-Xclang"*)
+       # A trick so that clang doesn't see it on link stаge
+       TARGET_CPPFLAGS="$TARGET_CPPFLAGS $grub_cv_target_cc_soft_float"
+       ;;
+diff --git a/grub-core/boot/mips/startup_raw.S b/grub-core/boot/mips/startup_raw.S
+index ca3413b..fd95c31 100644
+--- a/grub-core/boot/mips/startup_raw.S
++++ b/grub-core/boot/mips/startup_raw.S
+@@ -21,6 +21,7 @@
+ #include <grub/offsets.h>
+ #include <grub/machine/memory.h>
+ #include <grub/machine/kernel.h>
++#include <grub/cpu/kernel.h>
+ #include <grub/offsets.h>
+ 
+ #define BASE_ADDR 8
+@@ -32,6 +33,7 @@
+ 	.globl __start, _start, start
+ 	.set noreorder
+ 	.set nomacro
++	mips_attributes
+ __start:
+ _start:
+ start:		
+diff --git a/grub-core/kern/mips/cache.S b/grub-core/kern/mips/cache.S
+index 78e40bc..e83960f 100644
+--- a/grub-core/kern/mips/cache.S
++++ b/grub-core/kern/mips/cache.S
+@@ -1,8 +1,10 @@
+ 
+ #include <grub/symbol.h>
++#include <grub/cpu/kernel.h>
+ 
+ 	.set noreorder
+ 	.set nomacro
++	mips_attributes
+ 
+ FUNCTION (grub_arch_sync_caches)
+ #include "cache_flush.S"
+@@ -65,4 +67,4 @@ FUNCTION (grub_arch_sync_dma_caches)
+ #endif
+ 	sync_op
+ 
+-	jr $ra
+\ No newline at end of file
++	jr $ra
+diff --git a/grub-core/kern/mips/startup.S b/grub-core/kern/mips/startup.S
+index 339ab33..337aca9 100644
+--- a/grub-core/kern/mips/startup.S
++++ b/grub-core/kern/mips/startup.S
+@@ -21,6 +21,7 @@
+ #include <grub/offsets.h>
+ #include <grub/machine/memory.h>
+ #include <grub/machine/kernel.h>
++#include <grub/cpu/kernel.h>
+ #include <grub/offsets.h>
+ 
+ #define BASE_ADDR 8	
+@@ -28,6 +29,7 @@
+ 	.globl __start, _start, start
+ 	.set noreorder
+ 	.set nomacro
++	mips_attributes
+ __start:
+ _start:
+ start:		
+diff --git a/grub-core/lib/mips/relocator_asm.S b/grub-core/lib/mips/relocator_asm.S
+index 1d142a4..959893c 100644
+--- a/grub-core/lib/mips/relocator_asm.S
++++ b/grub-core/lib/mips/relocator_asm.S
+@@ -17,11 +17,13 @@
+  */
+ 
+ #include <grub/symbol.h>
++#include <grub/cpu/kernel.h>
+ 	
+ 	.p2align	4	/* force 16-byte alignment */
+ 
+ 	.set noreorder
+ 	.set nomacro
++	mips_attributes
+ 
+ VARIABLE (grub_relocator_forward_start)
+ 	move $a0, $9
+diff --git a/include/grub/mips/kernel.h b/include/grub/mips/kernel.h
+index 07b0884..d0e09dd 100644
+--- a/include/grub/mips/kernel.h
++++ b/include/grub/mips/kernel.h
+@@ -21,4 +21,8 @@
+ 
+ #include <grub/symbol.h>
+ 
++#ifdef ASM_FILE
++#define mips_attributes .gnu_attribute 4, 3
++#endif
++
+ #endif /* ! GRUB_KERNEL_MACHINE_HEADER */
+-- 
+2.4.3
+

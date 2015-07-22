@@ -1,0 +1,28 @@
+From 958167b91cdebe55c6cccdd28ad007c554df56d7 Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Fri, 30 Jan 2015 20:21:56 +0300
+Subject: [PATCH 273/506] test: fix previous commit - we need to return from
+ subexpression
+
+( ... ) was processed recursively, we need to return from it. Revert
+this change.
+---
+ grub-core/commands/test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/grub-core/commands/test.c b/grub-core/commands/test.c
+index f58b87c..5f06642 100644
+--- a/grub-core/commands/test.c
++++ b/grub-core/commands/test.c
+@@ -387,7 +387,7 @@ test_parse (char **args, int *argn, int argc)
+       if (grub_strcmp (args[*argn], ")") == 0)
+ 	{
+ 	  (*argn)++;
+-	  continue;
++	  return ctx.or || ctx.and;
+ 	}
+       /* Recursively invoke if parenthesis. */
+       if (grub_strcmp (args[*argn], "(") == 0)
+-- 
+2.4.3
+

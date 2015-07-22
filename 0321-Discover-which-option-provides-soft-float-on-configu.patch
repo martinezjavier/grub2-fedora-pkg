@@ -1,0 +1,64 @@
+From ebe316e4dfebb83c2e1de437b316b60195470961 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 21 Feb 2015 23:46:47 +0100
+Subject: [PATCH 321/506] Discover which option provides soft-float on
+ configure stage.
+
+Deals with clang needing other arguments to stop issuing floating
+instructions than gcc.
+---
+ configure.ac | 38 +++++++++++++++++++++++++++++++++-----
+ 1 file changed, 33 insertions(+), 5 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 8b94d34..10a6bf9 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -682,11 +682,39 @@ fi
+ # that floats are a good fit to run instead of what's written in the code.
+ # Given that floating point unit is disabled (if present to begin with)
+ # when GRUB is running which may result in various hard crashes.
+-if test "x$target_cpu" = xarm64; then
+-  TARGET_CFLAGS="$TARGET_CFLAGS -march=armv8-a+nofp+nosimd"
+-else
+-  TARGET_CFLAGS="$TARGET_CFLAGS -msoft-float"
+-  TARGET_CCASFLAGS="$TARGET_CCASFLAGS -msoft-float"
++if test x"$platform" != xemu ; then
++  AC_CACHE_CHECK([for options to get soft-float], grub_cv_target_cc_soft_float, [
++    grub_cv_target_cc_soft_float=no
++    if test "x$target_cpu" = xarm64; then
++       CFLAGS="$TARGET_CFLAGS -march=armv8-a+nofp+nosimd -Werror"
++       AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[]])],
++		         [grub_cv_target_cc_soft_float="-march=armv8-a+nofp+nosimd"], [])
++    fi
++    for cand in "-Xclang -msoft-float -Xclang -no-implicit-float" \
++		"-Xclang -msoft-float" "-msoft-float"; do
++      if test x"$grub_cv_target_cc_soft_float" != xno ; then
++        break
++      fi
++      CFLAGS="$TARGET_CFLAGS $cand -Werror"
++      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[]])],
++		        [grub_cv_target_cc_soft_float="$cand"], [])
++    done
++  ])
++
++  if test x"$grub_cv_target_cc_soft_float" = xno ; then
++    AC_MSG_ERROR([could not force soft-float])
++  fi
++
++  case x"$grub_cv_target_cc_soft_float" in
++    x"-Xclang"*)
++      # A trick so that clang doesn't see it on link stаge
++      TARGET_CPPFLAGS="$TARGET_CPPFLAGS $grub_cv_target_cc_soft_float"
++      ;;
++    *)
++      TARGET_CFLAGS="$TARGET_CFLAGS $grub_cv_target_cc_soft_float"
++      ;;
++  esac
++  TARGET_CCASFLAGS="$TARGET_CCASFLAGS $grub_cv_target_cc_soft_float"
+ fi
+ 
+ # By default, GCC 4.4 generates .eh_frame sections containing unwind
+-- 
+2.4.3
+

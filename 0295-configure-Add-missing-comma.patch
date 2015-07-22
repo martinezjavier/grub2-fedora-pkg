@@ -1,0 +1,25 @@
+From 86f05f1491b87550d69adbd003b9975ad7222557 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Fri, 20 Feb 2015 21:29:35 +0100
+Subject: [PATCH 295/506] configure: Add missing comma.
+
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 6d31ed0..9f54158 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -552,7 +552,7 @@ int main (void);
+ 
+ TARGET_CFLAGS="$TARGET_CFLAGS $grub_cv_target_cc_w_extra_flags"
+ 
+-AC_CACHE_CHECK([if compiling with clang], [grub_cv_cc_target_clang]
++AC_CACHE_CHECK([if compiling with clang], [grub_cv_cc_target_clang],
+ [
+ CFLAGS="$TARGET_CFLAGS"
+ AC_COMPILE_IFELSE(
+-- 
+2.4.3
+

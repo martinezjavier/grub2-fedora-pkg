@@ -1,0 +1,381 @@
+From 27d1a67f8a99e62b0900c68198477143f5bfbaa5 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Wed, 4 Mar 2015 01:00:19 +0100
+Subject: [PATCH 354/506] Fix canonicalize_file_name clash.
+
+canonicalize_file_name clashed with gnulib function. Additionally
+it was declared in 2 places: emu/misc.h and util/misc.h. Added
+grub_ prefix and removed second declaration.
+---
+ grub-core/bus/emu/pci.c            | 7 ++++---
+ grub-core/kern/emu/hostdisk.c      | 4 ++--
+ grub-core/osdep/aros/hostdisk.c    | 2 +-
+ grub-core/osdep/unix/getroot.c     | 4 ++--
+ grub-core/osdep/unix/hostdisk.c    | 2 +-
+ grub-core/osdep/unix/relpath.c     | 2 +-
+ grub-core/osdep/windows/hostdisk.c | 2 +-
+ grub-core/osdep/windows/init.c     | 2 +-
+ include/grub/emu/misc.h            | 3 +--
+ include/grub/util/misc.h           | 2 +-
+ util/getroot.c                     | 2 +-
+ util/grub-file.c                   | 2 +-
+ util/grub-fstest.c                 | 2 +-
+ util/grub-install.c                | 4 ++--
+ util/grub-macbless.c               | 2 +-
+ util/grub-mount.c                  | 2 +-
+ util/grub-probe.c                  | 2 +-
+ util/grub-syslinux2cfg.c           | 6 +++---
+ util/probe.c                       | 6 +++---
+ util/render-label.c                | 2 +-
+ 20 files changed, 30 insertions(+), 30 deletions(-)
+
+diff --git a/grub-core/bus/emu/pci.c b/grub-core/bus/emu/pci.c
+index 9d32963..663e554 100644
+--- a/grub-core/bus/emu/pci.c
++++ b/grub-core/bus/emu/pci.c
+@@ -55,7 +55,8 @@ grub_pci_device_map_range (grub_pci_device_t dev, grub_addr_t base,
+   int err;
+   err = pci_device_map_range (dev, base, size, PCI_DEV_MAP_FLAG_WRITABLE, &addr);
+   if (err)
+-    grub_util_error ("mapping 0x%x failed (error %d)\n", base, err);
++    grub_util_error ("mapping 0x%llx failed (error %d)\n",
++		     (unsigned long long) base, err);
+   return addr;
+ }
+ 
+@@ -66,12 +67,12 @@ grub_pci_device_unmap_range (grub_pci_device_t dev, void *mem,
+   pci_device_unmap_range (dev, mem, size);
+ }
+ 
+-GRUB_MOD_INIT (pci)
++GRUB_MOD_INIT (emupci)
+ {
+   pci_system_init ();
+ }
+ 
+-GRUB_MOD_FINI (pci)
++GRUB_MOD_FINI (emupci)
+ {
+   pci_system_cleanup ();
+ }
+diff --git a/grub-core/kern/emu/hostdisk.c b/grub-core/kern/emu/hostdisk.c
+index a4ebf78..a3b00c8 100644
+--- a/grub-core/kern/emu/hostdisk.c
++++ b/grub-core/kern/emu/hostdisk.c
+@@ -184,7 +184,7 @@ grub_hostdisk_os_dev_to_grub_drive (const char *os_disk, int add)
+   unsigned int i;
+   char *canon;
+ 
+-  canon = canonicalize_file_name (os_disk);
++  canon = grub_canonicalize_file_name (os_disk);
+   if (!canon)
+     canon = xstrdup (os_disk);
+ 
+@@ -535,7 +535,7 @@ read_device_map (const char *dev_map)
+       /* On Linux, the devfs uses symbolic links horribly, and that
+ 	 confuses the interface very much, so use realpath to expand
+ 	 symbolic links.  */
+-      map[drive].device = canonicalize_file_name (p);
++      map[drive].device = grub_canonicalize_file_name (p);
+       if (! map[drive].device)
+ 	map[drive].device = xstrdup (p);
+       
+diff --git a/grub-core/osdep/aros/hostdisk.c b/grub-core/osdep/aros/hostdisk.c
+index e1eeea7..7d99b54 100644
+--- a/grub-core/osdep/aros/hostdisk.c
++++ b/grub-core/osdep/aros/hostdisk.c
+@@ -61,7 +61,7 @@
+ static ULONG *bounce;
+ 
+ char *
+-canonicalize_file_name (const char *path)
++grub_canonicalize_file_name (const char *path)
+ {
+   char *ret;
+   BPTR lck;
+diff --git a/grub-core/osdep/unix/getroot.c b/grub-core/osdep/unix/getroot.c
+index 10fb56a..ccee7ce 100644
+--- a/grub-core/osdep/unix/getroot.c
++++ b/grub-core/osdep/unix/getroot.c
+@@ -491,7 +491,7 @@ grub_guess_root_devices (const char *dir_in)
+   char **os_dev = NULL;
+   struct stat st;
+   dev_t dev;
+-  char *dir = canonicalize_file_name (dir_in);
++  char *dir = grub_canonicalize_file_name (dir_in);
+ 
+   if (!dir)
+     grub_util_error (_("failed to get canonical path of `%s'"), dir_in);
+@@ -516,7 +516,7 @@ grub_guess_root_devices (const char *dir_in)
+ 	    *cur = tmp;
+ 	  else
+ 	    {
+-	      *cur = canonicalize_file_name (tmp);
++	      *cur = grub_canonicalize_file_name (tmp);
+ 	      if (*cur == NULL)
+ 		grub_util_error (_("failed to get canonical path of `%s'"), tmp);
+ 	      free (tmp);
+diff --git a/grub-core/osdep/unix/hostdisk.c b/grub-core/osdep/unix/hostdisk.c
+index b3bc0e4..2a8c588 100644
+--- a/grub-core/osdep/unix/hostdisk.c
++++ b/grub-core/osdep/unix/hostdisk.c
+@@ -198,7 +198,7 @@ grub_util_fd_close (grub_util_fd_t fd)
+ }
+ 
+ char *
+-canonicalize_file_name (const char *path)
++grub_canonicalize_file_name (const char *path)
+ {
+ #if defined (PATH_MAX)
+   char *ret;
+diff --git a/grub-core/osdep/unix/relpath.c b/grub-core/osdep/unix/relpath.c
+index 71c19d8..8fdc3a7 100644
+--- a/grub-core/osdep/unix/relpath.c
++++ b/grub-core/osdep/unix/relpath.c
+@@ -44,7 +44,7 @@ grub_make_system_path_relative_to_its_root (const char *path)
+   char *poolfs = NULL;
+ 
+   /* canonicalize.  */
+-  p = canonicalize_file_name (path);
++  p = grub_canonicalize_file_name (path);
+   if (p == NULL)
+     grub_util_error (_("failed to get canonical path of `%s'"), path);
+ 
+diff --git a/grub-core/osdep/windows/hostdisk.c b/grub-core/osdep/windows/hostdisk.c
+index d390b25..85507af 100644
+--- a/grub-core/osdep/windows/hostdisk.c
++++ b/grub-core/osdep/windows/hostdisk.c
+@@ -328,7 +328,7 @@ grub_util_fd_strerror (void)
+ }
+ 
+ char *
+-canonicalize_file_name (const char *path)
++grub_canonicalize_file_name (const char *path)
+ {
+   char *ret;
+   LPTSTR windows_path;
+diff --git a/grub-core/osdep/windows/init.c b/grub-core/osdep/windows/init.c
+index 98c325c..e8ffd62 100644
+--- a/grub-core/osdep/windows/init.c
++++ b/grub-core/osdep/windows/init.c
+@@ -170,7 +170,7 @@ grub_util_host_init (int *argc __attribute__ ((unused)),
+ #error "Unsupported TCHAR size"
+ #endif
+ 
+-  grub_util_base_directory = canonicalize_file_name ((*argv)[0]);
++  grub_util_base_directory = grub_canonicalize_file_name ((*argv)[0]);
+   if (!grub_util_base_directory)
+     grub_util_base_directory = xstrdup ((*argv)[0]);
+   for (ptr = grub_util_base_directory + strlen (grub_util_base_directory) - 1;
+diff --git a/include/grub/emu/misc.h b/include/grub/emu/misc.h
+index a588ba2..df6085b 100644
+--- a/include/grub/emu/misc.h
++++ b/include/grub/emu/misc.h
+@@ -27,6 +27,7 @@
+ #include <grub/symbol.h>
+ #include <grub/types.h>
+ #include <grub/misc.h>
++#include <grub/util/misc.h>
+ 
+ extern int verbosity;
+ extern const char *program_name;
+@@ -61,8 +62,6 @@ void EXPORT_FUNC(grub_util_error) (const char *fmt, ...) __attribute__ ((format
+ 
+ grub_uint64_t EXPORT_FUNC (grub_util_get_cpu_time_ms) (void);
+ 
+-extern char * canonicalize_file_name (const char *path);
+-
+ #ifdef HAVE_DEVICE_MAPPER
+ int grub_device_mapper_supported (void);
+ #endif
+diff --git a/include/grub/util/misc.h b/include/grub/util/misc.h
+index 192874d..e9e0a67 100644
+--- a/include/grub/util/misc.h
++++ b/include/grub/util/misc.h
+@@ -41,7 +41,7 @@ void grub_util_write_image_at (const void *img, size_t size, off_t offset,
+ 
+ char *make_system_path_relative_to_its_root (const char *path);
+ 
+-char *canonicalize_file_name (const char *path);
++char *grub_canonicalize_file_name (const char *path);
+ 
+ void grub_util_init_nls (void);
+ 
+diff --git a/util/getroot.c b/util/getroot.c
+index 3c1f12d..36f1730 100644
+--- a/util/getroot.c
++++ b/util/getroot.c
+@@ -406,7 +406,7 @@ grub_util_biosdisk_get_grub_dev (const char *os_dev)
+ 	       os_dev);
+ 	    grub_errno = GRUB_ERR_NONE;
+ 
+-	    canon = canonicalize_file_name (os_dev);
++	    canon = grub_canonicalize_file_name (os_dev);
+ 	    drive = grub_hostdisk_os_dev_to_grub_drive (canon ? : os_dev, 1);
+ 	    if (canon)
+ 	      free (canon);
+diff --git a/util/grub-file.c b/util/grub-file.c
+index 9989dfe..50c18b6 100644
+--- a/util/grub-file.c
++++ b/util/grub-file.c
+@@ -77,7 +77,7 @@ main (int argc, char *argv[])
+ 	}
+       if (had_file)
+ 	grub_util_error ("one argument expected");
+-      argv2[i - 1] = canonicalize_file_name (argv[i]);
++      argv2[i - 1] = grub_canonicalize_file_name (argv[i]);
+       if (!argv2[i - 1])
+ 	{
+ 	  grub_util_error (_("cannot open `%s': %s"), argv[i],
+diff --git a/util/grub-fstest.c b/util/grub-fstest.c
+index 02cd3e3..a358ae4 100644
+--- a/util/grub-fstest.c
++++ b/util/grub-fstest.c
+@@ -651,7 +651,7 @@ argp_parser (int key, char *arg, struct argp_state *state)
+     {
+       if (args_count == 0)
+ 	images = xmalloc (num_disks * sizeof (images[0]));
+-      images[args_count] = canonicalize_file_name (arg);
++      images[args_count] = grub_canonicalize_file_name (arg);
+       args_count++;
+       return 0;
+     }
+diff --git a/util/grub-install.c b/util/grub-install.c
+index cedc188..7b394c9 100644
+--- a/util/grub-install.c
++++ b/util/grub-install.c
+@@ -967,7 +967,7 @@ main (int argc, char *argv[])
+   {
+     char * t = grub_util_path_concat (2, bootdir, GRUB_DIR_NAME);
+     grub_install_mkdir_p (t);
+-    grubdir = canonicalize_file_name (t);
++    grubdir = grub_canonicalize_file_name (t);
+     if (!grubdir)
+       grub_util_error (_("failed to get canonical path of `%s'"), t);
+     free (t);
+@@ -1299,7 +1299,7 @@ main (int argc, char *argv[])
+   {
+     char *t = grub_util_path_concat (2, grubdir,
+ 				   platname);
+-    platdir = canonicalize_file_name (t);
++    platdir = grub_canonicalize_file_name (t);
+     if (!platdir)
+       grub_util_error (_("failed to get canonical path of `%s'"),
+ 		       t);
+diff --git a/util/grub-macbless.c b/util/grub-macbless.c
+index e57e13d..e9b15a0 100644
+--- a/util/grub-macbless.c
++++ b/util/grub-macbless.c
+@@ -64,7 +64,7 @@ bless (const char *path, int x86)
+   grub_err_t err;
+   struct stat st;
+ 
+-  grub_path = canonicalize_file_name (path);
++  grub_path = grub_canonicalize_file_name (path);
+ 
+   if (stat (grub_path, &st) < 0)
+     grub_util_error (N_("cannot stat `%s': %s"),
+diff --git a/util/grub-mount.c b/util/grub-mount.c
+index 4626e54..0d0fea5 100644
+--- a/util/grub-mount.c
++++ b/util/grub-mount.c
+@@ -547,7 +547,7 @@ argp_parser (int key, char *arg, struct argp_state *state)
+     }
+ 
+   images = xrealloc (images, (num_disks + 1) * sizeof (images[0]));
+-  images[num_disks] = canonicalize_file_name (arg);
++  images[num_disks] = grub_canonicalize_file_name (arg);
+   num_disks++;
+ 
+   return 0;
+diff --git a/util/grub-probe.c b/util/grub-probe.c
+index 8f4aa61..6075cb3 100644
+--- a/util/grub-probe.c
++++ b/util/grub-probe.c
+@@ -262,7 +262,7 @@ probe (const char *path, char **device_names, char delim)
+ 
+   if (path != NULL)
+     {
+-      grub_path = canonicalize_file_name (path);
++      grub_path = grub_canonicalize_file_name (path);
+       if (! grub_path)
+ 	grub_util_error (_("failed to get canonical path of `%s'"), path);
+       device_names = grub_guess_root_devices (grub_path);
+diff --git a/util/grub-syslinux2cfg.c b/util/grub-syslinux2cfg.c
+index f4fda6d..85fa0da 100644
+--- a/util/grub-syslinux2cfg.c
++++ b/util/grub-syslinux2cfg.c
+@@ -175,7 +175,7 @@ main (int argc, char *argv[])
+   grub_host_init ();
+ 
+   char *t, *inpfull, *rootfull, *res;
+-  t = canonicalize_file_name (arguments.input);
++  t = grub_canonicalize_file_name (arguments.input);
+   if (!t)
+     {
+       grub_util_error (_("cannot open `%s': %s"), arguments.input,
+@@ -185,7 +185,7 @@ main (int argc, char *argv[])
+   inpfull = xasprintf ("(host)/%s", t);
+   free (t);
+ 
+-  t = canonicalize_file_name (arguments.root ? : "/");
++  t = grub_canonicalize_file_name (arguments.root ? : "/");
+   if (!t)
+     {
+       grub_util_error (_("cannot open `%s': %s"), arguments.root,
+@@ -206,7 +206,7 @@ main (int argc, char *argv[])
+       cwd = xstrdup (".");
+     }
+ 
+-  t = canonicalize_file_name (arguments.cwd ? : cwd);
++  t = grub_canonicalize_file_name (arguments.cwd ? : cwd);
+   if (!t)
+     {
+       grub_util_error (_("cannot open `%s': %s"), arguments.root,
+diff --git a/util/probe.c b/util/probe.c
+index c389f5d..fa7ca34 100644
+--- a/util/probe.c
++++ b/util/probe.c
+@@ -73,7 +73,7 @@ grub_util_guess_bios_drive (const char *orig_path)
+ {
+   char *canon;
+   char *ptr;
+-  canon = canonicalize_file_name (orig_path);
++  canon = grub_canonicalize_file_name (orig_path);
+   if (!canon)
+     return NULL;
+   ptr = strrchr (orig_path, '/');
+@@ -102,7 +102,7 @@ grub_util_guess_efi_drive (const char *orig_path)
+ {
+   char *canon;
+   char *ptr;
+-  canon = canonicalize_file_name (orig_path);
++  canon = grub_canonicalize_file_name (orig_path);
+   if (!canon)
+     return NULL;
+   ptr = strrchr (orig_path, '/');
+@@ -131,7 +131,7 @@ grub_util_guess_baremetal_drive (const char *orig_path)
+ {
+   char *canon;
+   char *ptr;
+-  canon = canonicalize_file_name (orig_path);
++  canon = grub_canonicalize_file_name (orig_path);
+   if (!canon)
+     return NULL;
+   ptr = strrchr (orig_path, '/');
+diff --git a/util/render-label.c b/util/render-label.c
+index 39663a8..91c080c 100644
+--- a/util/render-label.c
++++ b/util/render-label.c
+@@ -157,7 +157,7 @@ grub_util_render_label (const char *label_font,
+   ieee1275_palette[cptr].a = 0xff;
+ 
+   char * t;
+-  t = canonicalize_file_name (label_font);
++  t = grub_canonicalize_file_name (label_font);
+   if (!t)
+     {
+       grub_util_error (_("cannot open `%s': %s"), label_font,
+-- 
+2.4.3
+

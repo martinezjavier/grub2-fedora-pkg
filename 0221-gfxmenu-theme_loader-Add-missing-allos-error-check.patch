@@ -1,0 +1,26 @@
+From af0be976bf5bb45c0d5d5290ca0f2a83fb380785 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Mon, 26 Jan 2015 09:37:39 +0100
+Subject: [PATCH 221/506] gfxmenu/theme_loader: Add missing allos error check.
+
+Found by: Coverity scan.
+---
+ grub-core/gfxmenu/theme_loader.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/grub-core/gfxmenu/theme_loader.c b/grub-core/gfxmenu/theme_loader.c
+index 8a79458..1a6ed1d 100644
+--- a/grub-core/gfxmenu/theme_loader.c
++++ b/grub-core/gfxmenu/theme_loader.c
+@@ -774,6 +774,8 @@ grub_gfxmenu_view_load_theme (grub_gfxmenu_view_t view, const char *theme_path)
+     view->canvas->component.ops->destroy (view->canvas);
+ 
+   view->canvas = grub_gui_canvas_new ();
++  if (!view->canvas)
++    goto fail;
+   ((grub_gui_component_t) view->canvas)
+     ->ops->set_bounds ((grub_gui_component_t) view->canvas,
+                        &view->screen);
+-- 
+2.4.3
+

@@ -1,0 +1,30 @@
+From d93147abb70fba583091ac6ec0426a0bf504d697 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 21 Feb 2015 16:03:11 +0100
+Subject: [PATCH 298/506] INSTALL: Fix names of host flags to match actual
+ behaviour
+
+---
+ INSTALL | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/INSTALL b/INSTALL
+index f6f276c..05cc443 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -175,9 +175,9 @@ corresponding platform are not needed for the platform in question.
+   - For host
+     1. --host= to autoconf name of host.
+     2. CC= for gcc able to compile for host
+-    3. CFLAGS= for C options for host.
+-    4. CPPFLAGS= for C preprocessor options for host.
+-    5. LDFLAGS= for linker options for host.
++    3. HOST_CFLAGS= for C options for host.
++    4. HOST_CPPFLAGS= for C preprocessor options for host.
++    5. HOST_LDFLAGS= for linker options for host.
+     6. FREETYPE= for freetype-config for host (optional).
+     7. Libdevmapper if any must be in standard linker folders (-ldevmapper) (optional).
+     8. Libfuse if any must be in standard linker folders (-lfuse) (optional).
+-- 
+2.4.3
+

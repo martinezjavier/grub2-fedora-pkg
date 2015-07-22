@@ -1,0 +1,25 @@
+From 5959b15c1cf2113999968291e0723337888d4979 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Wed, 4 Mar 2015 01:01:45 +0100
+Subject: [PATCH 355/506] configure.ac: Fix the name of pciaccess header.
+
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 2200776..891c14f 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1302,7 +1302,7 @@ fi
+ [fi]
+ [if [ x"$grub_emu_pci_excuse" = x ]; then
+     # Check for headers.]
+-    AC_CHECK_HEADERS([pci/pci.h], [],
++    AC_CHECK_HEADERS([pciaccess.h], [],
+       [grub_emu_pci_excuse=["need libpciaccess headers"]])
+ [fi]
+ 
+-- 
+2.4.3
+

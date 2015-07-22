@@ -1,0 +1,25 @@
+From dc06aa949b7ff25cec78e6c415a65b444c11d8d9 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Wed, 4 Mar 2015 14:19:29 +0100
+Subject: [PATCH 356/506] syslinux_parse: Fix the case of unknown localboot.
+
+Reported by: Jordan Uggla
+---
+ grub-core/lib/syslinux_parse.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/grub-core/lib/syslinux_parse.c b/grub-core/lib/syslinux_parse.c
+index afc12b5..22389eb 100644
+--- a/grub-core/lib/syslinux_parse.c
++++ b/grub-core/lib/syslinux_parse.c
+@@ -945,6 +945,7 @@ write_entry (struct output_buffer *outbuf,
+ 	    break;
+ 	  }
+ 	print_string ("  # UNSUPPORTED localboot type ");
++	print_string ("\ntrue;\n");
+ 	if (print_num (outbuf, n))
+ 	  return grub_errno;
+ 	print_string ("\n");
+-- 
+2.4.3
+

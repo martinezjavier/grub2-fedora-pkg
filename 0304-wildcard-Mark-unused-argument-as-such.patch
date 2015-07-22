@@ -1,0 +1,26 @@
+From ec65605af487d702577bfba214c27efd1a0d8b73 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 21 Feb 2015 16:19:09 +0100
+Subject: [PATCH 304/506] wildcard: Mark unused argument as such.
+
+---
+ grub-core/commands/wildcard.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/grub-core/commands/wildcard.c b/grub-core/commands/wildcard.c
+index d207acf..9b4e727 100644
+--- a/grub-core/commands/wildcard.c
++++ b/grub-core/commands/wildcard.c
+@@ -293,7 +293,8 @@ struct match_files_ctx
+ 
+ /* Helper for match_files.  */
+ static int
+-match_files_iter (const char *name, const struct grub_dirhook_info *info,
++match_files_iter (const char *name,
++		  const struct grub_dirhook_info *info __attribute__((unused)),
+ 		  void *data)
+ {
+   struct match_files_ctx *ctx = data;
+-- 
+2.4.3
+

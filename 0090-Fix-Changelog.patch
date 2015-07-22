@@ -1,0 +1,25 @@
+From 79c80b06b80c680e584038537098b9e433415465 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sun, 10 Aug 2014 10:04:04 +0200
+Subject: [PATCH 090/506] Fix Changelog
+
+---
+ ChangeLog | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/ChangeLog b/ChangeLog
+index 47ff355..cab1427 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -2,6 +2,8 @@
+ 
+ 	* grub-core/fs/cbfs.c: Don't probe disks of unknow size.
+ 
++	Fixes hang on virtualbox.
++
+ 2014-07-08  Colin Watson  <cjwatson@ubuntu.com>
+ 
+ 	* util/grub.d/10_hurd.in: Make kernel list progression not fail on
+-- 
+2.4.3
+

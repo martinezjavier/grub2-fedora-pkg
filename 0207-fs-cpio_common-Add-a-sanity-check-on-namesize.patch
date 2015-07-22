@@ -1,0 +1,32 @@
+From faad548ce3b906535acaeff95777b46836b817e6 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sun, 25 Jan 2015 00:11:59 +0100
+Subject: [PATCH 207/506] fs/cpio_common: Add a sanity check on namesize.
+
+Found by: Coverity scan.
+---
+ grub-core/fs/cpio_common.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/grub-core/fs/cpio_common.c b/grub-core/fs/cpio_common.c
+index b0ae9f4..20230a7 100644
+--- a/grub-core/fs/cpio_common.c
++++ b/grub-core/fs/cpio_common.c
+@@ -61,6 +61,14 @@ grub_cpio_find_file (struct grub_archelp_data *data, char **name,
+   modeval = read_number (hd.mode, ARRAY_SIZE (hd.mode));
+   namesize = read_number (hd.namesize, ARRAY_SIZE (hd.namesize));
+ 
++  /* Don't allow negative numbers.  */
++  if (namesize >= 0x80000000)
++    {
++      /* Probably a corruption, don't attempt to recover.  */
++      *mode = GRUB_ARCHELP_ATTR_END;
++      return GRUB_ERR_NONE;
++    }
++
+   if (mode)
+     *mode = modeval;
+ 
+-- 
+2.4.3
+

@@ -1,0 +1,38 @@
+From 8f95eae423fc7220af3c1f6150ac35e98281bb96 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Tue, 27 Jan 2015 16:49:49 +0100
+Subject: [PATCH 257/506] linux/ofpath: Fix error handling.
+
+Found by: Coverity Scan.
+---
+ grub-core/osdep/linux/ofpath.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/grub-core/osdep/linux/ofpath.c b/grub-core/osdep/linux/ofpath.c
+index 4cc171c..f716fd2 100644
+--- a/grub-core/osdep/linux/ofpath.c
++++ b/grub-core/osdep/linux/ofpath.c
+@@ -334,7 +334,7 @@ vendor_is_ATA(const char *path)
+ }
+ 
+ static void
+-check_sas (char *sysfs_path, int *tgt, unsigned long int *sas_address)
++check_sas (const char *sysfs_path, int *tgt, unsigned long int *sas_address)
+ {
+   char *ed = strstr (sysfs_path, "end_device");
+   char *p, *q, *path;
+@@ -346,8 +346,10 @@ check_sas (char *sysfs_path, int *tgt, unsigned long int *sas_address)
+     return;
+ 
+   /* SAS devices are identified using disk@$PHY_ID */
+-  p = strdup (sysfs_path);
++  p = xstrdup (sysfs_path);
+   ed = strstr(p, "end_device");
++  if (!ed)
++    return;
+ 
+   q = ed;
+   while (*q && *q != '/')
+-- 
+2.4.3
+

@@ -1,0 +1,101 @@
+From 5b5d8666a748109a3a0175f8140382d295a7938a Mon Sep 17 00:00:00 2001
+From: Toomas Soome <tsoome@me.com>
+Date: Mon, 13 Apr 2015 19:49:15 +0300
+Subject: [PATCH 386/506] core/partmap: rename 'sun' to avoid clash with
+ predefined symbol
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+the symbol “sun” is defined macro in solaris derived systems, from
+gcc -dM -E:
+
+and therefore can not be used as name.
+---
+ grub-core/partmap/sun.c   | 14 +++++++-------
+ grub-core/partmap/sunpc.c | 10 +++++-----
+ 2 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/grub-core/partmap/sun.c b/grub-core/partmap/sun.c
+index dae3602..aac30a3 100644
+--- a/grub-core/partmap/sun.c
++++ b/grub-core/partmap/sun.c
+@@ -91,7 +91,7 @@ sun_partition_map_iterate (grub_disk_t disk,
+   struct grub_partition p;
+   union
+   {
+-    struct grub_sun_block sun;
++    struct grub_sun_block sun_block;
+     grub_uint16_t raw[0];
+   } block;
+   int partnum;
+@@ -103,7 +103,7 @@ sun_partition_map_iterate (grub_disk_t disk,
+   if (err)
+     return err;
+ 
+-  if (GRUB_PARTMAP_SUN_MAGIC != grub_be_to_cpu16 (block.sun.magic))
++  if (GRUB_PARTMAP_SUN_MAGIC != grub_be_to_cpu16 (block.sun_block.magic))
+     return grub_error (GRUB_ERR_BAD_PART_TABLE, "not a sun partition table");
+ 
+   if (! grub_sun_is_valid (block.raw))
+@@ -115,14 +115,14 @@ sun_partition_map_iterate (grub_disk_t disk,
+     {
+       struct grub_sun_partition_descriptor *desc;
+ 
+-      if (block.sun.infos[partnum].id == 0
+-	  || block.sun.infos[partnum].id == GRUB_PARTMAP_SUN_WHOLE_DISK_ID)
++      if (block.sun_block.infos[partnum].id == 0
++	  || block.sun_block.infos[partnum].id == GRUB_PARTMAP_SUN_WHOLE_DISK_ID)
+ 	continue;
+ 
+-      desc = &block.sun.partitions[partnum];
++      desc = &block.sun_block.partitions[partnum];
+       p.start = ((grub_uint64_t) grub_be_to_cpu32 (desc->start_cylinder)
+-		  * grub_be_to_cpu16 (block.sun.ntrks)
+-		  * grub_be_to_cpu16 (block.sun.nsect));
++		  * grub_be_to_cpu16 (block.sun_block.ntrks)
++		  * grub_be_to_cpu16 (block.sun_block.nsect));
+       p.len = grub_be_to_cpu32 (desc->num_sectors);
+       p.number = p.index = partnum;
+       if (p.len)
+diff --git a/grub-core/partmap/sunpc.c b/grub-core/partmap/sunpc.c
+index 442763e..73a430c 100644
+--- a/grub-core/partmap/sunpc.c
++++ b/grub-core/partmap/sunpc.c
+@@ -74,7 +74,7 @@ sun_pc_partition_map_iterate (grub_disk_t disk,
+   grub_partition_t p;
+   union
+   {
+-    struct grub_sun_pc_block sun;
++    struct grub_sun_pc_block sun_block;
+     grub_uint16_t raw[0];
+   } block;
+   int partnum;
+@@ -92,7 +92,7 @@ sun_pc_partition_map_iterate (grub_disk_t disk,
+       return err;
+     }
+   
+-  if (GRUB_PARTMAP_SUN_PC_MAGIC != grub_le_to_cpu16 (block.sun.magic))
++  if (GRUB_PARTMAP_SUN_PC_MAGIC != grub_le_to_cpu16 (block.sun_block.magic))
+     {
+       grub_free (p);
+       return grub_error (GRUB_ERR_BAD_PART_TABLE, 
+@@ -111,12 +111,12 @@ sun_pc_partition_map_iterate (grub_disk_t disk,
+     {
+       struct grub_sun_pc_partition_descriptor *desc;
+ 
+-      if (block.sun.partitions[partnum].id == 0
+-	  || block.sun.partitions[partnum].id
++      if (block.sun_block.partitions[partnum].id == 0
++	  || block.sun_block.partitions[partnum].id
+ 	  == GRUB_PARTMAP_SUN_PC_WHOLE_DISK_ID)
+ 	continue;
+ 
+-      desc = &block.sun.partitions[partnum];
++      desc = &block.sun_block.partitions[partnum];
+       p->start = grub_le_to_cpu32 (desc->start_sector);
+       p->len = grub_le_to_cpu32 (desc->num_sectors);
+       p->number = partnum;
+-- 
+2.4.3
+

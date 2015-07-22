@@ -1,0 +1,26 @@
+From a05a6e6f92335236dc12339c73144ef8d03f07e8 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Mon, 26 Jan 2015 09:44:57 +0100
+Subject: [PATCH 229/506] xnu: Add missing error check.
+
+Found by: Coveriy scan.
+---
+ grub-core/loader/xnu.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/grub-core/loader/xnu.c b/grub-core/loader/xnu.c
+index cdd9715..bc89cdf 100644
+--- a/grub-core/loader/xnu.c
++++ b/grub-core/loader/xnu.c
+@@ -1378,6 +1378,8 @@ grub_xnu_fill_devicetree (void)
+     name[len] = 0;
+ 
+     curvalue = grub_xnu_create_value (curkey, name);
++    if (!curvalue)
++      return grub_errno;
+     grub_free (name);
+    
+     data = grub_malloc (grub_strlen (var->value) + 1);
+-- 
+2.4.3
+

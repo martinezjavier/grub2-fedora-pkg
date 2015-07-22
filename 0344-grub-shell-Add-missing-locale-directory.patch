@@ -1,0 +1,25 @@
+From ddde9ca71ac7e0c42a445f5a37085c5895098e34 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 28 Feb 2015 15:14:16 +0100
+Subject: [PATCH 344/506] grub-shell: Add missing --locale-directory.
+
+Fixes the language tests is no make install was done.
+---
+ tests/util/grub-shell.in | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/tests/util/grub-shell.in b/tests/util/grub-shell.in
+index 5b66139..6d2b132 100644
+--- a/tests/util/grub-shell.in
++++ b/tests/util/grub-shell.in
+@@ -349,6 +349,7 @@ fi
+ if [ x$boot != xnet ] && [ x$boot != xemu ]; then
+     pkgdatadir="@builddir@" "@builddir@/grub-mkrescue" "--output=${isofile}" "--override-directory=${builddir}/grub-core" \
+ 	--rom-directory="${rom_directory}" \
++	--locale-directory="@srcdir@/po" \
+ 	--themes-directory="@srcdir@/themes" \
+ 	$mkimage_extra_arg ${mkrescue_args} \
+ 	"/boot/grub/grub.cfg=${cfgfile}" "/boot/grub/testcase.cfg=${source}" \
+-- 
+2.4.3
+

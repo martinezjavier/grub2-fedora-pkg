@@ -1,0 +1,39 @@
+From be0743b052d76c27cc704d94cfd38cc54e7e02b3 Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Mon, 26 Jan 2015 22:17:31 +0300
+Subject: [PATCH 247/506] util/grub-install: rearrange code to avoid memory
+ leak.
+
+Found by: Coverity scan.
+---
+ util/grub-install.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
+
+diff --git a/util/grub-install.c b/util/grub-install.c
+index afbc557..210f4a7 100644
+--- a/util/grub-install.c
++++ b/util/grub-install.c
+@@ -615,17 +615,14 @@ device_map_check_duplicates (const char *dev_map)
+   char **d;
+   size_t i;
+ 
+-  d = xmalloc (alloced * sizeof (d[0]));
+-
+   if (dev_map[0] == '\0')
+     return;
+ 
+   fp = grub_util_fopen (dev_map, "r");
+   if (! fp)
+-    {
+-      free (d);
+-      return;
+-    }
++    return;
++
++  d = xmalloc (alloced * sizeof (d[0]));
+ 
+   while (fgets (buf, sizeof (buf), fp))
+     {
+-- 
+2.4.3
+

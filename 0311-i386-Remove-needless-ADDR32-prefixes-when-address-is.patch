@@ -1,0 +1,41 @@
+From 37353f0ae5b9a4123ca9fe132a2336c08f30615a Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 21 Feb 2015 17:38:56 +0100
+Subject: [PATCH 311/506] i386: Remove needless ADDR32 prefixes when address is
+ known and fixed.
+
+Shaves off 6 bytes in lzma_decompress.img.
+---
+ grub-core/boot/i386/pc/startup_raw.S | 2 +-
+ grub-core/kern/i386/realmode.S       | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/grub-core/boot/i386/pc/startup_raw.S b/grub-core/boot/i386/pc/startup_raw.S
+index 0f8806c..8bce798 100644
+--- a/grub-core/boot/i386/pc/startup_raw.S
++++ b/grub-core/boot/i386/pc/startup_raw.S
+@@ -89,7 +89,7 @@ LOCAL (codestart):
+ 	sti		/* we're safe again */
+ 
+ 	/* save the boot drive */
+-	ADDR32	movb	%dl, LOCAL(boot_drive)
++	movb	%dl, LOCAL(boot_drive)
+ 
+ 	/* reset disk system (%ah = 0) */
+ 	int	$0x13
+diff --git a/grub-core/kern/i386/realmode.S b/grub-core/kern/i386/realmode.S
+index 732697c..1384d52 100644
+--- a/grub-core/kern/i386/realmode.S
++++ b/grub-core/kern/i386/realmode.S
+@@ -137,7 +137,7 @@ real_to_prot:
+ 	/* load the GDT register */
+ 	xorw	%ax, %ax
+ 	movw	%ax, %ds
+-	ADDR32 lgdtl	gdtdesc
++	lgdtl	gdtdesc
+ 
+ 	/* turn on protected mode */
+ 	movl	%cr0, %eax
+-- 
+2.4.3
+

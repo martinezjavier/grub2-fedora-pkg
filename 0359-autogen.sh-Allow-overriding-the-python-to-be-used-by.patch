@@ -1,0 +1,68 @@
+From be41c1cf11313bc433eaad4792f1e5a90d30e5b5 Mon Sep 17 00:00:00 2001
+From: Jon McCune <jonmccune@google.com>
+Date: Fri, 6 Mar 2015 00:33:41 +0100
+Subject: [PATCH 359/506] autogen.sh: Allow overriding the python to be used by
+ setting $PYTHON.
+
+Some installations have several python versions installed. Allow user
+to choose which one to use by setting $PYTHON.
+---
+ INSTALL    |  3 +++
+ autogen.sh | 11 +++++++----
+ 2 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/INSTALL b/INSTALL
+index 846ac38..e5b0811 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -104,6 +104,9 @@ The simplest way to compile this package is:
+   
+   3. Type `./autogen.sh'.
+ 
++     * autogen.sh uses python. By default invocation is "python" but can be
++       overriden by setting variable $PYTHON.
++
+   4. Type `./configure' to configure the package for your system.
+      If you're using `csh' on an old version of System V, you might
+      need to type `sh ./configure' instead to prevent `csh' from trying
+diff --git a/autogen.sh b/autogen.sh
+index 7424428..5020456 100755
+--- a/autogen.sh
++++ b/autogen.sh
+@@ -2,6 +2,9 @@
+ 
+ set -e
+ 
++# Set ${PYTHON} to plain 'python' if not set already
++: ${PYTHON:=python}
++
+ export LC_COLLATE=C
+ unset LC_ALL
+ 
+@@ -9,10 +12,10 @@ find . -iname '*.[ch]' ! -ipath './grub-core/lib/libgcrypt-grub/*' ! -ipath './b
+ find util -iname '*.in' ! -name Makefile.in  |sort > po/POTFILES-shell.in
+ 
+ echo "Importing unicode..."
+-python util/import_unicode.py unicode/UnicodeData.txt unicode/BidiMirroring.txt unicode/ArabicShaping.txt grub-core/unidata.c
++${PYTHON} util/import_unicode.py unicode/UnicodeData.txt unicode/BidiMirroring.txt unicode/ArabicShaping.txt grub-core/unidata.c
+ 
+ echo "Importing libgcrypt..."
+-python util/import_gcry.py grub-core/lib/libgcrypt/ grub-core
++${PYTHON} util/import_gcry.py grub-core/lib/libgcrypt/ grub-core
+ sed -n -f util/import_gcrypth.sed < grub-core/lib/libgcrypt/src/gcrypt.h.in > include/grub/gcrypt/gcrypt.h
+ if [ -f include/grub/gcrypt/g10lib.h ]; then
+     rm include/grub/gcrypt/g10lib.h
+@@ -54,8 +57,8 @@ for extra in contrib/*/Makefile.core.def; do
+   fi
+ done
+ 
+-python gentpl.py $UTIL_DEFS > Makefile.util.am
+-python gentpl.py $CORE_DEFS > grub-core/Makefile.core.am
++${PYTHON} gentpl.py $UTIL_DEFS > Makefile.util.am
++${PYTHON} gentpl.py $CORE_DEFS > grub-core/Makefile.core.am
+ 
+ for extra in contrib/*/Makefile.common; do
+   if test -e "$extra"; then
+-- 
+2.4.3
+

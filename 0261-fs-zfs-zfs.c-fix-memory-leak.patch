@@ -1,0 +1,26 @@
+From e871994849802889af1ad26ddde68e9a12466ba1 Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Tue, 27 Jan 2015 20:52:27 +0300
+Subject: [PATCH 261/506] fs/zfs/zfs.c: fix memory leak.
+
+Found by: Coverity scan.
+---
+ grub-core/fs/zfs/zfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/grub-core/fs/zfs/zfs.c b/grub-core/fs/zfs/zfs.c
+index 9edac50..057b471 100644
+--- a/grub-core/fs/zfs/zfs.c
++++ b/grub-core/fs/zfs/zfs.c
+@@ -2835,6 +2835,8 @@ dnode_get_path (struct subvolume *subvol, const char *path_in, dnode_end_t *dn,
+ 	  if (!path_buf)
+ 	    {
+ 	      grub_free (oldpathbuf);
++	      if (free_symval)
++		grub_free (sym_value);
+ 	      return grub_errno;
+ 	    }
+ 	  grub_memcpy (path, sym_value, sym_sz);
+-- 
+2.4.3
+

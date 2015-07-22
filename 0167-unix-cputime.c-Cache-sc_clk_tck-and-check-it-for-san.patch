@@ -1,0 +1,49 @@
+From 68581b009f6e943bd6ddf3c781db1c884832fa8e Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Wed, 21 Jan 2015 10:28:52 +0100
+Subject: [PATCH 167/506] unix/cputime.c: Cache sc_clk_tck and check it for
+ sanity.
+
+---
+ ChangeLog                      | 5 +++++
+ grub-core/osdep/unix/cputime.c | 9 ++++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/ChangeLog b/ChangeLog
+index f9ac599..4b9f9b2 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,10 @@
+ 2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
+ 
++	* grub-core/osdep/unix/cputime.c (grub_util_get_cpu_time_ms): Cache
++	sc_clk_tck and check it for sanity.
++
++2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
++
+ 	* grub-core/kern/efi/mm.c (grub_efi_get_memory_map): Never return a
+ 	descriptor_size==0 to avoid potential divisions by zero.
+ 
+diff --git a/grub-core/osdep/unix/cputime.c b/grub-core/osdep/unix/cputime.c
+index 47e3abc..cff359a 100644
+--- a/grub-core/osdep/unix/cputime.c
++++ b/grub-core/osdep/unix/cputime.c
+@@ -9,7 +9,14 @@ grub_uint64_t
+ grub_util_get_cpu_time_ms (void)
+ {
+   struct tms tm;
++  static long sc_clk_tck;
++  if (!sc_clk_tck)
++    {
++      sc_clk_tck = sysconf(_SC_CLK_TCK);
++      if (sc_clk_tck <= 0)
++	sc_clk_tck = 1000;
++    }
+ 
+   times (&tm); 
+-  return (tm.tms_utime * 1000ULL) / sysconf(_SC_CLK_TCK);
++  return (tm.tms_utime * 1000ULL) / sc_clk_tck;
+ }
+-- 
+2.4.3
+

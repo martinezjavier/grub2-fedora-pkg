@@ -1,0 +1,55 @@
+From e12c3bed90221fad33c4b08ce208745dd65bd782 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Mon, 26 Jan 2015 09:44:33 +0100
+Subject: [PATCH 228/506] plan9: Add missing grub_device_close.
+
+Found by: Coverity scan.
+---
+ grub-core/loader/i386/pc/plan9.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/grub-core/loader/i386/pc/plan9.c b/grub-core/loader/i386/pc/plan9.c
+index 0d10b1c..814a49d 100644
+--- a/grub-core/loader/i386/pc/plan9.c
++++ b/grub-core/loader/i386/pc/plan9.c
+@@ -342,6 +342,7 @@ fill_disk (const char *name, void *data)
+   if (!plan9name)
+     {
+       grub_print_error ();
++      grub_device_close (dev);
+       return 0;
+     }
+   if (grub_extend_alloc (fill_ctx->pmapptr + grub_strlen (plan9name)
+@@ -349,6 +350,7 @@ fill_disk (const char *name, void *data)
+ 			 &fill_ctx->pmap))
+     {
+       grub_free (plan9name);
++      grub_device_close (dev);
+       return 1;
+     }
+   grub_strcpy (fill_ctx->pmap + fill_ctx->pmapptr, plan9name);
+@@ -366,12 +368,19 @@ fill_disk (const char *name, void *data)
+   fill_ctx->noslash = 1;
+   grub_memset (fill_ctx->prefixescnt, 0, sizeof (fill_ctx->prefixescnt));
+   if (grub_partition_iterate (dev->disk, fill_partition, fill_ctx))
+-    return 1;
++    {
++      grub_device_close (dev);
++      return 1;
++    }
+   if (grub_extend_alloc (fill_ctx->pmapptr + 1, &fill_ctx->pmapalloc,
+ 			 &fill_ctx->pmap))
+-    return 1;
++    {
++      grub_device_close (dev);
++      return 1;
++    }
+   fill_ctx->pmap[fill_ctx->pmapptr++] = '\n';
+ 
++  grub_device_close (dev);
+   return 0;
+ }
+ 
+-- 
+2.4.3
+

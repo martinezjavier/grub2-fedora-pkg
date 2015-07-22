@@ -1,0 +1,50 @@
+From bbbcb791ed06c75f3dd6a2671a57a67fa86bf2ca Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Fri, 28 Nov 2014 22:23:30 +0300
+Subject: [PATCH 122/506] grub-core/disk/geli.c: fix memory leaks in error
+ paths
+
+CID: 73813, 73710
+---
+ grub-core/disk/geli.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/grub-core/disk/geli.c b/grub-core/disk/geli.c
+index 9025c9d..1727341 100644
+--- a/grub-core/disk/geli.c
++++ b/grub-core/disk/geli.c
+@@ -332,19 +332,29 @@ configure_ciphers (grub_disk_t disk, const char *check_uuid,
+     {
+       secondary_cipher = grub_crypto_cipher_open (ciph);
+       if (!secondary_cipher)
+-	return NULL;
++	{
++	  grub_crypto_cipher_close (cipher);
++	  return NULL;
++	}
++
+     }
+ 
+   if (grub_le_to_cpu16 (header.keylen) > 1024)
+     {
+       grub_error (GRUB_ERR_BAD_ARGUMENT, "invalid keysize %d",
+ 		  grub_le_to_cpu16 (header.keylen));
++      grub_crypto_cipher_close (cipher);
++      grub_crypto_cipher_close (secondary_cipher);
+       return NULL;
+     }
+ 
+   newdev = grub_zalloc (sizeof (struct grub_cryptodisk));
+   if (!newdev)
+-    return NULL;
++    {
++      grub_crypto_cipher_close (cipher);
++      grub_crypto_cipher_close (secondary_cipher);
++      return NULL;
++    }
+   newdev->cipher = cipher;
+   newdev->secondary_cipher = secondary_cipher;
+   newdev->offset = 0;
+-- 
+2.4.3
+

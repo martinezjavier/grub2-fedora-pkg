@@ -1,0 +1,34 @@
+From cfe2ae89360954f0cbc585f5c72e60a07eb066a2 Mon Sep 17 00:00:00 2001
+From: Fu Wei <fu.wei@linaro.org>
+Date: Thu, 7 May 2015 15:13:25 +0200
+Subject: [PATCH 397/506] fdt.h: Add grub_fdt_set_reg64 macro
+
+Signed-off-by: Fu Wei <fu.wei@linaro.org>
+---
+ include/grub/fdt.h | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/include/grub/fdt.h b/include/grub/fdt.h
+index 3016998..fdfca75 100644
+--- a/include/grub/fdt.h
++++ b/include/grub/fdt.h
+@@ -117,4 +117,16 @@ int grub_fdt_set_prop (void *fdt, unsigned int nodeoffset, const char *name,
+   grub_fdt_set_prop ((fdt), (nodeoffset), (name), &_val, 8);   \
+ })
+ 
++/* Setup "reg" property for
++ * #address-cells = <0x2>
++ * #size-cells = <0x2>
++ */
++#define grub_fdt_set_reg64(fdt, nodeoffset, addr, size)        \
++({ \
++  grub_uint64_t reg_64[2]; \
++  reg_64[0] = grub_cpu_to_be64(addr); \
++  reg_64[1] = grub_cpu_to_be64(size); \
++  grub_fdt_set_prop ((fdt), (nodeoffset), "reg", reg_64, 16);  \
++})
++
+ #endif	/* ! GRUB_FDT_HEADER */
+-- 
+2.4.3
+

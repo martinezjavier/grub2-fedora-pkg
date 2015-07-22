@@ -1,0 +1,125 @@
+From 5ed3a5d0491f7e00d76bed0cdf4fa3cb8868ade4 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Tue, 20 Jan 2015 14:53:09 +0100
+Subject: [PATCH 147/506] 	* grub-core/fs/minix.c: Additional filesystem
+ sanity checks.
+
+---
+ ChangeLog            |  5 +++++
+ grub-core/fs/minix.c | 34 ++++++++++++++++++----------------
+ 2 files changed, 23 insertions(+), 16 deletions(-)
+
+diff --git a/ChangeLog b/ChangeLog
+index f69541e..a5d925a 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,10 @@
+ 2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
+ 
++	* grub-core/fs/minix.c: Additional filesystem
++	sanity checks.
++
++2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
++
+ 	* grub-core/fs/ext2.c (grub_ext2_mount): Additional
+ 	checks for superblock validity.
+ 
+diff --git a/grub-core/fs/minix.c b/grub-core/fs/minix.c
+index 6f629a1..90ddd34 100644
+--- a/grub-core/fs/minix.c
++++ b/grub-core/fs/minix.c
+@@ -65,7 +65,6 @@ typedef grub_uint16_t grub_minix_uintn_t;
+ #define grub_minix_to_cpu_n grub_minix_to_cpu16
+ #endif
+ 
+-#define GRUB_MINIX_INODE_BLKSZ(data) sizeof (grub_minix_uintn_t)
+ #ifdef MODE_MINIX3
+ typedef grub_uint32_t grub_minix_ino_t;
+ #define grub_minix_to_cpu_ino grub_minix_to_cpu32
+@@ -87,8 +86,6 @@ typedef grub_uint16_t grub_minix_ino_t;
+ #define GRUB_MINIX_LOG2_ZONESZ	(GRUB_MINIX_LOG2_BSIZE				\
+ 				 + grub_minix_to_cpu16 (data->sblock.log2_zone_size))
+ #endif
+-#define GRUB_MINIX_ZONESZ	((grub_uint64_t) data->block_size <<			\
+-				 (GRUB_DISK_SECTOR_BITS + grub_minix_to_cpu16 (data->sblock.log2_zone_size)))
+ 
+ #ifdef MODE_MINIX3
+ #define GRUB_MINIX_ZONE2SECT(zone) ((zone) * data->block_size)
+@@ -172,6 +169,7 @@ struct grub_minix_data
+ {
+   struct grub_minix_sblock sblock;
+   struct grub_minix_inode inode;
++  grub_uint32_t block_per_zone;
+   grub_minix_ino_t ino;
+   int linknest;
+   grub_disk_t disk;
+@@ -202,8 +200,6 @@ static grub_minix_uintn_t
+ grub_minix_get_file_block (struct grub_minix_data *data, unsigned int blk)
+ {
+   grub_minix_uintn_t indir;
+-  const grub_uint32_t block_per_zone = (GRUB_MINIX_ZONESZ
+-					/ GRUB_MINIX_INODE_BLKSZ (data));
+ 
+   /* Direct block.  */
+   if (blk < GRUB_MINIX_INODE_DIR_BLOCKS)
+@@ -211,33 +207,33 @@ grub_minix_get_file_block (struct grub_minix_data *data, unsigned int blk)
+ 
+   /* Indirect block.  */
+   blk -= GRUB_MINIX_INODE_DIR_BLOCKS;
+-  if (blk < block_per_zone)
++  if (blk < data->block_per_zone)
+     {
+       indir = grub_get_indir (data, GRUB_MINIX_INODE_INDIR_ZONE (data), blk);
+       return indir;
+     }
+ 
+   /* Double indirect block.  */
+-  blk -= block_per_zone;
+-  if (blk < block_per_zone * block_per_zone)
++  blk -= data->block_per_zone;
++  if (blk < (grub_uint64_t) data->block_per_zone * (grub_uint64_t) data->block_per_zone)
+     {
+       indir = grub_get_indir (data, GRUB_MINIX_INODE_DINDIR_ZONE (data),
+-			      blk / block_per_zone);
++			      blk / data->block_per_zone);
+ 
+-      indir = grub_get_indir (data, indir, blk % block_per_zone);
++      indir = grub_get_indir (data, indir, blk % data->block_per_zone);
+ 
+       return indir;
+     }
+ 
+ #if defined (MODE_MINIX3) || defined (MODE_MINIX2)
+-  blk -= block_per_zone * block_per_zone;
+-  if (blk < ((grub_uint64_t) block_per_zone * (grub_uint64_t) block_per_zone
+-	     * (grub_uint64_t) block_per_zone))
++  blk -= data->block_per_zone * data->block_per_zone;
++  if (blk < ((grub_uint64_t) data->block_per_zone * (grub_uint64_t) data->block_per_zone
++	     * (grub_uint64_t) data->block_per_zone))
+     {
+       indir = grub_get_indir (data, grub_minix_to_cpu_n (data->inode.triple_indir_zone),
+-			      (blk / block_per_zone) / block_per_zone);
+-      indir = grub_get_indir (data, indir, (blk / block_per_zone) % block_per_zone);
+-      indir = grub_get_indir (data, indir, blk % block_per_zone);
++			      (blk / data->block_per_zone) / data->block_per_zone);
++      indir = grub_get_indir (data, indir, (blk / data->block_per_zone) % data->block_per_zone);
++      indir = grub_get_indir (data, indir, blk % data->block_per_zone);
+ 
+       return indir;
+     }
+@@ -515,6 +511,12 @@ grub_minix_mount (grub_disk_t disk)
+   data->block_size = 2;
+ #endif
+ 
++  data->block_per_zone = (((grub_uint64_t) data->block_size <<	\
++			   (GRUB_DISK_SECTOR_BITS + grub_minix_to_cpu16 (data->sblock.log2_zone_size)))
++			  / sizeof (grub_minix_uintn_t));
++  if (!data->block_per_zone)
++    goto fail;
++
+   return data;
+ 
+  fail:
+-- 
+2.4.3
+

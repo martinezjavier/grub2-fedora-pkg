@@ -1,0 +1,26 @@
+From 2efab86d5a45da41adbe20ac59cc4d5b946de61e Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Wed, 28 Jan 2015 20:09:25 +0300
+Subject: [PATCH 269/506] syslinux_parse: fix memory leak.
+
+Found by: Coverity scan.
+---
+ grub-core/lib/syslinux_parse.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/grub-core/lib/syslinux_parse.c b/grub-core/lib/syslinux_parse.c
+index f605326..2c874b1 100644
+--- a/grub-core/lib/syslinux_parse.c
++++ b/grub-core/lib/syslinux_parse.c
+@@ -922,6 +922,8 @@ write_entry (struct output_buffer *outbuf,
+ 
+ 	    print_string ("\n");
+ 	  }
++	if (ptr && *ptr)
++	  grub_free (cmdline);
+       }
+       break;
+     case KERNEL_CHAINLOADER:
+-- 
+2.4.3
+

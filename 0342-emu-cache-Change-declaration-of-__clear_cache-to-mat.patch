@@ -1,0 +1,27 @@
+From 66b0e6649b8aa169db1b026abc4dd4167bb312e8 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Thu, 26 Feb 2015 22:20:59 +0100
+Subject: [PATCH 342/506] emu/cache: Change declaration of __clear_cache to
+ match builtin declaration.
+
+Fixes compile of arm64-emu.
+---
+ grub-core/kern/emu/cache.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/grub-core/kern/emu/cache.c b/grub-core/kern/emu/cache.c
+index 07be675..6f89e87 100644
+--- a/grub-core/kern/emu/cache.c
++++ b/grub-core/kern/emu/cache.c
+@@ -8,7 +8,7 @@
+ #include "../ia64/cache.c"
+ #elif defined (__arm__) || defined (__aarch64__)
+ 
+-void __clear_cache (char *beg, char *end);
++void __clear_cache (void *beg, void *end);
+ 
+ void
+ grub_arch_sync_caches (void *address, grub_size_t len)
+-- 
+2.4.3
+

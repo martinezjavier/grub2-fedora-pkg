@@ -1,0 +1,25 @@
+From 68cf24376c531ee468615a84aa361e2a6e0406a9 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 24 Jan 2015 20:55:06 +0100
+Subject: [PATCH 186/506] commands/hdparm: Add missing grub_disk_close.
+
+Found by: Coverity scan.
+---
+ grub-core/commands/hdparm.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/grub-core/commands/hdparm.c b/grub-core/commands/hdparm.c
+index 3fb0891..f6b178e 100644
+--- a/grub-core/commands/hdparm.c
++++ b/grub-core/commands/hdparm.c
+@@ -329,6 +329,7 @@ grub_cmd_hdparm (grub_extcmd_context_t ctxt, int argc, char **args)
+ 	  break;
+ 	}
+     default:
++      grub_disk_close (disk);
+       return grub_error (GRUB_ERR_IO, "not an ATA device");
+     }
+     
+-- 
+2.4.3
+

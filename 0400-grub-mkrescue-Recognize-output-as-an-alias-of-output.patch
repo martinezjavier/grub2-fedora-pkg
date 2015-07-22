@@ -1,0 +1,33 @@
+From 5fd1cb980af603126b82f421417f15326b0ca38d Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Thu, 7 May 2015 16:34:34 +0200
+Subject: [PATCH 400/506] grub-mkrescue: Recognize -output as an alias of
+ --output.
+
+This helps us to be in line with xorriso -as mkisofs.
+
+Suggested by: Thomas Schmitt
+---
+ util/grub-mkrescue.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/util/grub-mkrescue.c b/util/grub-mkrescue.c
+index 815fc91..5a7993f 100644
+--- a/util/grub-mkrescue.c
++++ b/util/grub-mkrescue.c
+@@ -451,6 +451,12 @@ main (int argc, char *argv[])
+     int i;
+     for (i = 1; i < argc; i++)
+       {
++	if (strcmp (argv[i], "-output") == 0) {
++	  argp_argv[argp_argc++] = "--output";
++	  i++;
++	  argp_argv[argp_argc++] = argv[i];
++	  continue;
++	}
+ 	switch (args_to_eat (argv[i]))
+ 	  {
+ 	  case 2:
+-- 
+2.4.3
+

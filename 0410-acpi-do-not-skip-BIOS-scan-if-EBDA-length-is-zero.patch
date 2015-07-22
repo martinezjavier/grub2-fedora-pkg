@@ -1,0 +1,83 @@
+From 07258815e96aab2c72593d0129d17051cbf68d27 Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Fri, 8 May 2015 06:15:16 +0300
+Subject: [PATCH 410/506] acpi: do not skip BIOS scan if EBDA length is zero
+
+EBDA layout is not standardized so we cannot assume first two bytes
+are length. Neither is it required by ACPI standard. HP 8710W is known
+to contain zeroes here.
+
+Closes: 45002
+---
+ grub-core/commands/acpi.c         |  4 ++++
+ grub-core/commands/i386/pc/acpi.c | 10 ++++++----
+ 2 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/grub-core/commands/acpi.c b/grub-core/commands/acpi.c
+index 05a6dca..c3861f5 100644
+--- a/grub-core/commands/acpi.c
++++ b/grub-core/commands/acpi.c
+@@ -180,8 +180,10 @@ grub_acpi_create_ebda (void)
+   struct grub_acpi_rsdp_v20 *v2;
+ 
+   ebda = (grub_uint8_t *) (grub_addr_t) ((*((grub_uint16_t *)0x40e)) << 4);
++  grub_dprintf ("acpi", "EBDA @%p\n", ebda);
+   if (ebda)
+     ebda_kb_len = *(grub_uint16_t *) ebda;
++  grub_dprintf ("acpi", "EBDA length 0x%x\n", ebda_kb_len);
+   if (ebda_kb_len > 16)
+     ebda_kb_len = 0;
+   ctx.ebda_len = (ebda_kb_len + 1) << 10;
+@@ -495,6 +497,8 @@ grub_cmd_acpi (struct grub_extcmd_context *ctxt, int argc, char **args)
+   if (! rsdp)
+     rsdp = grub_machine_acpi_get_rsdpv1 ();
+ 
++  grub_dprintf ("acpi", "RSDP @%p\n", rsdp);
++
+   if (rsdp)
+     {
+       grub_uint32_t *entry_ptr;
+diff --git a/grub-core/commands/i386/pc/acpi.c b/grub-core/commands/i386/pc/acpi.c
+index d415d23..297f5d0 100644
+--- a/grub-core/commands/i386/pc/acpi.c
++++ b/grub-core/commands/i386/pc/acpi.c
+@@ -29,14 +29,15 @@ grub_machine_acpi_get_rsdpv1 (void)
+   grub_dprintf ("acpi", "Looking for RSDP. Scanning EBDA\n");
+   ebda = (grub_uint8_t *) ((* ((grub_uint16_t *) 0x40e)) << 4);
+   ebda_len = * (grub_uint16_t *) ebda;
+-  if (! ebda_len)
+-    return 0;
++  if (! ebda_len) /* FIXME do we really need this check? */
++    goto scan_bios;
+   for (ptr = ebda; ptr < ebda + 0x400; ptr += 16)
+     if (grub_memcmp (ptr, GRUB_RSDP_SIGNATURE, GRUB_RSDP_SIGNATURE_SIZE) == 0
+ 	&& grub_byte_checksum (ptr, sizeof (struct grub_acpi_rsdp_v10)) == 0
+ 	&& ((struct grub_acpi_rsdp_v10 *) ptr)->revision == 0)
+       return (struct grub_acpi_rsdp_v10 *) ptr;
+ 
++scan_bios:
+   grub_dprintf ("acpi", "Looking for RSDP. Scanning BIOS\n");
+   for (ptr = (grub_uint8_t *) 0xe0000; ptr < (grub_uint8_t *) 0x100000;
+        ptr += 16)
+@@ -56,8 +57,8 @@ grub_machine_acpi_get_rsdpv2 (void)
+   grub_dprintf ("acpi", "Looking for RSDP. Scanning EBDA\n");
+   ebda = (grub_uint8_t *) ((* ((grub_uint16_t *) 0x40e)) << 4);
+   ebda_len = * (grub_uint16_t *) ebda;
+-  if (! ebda_len)
+-    return 0;
++  if (! ebda_len) /* FIXME do we really need this check? */
++    goto scan_bios;
+   for (ptr = ebda; ptr < ebda + 0x400; ptr += 16)
+     if (grub_memcmp (ptr, GRUB_RSDP_SIGNATURE, GRUB_RSDP_SIGNATURE_SIZE) == 0
+ 	&& grub_byte_checksum (ptr, sizeof (struct grub_acpi_rsdp_v10)) == 0
+@@ -67,6 +68,7 @@ grub_machine_acpi_get_rsdpv2 (void)
+ 	== 0)
+       return (struct grub_acpi_rsdp_v20 *) ptr;
+ 
++scan_bios:
+   grub_dprintf ("acpi", "Looking for RSDP. Scanning BIOS\n");
+   for (ptr = (grub_uint8_t *) 0xe0000; ptr < (grub_uint8_t *) 0x100000;
+        ptr += 16)
+-- 
+2.4.3
+

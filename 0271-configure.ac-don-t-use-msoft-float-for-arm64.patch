@@ -1,0 +1,33 @@
+From 2da4171eabfe0d1b9b1be6146f628099d08aac02 Mon Sep 17 00:00:00 2001
+From: Leif Lindholm <leif.lindholm@linaro.org>
+Date: Wed, 28 Jan 2015 20:17:18 +0000
+Subject: [PATCH 271/506] configure.ac: don't use -msoft-float for arm64
+
+aarch64 toolchains do not support the -msoft-float option added by
+commit 3661261f. Insted, for arm64 use -march=armv8-a+nofp+nosimd.
+
+Reported-by: Ryan Harkin <ryan.harkin@linaro.org>
+---
+ configure.ac | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index a3bca06..6d31ed0 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -678,7 +678,11 @@ fi
+ # that floats are a good fit to run instead of what's written in the code.
+ # Given that floating point unit is disabled (if present to begin with)
+ # when GRUB is running which may result in various hard crashes.
+-TARGET_CFLAGS="$TARGET_CFLAGS -msoft-float"
++if test "x$target_cpu" = xarm64; then
++  TARGET_CFLAGS="$TARGET_CFLAGS -march=armv8-a+nofp+nosimd"
++else
++  TARGET_CFLAGS="$TARGET_CFLAGS -msoft-float"
++fi
+ 
+ # By default, GCC 4.4 generates .eh_frame sections containing unwind
+ # information in some cases where it previously did not. GRUB doesn't need
+-- 
+2.4.3
+

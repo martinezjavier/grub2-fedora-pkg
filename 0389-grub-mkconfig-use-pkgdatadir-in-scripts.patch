@@ -1,0 +1,167 @@
+From 104dff36eabe25dec143838167466fd6a8ddbc79 Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Wed, 29 Apr 2015 19:18:54 +0300
+Subject: [PATCH 389/506] grub-mkconfig: use $pkgdatadir in scripts
+
+Otherwise scripts will source wrong grub-mkconfig_lib.
+---
+ util/grub-mkconfig.in       | 3 +++
+ util/grub.d/00_header.in    | 2 +-
+ util/grub.d/10_hurd.in      | 2 +-
+ util/grub.d/10_illumos.in   | 2 +-
+ util/grub.d/10_kfreebsd.in  | 2 +-
+ util/grub.d/10_linux.in     | 2 +-
+ util/grub.d/10_netbsd.in    | 2 +-
+ util/grub.d/10_windows.in   | 2 +-
+ util/grub.d/10_xnu.in       | 2 +-
+ util/grub.d/20_linux_xen.in | 2 +-
+ util/grub.d/30_os-prober.in | 2 +-
+ 11 files changed, 13 insertions(+), 10 deletions(-)
+
+diff --git a/util/grub-mkconfig.in b/util/grub-mkconfig.in
+index d1fae49..3183744 100644
+--- a/util/grub-mkconfig.in
++++ b/util/grub-mkconfig.in
+@@ -33,6 +33,9 @@ datadir="@datadir@"
+ if [ "x$pkgdatadir" = x ]; then
+     pkgdatadir="${datadir}/@PACKAGE@"
+ fi
++# export it for scripts
++export pkgdatadir
++
+ grub_cfg=""
+ grub_mkconfig_dir="${sysconfdir}"/grub.d
+ 
+diff --git a/util/grub.d/00_header.in b/util/grub.d/00_header.in
+index ce2ec81..93a9023 100644
+--- a/util/grub.d/00_header.in
++++ b/util/grub.d/00_header.in
+@@ -25,7 +25,7 @@ grub_lang=`echo $LANG | cut -d . -f 1`
+ export TEXTDOMAIN=@PACKAGE@
+ export TEXTDOMAINDIR="@localedir@"
+ 
+-. "@datadir@/@PACKAGE@/grub-mkconfig_lib"
++. "$pkgdatadir/grub-mkconfig_lib"
+ 
+ # Do this as early as possible, since other commands might depend on it.
+ # (e.g. the `loadfont' command might need lvm or raid modules)
+diff --git a/util/grub.d/10_hurd.in b/util/grub.d/10_hurd.in
+index 29b4554..59a9a48 100644
+--- a/util/grub.d/10_hurd.in
++++ b/util/grub.d/10_hurd.in
+@@ -24,7 +24,7 @@ datarootdir="@datarootdir@"
+ export TEXTDOMAIN=@PACKAGE@
+ export TEXTDOMAINDIR="@localedir@"
+ 
+-. "@datadir@/@PACKAGE@/grub-mkconfig_lib"
++. "$pkgdatadir/grub-mkconfig_lib"
+ 
+ CLASS="--class gnu --class os"
+ 
+diff --git a/util/grub.d/10_illumos.in b/util/grub.d/10_illumos.in
+index 0de616e..a133e1b 100644
+--- a/util/grub.d/10_illumos.in
++++ b/util/grub.d/10_illumos.in
+@@ -20,7 +20,7 @@ set -e
+ prefix="@prefix@"
+ exec_prefix="@exec_prefix@"
+ datarootdir="@datarootdir@"
+-. "@datadir@/@PACKAGE@/grub-mkconfig_lib"
++. "$pkgdatadir/grub-mkconfig_lib"
+ 
+ export TEXTDOMAIN=@PACKAGE@
+ export TEXTDOMAINDIR="@localedir@"
+diff --git a/util/grub.d/10_kfreebsd.in b/util/grub.d/10_kfreebsd.in
+index 65f6c32..9d8e8fd 100644
+--- a/util/grub.d/10_kfreebsd.in
++++ b/util/grub.d/10_kfreebsd.in
+@@ -20,7 +20,7 @@ set -e
+ prefix="@prefix@"
+ exec_prefix="@exec_prefix@"
+ datarootdir="@datarootdir@"
+-. "@datadir@/@PACKAGE@/grub-mkconfig_lib"
++. "$pkgdatadir/grub-mkconfig_lib"
+ 
+ export TEXTDOMAIN=@PACKAGE@
+ export TEXTDOMAINDIR="@localedir@"
+diff --git a/util/grub.d/10_linux.in b/util/grub.d/10_linux.in
+index a2a84dc..859b608 100644
+--- a/util/grub.d/10_linux.in
++++ b/util/grub.d/10_linux.in
+@@ -21,7 +21,7 @@ prefix="@prefix@"
+ exec_prefix="@exec_prefix@"
+ datarootdir="@datarootdir@"
+ 
+-. "@datadir@/@PACKAGE@/grub-mkconfig_lib"
++. "$pkgdatadir/grub-mkconfig_lib"
+ 
+ export TEXTDOMAIN=@PACKAGE@
+ export TEXTDOMAINDIR="@localedir@"
+diff --git a/util/grub.d/10_netbsd.in b/util/grub.d/10_netbsd.in
+index 9988a42..874f599 100644
+--- a/util/grub.d/10_netbsd.in
++++ b/util/grub.d/10_netbsd.in
+@@ -20,7 +20,7 @@ set -e
+ prefix="@prefix@"
+ exec_prefix="@exec_prefix@"
+ datarootdir="@datarootdir@"
+-. "@datadir@/@PACKAGE@/grub-mkconfig_lib"
++. "$pkgdatadir/grub-mkconfig_lib"
+ 
+ export TEXTDOMAIN=@PACKAGE@
+ export TEXTDOMAINDIR="@localedir@"
+diff --git a/util/grub.d/10_windows.in b/util/grub.d/10_windows.in
+index 48bd955..554c561 100644
+--- a/util/grub.d/10_windows.in
++++ b/util/grub.d/10_windows.in
+@@ -24,7 +24,7 @@ datarootdir="@datarootdir@"
+ export TEXTDOMAIN=@PACKAGE@
+ export TEXTDOMAINDIR="@localedir@"
+ 
+-. "@datadir@/@PACKAGE@/grub-mkconfig_lib"
++. "$pkgdatadir/grub-mkconfig_lib"
+ 
+ case "`uname 2>/dev/null`" in
+   CYGWIN*)  ;;
+diff --git a/util/grub.d/10_xnu.in b/util/grub.d/10_xnu.in
+index 4270385..51ee2f4 100644
+--- a/util/grub.d/10_xnu.in
++++ b/util/grub.d/10_xnu.in
+@@ -24,7 +24,7 @@ datarootdir="@datarootdir@"
+ export TEXTDOMAIN=@PACKAGE@
+ export TEXTDOMAINDIR="@localedir@"
+ 
+-. "@datadir@/@PACKAGE@/grub-mkconfig_lib"
++. "$pkgdatadir/grub-mkconfig_lib"
+ 
+ osx_entry() {
+     if [ x$2 = x32 ]; then
+diff --git a/util/grub.d/20_linux_xen.in b/util/grub.d/20_linux_xen.in
+index de34c8d..f532fb9 100644
+--- a/util/grub.d/20_linux_xen.in
++++ b/util/grub.d/20_linux_xen.in
+@@ -21,7 +21,7 @@ prefix="@prefix@"
+ exec_prefix="@exec_prefix@"
+ datarootdir="@datarootdir@"
+ 
+-. "@datadir@/@PACKAGE@/grub-mkconfig_lib"
++. "$pkgdatadir/grub-mkconfig_lib"
+ 
+ export TEXTDOMAIN=@PACKAGE@
+ export TEXTDOMAINDIR="@localedir@"
+diff --git a/util/grub.d/30_os-prober.in b/util/grub.d/30_os-prober.in
+index 4ee6015..5fc4f0c 100644
+--- a/util/grub.d/30_os-prober.in
++++ b/util/grub.d/30_os-prober.in
+@@ -24,7 +24,7 @@ datarootdir="@datarootdir@"
+ export TEXTDOMAIN=@PACKAGE@
+ export TEXTDOMAINDIR="@localedir@"
+ 
+-. "@datadir@/@PACKAGE@/grub-mkconfig_lib"
++. "$pkgdatadir/grub-mkconfig_lib"
+ 
+ if [ "x${GRUB_DISABLE_OS_PROBER}" = "xtrue" ]; then
+   exit 0
+-- 
+2.4.3
+

@@ -1,0 +1,24 @@
+From 1f23c87c19b3002231c2939a8d03fa4b67f7bcb6 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Fri, 27 Mar 2015 14:04:41 +0100
+Subject: [PATCH 375/506] Make Makefile.util.def independent of platform.
+
+---
+ Makefile.util.def | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/Makefile.util.def b/Makefile.util.def
+index 67dfb29..3cb6b21 100644
+--- a/Makefile.util.def
++++ b/Makefile.util.def
+@@ -613,7 +613,6 @@ program = {
+   common = grub-core/disk/host.c;
+ 
+   common = util/resolve.c;
+-  enable = noemu;
+   common = grub-core/kern/emu/argp_common.c;
+   common = grub-core/osdep/init.c;
+ 
+-- 
+2.4.3
+

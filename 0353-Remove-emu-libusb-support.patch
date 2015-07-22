@@ -1,0 +1,420 @@
+From 9d25b0da9a8cce9b3766f4e1b449d7936d5ba124 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Tue, 3 Mar 2015 20:59:36 +0100
+Subject: [PATCH 353/506] Remove emu libusb support.
+
+It's disabled by default and has been broken for a long time.
+As nobody is interested in fixing and maintaining it, remove it.
+---
+ configure.ac                |  44 ----------
+ gentpl.py                   |   2 +-
+ grub-core/Makefile.am       |   3 -
+ grub-core/Makefile.core.def |  14 ---
+ grub-core/bus/usb/emu/usb.c | 203 --------------------------------------------
+ include/grub/libusb.h       |  29 -------
+ 6 files changed, 1 insertion(+), 294 deletions(-)
+ delete mode 100644 grub-core/bus/usb/emu/usb.c
+ delete mode 100644 include/grub/libusb.h
+
+diff --git a/configure.ac b/configure.ac
+index 16fa0da..2200776 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1255,10 +1255,6 @@ else
+ fi
+ AC_SUBST([BOOT_TIME_STATS])
+ 
+-AC_ARG_ENABLE([grub-emu-usb],
+-	      [AS_HELP_STRING([--enable-grub-emu-usb],
+-                             [build and install the `grub-emu' debugging utility with USB support (default=guessed)])])
+-
+ AC_ARG_ENABLE([grub-emu-sdl],
+ 	      [AS_HELP_STRING([--enable-grub-emu-sdl],
+                              [build and install the `grub-emu' debugging utility with SDL support (default=guessed)])])
+@@ -1269,34 +1265,6 @@ AC_ARG_ENABLE([grub-emu-pci],
+ 
+ if test "$platform" = emu; then
+ 
+-if test x"$enable_grub_emu_usb" != xyes ; then
+-   grub_emu_usb_excuse="not enabled"
+-fi
+-
+-if test x"$enable_grub_emu_pci" = xyes ; then
+-   grub_emu_usb_excuse="conflicts with PCI support"
+-fi
+-
+-[if [ x"$grub_emu_usb_excuse" = x ]; then
+-    # Check for libusb libraries.]
+-AC_CHECK_LIB([usb], [usb_claim_interface], [LIBUSB="-lusb"],
+-    [grub_emu_usb_excuse=["need libusb library"]])
+-    AC_SUBST([LIBUSB])
+-[fi]
+-[if [ x"$grub_emu_usb_excuse" = x ]; then
+-    # Check for headers.]
+-    AC_CHECK_HEADERS([usb.h], [],
+-      [grub_emu_usb_excuse=["need libusb headers"]])
+-[fi]
+-if test x"$enable_grub_emu_usb" = xyes && test x"$grub_emu_usb_excuse" != x ; then
+-  AC_MSG_ERROR([USB support for grub-emu was explicitly requested but can't be compiled ($grub_emu_usb_excuse)])
+-fi
+-if test x"$grub_emu_usb_excuse" = x ; then
+-enable_grub_emu_usb=yes
+-else
+-enable_grub_emu_usb=no
+-fi
+-
+ if test x"$enable_grub_emu_sdl" = xno ; then
+   grub_emu_sdl_excuse="explicitly disabled"
+ fi
+@@ -1326,10 +1294,6 @@ if test x"$enable_grub_emu_pci" != xyes ; then
+    grub_emu_pci_excuse="not enabled"
+ fi
+ 
+-if test x"$enable_grub_emu_usb" = xyes ; then
+-   grub_emu_pci_excuse="conflicts with USB support"
+-fi
+-
+ [if [ x"$grub_emu_pci_excuse" = x ]; then
+       # Check for libpci libraries.]
+    AC_CHECK_LIB([pciaccess], [pci_system_init], [LIBPCIACCESS="-lpciaccess"],
+@@ -1350,14 +1314,12 @@ enable_grub_emu_pci=no
+ fi
+ 
+ AC_SUBST([enable_grub_emu_sdl])
+-AC_SUBST([enable_grub_emu_usb])
+ AC_SUBST([enable_grub_emu_pci])
+ 
+ else
+ 
+ # Ignore --enable-emu-* if platform is not emu
+ enable_grub_emu_sdl=no
+-enable_grub_emu_usb=no
+ enable_grub_emu_pci=no
+ fi
+ 
+@@ -1793,7 +1755,6 @@ AM_CONDITIONAL([COND_HOST_XNU], [test x$host_kernel = xxnu])
+ AM_CONDITIONAL([COND_HOST_ILLUMOS], [test x$host_kernel = xillumos])
+ 
+ AM_CONDITIONAL([COND_MAN_PAGES], [test x$cross_compiling = xno -a x$HELP2MAN != x])
+-AM_CONDITIONAL([COND_GRUB_EMU_USB], [test x$enable_grub_emu_usb = xyes])
+ AM_CONDITIONAL([COND_GRUB_EMU_SDL], [test x$enable_grub_emu_sdl = xyes])
+ AM_CONDITIONAL([COND_GRUB_EMU_PCI], [test x$enable_grub_emu_pci = xyes])
+ AM_CONDITIONAL([COND_GRUB_MKFONT], [test x$enable_grub_mkfont = xyes])
+@@ -1871,11 +1832,6 @@ echo "*******************************************************"
+ echo GRUB2 will be compiled with following components:
+ echo Platform: "$target_cpu"-"$platform"
+ if [ x"$platform" = xemu ]; then
+-if [ x"$grub_emu_usb_excuse" = x ]; then
+-echo USB support for grub-emu: Yes
+-else
+-echo USB support for grub-emu: No "($grub_emu_usb_excuse)"
+-fi
+ if [ x"$grub_emu_sdl_excuse" = x ]; then
+ echo SDL support for grub-emu: Yes
+ else
+diff --git a/gentpl.py b/gentpl.py
+index d2aa035..f177883 100644
+--- a/gentpl.py
++++ b/gentpl.py
+@@ -606,7 +606,7 @@ def foreach_enabled_platform(defn, closure):
+ #    enable = emu;
+ #    enable = i386;
+ #    enable = mips_loongson;
+-#    emu_condition = COND_GRUB_EMU_USB;
++#    emu_condition = COND_GRUB_EMU_SDL;
+ #  };
+ #
+ def under_platform_specific_conditionals(defn, platform, closure):
+diff --git a/grub-core/Makefile.am b/grub-core/Makefile.am
+index 57c0b64..af0c7f4 100644
+--- a/grub-core/Makefile.am
++++ b/grub-core/Makefile.am
+@@ -250,9 +250,6 @@ KERNEL_HEADER_FILES += $(top_srcdir)/include/grub/extcmd.h
+ if COND_GRUB_EMU_SDL
+ KERNEL_HEADER_FILES += $(top_srcdir)/include/grub/sdl.h
+ endif
+-if COND_GRUB_EMU_USB
+-KERNEL_HEADER_FILES += $(top_srcdir)/include/grub/libusb.h
+-endif
+ if COND_GRUB_EMU_PCI
+ KERNEL_HEADER_FILES += $(top_srcdir)/include/grub/libpciaccess.h
+ endif
+diff --git a/grub-core/Makefile.core.def b/grub-core/Makefile.core.def
+index 7a6fa21..8eaae45 100644
+--- a/grub-core/Makefile.core.def
++++ b/grub-core/Makefile.core.def
+@@ -512,13 +512,6 @@ module = {
+ };
+ 
+ module = {
+-  name = libusb;
+-  emu = bus/usb/emu/usb.c;
+-  enable = emu;
+-  condition = COND_GRUB_EMU_USB;
+-};
+-
+-module = {
+   name = lsspd;
+   mips_loongson = commands/mips/loongson/lsspd.c;
+   enable = mips_loongson;
+@@ -533,13 +526,6 @@ module = {
+ };
+ 
+ module = {
+-  name = emuusb;
+-  common = bus/usb/usb.c;
+-  enable = emu;
+-  condition = COND_GRUB_EMU_USB;
+-};
+-
+-module = {
+   name = usbserial_common;
+   common = bus/usb/serial/common.c;
+   enable = usb;
+diff --git a/grub-core/bus/usb/emu/usb.c b/grub-core/bus/usb/emu/usb.c
+deleted file mode 100644
+index 3ad2fc3..0000000
+--- a/grub-core/bus/usb/emu/usb.c
++++ /dev/null
+@@ -1,203 +0,0 @@
+-/*  usb.c -- libusb USB support for GRUB.  */
+-/*
+- *  GRUB  --  GRand Unified Bootloader
+- *  Copyright (C) 2008  Free Software Foundation, Inc.
+- *
+- *  GRUB is free software: you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation, either version 3 of the License, or
+- *  (at your option) any later version.
+- *
+- *  GRUB is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with GRUB.  If not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#include <config.h>
+-#include <grub/misc.h>
+-#include <grub/mm.h>
+-#include <usb.h>
+-#include <grub/usb.h>
+-#include <grub/dl.h>
+-
+-GRUB_MOD_LICENSE ("GPLv3+");
+-
+-
+-static struct grub_usb_controller_dev usb_controller =
+-{
+-  .name = "libusb"
+-};
+-
+-static struct grub_usb_device *grub_usb_devs[128];
+-
+-struct usb_bus *busses;
+-
+-static grub_err_t
+-grub_libusb_devices (void)
+-
+-{
+-  struct usb_bus *bus;
+-  int last = 0;
+-
+-  busses = usb_get_busses();
+-
+-  for (bus = busses; bus; bus = bus->next)
+-    {
+-      struct usb_device *usbdev;
+-      struct grub_usb_device *dev;
+-
+-      for (usbdev = bus->devices; usbdev; usbdev = usbdev->next)
+-	{
+-	  struct usb_device_descriptor *desc = &usbdev->descriptor;
+-	  grub_err_t err;
+-
+-	  if (! desc->bcdUSB)
+-	    continue;
+-
+-	  dev = grub_malloc (sizeof (*dev));
+-	  if (! dev)
+-	    return grub_errno;
+-
+-	  dev->data = usbdev;
+-
+-	  /* Fill in all descriptors.  */
+-	  err = grub_usb_device_initialize (dev);
+-	  if (err)
+-	    {
+-	      grub_errno = GRUB_ERR_NONE;
+-	      continue;
+-	    }
+-
+-	  /* Register the device.  */
+-	  grub_usb_devs[last++] = dev;
+-	}
+-    }
+-
+-  return GRUB_USB_ERR_NONE;
+-}
+-
+-void
+-grub_usb_poll_devices (void)
+-{
+-  /* TODO: recheck grub_usb_devs */
+-}
+-
+-
+-int
+-grub_usb_iterate (grub_usb_iterate_hook_t hook, void *hook_data)
+-{
+-  int i;
+-
+-  for (i = 0; i < 128; i++)
+-    {
+-      if (grub_usb_devs[i])
+-	{
+-	  if (hook (grub_usb_devs[i], hook_data))
+-	      return 1;
+-	}
+-    }
+-
+-  return 0;
+-}
+-
+-grub_usb_err_t
+-grub_usb_root_hub (grub_usb_controller_t controller __attribute__((unused)))
+-{
+-  return GRUB_USB_ERR_NONE;
+-}
+-
+-grub_usb_err_t
+-grub_usb_control_msg (grub_usb_device_t dev, grub_uint8_t reqtype,
+-		      grub_uint8_t request, grub_uint16_t value,
+-		      grub_uint16_t idx, grub_size_t size, char *data)
+-{
+-  usb_dev_handle *devh;
+-  struct usb_device *d = dev->data;
+-
+-  devh = usb_open (d);
+-  if (usb_control_msg (devh, reqtype, request,
+-		       value, idx, data, size, 20) < 0)
+-    {
+-      usb_close (devh);
+-      return GRUB_USB_ERR_STALL;
+-    }
+-
+-  usb_close (devh);
+-
+-  return GRUB_USB_ERR_NONE;
+-}
+-
+-grub_usb_err_t
+-grub_usb_bulk_read (grub_usb_device_t dev,
+-		    int endpoint, grub_size_t size, char *data)
+-{
+-  usb_dev_handle *devh;
+-  struct usb_device *d = dev->data;
+-
+-  devh = usb_open (d);
+-  if (usb_claim_interface (devh, 0) < 1)
+-    {
+-      usb_close (devh);
+-      return GRUB_USB_ERR_STALL;
+-    }
+-
+-  if (usb_bulk_read (devh, endpoint, data, size, 20) < 1)
+-    {
+-      usb_close (devh);
+-      return GRUB_USB_ERR_STALL;
+-    }
+-
+-  usb_release_interface (devh, 0);
+-  usb_close (devh);
+-
+-  return GRUB_USB_ERR_NONE;
+-}
+-
+-grub_usb_err_t
+-grub_usb_bulk_write (grub_usb_device_t dev,
+-		     int endpoint, grub_size_t size, char *data)
+-{
+-  usb_dev_handle *devh;
+-  struct usb_device *d = dev->data;
+-
+-  devh = usb_open (d);
+-  if (usb_claim_interface (devh, 0) < 0)
+-    goto fail;
+-
+-  if (usb_bulk_write (devh, endpoint, data, size, 20) < 0)
+-    goto fail;
+-
+-  if (usb_release_interface (devh, 0) < 0)
+-    goto fail;
+-
+-  usb_close (devh);
+-
+-  return GRUB_USB_ERR_NONE;
+-
+- fail:
+-  usb_close (devh);
+-  return GRUB_USB_ERR_STALL;
+-}
+-
+-GRUB_MOD_INIT (libusb)
+-{
+-  usb_init();
+-  usb_find_busses();
+-  usb_find_devices();
+-
+-  if (grub_libusb_devices ())
+-    return;
+-
+-  grub_usb_controller_dev_register (&usb_controller);
+-
+-  return;
+-}
+-
+-GRUB_MOD_FINI (libusb)
+-{
+-  return;
+-}
+diff --git a/include/grub/libusb.h b/include/grub/libusb.h
+deleted file mode 100644
+index 26548bc..0000000
+--- a/include/grub/libusb.h
++++ /dev/null
+@@ -1,29 +0,0 @@
+-/*
+- *  GRUB  --  GRand Unified Bootloader
+- *  Copyright (C) 2010  Free Software Foundation, Inc.
+- *
+- *  GRUB is free software: you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation, either version 3 of the License, or
+- *  (at your option) any later version.
+- *
+- *  GRUB is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with GRUB.  If not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-void EXPORT_FUNC (usb_bulk_write) (void);
+-void EXPORT_FUNC (usb_find_busses) (void);
+-void EXPORT_FUNC (usb_init) (void);
+-void EXPORT_FUNC (usb_find_devices) (void);
+-void EXPORT_FUNC (usb_open) (void);
+-void EXPORT_FUNC (usb_get_busses) (void);
+-void EXPORT_FUNC (usb_control_msg) (void);
+-void EXPORT_FUNC (usb_release_interface) (void);
+-void EXPORT_FUNC (usb_close) (void);
+-void EXPORT_FUNC (usb_bulk_read) (void);
+-void EXPORT_FUNC (usb_claim_interface) (void);
+-- 
+2.4.3
+

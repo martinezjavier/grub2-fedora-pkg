@@ -1,0 +1,29 @@
+From 3c6384832bb304078fcafc537195827710f9f6bf Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Mon, 26 Jan 2015 09:55:30 +0100
+Subject: [PATCH 239/506] grub-install: Fix memory leak.
+
+Found by: Coverity scan.
+---
+ util/grub-install.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/util/grub-install.c b/util/grub-install.c
+index 7d61c32..afbc557 100644
+--- a/util/grub-install.c
++++ b/util/grub-install.c
+@@ -622,7 +622,10 @@ device_map_check_duplicates (const char *dev_map)
+ 
+   fp = grub_util_fopen (dev_map, "r");
+   if (! fp)
+-    return;
++    {
++      free (d);
++      return;
++    }
+ 
+   while (fgets (buf, sizeof (buf), fp))
+     {
+-- 
+2.4.3
+

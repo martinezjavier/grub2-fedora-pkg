@@ -1,0 +1,26 @@
+From 6079e67926079d4b3ca35aa570eee2c0f4459f04 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 24 Jan 2015 21:25:42 +0100
+Subject: [PATCH 195/506] commands/tr: Simplify and fix missing parameter test.
+
+Found by: Coverity scan
+---
+ grub-core/commands/tr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/grub-core/commands/tr.c b/grub-core/commands/tr.c
+index 84ad6ff..ef72841 100644
+--- a/grub-core/commands/tr.c
++++ b/grub-core/commands/tr.c
+@@ -80,7 +80,7 @@ grub_cmd_tr (grub_extcmd_context_t ctxt, int argc, char **args)
+   } else if (argc > 3)
+     return grub_error (GRUB_ERR_BAD_ARGUMENT, "too many parameters");
+ 
+-  if (argc <= 0 && (!s1 || !s2 || !input))
++  if (!s1 || !s2 || !input)
+     return grub_error (GRUB_ERR_BAD_ARGUMENT, "missing parameters");
+ 
+   if (grub_strlen (s1) != grub_strlen (s2))
+-- 
+2.4.3
+

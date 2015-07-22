@@ -1,0 +1,30 @@
+From b8f537199a64c7aef68ed39e037f52e9bb629cfc Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 24 Jan 2015 20:14:59 +0100
+Subject: [PATCH 179/506] Generate empty ChangeLog if no .git is available.
+
+When making dist from a git snapshot without repo available make dist would
+fail to find ChangeLog. Generate empty ChangeLog if no ChangeLog is already
+present and repo is not available.
+
+Reported by: Andrei Borzenkov <arvidjaar@gmail.com>
+---
+ Makefile.am | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Makefile.am b/Makefile.am
+index a232eb1..f702951 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -447,6 +447,8 @@ ChangeLog: FORCE
+ 	if test -d $(top_srcdir)/.git; then \
+ 		$(gitlog_to_changelog) --srcdir=$(top_srcdir) --since=$(changelog_start_date) > '$@.tmp'; \
+ 		rm -f '$@'; mv '$@.tmp' '$@'; \
++	else \
++		touch $@; \
+ 	fi
+ 
+ EXTRA_DIST += ChangeLog ChangeLog-2015
+-- 
+2.4.3
+

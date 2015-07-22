@@ -1,0 +1,47 @@
+From e5851b63e0b84cc648faaeff50d6300a16f9236a Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 21 Feb 2015 16:09:46 +0100
+Subject: [PATCH 301/506] mips/startup_raw: Use more portable .asciz
+
+---
+ grub-core/boot/mips/startup_raw.S | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/grub-core/boot/mips/startup_raw.S b/grub-core/boot/mips/startup_raw.S
+index 29e93c1..c169ca3 100644
+--- a/grub-core/boot/mips/startup_raw.S
++++ b/grub-core/boot/mips/startup_raw.S
+@@ -150,18 +150,18 @@ digcont:
+ 1:
+ 	jr $ra
+ 	 nop
+-busclockstr:	.asciiz "busclock="
+-cpuclockstr:	.asciiz "cpuclock="
+-memsizestr:	.asciiz "memsize="
+-highmemsizestr:	.asciiz "highmemsize="
+-machtype_yeeloong_str1:	.asciiz "machtype=8.9"
+-machtype_yeeloong_str2:	.asciiz "machtype=lemote-yeeloong-"
+-machtype_fuloong2f_str:	.asciiz "machtype=lemote-fuloong-2f"
+-machtype_fuloong2e_str:	.asciiz "machtype=lemote-fuloong-2e"
+-pmon_yeeloong_str:	.asciiz "PMON_VER=LM8"
+-pmon_fuloong2f_str:	.asciiz "PMON_VER=LM6"
+-pmon_yeeloong_verstr:	.asciiz "Version=LM8"
+-pmon_fuloong2f_verstr:	.asciiz "Version=LM6"
++busclockstr:	.asciz "busclock="
++cpuclockstr:	.asciz "cpuclock="
++memsizestr:	.asciz "memsize="
++highmemsizestr:	.asciz "highmemsize="
++machtype_yeeloong_str1:	.asciz "machtype=8.9"
++machtype_yeeloong_str2:	.asciz "machtype=lemote-yeeloong-"
++machtype_fuloong2f_str:	.asciz "machtype=lemote-fuloong-2f"
++machtype_fuloong2e_str:	.asciz "machtype=lemote-fuloong-2e"
++pmon_yeeloong_str:	.asciz "PMON_VER=LM8"
++pmon_fuloong2f_str:	.asciz "PMON_VER=LM6"
++pmon_yeeloong_verstr:	.asciz "Version=LM8"
++pmon_fuloong2f_verstr:	.asciz "Version=LM6"
+ 	.p2align 2
+ 
+ argdone:
+-- 
+2.4.3
+

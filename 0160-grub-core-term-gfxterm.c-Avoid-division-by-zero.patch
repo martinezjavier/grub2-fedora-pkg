@@ -1,0 +1,41 @@
+From c453760c71282bc01a88ab80fff02a247297c62b Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Tue, 20 Jan 2015 20:50:35 +0100
+Subject: [PATCH 160/506] 	* grub-core/term/gfxterm.c: Avoid division by
+ zero.
+
+---
+ ChangeLog                | 4 ++++
+ grub-core/term/gfxterm.c | 2 ++
+ 2 files changed, 6 insertions(+)
+
+diff --git a/ChangeLog b/ChangeLog
+index 7d5a651..dc882d8 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,9 @@
+ 2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
+ 
++	* grub-core/term/gfxterm.c: Avoid division by zero.
++
++2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
++
+ 	Avoid division by zero in serial.
+ 
+ 	* grub-core/term/serial.c (grub_cmd_serial): Ensure speed is not 0.
+diff --git a/grub-core/term/gfxterm.c b/grub-core/term/gfxterm.c
+index dc0669b..70f10f1 100644
+--- a/grub-core/term/gfxterm.c
++++ b/grub-core/term/gfxterm.c
+@@ -221,6 +221,8 @@ grub_virtual_screen_setup (unsigned int x, unsigned int y,
+     calculate_normal_character_width (virtual_screen.font);
+   virtual_screen.normal_char_height =
+     grub_font_get_max_char_height (virtual_screen.font);
++  if (virtual_screen.normal_char_height == 0)
++    virtual_screen.normal_char_height = 16;
+   virtual_screen.cursor_x = 0;
+   virtual_screen.cursor_y = 0;
+   virtual_screen.cursor_state = 1;
+-- 
+2.4.3
+

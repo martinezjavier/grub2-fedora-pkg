@@ -1,0 +1,25 @@
+From edf2db97e72916786ee87b5a7630659369e1ee97 Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Fri, 23 Jan 2015 21:06:16 +0300
+Subject: [PATCH 172/506] Mention platform "none" in NEWS
+
+---
+ NEWS | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/NEWS b/NEWS
+index a61df94..55f09d6 100644
+--- a/NEWS
++++ b/NEWS
+@@ -85,6 +85,8 @@ New in 2.02:
+   * Support for USB debug dongles.
+   * Support for *-emu on all platforms (previously only i386/x86_64 worked).
+   * Support *-emu on Windows.
++  * New platform "none" which builds only user level utilities. This is now
++    default if target CPU is not supported.
+ 
+ * Security:
+   * Add optional facility to enforce that all files read by the core image
+-- 
+2.4.3
+

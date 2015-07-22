@@ -1,0 +1,23 @@
+From 60049a0e7204c267fc867ce8de31421613af0b69 Mon Sep 17 00:00:00 2001
+From: Colin Watson <cjwatson@ubuntu.com>
+Date: Fri, 19 Sep 2014 14:50:51 +0100
+Subject: [PATCH 100/506] Tidy up ChangeLog formatting.
+
+---
+ ChangeLog | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/ChangeLog b/ChangeLog
+index ea011b7..2bbf501 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,4 +1,5 @@
+-2014-09-15  Khem Raj <raj.khem@gmail.com>
++2014-09-15  Khem Raj  <raj.khem@gmail.com>
++
+ 	* grub-core/kern/emu/hostfs.c: use _DEFAULT_SOURCE in addition to
+ 	_BSD_SOURCE to avoid warnings under glibc 2.20+.
+ 
+-- 
+2.4.3
+

@@ -1,0 +1,29 @@
+From 050505ab8f695c10b3e4e768a4188688ebe5e366 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 28 Feb 2015 15:13:41 +0100
+Subject: [PATCH 343/506] ntfs_test: Skip is setfattr is unavailable.
+
+---
+ tests/ntfs_test.in | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/tests/ntfs_test.in b/tests/ntfs_test.in
+index 6bf09e6..e25c638 100644
+--- a/tests/ntfs_test.in
++++ b/tests/ntfs_test.in
+@@ -15,5 +15,10 @@ if ! which mkfs.ntfs >/dev/null 2>&1; then
+    exit 77
+ fi
+ 
++if ! which setfattr >/dev/null 2>&1; then
++   echo "setfattr not installed; cannot test ntfs."
++   exit 77
++fi
++
+ "@builddir@/grub-fs-tester" ntfs
+-"@builddir@/grub-fs-tester" ntfscomp
+\ No newline at end of file
++"@builddir@/grub-fs-tester" ntfscomp
+-- 
+2.4.3
+

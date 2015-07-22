@@ -1,0 +1,24 @@
+From 6a5c78c8c85c890034974a297bfb009dff0954c6 Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Thu, 7 May 2015 22:13:34 +0300
+Subject: [PATCH 409/506] Add asm-tests to tarball
+
+---
+ conf/Makefile.extra-dist | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/conf/Makefile.extra-dist b/conf/Makefile.extra-dist
+index db6cfd1..ea6b9df 100644
+--- a/conf/Makefile.extra-dist
++++ b/conf/Makefile.extra-dist
+@@ -5,6 +5,7 @@ EXTRA_DIST += gentpl.py
+ EXTRA_DIST += Makefile.util.def
+ EXTRA_DIST += Makefile.utilgcry.def
+ 
++EXTRA_DIST += asm-tests
+ EXTRA_DIST += unicode
+ 
+ EXTRA_DIST += util/import_gcry.py
+-- 
+2.4.3
+

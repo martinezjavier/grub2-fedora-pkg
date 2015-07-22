@@ -1,0 +1,34 @@
+From b6f21bcb98f03d61087b4423261bda5d6a58fb1f Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sun, 25 Jan 2015 00:00:49 +0100
+Subject: [PATCH 206/506] fs/cbfs: Add missing free.
+
+Found by: Coverity scan.
+---
+ grub-core/fs/cbfs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/grub-core/fs/cbfs.c b/grub-core/fs/cbfs.c
+index 35750a0..4ddd683 100644
+--- a/grub-core/fs/cbfs.c
++++ b/grub-core/fs/cbfs.c
+@@ -144,7 +144,7 @@ static struct grub_archelp_data *
+ grub_cbfs_mount (grub_disk_t disk)
+ {
+   struct cbfs_file hd;
+-  struct grub_archelp_data *data;
++  struct grub_archelp_data *data = NULL;
+   grub_uint32_t ptr;
+   grub_off_t header_off;
+   struct cbfs_header head;
+@@ -196,6 +196,7 @@ grub_cbfs_mount (grub_disk_t disk)
+   return data;
+ 
+ fail:
++  grub_free (data);
+   grub_error (GRUB_ERR_BAD_FS, "not a cbfs filesystem");
+   return 0;
+ }
+-- 
+2.4.3
+

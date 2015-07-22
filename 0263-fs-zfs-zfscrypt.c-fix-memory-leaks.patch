@@ -1,0 +1,67 @@
+From fa13e605270f46dc78cbfded62e4cc58a31dff50 Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Tue, 27 Jan 2015 21:12:19 +0300
+Subject: [PATCH 263/506] fs/zfs/zfscrypt.c: fix memory leaks.
+
+Found by: Coverity scan.
+---
+ grub-core/fs/zfs/zfscrypt.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/grub-core/fs/zfs/zfscrypt.c b/grub-core/fs/zfs/zfscrypt.c
+index 91a0af6..834f858 100644
+--- a/grub-core/fs/zfs/zfscrypt.c
++++ b/grub-core/fs/zfs/zfscrypt.c
+@@ -354,6 +354,7 @@ grub_zfs_load_key_real (const struct grub_zfs_key *key,
+       if (err)
+ 	{
+ 	  grub_errno = GRUB_ERR_NONE;
++	  grub_crypto_cipher_close (cipher);
+ 	  continue;
+ 	}
+ 		    
+@@ -362,6 +363,7 @@ grub_zfs_load_key_real (const struct grub_zfs_key *key,
+       if (err)
+ 	{
+ 	  grub_errno = GRUB_ERR_NONE;
++	  grub_crypto_cipher_close (cipher);
+ 	  continue;
+ 	}
+       
+@@ -372,6 +374,7 @@ grub_zfs_load_key_real (const struct grub_zfs_key *key,
+ 	{
+ 	  grub_dprintf ("zfs", "key loading failed\n");
+ 	  grub_errno = GRUB_ERR_NONE;
++	  grub_crypto_cipher_close (cipher);
+ 	  continue;
+ 	}
+ 
+@@ -381,12 +384,14 @@ grub_zfs_load_key_real (const struct grub_zfs_key *key,
+ 	{
+ 	  grub_dprintf ("zfs", "key loading failed\n");
+ 	  grub_errno = GRUB_ERR_NONE;
++	  grub_crypto_cipher_close (cipher);
+ 	  continue;
+ 	}
+       ret = grub_crypto_cipher_open (GRUB_CIPHER_AES);
+       if (!ret)
+ 	{
+ 	  grub_errno = GRUB_ERR_NONE;
++	  grub_crypto_cipher_close (cipher);
+ 	  continue;
+ 	}
+       err = grub_crypto_cipher_set_key (ret, decrypted, keylen);
+@@ -394,8 +399,10 @@ grub_zfs_load_key_real (const struct grub_zfs_key *key,
+ 	{
+ 	    grub_errno = GRUB_ERR_NONE;
+ 	    grub_crypto_cipher_close (ret);
++	    grub_crypto_cipher_close (cipher);
+ 	    continue;
+ 	  }
++      grub_crypto_cipher_close (cipher);
+       return ret;
+     }
+   return NULL;
+-- 
+2.4.3
+

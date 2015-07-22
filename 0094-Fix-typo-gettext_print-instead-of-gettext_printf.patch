@@ -1,0 +1,39 @@
+From c291f47b2c003ef6daeafaedd458db838bad6fb8 Mon Sep 17 00:00:00 2001
+From: Andrey Borzenkov <arvidjaar@gmail.com>
+Date: Thu, 14 Aug 2014 21:02:31 +0400
+Subject: [PATCH 094/506] Fix typo (gettext_print instead of gettext_printf)
+
+---
+ ChangeLog             | 5 +++++
+ util/grub-mkconfig.in | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/ChangeLog b/ChangeLog
+index 22030fd..a8f379b 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,8 @@
++2014-08-14  Andrey Borzenkov <arvidjaar@gmail.com>
++
++	* util/grub-mkconfig.in: Fix typo (gettext_print instead of
++	gettext_printf).
++
+ 2014-08-13  Vladimir Serbinenko  <phcoder@gmail.com>
+ 
+ 	* grub-core/term/at_keyboard.c: Retry probing keyboard if
+diff --git a/util/grub-mkconfig.in b/util/grub-mkconfig.in
+index ca040dd..d1fae49 100644
+--- a/util/grub-mkconfig.in
++++ b/util/grub-mkconfig.in
+@@ -124,7 +124,7 @@ set $grub_probe dummy
+ if test -f "$1"; then
+     :
+ else
+-    gettext_print "%s: Not found.\n" "$1" 1>&2
++    gettext_printf "%s: Not found.\n" "$1" 1>&2
+     exit 1
+ fi
+ 
+-- 
+2.4.3
+

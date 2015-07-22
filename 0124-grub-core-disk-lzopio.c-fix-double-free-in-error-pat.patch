@@ -1,0 +1,39 @@
+From 343dad410eaa37f4f02eff6a4a4114102d211a28 Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Fri, 28 Nov 2014 22:37:00 +0300
+Subject: [PATCH 124/506] grub-core/disk/lzopio.c: fix double free in error
+ path
+
+CID: 73665
+---
+ ChangeLog             | 1 +
+ grub-core/io/lzopio.c | 2 --
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/ChangeLog b/ChangeLog
+index 504d829..b6220de 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,6 @@
+ 2014-11-28  Andrei Borzenkov  <arvidjaar@gmail.com>
+ 
++	* grub-core/io/lzopio.c (test_header): Fix double free (CID 73665)
+ 	* grub-core/disk/geli.c (configure_ciphers): Fix memory leaks
+ 	(Coverity CID 73813, 73710)
+ 	* grub-core/disk/luks.c (configure_ciphers): Fix memory leaks
+diff --git a/grub-core/io/lzopio.c b/grub-core/io/lzopio.c
+index de2ea67..7559c6c 100644
+--- a/grub-core/io/lzopio.c
++++ b/grub-core/io/lzopio.c
+@@ -403,8 +403,6 @@ test_header (grub_file_t file)
+   return 1;
+ 
+ CORRUPTED:
+-  grub_free(name);
+-
+   return 0;
+ }
+ 
+-- 
+2.4.3
+

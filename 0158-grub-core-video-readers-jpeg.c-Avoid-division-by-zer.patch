@@ -1,0 +1,41 @@
+From 4816dcac19a05a1209822015d88903faef3d6f44 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Tue, 20 Jan 2015 19:35:49 +0100
+Subject: [PATCH 158/506] 	* grub-core/video/readers/jpeg.c: Avoid
+ division by zero.
+
+---
+ ChangeLog                      | 4 ++++
+ grub-core/video/readers/jpeg.c | 2 +-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/ChangeLog b/ChangeLog
+index fbdd560..7b34ba7 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,9 @@
+ 2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
+ 
++	* grub-core/video/readers/jpeg.c: Avoid sivision by zero.
++
++2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
++
+ 	* grub-core/disk/diskfilter.c: Validate volumes to avoid division
+ 	by zero.
+ 
+diff --git a/grub-core/video/readers/jpeg.c b/grub-core/video/readers/jpeg.c
+index 2dc2ee1..38ea239 100644
+--- a/grub-core/video/readers/jpeg.c
++++ b/grub-core/video/readers/jpeg.c
+@@ -317,7 +317,7 @@ grub_jpeg_decode_sof (struct grub_jpeg_data *data)
+ 	{
+ 	  data->vs = ss & 0xF;	/* Vertical sampling.  */
+ 	  data->hs = ss >> 4;	/* Horizontal sampling.  */
+-	  if ((data->vs > 2) || (data->hs > 2))
++	  if ((data->vs > 2) || (data->hs > 2) || (data->vs == 0) || (data->hs == 0))
+ 	    return grub_error (GRUB_ERR_BAD_FILE_TYPE,
+ 			       "jpeg: sampling method not supported");
+ 	}
+-- 
+2.4.3
+

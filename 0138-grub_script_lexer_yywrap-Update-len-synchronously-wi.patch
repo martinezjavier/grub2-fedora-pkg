@@ -1,0 +1,41 @@
+From 66ce4d1aefd54f952f809801380253c28754ed81 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Tue, 20 Jan 2015 12:53:20 +0100
+Subject: [PATCH 138/506] grub_script_lexer_yywrap: Update len synchronously
+ with line.
+
+---
+ ChangeLog                | 5 +++++
+ grub-core/script/lexer.c | 1 +
+ 2 files changed, 6 insertions(+)
+
+diff --git a/ChangeLog b/ChangeLog
+index 326f621..80ef35c 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,10 @@
+ 2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
+ 
++	* grub-core/script/lexer.c (grub_script_lexer_yywrap): Update len
++	synchronously with line.
++
++2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
++
+ 	Replace explicit sizeof divisions by ARRAY_SIZE.
+ 
+ 2015-01-19  Kris Moore <kris@pcbsd.org>
+diff --git a/grub-core/script/lexer.c b/grub-core/script/lexer.c
+index 128d238..89cf677 100644
+--- a/grub-core/script/lexer.c
++++ b/grub-core/script/lexer.c
+@@ -164,6 +164,7 @@ grub_script_lexer_yywrap (struct grub_parser_param *parserstate,
+     {
+       grub_free (line);
+       line = grub_strdup ("\n");
++      len = 1;
+     }
+   else if (len && line[len - 1] != '\n')
+     {
+-- 
+2.4.3
+

@@ -1,0 +1,184 @@
+From 065ad910f1938fb8c02a14fe020819ed28429bad Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 21 Feb 2015 16:29:28 +0100
+Subject: [PATCH 307/506] Test which flags make our asm compile.
+
+Previously we relied on assumption that clang always needs -no-integrated-as
+but it's not always true.
+---
+ asm-tests/arm.S     | 20 ++++++++++++++++++
+ asm-tests/i386.S    | 10 +++++++++
+ asm-tests/mips.S    | 11 ++++++++++
+ asm-tests/powerpc.S |  8 +++++++
+ asm-tests/sparc64.S |  9 ++++++++
+ configure.ac        | 60 ++++++++++++++++++++++++++++-------------------------
+ 6 files changed, 90 insertions(+), 28 deletions(-)
+ create mode 100644 asm-tests/arm.S
+ create mode 100644 asm-tests/i386.S
+ create mode 100644 asm-tests/mips.S
+ create mode 100644 asm-tests/powerpc.S
+ create mode 100644 asm-tests/sparc64.S
+
+diff --git a/asm-tests/arm.S b/asm-tests/arm.S
+new file mode 100644
+index 0000000..97c2546
+--- /dev/null
++++ b/asm-tests/arm.S
+@@ -0,0 +1,20 @@
++/* on arm clang doesn't support .arch directive */
++
++	.text
++	.syntax	unified
++
++#if !defined (__thumb2__)
++	.arch	armv7a
++	.arm
++#else
++	.arch	armv7
++	.thumb
++#endif
++	mcr	p15, 0, r11, c7, c14, 2
++
++	/* clang restricts access to dsb/isb despite .arch  */
++	dsb
++	isb
++
++
++	
+diff --git a/asm-tests/i386.S b/asm-tests/i386.S
+new file mode 100644
+index 0000000..97cd32a
+--- /dev/null
++++ b/asm-tests/i386.S
+@@ -0,0 +1,10 @@
++/* on x86 old clang doesn't support .code16
++   newer clang supports it but creates 6-byte jumps instead of 3-byte ones
++   which makes us go over boot sector size.  */
++
++	.code16
++	jmp far
++	.org 4
++	.space 300
++far:
++	.byte 0
+diff --git a/asm-tests/mips.S b/asm-tests/mips.S
+new file mode 100644
+index 0000000..8233dfc
+--- /dev/null
++++ b/asm-tests/mips.S
+@@ -0,0 +1,11 @@
++/* on mips clang doesn't support privilegied instructions, doubleword store/load
++   and crashes with hand-written assembly
++ */
++
++	.set mips3
++	sync
++	ld $t2, 0($t6)
++
++a:
++	addiu $t7, $s0, (b - a)
++b:	nop
+diff --git a/asm-tests/powerpc.S b/asm-tests/powerpc.S
+new file mode 100644
+index 0000000..396a6cc
+--- /dev/null
++++ b/asm-tests/powerpc.S
+@@ -0,0 +1,8 @@
++/* clang <= 3.3 doesn't handle most of ppc assembly, not even inline assembly
++   used by gcrypt */
++/* Cache invalidation loop is a fair test.  */
++	li 5, 0
++1:	icbi 5, 3
++	addi 5, 5, 32
++	cmpw 5, 4
++	blt 1b
+diff --git a/asm-tests/sparc64.S b/asm-tests/sparc64.S
+new file mode 100644
+index 0000000..03c5fe0
+--- /dev/null
++++ b/asm-tests/sparc64.S
+@@ -0,0 +1,9 @@
++        .text
++1:	
++	/* A small list of examples of what clang doesn't support.  */
++	clr	%o0
++	lduw	[%o4 + 4], %o4
++	and     %o6, ~0xff, %o6
++	stw	%o5, [%o3]
++	bne,pt	%icc, 1b
++	 nop
+diff --git a/configure.ac b/configure.ac
+index 4ef67f0..40b7329 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -560,35 +560,39 @@ AC_COMPILE_IFELSE(
+ ]])],
+ [grub_cv_cc_target_clang=no], [grub_cv_cc_target_clang=yes])])
+ 
+-# on x86 clang doesn't support .code16
+-# on arm clang doesn't support .arch directive
+-# on mips clang doesn't support privilegied instructions, doubleword store/load
+-# and crashes with hand-written assembly
+-if test "x$grub_cv_cc_target_clang" = xyes && ( test "x$target_cpu" = xi386 \
+-   || test "x$target_cpu" = xx86_64 || test "x$target_cpu" = xarm \
+-   || test "x$target_cpu" = xmips || test "x$target_cpu" = xmipsel ); then
+-   TARGET_CCASFLAGS="$TARGET_CCASFLAGS -no-integrated-as"
+-fi
+-
+-if test "x$grub_cv_cc_target_clang" = xyes && test "x$target_cpu" = xpowerpc; then
+-AC_CACHE_CHECK([if clang can handle ame instruction], [grub_cv_cc_target_clang_ame]
+-[
+-CFLAGS="$TARGET_CFLAGS"
+-AC_COMPILE_IFELSE(
+-[AC_LANG_PROGRAM([], [[
+-   unsigned int a = 0, b = 0;
+-   asm volatile ("{ame|addme} %0,%1" : "=r" (a) : "r" (b));
+-   if (a)
+-     return 1;
+-]])],
+-[grub_cv_cc_target_clang_ame=yes], [grub_cv_cc_target_clang_ame=no])])
+-   # clang <= 3.3 doesn't handle most of ppc assembly, not even inline assembly
+-   # used by gcrypt
+-   if test x$grub_cv_cc_target_clang_ame = xno ; then
+-     TARGET_CCASFLAGS="$TARGET_CCASFLAGS -no-integrated-as"
+-     TARGET_CFLAGS="$TARGET_CFLAGS -no-integrated-as"
+-   fi
++AC_CACHE_CHECK([for options to compile assembly], [grub_cv_cc_target_asm_compile], [
++test_program=
++case "x$target_cpu" in
++     xmips | xmipsel)
++        test_program=mips
++	;;
++     xi386 | xx86_64)
++       test_program=i386
++	;;
++     xpowerpc | xsparc64 | xarm)
++        test_program=$target_cpu
++	;;
++esac
++if test x"$test_program" = x ; then
++  grub_cv_cc_target_asm_compile=
++else
++  found=no
++  for arg in "" "-no-integrated-as"; do
++    cmdline="$TARGET_CC -c -o /dev/null $TARGET_CCASFLAGS $arg $TARGET_CPPFLAGS $srcdir/asm-tests/$test_program.S"
++    echo "Running $cmdline" >&AS_MESSAGE_LOG_FD
++    if $cmdline >&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
++      grub_cv_cc_target_asm_compile="$arg"
++      found=yes
++      break
++    fi
++  done
++  if test x"$found" = xno ; then
++    AC_MSG_ERROR([could not compile assembly])
++  fi
+ fi
++])
++
++TARGET_CCASFLAGS="$TARGET_CCASFLAGS $grub_cv_cc_target_asm_compile"
+ 
+ if test "x$target_cpu" = xi386 && test "x$platform" != xemu; then
+   TARGET_CFLAGS="$TARGET_CFLAGS -march=i386"
+-- 
+2.4.3
+

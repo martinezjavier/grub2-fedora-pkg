@@ -1,0 +1,152 @@
+From 59d403659461db52e08a0bd49d418baaa2fa106b Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Tue, 20 Jan 2015 12:45:45 +0100
+Subject: [PATCH 137/506] Replace explicit sizeof divisions by ARRAY_SIZE.
+
+---
+ ChangeLog                            |  4 ++++
+ grub-core/commands/i386/pc/sendkey.c | 10 ++++------
+ grub-core/kern/emu/hostdisk.c        |  6 +++---
+ grub-core/lib/syslinux_parse.c       |  4 ++--
+ grub-core/loader/i386/xnu.c          |  4 ++--
+ grub-core/normal/color.c             |  2 +-
+ 6 files changed, 16 insertions(+), 14 deletions(-)
+
+diff --git a/ChangeLog b/ChangeLog
+index 854c008..326f621 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,7 @@
++2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
++
++	Replace explicit sizeof divisions by ARRAY_SIZE.
++
+ 2015-01-19  Kris Moore <kris@pcbsd.org>
+ 
+ 	* grub-core/disk/geli.c: Support GELI v6 and v7.
+diff --git a/grub-core/commands/i386/pc/sendkey.c b/grub-core/commands/i386/pc/sendkey.c
+index d985cb3..26d9acd 100644
+--- a/grub-core/commands/i386/pc/sendkey.c
++++ b/grub-core/commands/i386/pc/sendkey.c
+@@ -292,7 +292,7 @@ find_key_code (char *key)
+ {
+   unsigned i;
+ 
+-  for (i = 0; i < sizeof (keysym_table) / sizeof (keysym_table[0]); i++)
++  for (i = 0; i < ARRAY_SIZE(keysym_table); i++)
+     {
+       if (keysym_table[i].unshifted_name 
+ 	  && grub_strcmp (key, keysym_table[i].unshifted_name) == 0)
+@@ -311,7 +311,7 @@ find_ascii_code (char *key)
+ {
+   unsigned i;
+ 
+-  for (i = 0; i < sizeof (keysym_table) / sizeof (keysym_table[0]); i++)
++  for (i = 0; i < ARRAY_SIZE(keysym_table); i++)
+     {
+       if (keysym_table[i].unshifted_name 
+ 	  && grub_strcmp (key, keysym_table[i].unshifted_name) == 0)
+@@ -352,15 +352,13 @@ grub_cmd_sendkey (grub_extcmd_context_t ctxt, int argc, char **args)
+ 
+   {
+     unsigned i;
+-    for (i = 0; i < sizeof (simple_flag_offsets) 
+-	   / sizeof (simple_flag_offsets[0]); i++)
++    for (i = 0; i < ARRAY_SIZE(simple_flag_offsets); i++)
+       grub_sendkey_set_simple_flag (simple_flag_offsets[i], 
+ 				    grub_sendkey_parse_op(state[i]));
+   }
+ 
+   /* Set noled. */
+-  noled = (state[sizeof (simple_flag_offsets) 
+-		 / sizeof (simple_flag_offsets[0])].set);
++  noled = (state[ARRAY_SIZE(simple_flag_offsets)].set);
+ 
+   return GRUB_ERR_NONE;
+ }
+diff --git a/grub-core/kern/emu/hostdisk.c b/grub-core/kern/emu/hostdisk.c
+index 44b0fcb..a4ebf78 100644
+--- a/grub-core/kern/emu/hostdisk.c
++++ b/grub-core/kern/emu/hostdisk.c
+@@ -99,7 +99,7 @@ find_free_slot (void)
+ {
+   unsigned int i;
+ 
+-  for (i = 0; i < sizeof (map) / sizeof (map[0]); i++)
++  for (i = 0; i < ARRAY_SIZE (map); i++)
+     if (! map[i].drive)
+       return i;
+ 
+@@ -115,7 +115,7 @@ grub_util_biosdisk_iterate (grub_disk_dev_iterate_hook_t hook, void *hook_data,
+   if (pull != GRUB_DISK_PULL_NONE)
+     return 0;
+ 
+-  for (i = 0; i < sizeof (map) / sizeof (map[0]); i++)
++  for (i = 0; i < ARRAY_SIZE (map); i++)
+     if (map[i].drive && hook (map[i].drive, hook_data))
+       return 1;
+ 
+@@ -581,7 +581,7 @@ grub_util_biosdisk_fini (void)
+ {
+   unsigned i;
+ 
+-  for (i = 0; i < sizeof (map) / sizeof (map[0]); i++)
++  for (i = 0; i < ARRAY_SIZE(map); i++)
+     {
+       if (map[i].drive)
+ 	free (map[i].drive);
+diff --git a/grub-core/lib/syslinux_parse.c b/grub-core/lib/syslinux_parse.c
+index 08e451c..241cefe 100644
+--- a/grub-core/lib/syslinux_parse.c
++++ b/grub-core/lib/syslinux_parse.c
+@@ -717,7 +717,7 @@ syslinux_parse_real (struct syslinux_menu *menu)
+       for (ptr3 = ptr2;  grub_isspace (*ptr3) && *ptr3; ptr3++);
+       for (ptr4 = ptr3; !grub_isspace (*ptr4) && *ptr4; ptr4++);
+       for (ptr5 = ptr4;  grub_isspace (*ptr5) && *ptr5; ptr5++);
+-      for (i = 0; i < sizeof (commands) / sizeof (commands[0]); i++)
++      for (i = 0; i < ARRAY_SIZE(commands); i++)
+ 	if (grub_strlen (commands[i].name1) == (grub_size_t) (ptr2 - ptr1)
+ 	    && grub_strncasecmp (commands[i].name1, ptr1, ptr2 - ptr1) == 0
+ 	    && (commands[i].name2 == NULL
+@@ -726,7 +726,7 @@ syslinux_parse_real (struct syslinux_menu *menu)
+ 		    && grub_strncasecmp (commands[i].name2, ptr3, ptr4 - ptr3)
+ 		    == 0)))
+ 	  break;
+-      if (i == sizeof (commands) / sizeof (commands[0]))
++      if (i == ARRAY_SIZE(commands))
+ 	{
+ 	  if (sizeof ("text") - 1 == ptr2 - ptr1
+ 	      && grub_strncasecmp ("text", ptr1, ptr2 - ptr1) == 0
+diff --git a/grub-core/loader/i386/xnu.c b/grub-core/loader/i386/xnu.c
+index e83e1e9..94daa02 100644
+--- a/grub-core/loader/i386/xnu.c
++++ b/grub-core/loader/i386/xnu.c
+@@ -741,10 +741,10 @@ grub_cpu_xnu_fill_devicetree (grub_uint64_t *fsbfreq_out)
+ 	*((grub_uint64_t *) curval->data) = (grub_addr_t) ptr;
+ 
+       /* Create alias. */
+-      for (j = 0; j < sizeof (table_aliases) / sizeof (table_aliases[0]); j++)
++      for (j = 0; j < ARRAY_SIZE(table_aliases); j++)
+ 	if (grub_memcmp (&table_aliases[j].guid, &guid, sizeof (guid)) == 0)
+ 	  break;
+-      if (j != sizeof (table_aliases) / sizeof (table_aliases[0]))
++      if (j != ARRAY_SIZE(table_aliases))
+ 	{
+ 	  curval = grub_xnu_create_value (&(curkey->first_child), "alias");
+ 	  if (!curval)
+diff --git a/grub-core/normal/color.c b/grub-core/normal/color.c
+index c265423..d22cf90 100644
+--- a/grub-core/normal/color.c
++++ b/grub-core/normal/color.c
+@@ -47,7 +47,7 @@ static int
+ parse_color_name (grub_uint8_t *ret, char *name)
+ {
+   grub_uint8_t i;
+-  for (i = 0; i < sizeof (color_list) / sizeof (*color_list); i++)
++  for (i = 0; i < ARRAY_SIZE(color_list); i++)
+     if (! grub_strcmp (name, color_list[i]))
+       {
+         *ret = i;
+-- 
+2.4.3
+

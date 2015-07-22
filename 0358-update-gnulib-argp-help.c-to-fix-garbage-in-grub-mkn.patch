@@ -1,0 +1,65 @@
+From 8842991a56f062c6bff03da9c2f7dcffa7e31492 Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Thu, 5 Mar 2015 20:19:47 +0300
+Subject: [PATCH 358/506] update gnulib/argp-help.c to fix garbage in
+ grub-mknetdir --help output
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+argp_help attempts to translate empty string, which results in printing
+meta information about translation, like in
+
+bor@opensuse:~/build/grub> grub2-mknetdir --help
+Использование: grub2-mknetdir [ПАРАМЕТР…]
+Project-Id-Version: grub 2.02-pre2
+Report-Msgid-Bugs-To: bug-grub@gnu.org
+...
+
+Update gnulib/argp-help.c to the current version which fixes this
+(commit b9bfe78424b871f5b92e5ee9e7d21ef951a6801d).
+---
+ grub-core/gnulib/argp-help.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/grub-core/gnulib/argp-help.c b/grub-core/gnulib/argp-help.c
+index 2914f47..b9be63f 100644
+--- a/grub-core/gnulib/argp-help.c
++++ b/grub-core/gnulib/argp-help.c
+@@ -1,5 +1,5 @@
+ /* Hierarchical argument parsing help output
+-   Copyright (C) 1995-2005, 2007, 2009-2013 Free Software Foundation, Inc.
++   Copyright (C) 1995-2005, 2007, 2009-2015 Free Software Foundation, Inc.
+    This file is part of the GNU C Library.
+    Written by Miles Bader <miles@gnu.ai.mit.edu>.
+ 
+@@ -650,7 +650,7 @@ hol_find_entry (struct hol *hol, const char *name)
+   return 0;
+ }
+ 
+-/* If an entry with the long option NAME occurs in HOL, set it's special
++/* If an entry with the long option NAME occurs in HOL, set its special
+    sort position to GROUP.  */
+ static void
+ hol_set_group (struct hol *hol, const char *name, int group)
+@@ -1507,11 +1507,15 @@ argp_doc (const struct argp *argp, const struct argp_state *state,
+       if (vt)
+         {
+           if (post)
+-            inp_text = vt + 1;
++            {
++              inp_text = vt + 1;
++              if (! *inp_text)
++                inp_text = 0;
++            }
+           else
+             {
+               inp_text_len = vt - argp->doc;
+-              inp_text = __strndup (argp->doc, inp_text_len);
++              inp_text = inp_text_len ? __strndup (argp->doc, inp_text_len) : 0;
+             }
+         }
+       else
+-- 
+2.4.3
+

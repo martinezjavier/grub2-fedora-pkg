@@ -1,0 +1,26 @@
+From f2baeb194be2f08e9281115df514cd3ceeba6110 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 24 Jan 2015 21:44:27 +0100
+Subject: [PATCH 201/506] disk/diskfilter: Add missing lv presence check.
+
+Found by: Coverity scan.
+---
+ grub-core/disk/diskfilter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/grub-core/disk/diskfilter.c b/grub-core/disk/diskfilter.c
+index 97ca546..6124846 100644
+--- a/grub-core/disk/diskfilter.c
++++ b/grub-core/disk/diskfilter.c
+@@ -1065,7 +1065,7 @@ grub_diskfilter_make_raid (grub_size_t uuidlen, char *uuid, int nmemb,
+ 	    array->lvs->segments->extent_count = totsize;
+ 	}
+ 
+-      if (array->lvs->segments
++      if (array->lvs && array->lvs->segments
+ 	  && array->lvs->segments->raid_member_size > disk_size)
+ 	array->lvs->segments->raid_member_size = disk_size;
+ 
+-- 
+2.4.3
+

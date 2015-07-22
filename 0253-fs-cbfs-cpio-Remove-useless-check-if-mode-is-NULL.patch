@@ -1,0 +1,44 @@
+From 69a52e95d425502945fe43892cebf6b183290e6e Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Tue, 27 Jan 2015 10:30:43 +0100
+Subject: [PATCH 253/506] fs/{cbfs,cpio}: Remove useless check if mode is NULL.
+
+Callers already ensure that it's not null.
+
+Found by: Coverity Scan.
+---
+ grub-core/fs/cbfs.c        | 3 +--
+ grub-core/fs/cpio_common.c | 3 +--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/grub-core/fs/cbfs.c b/grub-core/fs/cbfs.c
+index 4ddd683..a34eb88 100644
+--- a/grub-core/fs/cbfs.c
++++ b/grub-core/fs/cbfs.c
+@@ -74,8 +74,7 @@ grub_cbfs_find_file (struct grub_archelp_data *data, char **name,
+       (void) mtime;
+       offset = grub_be_to_cpu32 (hd.offset);
+ 
+-      if (mode)
+-	*mode = GRUB_ARCHELP_ATTR_FILE | GRUB_ARCHELP_ATTR_NOTIME;
++      *mode = GRUB_ARCHELP_ATTR_FILE | GRUB_ARCHELP_ATTR_NOTIME;
+ 
+       namesize = offset;
+       if (namesize >= sizeof (hd))
+diff --git a/grub-core/fs/cpio_common.c b/grub-core/fs/cpio_common.c
+index 20230a7..50fea47 100644
+--- a/grub-core/fs/cpio_common.c
++++ b/grub-core/fs/cpio_common.c
+@@ -69,8 +69,7 @@ grub_cpio_find_file (struct grub_archelp_data *data, char **name,
+       return GRUB_ERR_NONE;
+     }
+ 
+-  if (mode)
+-    *mode = modeval;
++  *mode = modeval;
+ 
+   *name = grub_malloc (namesize + 1);
+   if (*name == NULL)
+-- 
+2.4.3
+

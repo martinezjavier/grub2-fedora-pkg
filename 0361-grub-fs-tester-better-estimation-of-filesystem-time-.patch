@@ -1,0 +1,54 @@
+From fa07d919d1ff868b18d8a42276d094b63a58e299 Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Sun, 15 Mar 2015 21:06:26 +0300
+Subject: [PATCH 361/506] grub-fs-tester: better estimation of filesystem time
+ for LVM/RAID
+
+Write activity with LVM/RAID can happen after filesystem is unmounted.
+In my testing modification time of loop files was 15 - 20 seconds
+after unmount.  So use time as close to unmount as possible as
+reference instead.
+---
+ tests/util/grub-fs-tester.in | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/tests/util/grub-fs-tester.in b/tests/util/grub-fs-tester.in
+index 9ecbe0f..4f7f920 100644
+--- a/tests/util/grub-fs-tester.in
++++ b/tests/util/grub-fs-tester.in
+@@ -993,6 +993,7 @@ for ((LOGSECSIZE=MINLOGSECSIZE;LOGSECSIZE<=MAXLOGSECSIZE;LOGSECSIZE=LOGSECSIZE +
+ 			fi
+ 			sleep 1;
+ 		    done
++		    UMOUNT_TIME=$(date -u "+%Y-%m-%d %H:%M:%S")
+ 		    sleep 1
+ 		    vgchange -a n grub_test
+ 		    ;;
+@@ -1004,6 +1005,7 @@ for ((LOGSECSIZE=MINLOGSECSIZE;LOGSECSIZE<=MAXLOGSECSIZE;LOGSECSIZE=LOGSECSIZE +
+ 			fi
+ 			sleep 1;
+ 		    done
++		    UMOUNT_TIME=$(date -u "+%Y-%m-%d %H:%M:%S")
+ 		    sleep 1
+ 		    mdadm --stop /dev/md/"${fs}_$NDEVICES"
+ 		    ;;
+@@ -1214,10 +1216,15 @@ for ((LOGSECSIZE=MINLOGSECSIZE;LOGSECSIZE<=MAXLOGSECSIZE;LOGSECSIZE=LOGSECSIZE +
+ 	    case x$fs in
+ 		xiso9660 | xziso9660 | xrockridge | xjoliet | xrockridge_joliet | xiso9660_1999 | xrockridge_1999 | xjoliet_1999 | xrockridge_joliet_1999)
+ 		    FSTIME="$(date -d "$(echo ${FSUUID} | awk -F - '{ print $1"-"$2"-"$3" "$4":"$5":"$6 ;}')" '+%Y-%m-%d %H:%M:%S')";;
++		xlvm*|xmdraid*)
++		    # With some abstractions like mdraid flushing to disk
++		    # may be delayed for a long time.
++		    FSTIME="$UMOUNT_TIME";;
+ 		*)
+ 		    FSTIME="$(TZ=UTC ls --time-style="+%Y-%m-%d_%H:%M:%S" -l -d "${FSIMAGES[0]}"|awk '{print $6; }'|sed 's,_, ,g')";;
+ 	    esac
+-		# With some abstractions like mdraid it may take up to 2 seconds for the data to reach the disks after it was flushed by FS in these tests.
++	    # With some abstractions like mdraid computing of UMOUNT_TIME
++	    # is not precise. Account for small difference here.
+ 	    FSTIMEM1="$(date -d "$FSTIME UTC -1 second" -u "+%Y-%m-%d %H:%M:%S")"
+ 	    FSTIMEM2="$(date -d "$FSTIME UTC -2 second" -u "+%Y-%m-%d %H:%M:%S")"
+ 
+-- 
+2.4.3
+

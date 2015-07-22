@@ -1,0 +1,77 @@
+From f16b8c04057925270d765532fa5710757119c6da Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 21 Feb 2015 20:18:18 +0100
+Subject: [PATCH 317/506] Relax requirements on asm for non-BIOS i386
+ platforms.
+
+These platforms don't have a hard limit on size of resulting code16
+code, so we don't care if assembly is bigger than necessarry.
+---
+ asm-tests/i386-pc.S | 10 ++++++++++
+ asm-tests/i386.S    | 10 ++--------
+ configure.ac        | 11 +++++++----
+ 3 files changed, 19 insertions(+), 12 deletions(-)
+ create mode 100644 asm-tests/i386-pc.S
+
+diff --git a/asm-tests/i386-pc.S b/asm-tests/i386-pc.S
+new file mode 100644
+index 0000000..97cd32a
+--- /dev/null
++++ b/asm-tests/i386-pc.S
+@@ -0,0 +1,10 @@
++/* on x86 old clang doesn't support .code16
++   newer clang supports it but creates 6-byte jumps instead of 3-byte ones
++   which makes us go over boot sector size.  */
++
++	.code16
++	jmp far
++	.org 4
++	.space 300
++far:
++	.byte 0
+diff --git a/asm-tests/i386.S b/asm-tests/i386.S
+index 97cd32a..30adc4f 100644
+--- a/asm-tests/i386.S
++++ b/asm-tests/i386.S
+@@ -1,10 +1,4 @@
+-/* on x86 old clang doesn't support .code16
+-   newer clang supports it but creates 6-byte jumps instead of 3-byte ones
+-   which makes us go over boot sector size.  */
++/* on x86 old clang doesn't support .code16  */
+ 
+ 	.code16
+-	jmp far
+-	.org 4
+-	.space 300
+-far:
+-	.byte 0
++	movb %al, %bl
+diff --git a/configure.ac b/configure.ac
+index 8ddb5d3..8b94d34 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -562,14 +562,17 @@ AC_COMPILE_IFELSE(
+ 
+ AC_CACHE_CHECK([for options to compile assembly], [grub_cv_cc_target_asm_compile], [
+ test_program=
+-case "x$target_cpu" in
+-     xmips | xmipsel)
++case "x$target_cpu-$platform" in
++     xmips-* | xmipsel-*)
+         test_program=mips
+ 	;;
+-     xi386 | xx86_64)
++     xi386-pc)
++       test_program=i386-pc
++	;;
++     xi386-* | xx86_64-*)
+        test_program=i386
+ 	;;
+-     xpowerpc | xsparc64 | xarm)
++     xpowerpc-* | xsparc64-* | xarm-*)
+         test_program=$target_cpu
+ 	;;
+ esac
+-- 
+2.4.3
+

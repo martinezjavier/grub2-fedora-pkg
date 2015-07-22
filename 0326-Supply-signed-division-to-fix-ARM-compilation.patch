@@ -1,0 +1,425 @@
+From f034fab6206173d411407fab6eb9a44c90e02dca Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sun, 22 Feb 2015 17:24:28 +0100
+Subject: [PATCH 326/506] Supply signed division to fix ARM compilation.
+
+Previously we supplied only unsigned divisions on platforms that need software
+division.
+Yet compiler may itself use a signed division. A typical example would be a
+difference between 2 pointers which involves division by object size.
+---
+ gentpl.py                   |  6 ++++
+ grub-core/Makefile.core.def |  8 +++++
+ grub-core/kern/arm/misc.S   | 13 +++-----
+ grub-core/kern/misc.c       | 71 ++++++++++++++++++++++++++++-------------
+ grub-core/tests/div_test.c  | 73 +++++++++++++++++++++++++++++++++++++++---
+ include/grub/misc.h         | 78 +++++++++++++++++++++++++++++++++++----------
+ 6 files changed, 198 insertions(+), 51 deletions(-)
+
+diff --git a/gentpl.py b/gentpl.py
+index c986cec..d2aa035 100644
+--- a/gentpl.py
++++ b/gentpl.py
+@@ -76,6 +76,12 @@ for i in GROUPS["terminfoinkernel"]: GROUPS["terminfomodule"].remove(i)
+ # Flattened Device Trees (FDT)
+ GROUPS["fdt"] = [ "arm64_efi", "arm_uboot", "arm_efi" ]
+ 
++# Needs software helpers for division
++# Must match GRUB_DIVISION_IN_SOFTWARE in misc.h
++GROUPS["softdiv"] = GROUPS["arm"] + ["ia64_efi"]
++GROUPS["no_softdiv"]   = GRUB_PLATFORMS[:]
++for i in GROUPS["softdiv"]: GROUPS["no_softdiv"].remove(i)
++
+ # Miscelaneous groups schedulded to disappear in future
+ GROUPS["i386_coreboot_multiboot_qemu"] = ["i386_coreboot", "i386_multiboot", "i386_qemu"]
+ GROUPS["nopc"] = GRUB_PLATFORMS[:]; GROUPS["nopc"].remove("i386_pc")
+diff --git a/grub-core/Makefile.core.def b/grub-core/Makefile.core.def
+index 42443bc..b539ccf 100644
+--- a/grub-core/Makefile.core.def
++++ b/grub-core/Makefile.core.def
+@@ -159,6 +159,8 @@ kernel = {
+   terminfoinkernel = commands/extcmd.c;
+   terminfoinkernel = lib/arg.c;
+ 
++  softdiv = lib/division.c;
++
+   i386 = kern/i386/dl.c;
+   i386_xen = kern/i386/dl.c;
+ 
+@@ -1970,6 +1972,12 @@ module = {
+ };
+ 
+ module = {
++  name = div;
++  common = lib/division.c;
++  enable = no_softdiv;
++};
++
++module = {
+   name = div_test;
+   common = tests/div_test.c;
+ };
+diff --git a/grub-core/kern/arm/misc.S b/grub-core/kern/arm/misc.S
+index 16b6f8e..645b42f 100644
+--- a/grub-core/kern/arm/misc.S
++++ b/grub-core/kern/arm/misc.S
+@@ -58,15 +58,11 @@ FUNCTION(__aeabi_lmul)
+         ldmfd   sp!, {r4, fp}
+         bx      lr
+ 
+-	.macro division parent
++	.macro division32 parent
+ 
+         sub     sp, sp, #8      @ Allocate naturally aligned 64-bit space
+         stmfd   sp!, {r3,lr}    @ Dummy r3 to maintain stack alignment
+-        add     r3, sp, #8      @ Set r3 to address of 64-bit space
+-        str     r3, [sp]        @ Stack parameter, pointer to 64-bit space
+-        mov     r2, r1
+-        mov     r1, #0
+-        mov     r3, #0
++        add     r2, sp, #8      @ Set r2 to address of 64-bit space
+         bl      \parent
+         ldr     r1, [sp, #8]    @ Extract remainder
+         ldmfd   sp!, {r3,lr}    @ Pop into an unused arg/scratch register
+@@ -75,8 +71,9 @@ FUNCTION(__aeabi_lmul)
+ 	.endm
+ 
+ FUNCTION(__aeabi_uidivmod)
+-	division grub_divmod64
+-
++	division32 grub_divmod32
++FUNCTION(__aeabi_idivmod)
++	division32 grub_divmod32s
+ 
+ /*
+  * Null divide-by-zero handler
+diff --git a/grub-core/kern/misc.c b/grub-core/kern/misc.c
+index 883d353..b0347e7 100644
+--- a/grub-core/kern/misc.c
++++ b/grub-core/kern/misc.c
+@@ -594,10 +594,10 @@ grub_divmod64 (grub_uint64_t n, grub_uint64_t d, grub_uint64_t *r)
+   grub_uint64_t m = 0;
+ 
+   /* ARM and IA64 don't have a fast 32-bit division.
+-     Using that code would just make us use libgcc routines, calling
+-     them twice (once for modulo and once for quotient.
++     Using that code would just make us use software division routines, calling
++     ourselves indirectly and hence getting infinite recursion.
+   */
+-#if !defined (__arm__) && !defined (__ia64__)
++#if !GRUB_DIVISION_IN_SOFTWARE
+   /* Skip the slow computation if 32-bit arithmetic is possible.  */
+   if (n < 0xffffffff && d < 0xffffffff)
+     {
+@@ -633,7 +633,7 @@ grub_divmod64 (grub_uint64_t n, grub_uint64_t d, grub_uint64_t *r)
+ 
+ #if !defined (GRUB_UTIL) && !defined (GRUB_MACHINE_EMU)
+ 
+-#if defined (__arm__)
++#if GRUB_DIVISION_IN_SOFTWARE
+ 
+ grub_uint32_t
+ __udivsi3 (grub_uint32_t a, grub_uint32_t b)
+@@ -641,6 +641,12 @@ __udivsi3 (grub_uint32_t a, grub_uint32_t b)
+   return grub_divmod64 (a, b, 0);
+ }
+ 
++grub_int32_t
++__divsi3 (grub_int32_t a, grub_int32_t b)
++{
++  return grub_divmod64s (a, b, 0);
++}
++
+ grub_uint32_t
+ __umodsi3 (grub_uint32_t a, grub_uint32_t b)
+ {
+@@ -649,6 +655,42 @@ __umodsi3 (grub_uint32_t a, grub_uint32_t b)
+   return ret;
+ }
+ 
++grub_int32_t
++__modsi3 (grub_int32_t a, grub_int32_t b)
++{
++  grub_int64_t ret;
++  grub_divmod64s (a, b, &ret);
++  return ret;
++}
++
++grub_uint64_t
++__udivdi3 (grub_uint64_t a, grub_uint64_t b)
++{
++  return grub_divmod64 (a, b, 0);
++}
++
++grub_uint64_t
++__umoddi3 (grub_uint64_t a, grub_uint64_t b)
++{
++  grub_uint64_t ret;
++  grub_divmod64 (a, b, &ret);
++  return ret;
++}
++
++grub_int64_t
++__divdi3 (grub_int64_t a, grub_int64_t b)
++{
++  return grub_divmod64s (a, b, 0);
++}
++
++grub_int64_t
++__moddi3 (grub_int64_t a, grub_int64_t b)
++{
++  grub_int64_t ret;
++  grub_divmod64s (a, b, &ret);
++  return ret;
++}
++
+ #endif
+ 
+ #ifdef NEED_CTZDI2
+@@ -735,30 +777,15 @@ __ctzsi2 (grub_uint32_t x)
+ grub_uint32_t
+ __aeabi_uidiv (grub_uint32_t a, grub_uint32_t b)
+   __attribute__ ((alias ("__udivsi3")));
++grub_int32_t
++__aeabi_idiv (grub_int32_t a, grub_int32_t b)
++  __attribute__ ((alias ("__divsi3")));
+ void *__aeabi_memcpy (void *dest, const void *src, grub_size_t n)
+   __attribute__ ((alias ("grub_memcpy")));
+ void *__aeabi_memset (void *s, int c, grub_size_t n)
+   __attribute__ ((alias ("grub_memset")));
+ #endif
+ 
+-#if defined (__ia64__)
+-
+-grub_uint64_t
+-__udivdi3 (grub_uint64_t a, grub_uint64_t b)
+-{
+-  return grub_divmod64 (a, b, 0);
+-}
+-
+-grub_uint64_t
+-__umoddi3 (grub_uint64_t a, grub_uint64_t b)
+-{
+-  grub_uint64_t ret;
+-  grub_divmod64 (a, b, &ret);
+-  return ret;
+-}
+-
+-#endif
+-
+ #endif /* GRUB_UTIL */
+ 
+ /* Convert a long long value to a string. This function avoids 64-bit
+diff --git a/grub-core/tests/div_test.c b/grub-core/tests/div_test.c
+index 7bdc80b..9abc6d5 100644
+--- a/grub-core/tests/div_test.c
++++ b/grub-core/tests/div_test.c
+@@ -97,6 +97,72 @@ test64 (grub_uint64_t a, grub_uint64_t b)
+ #endif
+ }
+ 
++static grub_int64_t
++abs64(grub_int64_t a)
++{
++  return a > 0 ? a : -a;
++}
++
++static void
++test32s (grub_int32_t a, grub_int32_t b)
++{
++  grub_int64_t q, r;
++  if (b == 0)
++    return;
++
++  q = grub_divmod64s (a, b, &r);
++  grub_test_assert (a > 0 ? r >= 0 : r <= 0, "remainder sign mismatch: %lld %% %lld = %lld",
++		    (long long) a, (long long) b, (long long) r);
++  grub_test_assert (((a > 0) == (b > 0)) ? q >= 0 : q <= 0, "quotient sign mismatch: %lld / %lld = %lld",
++		    (long long) a, (long long) b, (long long) q);
++  grub_test_assert (abs64(r) < abs64(b), "remainder is larger than dividend: %lld %% %lld = %lld",
++		    (long long) a, (long long) b, (long long) r);
++  grub_test_assert (q * b + r == a, "division doesn't satisfy base property: %lld * %lld + %lld != %lld", (long long) q, (long long) b, (long long) r,
++		    (long long) a);
++  if (0) {  grub_test_assert (q == (a / b),
++		    "C compiler division failure in 0x%llx, 0x%llx", (long long) a, (long long) b);
++  grub_test_assert (r == (a % b),
++		    "C compiler modulo failure in 0x%llx, 0x%llx", (long long) a, (long long) b);
++  }
++}
++
++static void
++test64s (grub_int64_t a, grub_int64_t b)
++{
++  grub_int64_t q, r;
++  q = grub_divmod64s (a, b, &r);
++
++  grub_test_assert (a > 0 ? r >= 0 : r <= 0, "remainder sign mismatch: %lld %% %lld = %lld",
++		    (long long) a, (long long) b, (long long) r);
++  grub_test_assert (((a > 0) == (b > 0)) ? q >= 0 : q <= 0, "quotient sign mismatch: %lld / %lld = %lld",
++		    (long long) a, (long long) b, (long long) q);
++  grub_test_assert (abs64(r) < abs64(b), "remainder is larger than dividend: %lld %% %lld = %lld",
++		    (long long) a, (long long) b, (long long) r);
++  grub_test_assert (q * b + r == a, "division doesn't satisfy base property: 0x%llx * 0x%llx + 0x%llx != 0x%llx", (long long) q, (long long) b, (long long) r,
++		    (long long) a);
++#if GRUB_TARGET_SIZEOF_VOID_P == 8
++  grub_test_assert (q == (a / b),
++		    "C compiler division failure in 0x%llx, 0x%llx", (long long) a, (long long) b);
++  grub_test_assert (r == (a % b),
++		    "C compiler modulo failure in 0x%llx, 0x%llx", (long long) a, (long long) b);
++#endif
++}
++
++static void
++test_all(grub_uint64_t a, grub_uint64_t b)
++{
++  test64 (a, b);
++  test32 (a, b);
++  test64s (a, b);
++  test32s (a, b);
++  test64s (a, -b);
++  test32s (a, -b);
++  test64s (-a, b);
++  test32s (-a, b);
++  test64s (-a, -b);
++  test32s (-a, -b);
++}
++
+ static void
+ div_test (void)
+ {
+@@ -105,8 +171,7 @@ div_test (void)
+ 
+   for (i = 0; i < ARRAY_SIZE (vectors); i++)
+     {
+-      test64 (vectors[i][0], vectors[i][1]);
+-      test32 (vectors[i][0], vectors[i][1]);
++      test_all (vectors[i][0], vectors[i][1]);
+     }
+   for (i = 0; i < 40000; i++)
+     {
+@@ -116,9 +181,7 @@ div_test (void)
+ 	b = 1;
+       if (a == 0)
+ 	a = 1;
+-      test64 (a, b);
+-      test32 (a, b);
+-
++      test_all (a, b);
+     }
+ }
+ 
+diff --git a/include/grub/misc.h b/include/grub/misc.h
+index e35934c..a05b3fd 100644
+--- a/include/grub/misc.h
++++ b/include/grub/misc.h
+@@ -358,6 +358,64 @@ grub_uint64_t EXPORT_FUNC(grub_divmod64) (grub_uint64_t n,
+ 					  grub_uint64_t d,
+ 					  grub_uint64_t *r);
+ 
++/* Must match softdiv group in gentpl.py.  */
++#if !defined(GRUB_MACHINE_EMU) && (defined(__arm__) || defined(__ia64__))
++#define GRUB_DIVISION_IN_SOFTWARE 1
++#else
++#define GRUB_DIVISION_IN_SOFTWARE 0
++#endif
++
++/* Some division functions need to be in kernel if compiler generates calls
++   to them. Otherwise we still need them for consistent tests but they go
++   into a separate module.  */
++#if GRUB_DIVISION_IN_SOFTWARE
++#define EXPORT_FUNC_IF_SOFTDIV EXPORT_FUNC
++#else
++#define EXPORT_FUNC_IF_SOFTDIV(x) x
++#endif
++
++grub_int64_t
++EXPORT_FUNC_IF_SOFTDIV(grub_divmod64s) (grub_int64_t n,
++					grub_int64_t d,
++					grub_int64_t *r);
++grub_uint32_t
++EXPORT_FUNC_IF_SOFTDIV (grub_divmod32) (grub_uint32_t n,
++					grub_uint32_t d,
++					grub_uint32_t *r);
++
++grub_int32_t
++EXPORT_FUNC_IF_SOFTDIV (grub_divmod32s) (grub_int32_t n,
++					 grub_int32_t d,
++					 grub_int32_t *r);
++
++#if defined(GRUB_DIVISION_IN_SOFTWARE) && GRUB_DIVISION_IN_SOFTWARE
++
++grub_uint32_t
++EXPORT_FUNC (__udivsi3) (grub_uint32_t a, grub_uint32_t b);
++
++grub_uint32_t
++EXPORT_FUNC (__umodsi3) (grub_uint32_t a, grub_uint32_t b);
++
++grub_int32_t
++EXPORT_FUNC (__divsi3) (grub_int32_t a, grub_int32_t b);
++
++grub_int32_t
++EXPORT_FUNC (__modsi3) (grub_int32_t a, grub_int32_t b);
++
++grub_int64_t
++EXPORT_FUNC (__divdi3) (grub_int64_t a, grub_int64_t b);
++
++grub_int64_t
++EXPORT_FUNC (__moddi3) (grub_int64_t a, grub_int64_t b);
++
++grub_uint64_t
++EXPORT_FUNC (__udivdi3) (grub_uint64_t a, grub_uint64_t b);
++
++grub_uint64_t
++EXPORT_FUNC (__umoddi3) (grub_uint64_t a, grub_uint64_t b);
++
++#endif
++
+ #if (defined (__MINGW32__) || defined (__CYGWIN__)) && !defined(GRUB_UTIL)
+ void EXPORT_FUNC (__register_frame_info) (void);
+ void EXPORT_FUNC (__deregister_frame_info) (void);
+@@ -437,12 +495,6 @@ grub_error_load (const struct grub_error_saved *save)
+ 
+ #if defined (__arm__)
+ 
+-grub_uint32_t
+-EXPORT_FUNC (__udivsi3) (grub_uint32_t a, grub_uint32_t b);
+-
+-grub_uint32_t
+-EXPORT_FUNC (__umodsi3) (grub_uint32_t a, grub_uint32_t b);
+-
+ #endif
+ 
+ #if defined (__sparc__) || defined (__powerpc__)
+@@ -460,8 +512,12 @@ EXPORT_FUNC (__ctzsi2) (grub_uint32_t x);
+ #ifdef __arm__
+ grub_uint32_t
+ EXPORT_FUNC (__aeabi_uidiv) (grub_uint32_t a, grub_uint32_t b);
++grub_int32_t
++EXPORT_FUNC (__aeabi_idiv) (grub_int32_t a, grub_int32_t b);
+ grub_uint32_t
+ EXPORT_FUNC (__aeabi_uidivmod) (grub_uint32_t a, grub_uint32_t b);
++grub_int32_t
++EXPORT_FUNC (__aeabi_idivmod) (grub_int32_t a, grub_int32_t b);
+ 
+ /* Needed for allowing modules to be compiled as thumb.  */
+ grub_uint64_t
+@@ -476,16 +532,6 @@ EXPORT_FUNC(__aeabi_memset) (void *s, int c, grub_size_t n);
+ 
+ #endif
+ 
+-#if defined (__ia64__)
+-
+-grub_uint64_t
+-EXPORT_FUNC (__udivdi3) (grub_uint64_t a, grub_uint64_t b);
+-
+-grub_uint64_t
+-EXPORT_FUNC (__umoddi3) (grub_uint64_t a, grub_uint64_t b);
+-
+-#endif
+-
+ #endif /* GRUB_UTIL */
+ 
+ 
+-- 
+2.4.3
+

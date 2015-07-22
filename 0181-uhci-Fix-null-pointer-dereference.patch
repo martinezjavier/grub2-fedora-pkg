@@ -1,0 +1,28 @@
+From 9ff9d5a54ead6fba080a08fcb1ff8462b8cf2497 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 24 Jan 2015 20:38:12 +0100
+Subject: [PATCH 181/506] uhci: Fix null pointer dereference.
+
+Found by: Coverity scan.
+---
+ grub-core/bus/usb/uhci.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/grub-core/bus/usb/uhci.c b/grub-core/bus/usb/uhci.c
+index a95fdfe..7c5811f 100644
+--- a/grub-core/bus/usb/uhci.c
++++ b/grub-core/bus/usb/uhci.c
+@@ -625,9 +625,7 @@ grub_uhci_check_transfer (grub_usb_controller_t dev,
+       return GRUB_USB_ERR_NONE;
+     }
+ 
+-  grub_dprintf ("uhci", "t status=0x%02x\n", errtd->ctrl_status);
+-
+-  if (!(errtd->ctrl_status & (1 << 23)))
++  if (errtd && !(errtd->ctrl_status & (1 << 23)))
+     {
+       grub_usb_err_t err = GRUB_USB_ERR_NONE;
+ 
+-- 
+2.4.3
+

@@ -1,0 +1,52 @@
+From 935863518f3a9ec12161616a31ac40e5b78bd550 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Tue, 20 Jan 2015 15:01:58 +0100
+Subject: [PATCH 149/506] grub_dmraid_nv_detect: Do not divide by zero.
+
+---
+ ChangeLog                      | 5 +++++
+ grub-core/disk/dmraid_nvidia.c | 6 ++++++
+ 2 files changed, 11 insertions(+)
+
+diff --git a/ChangeLog b/ChangeLog
+index 473eb14..8661726 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,10 @@
+ 2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
+ 
++	* grub-core/disk/dmraid_nvidia.c (grub_dmraid_nv_detect): Do not
++	divide by zero.
++
++2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
++
+ 	* grub-core/fs/hfs.c (grub_hfs_mount): Additional filesystem
+ 	sanity checks.
+ 
+diff --git a/grub-core/disk/dmraid_nvidia.c b/grub-core/disk/dmraid_nvidia.c
+index 6e64055..fc02f57 100644
+--- a/grub-core/disk/dmraid_nvidia.c
++++ b/grub-core/disk/dmraid_nvidia.c
+@@ -129,6 +129,9 @@ grub_dmraid_nv_detect (grub_disk_t disk,
+     case NV_LEVEL_0:
+       level = 0;
+       disk_size = sb.capacity / sb.array.total_volumes;
++      if (sb.array.total_volumes == 0)
++	/* Not RAID.  */
++	return NULL;
+       break;
+ 
+     case NV_LEVEL_1:
+@@ -139,6 +142,9 @@ grub_dmraid_nv_detect (grub_disk_t disk,
+     case NV_LEVEL_5:
+       level = 5;
+       disk_size = sb.capacity / (sb.array.total_volumes - 1);
++      if (sb.array.total_volumes == 0 || sb.array.total_volumes == 1)
++	/* Not RAID.  */
++	return NULL;
+       break;
+ 
+     default:
+-- 
+2.4.3
+

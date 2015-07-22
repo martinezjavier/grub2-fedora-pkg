@@ -1,0 +1,192 @@
+From 9ee5ae1fae1d7e19f76d4758d9658af90018b0f9 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Tue, 27 Jan 2015 17:17:58 +0100
+Subject: [PATCH 258/506] Document intentional fallthroughs.
+
+Found by: Coverity scan.
+---
+ grub-core/disk/diskfilter.c      | 3 +++
+ grub-core/font/font.c            | 3 ++-
+ grub-core/fs/udf.c               | 1 +
+ grub-core/lib/legacy_parse.c     | 1 +
+ grub-core/loader/i386/pc/linux.c | 3 +++
+ grub-core/normal/charset.c       | 1 +
+ grub-core/video/bochs.c          | 1 +
+ grub-core/video/cirrus.c         | 1 +
+ grub-core/video/i386/pc/vbe.c    | 2 ++
+ util/getroot.c                   | 1 +
+ util/grub-install.c              | 2 +-
+ 11 files changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/grub-core/disk/diskfilter.c b/grub-core/disk/diskfilter.c
+index 6124846..80966ac 100644
+--- a/grub-core/disk/diskfilter.c
++++ b/grub-core/disk/diskfilter.c
+@@ -71,10 +71,12 @@ is_lv_readable (struct grub_diskfilter_lv *lv, int easily)
+ 	case GRUB_DISKFILTER_RAID6:
+ 	  if (!easily)
+ 	    need--;
++	  /* Fallthrough.  */
+ 	case GRUB_DISKFILTER_RAID4:
+ 	case GRUB_DISKFILTER_RAID5:
+ 	  if (!easily)
+ 	    need--;
++	  /* Fallthrough.  */
+ 	case GRUB_DISKFILTER_STRIPED:
+ 	  break;
+ 
+@@ -584,6 +586,7 @@ read_segment (struct grub_diskfilter_segment *seg, grub_disk_addr_t sector,
+       if (seg->node_count == 1)
+ 	return grub_diskfilter_read_node (&seg->nodes[0],
+ 					  sector, size, buf);
++      /* Fallthrough.  */
+     case GRUB_DISKFILTER_MIRROR:
+     case GRUB_DISKFILTER_RAID10:
+       {
+diff --git a/grub-core/font/font.c b/grub-core/font/font.c
+index 607964b..53d76a6 100644
+--- a/grub-core/font/font.c
++++ b/grub-core/font/font.c
+@@ -1286,7 +1286,7 @@ blit_comb (const struct grub_unicode_glyph *glyph_id,
+ 	    - grub_font_get_xheight (combining_glyphs[i]->font) - 1;
+ 	  if (space <= 0)
+ 	    space = 1 + (grub_font_get_xheight (main_glyph->font)) / 8;
+-
++	  /* Fallthrough.  */
+ 	case GRUB_UNICODE_STACK_ATTACHED_ABOVE:
+ 	  do_blit (combining_glyphs[i], targetx,
+ 		   -(ctx.bounds.height + ctx.bounds.y + space
+@@ -1327,6 +1327,7 @@ blit_comb (const struct grub_unicode_glyph *glyph_id,
+ 		    + combining_glyphs[i]->height);
+ 	  if (space <= 0)
+ 	    space = 1 + (grub_font_get_xheight (main_glyph->font)) / 8;
++	  /* Fallthrough.  */
+ 
+ 	case GRUB_UNICODE_STACK_ATTACHED_BELOW:
+ 	  do_blit (combining_glyphs[i], targetx, -(ctx.bounds.y - space),
+diff --git a/grub-core/fs/udf.c b/grub-core/fs/udf.c
+index fd41283..839bff8 100644
+--- a/grub-core/fs/udf.c
++++ b/grub-core/fs/udf.c
+@@ -986,6 +986,7 @@ grub_udf_read_symlink (grub_fshelp_node_t node)
+ 	case 1:
+ 	  if (ptr[1])
+ 	    goto fail;
++	  /* Fallthrough.  */
+ 	case 2:
+ 	  /* in 4 bytes. out: 1 byte.  */
+ 	  optr = out;
+diff --git a/grub-core/lib/legacy_parse.c b/grub-core/lib/legacy_parse.c
+index 61266d9..ef56150 100644
+--- a/grub-core/lib/legacy_parse.c
++++ b/grub-core/lib/legacy_parse.c
+@@ -664,6 +664,7 @@ grub_legacy_parse (const char *buf, char **entryname, char **suffix)
+ 	  {
+ 	  case TYPE_FILE_NO_CONSUME:
+ 	    hold_arg = 1;
++	    /* Fallthrough.  */
+ 	  case TYPE_PARTITION:
+ 	  case TYPE_FILE:
+ 	    args[i] = adjust_file (curarg, curarglen);
+diff --git a/grub-core/loader/i386/pc/linux.c b/grub-core/loader/i386/pc/linux.c
+index 870992b..a293b17 100644
+--- a/grub-core/loader/i386/pc/linux.c
++++ b/grub-core/loader/i386/pc/linux.c
+@@ -280,10 +280,13 @@ grub_cmd_linux (grub_command_t cmd __attribute__ ((unused)),
+ 	      {
+ 	      case 'g':
+ 		shift += 10;
++		/* Fallthrough.  */
+ 	      case 'm':
+ 		shift += 10;
++		/* Fallthrough.  */
+ 	      case 'k':
+ 		shift += 10;
++		/* Fallthrough.  */
+ 	      default:
+ 		break;
+ 	      }
+diff --git a/grub-core/normal/charset.c b/grub-core/normal/charset.c
+index 3e4c337..eeb7ec1 100644
+--- a/grub-core/normal/charset.c
++++ b/grub-core/normal/charset.c
+@@ -929,6 +929,7 @@ grub_bidi_line_logical_to_visual (const grub_uint32_t *logical,
+ 	  case GRUB_BIDI_TYPE_R:
+ 	  case GRUB_BIDI_TYPE_AL:
+ 	    bidi_needed = 1;
++	    /* Fallthrough.  */
+ 	  default:
+ 	    {
+ 	      if (join_state == JOIN_FORCE)
+diff --git a/grub-core/video/bochs.c b/grub-core/video/bochs.c
+index 9098f90..3bcfa53 100644
+--- a/grub-core/video/bochs.c
++++ b/grub-core/video/bochs.c
+@@ -359,6 +359,7 @@ grub_video_bochs_setup (unsigned int width, unsigned int height,
+     case 32:
+       framebuffer.mode_info.reserved_mask_size = 8;
+       framebuffer.mode_info.reserved_field_pos = 24;
++      /* Fallthrough.  */
+ 
+     case 24:
+       framebuffer.mode_info.red_mask_size = 8;
+diff --git a/grub-core/video/cirrus.c b/grub-core/video/cirrus.c
+index 4913084..e2149e8 100644
+--- a/grub-core/video/cirrus.c
++++ b/grub-core/video/cirrus.c
+@@ -440,6 +440,7 @@ grub_video_cirrus_setup (unsigned int width, unsigned int height,
+     case 32:
+       framebuffer.mode_info.reserved_mask_size = 8;
+       framebuffer.mode_info.reserved_field_pos = 24;
++      /* Fallthrough.  */
+ 
+     case 24:
+       framebuffer.mode_info.red_mask_size = 8;
+diff --git a/grub-core/video/i386/pc/vbe.c b/grub-core/video/i386/pc/vbe.c
+index 07a614a..b7f9119 100644
+--- a/grub-core/video/i386/pc/vbe.c
++++ b/grub-core/video/i386/pc/vbe.c
+@@ -874,6 +874,7 @@ vbe2videoinfo (grub_uint32_t mode,
+       /* CGA is basically 4-bit packed pixel.  */
+     case GRUB_VBE_MEMORY_MODEL_CGA:
+       mode_info->mode_type |= GRUB_VIDEO_MODE_TYPE_CGA;
++      /* Fallthrough.  */
+     case GRUB_VBE_MEMORY_MODEL_PACKED_PIXEL:
+       mode_info->mode_type |= GRUB_VIDEO_MODE_TYPE_INDEX_COLOR;
+       break;
+@@ -886,6 +887,7 @@ vbe2videoinfo (grub_uint32_t mode,
+       /* Non chain 4 is a special case of planar.  */
+     case GRUB_VBE_MEMORY_MODEL_NONCHAIN4_256:
+       mode_info->mode_type |= GRUB_VIDEO_MODE_TYPE_NONCHAIN4;
++      /* Fallthrough.  */
+     case GRUB_VBE_MEMORY_MODEL_PLANAR:
+       mode_info->mode_type |= GRUB_VIDEO_MODE_TYPE_PLANAR
+ 	| GRUB_VIDEO_MODE_TYPE_INDEX_COLOR;
+diff --git a/util/getroot.c b/util/getroot.c
+index 345d49b..3c1f12d 100644
+--- a/util/getroot.c
++++ b/util/getroot.c
+@@ -107,6 +107,7 @@ grub_util_pull_device (const char *os_dev)
+     default:
+       if (grub_util_pull_device_os (os_dev, ab))
+ 	return;
++      /* Fallthrough.  */
+     case GRUB_DEV_ABSTRACTION_NONE:
+       free (grub_util_biosdisk_get_grub_dev (os_dev));
+       return;
+diff --git a/util/grub-install.c b/util/grub-install.c
+index 210f4a7..cedc188 100644
+--- a/util/grub-install.c
++++ b/util/grub-install.c
+@@ -1809,7 +1809,7 @@ main (int argc, char *argv[])
+ 	  grub_install_copy_file (imgfile, dst, 1);
+ 	  free (dst);
+ 	}
+-
++      /* Fallthrough.  */
+     case GRUB_INSTALL_PLATFORM_X86_64_EFI:
+       if (efidir_is_mac)
+ 	{
+-- 
+2.4.3
+

@@ -1,0 +1,26 @@
+From 71783dc9780c1e1897a59ec3273e6259807f47eb Mon Sep 17 00:00:00 2001
+From: Daniel Kiper <daniel.kiper@oracle.com>
+Date: Thu, 7 May 2015 18:00:47 +0200
+Subject: [PATCH 402/506] i386/relocator: Remove unused extern
+ grub_relocator64_rip_addr
+
+Signed-off-by: Daniel Kiper <daniel.kiper@oracle.com>
+---
+ grub-core/lib/i386/relocator.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/grub-core/lib/i386/relocator.c b/grub-core/lib/i386/relocator.c
+index ffaf25f..71dd4f0 100644
+--- a/grub-core/lib/i386/relocator.c
++++ b/grub-core/lib/i386/relocator.c
+@@ -64,7 +64,6 @@ extern grub_uint64_t grub_relocator64_rbx;
+ extern grub_uint64_t grub_relocator64_rcx;
+ extern grub_uint64_t grub_relocator64_rdx;
+ extern grub_uint64_t grub_relocator64_rip;
+-extern grub_uint64_t grub_relocator64_rip_addr;
+ extern grub_uint64_t grub_relocator64_rsp;
+ extern grub_uint64_t grub_relocator64_rsi;
+ extern grub_addr_t grub_relocator64_cr3;
+-- 
+2.4.3
+

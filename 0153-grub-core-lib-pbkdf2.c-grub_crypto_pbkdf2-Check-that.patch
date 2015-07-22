@@ -1,0 +1,41 @@
+From 065ed900d4865fc31062f01290560ad1bc189522 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Tue, 20 Jan 2015 15:26:09 +0100
+Subject: [PATCH 153/506] grub-core/lib/pbkdf2.c (grub_crypto_pbkdf2): Check
+ that hash len is not 0.
+
+---
+ ChangeLog              | 4 ++++
+ grub-core/lib/pbkdf2.c | 2 +-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/ChangeLog b/ChangeLog
+index 87c4658..a708ca2 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,9 @@
+ 2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
+ 
++	* grub-core/lib/pbkdf2.c (grub_crypto_pbkdf2): Check that hash len is not 0.
++
++2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
++
+ 	* grub-core/osdep/linux/blocklist.c (grub_install_get_blocklist): Check
+ 	blocksize validity.
+ 
+diff --git a/grub-core/lib/pbkdf2.c b/grub-core/lib/pbkdf2.c
+index 2fbaa95..01cee39 100644
+--- a/grub-core/lib/pbkdf2.c
++++ b/grub-core/lib/pbkdf2.c
+@@ -52,7 +52,7 @@ grub_crypto_pbkdf2 (const struct gcry_md_spec *md,
+   grub_uint8_t *tmp;
+   grub_size_t tmplen = Slen + 4;
+ 
+-  if (md->mdlen > GRUB_CRYPTO_MAX_MDLEN)
++  if (md->mdlen > GRUB_CRYPTO_MAX_MDLEN || md->mdlen == 0)
+     return GPG_ERR_INV_ARG;
+ 
+   if (c == 0)
+-- 
+2.4.3
+

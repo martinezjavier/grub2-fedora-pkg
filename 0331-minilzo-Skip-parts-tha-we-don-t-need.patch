@@ -1,0 +1,31 @@
+From c5a4e79335cebc026684de623bdd327312139330 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Thu, 26 Feb 2015 18:11:53 +0100
+Subject: [PATCH 331/506] minilzo: Skip parts tha we don't need.
+
+---
+ config.h.in | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/config.h.in b/config.h.in
+index d93b687..ea0f383 100644
+--- a/config.h.in
++++ b/config.h.in
+@@ -12,6 +12,14 @@
+ #define DISK_CACHE_STATS @DISK_CACHE_STATS@
+ #define BOOT_TIME_STATS @BOOT_TIME_STATS@
+ 
++/* We don't need those.  */
++#define MINILZO_CFG_SKIP_LZO_PTR 1
++#define MINILZO_CFG_SKIP_LZO_UTIL 1
++#define MINILZO_CFG_SKIP_LZO_STRING 1
++#define MINILZO_CFG_SKIP_LZO_INIT 1
++#define MINILZO_CFG_SKIP_LZO1X_1_COMPRESS 1
++#define MINILZO_CFG_SKIP_LZO1X_DECOMPRESS 1
++
+ #if defined (GRUB_BUILD)
+ #undef ENABLE_NLS
+ #define BUILD_SIZEOF_LONG @BUILD_SIZEOF_LONG@
+-- 
+2.4.3
+

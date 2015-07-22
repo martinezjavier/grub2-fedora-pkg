@@ -1,0 +1,37 @@
+From e61f4eba1850c1c6576c0977fc1a305ad02ab0ce Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Mon, 26 Jan 2015 22:08:13 +0300
+Subject: [PATCH 246/506] linux/getroot: fix memory leak.
+
+Found by: Coverity scan.
+---
+ grub-core/osdep/unix/getroot.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/grub-core/osdep/unix/getroot.c b/grub-core/osdep/unix/getroot.c
+index e3887cb..10fb56a 100644
+--- a/grub-core/osdep/unix/getroot.c
++++ b/grub-core/osdep/unix/getroot.c
+@@ -621,7 +621,10 @@ grub_util_pull_lvm_by_command (const char *os_dev)
+   free (vgname);
+ 
+   if (!pid)
+-    return;
++    {
++      free (vgid);
++      return;
++    }
+ 
+   /* Parent.  Read vgs' output.  */
+   vgs = fdopen (fd, "r");
+@@ -653,6 +656,7 @@ out:
+   close (fd);
+   waitpid (pid, NULL, 0);
+   free (buf);
++  free (vgid);
+ }
+ 
+ /* ZFS has similar problems to those of btrfs (see above).  */
+-- 
+2.4.3
+

@@ -1,0 +1,67 @@
+From ed07b7e1289dd00b9d6dc8ac5dd56130f3376bc9 Mon Sep 17 00:00:00 2001
+From: Michael Zimmermann <sigmaepsilon92@gmail.com>
+Date: Fri, 27 Mar 2015 14:44:41 +0100
+Subject: [PATCH 378/506] Add missing initializers to silence suprious
+ warnings.
+
+---
+ grub-core/commands/verify.c | 2 +-
+ grub-core/fs/hfsplus.c      | 8 ++++----
+ grub-core/normal/main.c     | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/grub-core/commands/verify.c b/grub-core/commands/verify.c
+index 6569391..9620a3b 100644
+--- a/grub-core/commands/verify.c
++++ b/grub-core/commands/verify.c
+@@ -454,7 +454,7 @@ grub_verify_signature_real (char *buf, grub_size_t size,
+   grub_err_t err;
+   grub_size_t i;
+   gcry_mpi_t mpis[10];
+-  grub_uint8_t type;
++  grub_uint8_t type = 0;
+ 
+   err = read_packet_header (sig, &type, &len);
+   if (err)
+diff --git a/grub-core/fs/hfsplus.c b/grub-core/fs/hfsplus.c
+index 110d858..21159e8 100644
+--- a/grub-core/fs/hfsplus.c
++++ b/grub-core/fs/hfsplus.c
+@@ -792,8 +792,8 @@ grub_hfsplus_iterate_dir (grub_fshelp_node_t dir,
+   };
+ 
+   struct grub_hfsplus_key_internal intern;
+-  struct grub_hfsplus_btnode *node;
+-  grub_disk_addr_t ptr;
++  struct grub_hfsplus_btnode *node = NULL;
++  grub_disk_addr_t ptr = 0;
+ 
+   {
+     struct grub_fshelp_node *fsnode;
+@@ -976,8 +976,8 @@ grub_hfsplus_label (grub_device_t device, char **label)
+   struct grub_hfsplus_catkey *catkey;
+   int i, label_len;
+   struct grub_hfsplus_key_internal intern;
+-  struct grub_hfsplus_btnode *node;
+-  grub_disk_addr_t ptr;
++  struct grub_hfsplus_btnode *node = NULL;
++  grub_disk_addr_t ptr = 0;
+ 
+   *label = 0;
+ 
+diff --git a/grub-core/normal/main.c b/grub-core/normal/main.c
+index 623b93b..78a70a8 100644
+--- a/grub-core/normal/main.c
++++ b/grub-core/normal/main.c
+@@ -445,7 +445,7 @@ grub_cmdline_run (int nested, int force_auth)
+ 
+   while (1)
+     {
+-      char *line;
++      char *line = NULL;
+ 
+       if (grub_normal_exit_level)
+ 	break;
+-- 
+2.4.3
+

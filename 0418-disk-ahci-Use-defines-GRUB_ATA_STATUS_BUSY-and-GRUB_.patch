@@ -1,0 +1,35 @@
+From 5e74a3e6dfc4e5992c423bf740a4b3604030b007 Mon Sep 17 00:00:00 2001
+From: Paul Menzel <paulepanter@users.sourceforge.net>
+Date: Sun, 24 May 2015 11:11:25 +0200
+Subject: [PATCH 418/506] disk/ahci: Use defines `GRUB_ATA_STATUS_BUSY` and
+ `GRUB_ATA_STATUS_DRQ`
+
+Instead of hard coding `0x88` use the macros defined in `disk/ata.h`.
+---
+ grub-core/disk/ahci.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/grub-core/disk/ahci.c b/grub-core/disk/ahci.c
+index d6bdbdd..7f75724 100644
+--- a/grub-core/disk/ahci.c
++++ b/grub-core/disk/ahci.c
+@@ -565,14 +565,14 @@ grub_ahci_pciinit (grub_pci_device_t dev,
+   while (grub_get_time_ms () < endtime)
+     {
+       for (i = 0; i < nports; i++)
+-	if (adevs[i] && (adevs[i]->hba->ports[adevs[i]->port].task_file_data & 0x88))
++	if (adevs[i] && (adevs[i]->hba->ports[adevs[i]->port].task_file_data & (GRUB_ATA_STATUS_BUSY | GRUB_ATA_STATUS_DRQ)))
+ 	  break;
+       if (i == nports)
+ 	break;
+     }
+ 
+   for (i = 0; i < nports; i++)
+-    if (adevs[i] && (adevs[i]->hba->ports[adevs[i]->port].task_file_data & 0x88))
++    if (adevs[i] && (adevs[i]->hba->ports[adevs[i]->port].task_file_data & (GRUB_ATA_STATUS_BUSY | GRUB_ATA_STATUS_DRQ)))
+       {
+ 	grub_dprintf ("ahci", "port %d is busy\n", i);
+ 	failed_adevs[i] = adevs[i];
+-- 
+2.4.3
+

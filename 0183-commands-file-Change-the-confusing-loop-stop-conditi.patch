@@ -1,0 +1,48 @@
+From b04c6d32ce816c5d8943c767bb4cc7e56aa3c1c5 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 24 Jan 2015 20:45:25 +0100
+Subject: [PATCH 183/506] commands/file: Change the confusing loop stop
+ condition.
+
+Old condition was used to zero-out header variable on exit of the loop.
+This is correct but confusing. Replace with in-loop logic.
+
+Found by: Coverity Scan.
+---
+ grub-core/commands/file.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/grub-core/commands/file.c b/grub-core/commands/file.c
+index 42d62d4..12fba99 100644
+--- a/grub-core/commands/file.c
++++ b/grub-core/commands/file.c
+@@ -476,8 +476,8 @@ grub_cmd_file (grub_extcmd_context_t ctxt, int argc, char **args)
+ 	   be at least 12 bytes and aligned on a 4-byte boundary.  */
+ 	for (header = buffer;
+ 	     ((char *) header <=
+-	      (char *) buffer + len - (type == IS_MULTIBOOT2 ? 16 : 12))
+-	     || (header = 0); header += step)
++	      (char *) buffer + len - (type == IS_MULTIBOOT2 ? 16 : 12));
++	     header += step)
+ 	  {
+ 	    if (header[0] == magic
+ 		&& !(grub_le_to_cpu32 (header[0])
+@@ -485,11 +485,12 @@ grub_cmd_file (grub_extcmd_context_t ctxt, int argc, char **args)
+ 		     + grub_le_to_cpu32 (header[2])
+ 		     + (type == IS_MULTIBOOT2
+ 			? grub_le_to_cpu32 (header[3]) : 0)))
+-	      break;
++	      {
++		ret = 1;
++		break;
++	      }
+ 	  }
+ 
+-	if (header != 0)
+-	  ret = 1;
+ 	grub_free (buffer);
+ 	break;
+       }
+-- 
+2.4.3
+

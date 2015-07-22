@@ -1,0 +1,24 @@
+From f07784e8901906d47b892bc49b44dd7c832cebdd Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Fri, 28 Nov 2014 22:35:01 +0300
+Subject: [PATCH 123/506] Fix ChangeLog
+
+---
+ ChangeLog | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/ChangeLog b/ChangeLog
+index 0ba21d5..504d829 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,7 @@
+ 2014-11-28  Andrei Borzenkov  <arvidjaar@gmail.com>
+ 
++	* grub-core/disk/geli.c (configure_ciphers): Fix memory leaks
++	(Coverity CID 73813, 73710)
+ 	* grub-core/disk/luks.c (configure_ciphers): Fix memory leaks
+ 	and use after free (Coverity CID 73813, 73710, 73730)
+ 	* grub-core/disk/luks.c (luks_recover_key): Fix memory leak (Coverity
+-- 
+2.4.3
+

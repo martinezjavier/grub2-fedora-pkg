@@ -1,0 +1,39 @@
+From e3c7aca76d5a3467f1bf0736dcd439a0d6f55ae9 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 21 Feb 2015 16:01:53 +0100
+Subject: [PATCH 297/506] Strip .MIPS.abiflags which causes compile failure
+
+---
+ conf/Makefile.common | 2 +-
+ gentpl.py            | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/conf/Makefile.common b/conf/Makefile.common
+index 8c4d148..66c9fdb 100644
+--- a/conf/Makefile.common
++++ b/conf/Makefile.common
+@@ -45,7 +45,7 @@ CFLAGS_KERNEL = $(CFLAGS_PLATFORM) -ffreestanding
+ LDFLAGS_KERNEL = $(LDFLAGS_PLATFORM) -nostdlib $(TARGET_LDFLAGS_OLDMAGIC) $(TARGET_LDFLAGS_STATIC_LIBGCC)
+ CPPFLAGS_KERNEL = $(CPPFLAGS_CPU) $(CPPFLAGS_PLATFORM) -DGRUB_KERNEL=1
+ CCASFLAGS_KERNEL = $(CCASFLAGS_CPU) $(CCASFLAGS_PLATFORM)
+-STRIPFLAGS_KERNEL = -R .rel.dyn -R .reginfo -R .note -R .comment -R .drectve -R .note.gnu.gold-version
++STRIPFLAGS_KERNEL = -R .rel.dyn -R .reginfo -R .note -R .comment -R .drectve -R .note.gnu.gold-version -R .MIPS.abiflags
+ 
+ CFLAGS_MODULE = $(CFLAGS_PLATFORM) -ffreestanding
+ LDFLAGS_MODULE = $(LDFLAGS_PLATFORM) -nostdlib $(TARGET_LDFLAGS_OLDMAGIC) -Wl,-r,-d
+diff --git a/gentpl.py b/gentpl.py
+index bdcae1a..c986cec 100644
+--- a/gentpl.py
++++ b/gentpl.py
+@@ -753,7 +753,7 @@ def image(defn, platform):
+ if test x$(TARGET_APPLE_LINKER) = x1; then \
+   $(MACHO2IMG) $< $@; \
+ else \
+-  $(TARGET_OBJCOPY) $(""" + cname(defn) + """_OBJCOPYFLAGS) --strip-unneeded -R .note -R .comment -R .note.gnu.build-id -R .reginfo -R .rel.dyn -R .note.gnu.gold-version $< $@; \
++  $(TARGET_OBJCOPY) $(""" + cname(defn) + """_OBJCOPYFLAGS) --strip-unneeded -R .note -R .comment -R .note.gnu.build-id -R .MIPS.abiflags -R .reginfo -R .rel.dyn -R .note.gnu.gold-version $< $@; \
+ fi
+ """)
+ 
+-- 
+2.4.3
+

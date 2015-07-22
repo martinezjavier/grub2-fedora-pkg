@@ -1,0 +1,25 @@
+From 12bf55703940cde06448a1c1a19001556c1450f9 Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Sat, 28 Mar 2015 22:13:35 +0300
+Subject: [PATCH 383/506] do not emit cryptomount without crypto UUID
+
+---
+ util/grub-mkconfig_lib.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/util/grub-mkconfig_lib.in b/util/grub-mkconfig_lib.in
+index 29ef865..60b31ca 100644
+--- a/util/grub-mkconfig_lib.in
++++ b/util/grub-mkconfig_lib.in
+@@ -145,7 +145,7 @@ prepare_grub_to_access_device ()
+   done
+ 
+   if [ x$GRUB_ENABLE_CRYPTODISK = xy ]; then
+-      for uuid in "`"${grub_probe}" --device $@ --target=cryptodisk_uuid`"; do
++      for uuid in `"${grub_probe}" --device $@ --target=cryptodisk_uuid`; do
+ 	  echo "cryptomount -u $uuid"
+       done
+   fi
+-- 
+2.4.3
+

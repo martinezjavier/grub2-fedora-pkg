@@ -1,0 +1,130 @@
+From 5e42618e001ab28346ee1a3f4591977afda7f2f5 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sun, 21 Sep 2014 18:18:03 +0200
+Subject: [PATCH 103/506] Fix wrong commit
+
+---
+ grub-core/commands/keylayouts.c    |  4 +---
+ grub-core/gmodule.pl.in            |  2 +-
+ grub-core/normal/main.c            | 10 +++-------
+ grub-core/normal/menu.c            |  2 +-
+ grub-core/normal/menu_entry.c      |  2 +-
+ grub-core/tests/cmdline_cat_test.c |  2 +-
+ include/grub/normal.h              |  2 +-
+ 7 files changed, 9 insertions(+), 15 deletions(-)
+
+diff --git a/grub-core/commands/keylayouts.c b/grub-core/commands/keylayouts.c
+index f4b7730..da04389 100644
+--- a/grub-core/commands/keylayouts.c
++++ b/grub-core/commands/keylayouts.c
+@@ -173,10 +173,8 @@ grub_term_map_key (grub_keyboard_key_t code, int status)
+ 
+   key = map_key_core (code, status, &alt_gr_consumed);
+   
+-  if (key == 0 || key == GRUB_TERM_SHIFT) {
++  if (key == 0 || key == GRUB_TERM_SHIFT)
+     grub_printf ("Unknown key 0x%x detected\n", code);
+-    return GRUB_TERM_NO_KEY;
+-  }
+   
+   if (status & GRUB_TERM_STATUS_CAPS)
+     {
+diff --git a/grub-core/gmodule.pl.in b/grub-core/gmodule.pl.in
+index 78aa1e6..6739a6f 100644
+--- a/grub-core/gmodule.pl.in
++++ b/grub-core/gmodule.pl.in
+@@ -23,7 +23,7 @@ while (<>) {
+ 		}
+ 
+ 		print " -s $2 $sections{$1}"
+-			if ($sections{$1} ne '0x0' and $sections{$1} ne '');
++			if ($sections{$1} ne '0x0');
+ 	};
+ 	close (READELF);
+ 	print "\n";
+diff --git a/grub-core/normal/main.c b/grub-core/normal/main.c
+index c41f175..3a926fc 100644
+--- a/grub-core/normal/main.c
++++ b/grub-core/normal/main.c
+@@ -302,7 +302,7 @@ grub_enter_normal_mode (const char *config)
+   nested_level++;
+   grub_normal_execute (config, 0, 0);
+   grub_boot_time ("Entering shell");
+-  grub_cmdline_run (0, 1);
++  grub_cmdline_run (0);
+   nested_level--;
+   if (grub_normal_exit_level)
+     grub_normal_exit_level--;
+@@ -424,15 +424,11 @@ grub_normal_read_line (char **line, int cont,
+ }
+ 
+ void
+-grub_cmdline_run (int nested, int force_auth)
++grub_cmdline_run (int nested)
+ {
+   grub_err_t err = GRUB_ERR_NONE;
+ 
+-  do
+-    {
+-      err = grub_auth_check_authentication (NULL);
+-    }
+-  while (err && force_auth);
++  err = grub_auth_check_authentication (NULL);
+ 
+   if (err)
+     {
+diff --git a/grub-core/normal/menu.c b/grub-core/normal/menu.c
+index 719e2fb..b47991a 100644
+--- a/grub-core/normal/menu.c
++++ b/grub-core/normal/menu.c
+@@ -773,7 +773,7 @@ run_menu (grub_menu_t menu, int nested, int *auto_boot)
+ 
+ 	    case 'c':
+ 	      menu_fini ();
+-	      grub_cmdline_run (1, 0);
++	      grub_cmdline_run (1);
+ 	      goto refresh;
+ 
+ 	    case 'e':
+diff --git a/grub-core/normal/menu_entry.c b/grub-core/normal/menu_entry.c
+index 62c7e16..b485df8 100644
+--- a/grub-core/normal/menu_entry.c
++++ b/grub-core/normal/menu_entry.c
+@@ -1396,7 +1396,7 @@ grub_menu_entry_run (grub_menu_entry_t entry)
+ 
+ 	case GRUB_TERM_CTRL | 'c':
+ 	case GRUB_TERM_KEY_F2:
+-	  grub_cmdline_run (1, 0);
++	  grub_cmdline_run (1);
+ 	  goto refresh;
+ 
+ 	case GRUB_TERM_CTRL | 'x':
+diff --git a/grub-core/tests/cmdline_cat_test.c b/grub-core/tests/cmdline_cat_test.c
+index f1e2143..c3de5c4 100644
+--- a/grub-core/tests/cmdline_cat_test.c
++++ b/grub-core/tests/cmdline_cat_test.c
+@@ -109,7 +109,7 @@ cmdline_cat_test (void)
+       grub_video_checksum ("cmdline_cat");
+ 
+       if (!grub_test_use_gfxterm ())
+-	grub_cmdline_run (1, 0);
++	grub_cmdline_run (1);
+ 
+       grub_test_use_gfxterm_end ();
+ 
+diff --git a/include/grub/normal.h b/include/grub/normal.h
+index 218cbab..c4ab193 100644
+--- a/include/grub/normal.h
++++ b/include/grub/normal.h
+@@ -66,7 +66,7 @@ void grub_menu_init_page (int nested, int edit,
+ 			  struct grub_term_output *term);
+ void grub_normal_init_page (struct grub_term_output *term, int y);
+ char *grub_file_getline (grub_file_t file);
+-void grub_cmdline_run (int nested, int force_auth);
++void grub_cmdline_run (int nested);
+ 
+ /* Defined in `cmdline.c'.  */
+ char *grub_cmdline_get (const char *prompt);
+-- 
+2.4.3
+

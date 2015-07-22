@@ -1,0 +1,36 @@
+From bd196014ec4eed6b4671cac4f4cb73621b219afa Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Mon, 26 Jan 2015 22:44:45 +0300
+Subject: [PATCH 251/506] util/setup: fix memory leak.
+
+Found by: Coverity scan.
+---
+ util/setup.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/util/setup.c b/util/setup.c
+index ed4bd11..b299159 100644
+--- a/util/setup.c
++++ b/util/setup.c
+@@ -670,15 +670,17 @@ unable_to_embed:
+     if (dest_dev->disk->id != root_dev->disk->id
+ 	|| dest_dev->disk->dev->id != root_dev->disk->dev->id)
+       {
+-	const char *dest_ofpath;
++	char *dest_ofpath;
+ 	dest_ofpath
+ 	  = grub_util_devname_to_ofpath (grub_util_biosdisk_get_osdev (root_dev->disk));
++	/* FIXME handle NULL result */
+ 	grub_util_info ("dest_ofpath is `%s'", dest_ofpath);
+ 	strncpy (boot_devpath, dest_ofpath,
+ 		 GRUB_BOOT_MACHINE_BOOT_DEVPATH_END
+ 		 - GRUB_BOOT_MACHINE_BOOT_DEVPATH - 1);
+ 	boot_devpath[GRUB_BOOT_MACHINE_BOOT_DEVPATH_END
+ 		   - GRUB_BOOT_MACHINE_BOOT_DEVPATH - 1] = 0;
++	free (dest_ofpath);
+       }
+     else
+       {
+-- 
+2.4.3
+

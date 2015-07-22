@@ -1,0 +1,70 @@
+From e62ca2a870ecec4d46fcc03556e8e61592e9dd18 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 21 Feb 2015 19:55:53 +0100
+Subject: [PATCH 314/506] qemu: Fix compilation
+
+---
+ grub-core/boot/i386/qemu/boot.S |  2 +-
+ grub-core/kern/i386/realmode.S  | 20 +++++++++++++++++++-
+ 2 files changed, 20 insertions(+), 2 deletions(-)
+
+diff --git a/grub-core/boot/i386/qemu/boot.S b/grub-core/boot/i386/qemu/boot.S
+index 8d97fc1..354436e 100644
+--- a/grub-core/boot/i386/qemu/boot.S
++++ b/grub-core/boot/i386/qemu/boot.S
+@@ -48,7 +48,7 @@ VARIABLE(grub_core_entry_addr)
+ 	/* Transition to protected mode.  We use pushl to force generation
+ 	   of a flat return address.  */
+ 	pushl	$1f
+-	jmpl	real_to_prot
++	jmp	real_to_prot
+ 	.code32
+ 	/* Ensure A20 is enabled. We're in qemu, so control port A works
+ 	   and there is no need to wait since there is no real logic, it's
+diff --git a/grub-core/kern/i386/realmode.S b/grub-core/kern/i386/realmode.S
+index 1384d52..998fdc7 100644
+--- a/grub-core/kern/i386/realmode.S
++++ b/grub-core/kern/i386/realmode.S
+@@ -137,7 +137,22 @@ real_to_prot:
+ 	/* load the GDT register */
+ 	xorw	%ax, %ax
+ 	movw	%ax, %ds
++#ifdef GRUB_MACHINE_QEMU
++	/*
++	qemu is special: gdtdesc is in ROM.
++	%cs = 0xf000
++	_start + GRUB_BOOT_MACHINE_SIZE = 0x100000
++	So
++	_start + GRUB_BOOT_MACHINE_SIZE - 0x10000 points to the same point
++	as %cs.
++	gdtdesc - (_start + GRUB_BOOT_MACHINE_SIZE - 0x10000)
++	= gdtdesc - _start - GRUB_BOOT_MACHINE_SIZE + 0x10000
++	but the later can be computed by assembly.
++	*/
++	lgdtl	%cs:(gdtdesc - _start - GRUB_BOOT_MACHINE_SIZE + 0x10000)
++#else
+ 	lgdtl	gdtdesc
++#endif
+ 
+ 	/* turn on protected mode */
+ 	movl	%cr0, %eax
+@@ -178,6 +193,9 @@ protcseg:
+ 
+ 	/* return on the old (or initialized) stack! */
+ 	ret
++	/* prot_to_real assumes that this code is under 64K which is not
++	true for qemu.  */
++#ifndef GRUB_MACHINE_QEMU
+ /*
+  *  GRUB  --  GRand Unified Bootloader
+  *  Copyright (C) 1999,2000,2001,2002,2003,2005,2006,2007,2009,2010 Free Software Foundation, Inc.
+@@ -259,5 +277,5 @@ realcseg:
+ 
+ 	/* return on new stack! */
+ 	retl
+-
++#endif
+ 	.code32
+-- 
+2.4.3
+

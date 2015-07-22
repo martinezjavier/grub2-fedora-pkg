@@ -1,0 +1,199 @@
+From bc29c6d019c8645e6da843c78ba522f17165e808 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 21 Feb 2015 17:19:01 +0100
+Subject: [PATCH 309/506] Change dot assignmnet to more portable .org.
+
+Binary is unchanged (verified)
+---
+ grub-core/boot/i386/pc/boot.S        | 20 ++++++++++----------
+ grub-core/boot/i386/pc/cdboot.S      |  4 ++--
+ grub-core/boot/i386/pc/diskboot.S    |  2 +-
+ grub-core/boot/i386/pc/lnxboot.S     |  4 ++--
+ grub-core/boot/i386/pc/pxeboot.S     |  2 +-
+ grub-core/boot/i386/pc/startup_raw.S | 10 +++++-----
+ 6 files changed, 21 insertions(+), 21 deletions(-)
+
+diff --git a/grub-core/boot/i386/pc/boot.S b/grub-core/boot/i386/pc/boot.S
+index b4975e2..d17a138 100644
+--- a/grub-core/boot/i386/pc/boot.S
++++ b/grub-core/boot/i386/pc/boot.S
+@@ -165,8 +165,8 @@ start:
+ 	 * this area.
+ 	 */
+ 
+-	. = _start + GRUB_BOOT_MACHINE_BPB_START
+-	. = _start + 4
++	.org GRUB_BOOT_MACHINE_BPB_START
++	.org 4
+ #endif
+ #ifdef HYBRID_BOOT
+ 	floppy
+@@ -174,7 +174,7 @@ start:
+ 	scratch
+ #endif
+ 
+-	. = _start + GRUB_BOOT_MACHINE_BPB_END
++	.org GRUB_BOOT_MACHINE_BPB_END
+ 	/*
+ 	 * End of BIOS parameter block.
+ 	 */
+@@ -183,14 +183,14 @@ kernel_address:
+ 	.word	GRUB_BOOT_MACHINE_KERNEL_ADDR
+ 
+ #ifndef HYBRID_BOOT
+-	. = _start + GRUB_BOOT_MACHINE_KERNEL_SECTOR
++	.org GRUB_BOOT_MACHINE_KERNEL_SECTOR
+ kernel_sector:
+ 	.long	1
+ kernel_sector_high:
+ 	.long	0
+ #endif
+ 
+-	. = _start + GRUB_BOOT_MACHINE_BOOT_DRIVE
++	.org GRUB_BOOT_MACHINE_BOOT_DRIVE
+ boot_drive:
+ 	.byte 0xff	/* the disk to load kernel from */
+ 			/* 0xff means use the boot drive */
+@@ -208,7 +208,7 @@ LOCAL(after_BPB):
+          * possible boot drive. If GRUB is installed into a floppy,
+          * this does nothing (only jump).
+          */
+-	. = _start + GRUB_BOOT_MACHINE_DRIVE_CHECK
++	.org GRUB_BOOT_MACHINE_DRIVE_CHECK
+ boot_drive_check:
+         jmp     3f	/* grub-setup may overwrite this jump */
+         testb   $0x80, %dl
+@@ -511,13 +511,13 @@ LOCAL(message):
+ 	 */
+ 
+ #ifdef HYBRID_BOOT
+-	. = _start + 0x1b0
++	.org 0x1b0
+ kernel_sector:
+ 	.long	1
+ kernel_sector_high:
+ 	.long	0
+ #endif
+-	. = _start + GRUB_BOOT_MACHINE_WINDOWS_NT_MAGIC
++	.org GRUB_BOOT_MACHINE_WINDOWS_NT_MAGIC
+ nt_magic:
+ 	.long 0
+ 	.word 0
+@@ -528,7 +528,7 @@ nt_magic:
+ 	 *  sneaky, huh?
+ 	*/
+ 
+-	. = _start + GRUB_BOOT_MACHINE_PART_START
++	.org GRUB_BOOT_MACHINE_PART_START
+ 
+ #ifndef HYBRID_BOOT
+ 	floppy
+@@ -536,7 +536,7 @@ nt_magic:
+ 	scratch
+ #endif
+ 
+-	. = _start + GRUB_BOOT_MACHINE_PART_END
++	.org GRUB_BOOT_MACHINE_PART_END
+ 	
+ /* the last 2 bytes in the sector 0 contain the signature */
+ 	.word	GRUB_BOOT_MACHINE_SIGNATURE
+diff --git a/grub-core/boot/i386/pc/cdboot.S b/grub-core/boot/i386/pc/cdboot.S
+index 92df7c7..de4f809 100644
+--- a/grub-core/boot/i386/pc/cdboot.S
++++ b/grub-core/boot/i386/pc/cdboot.S
+@@ -43,7 +43,7 @@ _start:
+ LOCAL(next):
+ 	jmp	1f
+ 
+-	. = start + 8
++	.org 8
+ 
+ bi_pvd:
+ 	.long 0		/* LBA of primary volume descriptor.  */
+@@ -168,6 +168,6 @@ err_noboot_msg:
+ err_cdfail_msg:
+ 	.ascii	"cdrom read fails\0"
+ 
+-	. = start + 0x7FF
++	.org 0x7FF
+ 
+ 	.byte	0
+diff --git a/grub-core/boot/i386/pc/diskboot.S b/grub-core/boot/i386/pc/diskboot.S
+index d030a14..1ee4cf5 100644
+--- a/grub-core/boot/i386/pc/diskboot.S
++++ b/grub-core/boot/i386/pc/diskboot.S
+@@ -362,7 +362,7 @@ LOCAL(message):
+ 	.word 0
+ 	.word 0
+ 
+-	. = _start + 0x200 - GRUB_BOOT_MACHINE_LIST_SIZE
++	.org 0x200 - GRUB_BOOT_MACHINE_LIST_SIZE
+ LOCAL(firstlist):	/* this label has to be before the first list entry!!! */
+         /* fill the first data listing with the default */
+ blocklist_default_start:
+diff --git a/grub-core/boot/i386/pc/lnxboot.S b/grub-core/boot/i386/pc/lnxboot.S
+index 87e56a2..2dda0e0 100644
+--- a/grub-core/boot/i386/pc/lnxboot.S
++++ b/grub-core/boot/i386/pc/lnxboot.S
+@@ -41,7 +41,7 @@ data_start:
+ 	xorl	%ebp, %ebp
+ 	jmp	LOCAL(linux_next)
+ 
+-	. = data_start + 0x1F1
++	.org 0x1F1
+ 
+ setup_sects:
+ 	.byte	CODE_SECTORS
+@@ -292,4 +292,4 @@ LOCAL(fail):
+ err_int15_msg:
+ 	.ascii	"move memory fails\0"
+ 
+-	. = _start + CODE_SECTORS * 512
++	.org (CODE_SECTORS * 512 + 512)
+diff --git a/grub-core/boot/i386/pc/pxeboot.S b/grub-core/boot/i386/pc/pxeboot.S
+index 446bfc7..b695b24 100644
+--- a/grub-core/boot/i386/pc/pxeboot.S
++++ b/grub-core/boot/i386/pc/pxeboot.S
+@@ -38,5 +38,5 @@ start:
+ 	/* This region is a junk. Do you say that this is wasteful?
+ 	   But I like that the memory layout of the body is consistent
+ 	   among different kernels rather than scamping just for 1.5KB. */
+-	. = _start + 0x8200 - 0x7C00 - 0x200 - 1
++	.org  0x8200 - 0x7C00 - 0x200 - 1
+ 	.byte	0
+diff --git a/grub-core/boot/i386/pc/startup_raw.S b/grub-core/boot/i386/pc/startup_raw.S
+index 812ff54..0f8806c 100644
+--- a/grub-core/boot/i386/pc/startup_raw.S
++++ b/grub-core/boot/i386/pc/startup_raw.S
+@@ -50,23 +50,23 @@ LOCAL (base):
+ 	 *  This is a special data area.
+ 	 */
+ 
+-	. = _start + GRUB_DECOMPRESSOR_MACHINE_COMPRESSED_SIZE
++	.org GRUB_DECOMPRESSOR_MACHINE_COMPRESSED_SIZE
+ LOCAL(compressed_size):
+ 	.long 0
+-	. = _start + GRUB_DECOMPRESSOR_MACHINE_UNCOMPRESSED_SIZE
++	.org GRUB_DECOMPRESSOR_MACHINE_UNCOMPRESSED_SIZE
+ LOCAL(uncompressed_size):
+ 	.long 0
+ 
+-	. = _start + GRUB_KERNEL_I386_PC_REED_SOLOMON_REDUNDANCY
++	.org GRUB_KERNEL_I386_PC_REED_SOLOMON_REDUNDANCY
+ reed_solomon_redundancy:
+ 	.long	0
+-	. = _start + GRUB_KERNEL_I386_PC_NO_REED_SOLOMON_LENGTH
++	.org GRUB_KERNEL_I386_PC_NO_REED_SOLOMON_LENGTH
+ 	.short	(LOCAL(reed_solomon_part) - _start)
+ 
+ /*
+  *  This is the area for all of the special variables.
+  */
+-	. = _start + GRUB_DECOMPRESSOR_I386_PC_BOOT_DEVICE
++	.org GRUB_DECOMPRESSOR_I386_PC_BOOT_DEVICE
+ LOCAL(boot_dev):
+ 	.byte	0xFF, 0xFF, 0xFF
+ LOCAL(boot_drive):
+-- 
+2.4.3
+

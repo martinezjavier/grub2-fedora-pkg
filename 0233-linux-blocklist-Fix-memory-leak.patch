@@ -1,0 +1,25 @@
+From 5adc6d76d3c82ed7d85fc7aaa341743f5378314c Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Mon, 26 Jan 2015 09:50:58 +0100
+Subject: [PATCH 233/506] linux/blocklist: Fix memory leak.
+
+Found by: Coverity scan.
+---
+ grub-core/osdep/linux/blocklist.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/grub-core/osdep/linux/blocklist.c b/grub-core/osdep/linux/blocklist.c
+index 10ddd11..c77d608 100644
+--- a/grub-core/osdep/linux/blocklist.c
++++ b/grub-core/osdep/linux/blocklist.c
+@@ -130,6 +130,7 @@ grub_install_get_blocklist (grub_device_t root_dev,
+ 		    & (GRUB_DISK_SECTOR_SIZE - 1),
+ 		    fie2->fm_extents[i].fe_length, hook_data);
+ 	}
++      free (fie2);
+     }
+   close (fd);
+ }
+-- 
+2.4.3
+

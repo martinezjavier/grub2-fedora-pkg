@@ -1,0 +1,34 @@
+From 8acb9dc697627e4189972f15fc219581557365b6 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Fri, 23 Jan 2015 19:46:02 +0100
+Subject: [PATCH 173/506] 	* tests/file_filter/file: Really add missing
+ file.
+
+---
+ ChangeLog              | 4 ++++
+ tests/file_filter/file | 1 +
+ 2 files changed, 5 insertions(+)
+ create mode 100644 tests/file_filter/file
+
+diff --git a/ChangeLog b/ChangeLog
+index 3f01f98..869f6bf 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,7 @@
++2015-01-23  Vladimir Serbinenko  <phcoder@gmail.com>
++
++	* tests/file_filter/file: Really add missing file.
++
+ 2015-01-23  Andrei Borzenkov  <arvidjaar@gmail.com>
+ 
+ 	* grub-core/disk/xen/xendisk.c: Accept hdX as disk names on Xen to
+diff --git a/tests/file_filter/file b/tests/file_filter/file
+new file mode 100644
+index 0000000..64650ac
+--- /dev/null
++++ b/tests/file_filter/file
+@@ -0,0 +1 @@
++Hello, user!
+-- 
+2.4.3
+

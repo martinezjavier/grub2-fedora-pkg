@@ -1,0 +1,31 @@
+From 6603c22f3125185077d9e6431e1004aff83a473c Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Mon, 26 Jan 2015 09:49:32 +0100
+Subject: [PATCH 231/506] normal/misc: Close device on all pathes.
+
+Found by: Coverity scan.
+---
+ grub-core/normal/misc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/grub-core/normal/misc.c b/grub-core/normal/misc.c
+index 34d505e..38f91b9 100644
+--- a/grub-core/normal/misc.c
++++ b/grub-core/normal/misc.c
+@@ -184,10 +184,11 @@ grub_normal_print_device_info (const char *name)
+ 		     /* TRANSLATORS: Replace dot with appropriate decimal separator for
+ 			your language.  */
+ 		     (grub_disk_get_size (dev->disk) & 1) ? _(".5") : "");
+-
+-      grub_device_close (dev);
+     }
+ 
++  if (dev)
++    grub_device_close (dev);
++
+   grub_xputs ("\n");
+   return grub_errno;
+ }
+-- 
+2.4.3
+

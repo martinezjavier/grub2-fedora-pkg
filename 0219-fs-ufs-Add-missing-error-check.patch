@@ -1,0 +1,32 @@
+From a4e33a8b180a289ee48ab22c63e0f836adb2ade7 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Mon, 26 Jan 2015 09:36:19 +0100
+Subject: [PATCH 219/506] fs/ufs: Add missing error check.
+
+Found by: Coverity scan.
+---
+ grub-core/fs/ufs.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/grub-core/fs/ufs.c b/grub-core/fs/ufs.c
+index f560ad3..0619d6e 100644
+--- a/grub-core/fs/ufs.c
++++ b/grub-core/fs/ufs.c
+@@ -465,7 +465,13 @@ grub_ufs_lookup_symlink (struct grub_ufs_data *data, int ino)
+       && INODE_SIZE (data) <= sizeof (data->inode.symlink))
+     grub_strcpy (symlink, (char *) data->inode.symlink);
+   else
+-    grub_ufs_read_file (data, 0, 0, 0, sz, symlink);
++    {
++      if (grub_ufs_read_file (data, 0, 0, 0, sz, symlink) < 0)
++	{
++	  grub_free(symlink);
++	  return grub_errno;
++	}
++    }
+   symlink[sz] = '\0';
+ 
+   /* The symlink is an absolute path, go back to the root inode.  */
+-- 
+2.4.3
+

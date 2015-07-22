@@ -1,0 +1,46 @@
+From fd73b3d00881abae3daf820fe0009434edf2e3d4 Mon Sep 17 00:00:00 2001
+From: Paul Menzel <paulepanter@users.sourceforge.net>
+Date: Sun, 24 May 2015 23:27:46 +0200
+Subject: [PATCH 421/506] Correct spelling of *scheduled*
+
+Run the command below
+
+	$ git grep -l schedulded | xargs sed -i 's/schedulded/scheduled/g'
+
+and revert the change in `ChangeLog-2015`.
+
+Including "miscellaneous" spelling fix noted by richardvoigt@gmail.com
+---
+ gentpl.py             | 2 +-
+ grub-core/disk/ahci.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/gentpl.py b/gentpl.py
+index f177883..37b1f45 100644
+--- a/gentpl.py
++++ b/gentpl.py
+@@ -82,7 +82,7 @@ GROUPS["softdiv"] = GROUPS["arm"] + ["ia64_efi"]
+ GROUPS["no_softdiv"]   = GRUB_PLATFORMS[:]
+ for i in GROUPS["softdiv"]: GROUPS["no_softdiv"].remove(i)
+ 
+-# Miscelaneous groups schedulded to disappear in future
++# Miscellaneous groups scheduled to disappear in future
+ GROUPS["i386_coreboot_multiboot_qemu"] = ["i386_coreboot", "i386_multiboot", "i386_qemu"]
+ GROUPS["nopc"] = GRUB_PLATFORMS[:]; GROUPS["nopc"].remove("i386_pc")
+ 
+diff --git a/grub-core/disk/ahci.c b/grub-core/disk/ahci.c
+index 7f75724..4e8619c 100644
+--- a/grub-core/disk/ahci.c
++++ b/grub-core/disk/ahci.c
+@@ -1002,7 +1002,7 @@ grub_ahci_readwrite_real (struct grub_ahci_device *dev,
+   if (parms->write)
+     grub_memcpy ((char *) grub_dma_get_virt (bufc), parms->buffer, parms->size);
+ 
+-  grub_dprintf ("ahci", "AHCI command schedulded\n");
++  grub_dprintf ("ahci", "AHCI command scheduled\n");
+   grub_dprintf ("ahci", "AHCI tfd = %x\n",
+ 		dev->hba->ports[dev->port].task_file_data);
+   grub_dprintf ("ahci", "AHCI inten = %x\n",
+-- 
+2.4.3
+

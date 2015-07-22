@@ -1,0 +1,322 @@
+From 272e0466da16d0f8ce782895de4189c1585de9f3 Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Fri, 5 Dec 2014 20:19:58 +0300
+Subject: [PATCH 129/506] add file filters tests
+
+Tests file access with all filters enabled. It does it both for local
+and network access, due to regression in signature checking over network.
+
+This includes all files in distribution to not depend on existence
+of compression tools and gpg. Test preloads all required modules to
+avoid having to provide signatures for them.
+
+Still not implemented is file offset filter (is not available in grub
+script, needs extra module)
+---
+ ChangeLog                       |  12 +++++++
+ Makefile.util.def               |   6 ++++
+ conf/Makefile.extra-dist        |  11 ++++++
+ tests/file_filter/file.gz       | Bin 0 -> 33 bytes
+ tests/file_filter/file.gz.sig   | Bin 0 -> 96 bytes
+ tests/file_filter/file.lzop     | Bin 0 -> 67 bytes
+ tests/file_filter/file.lzop.sig | Bin 0 -> 96 bytes
+ tests/file_filter/file.xz       | Bin 0 -> 72 bytes
+ tests/file_filter/file.xz.sig   | Bin 0 -> 96 bytes
+ tests/file_filter/keys          | Bin 0 -> 994 bytes
+ tests/file_filter/keys.pub      | Bin 0 -> 990 bytes
+ tests/file_filter/test.cfg      |   6 ++++
+ tests/file_filter_test.in       |  76 ++++++++++++++++++++++++++++++++++++++++
+ 13 files changed, 111 insertions(+)
+ create mode 100644 tests/file_filter/file.gz
+ create mode 100644 tests/file_filter/file.gz.sig
+ create mode 100644 tests/file_filter/file.lzop
+ create mode 100644 tests/file_filter/file.lzop.sig
+ create mode 100644 tests/file_filter/file.xz
+ create mode 100644 tests/file_filter/file.xz.sig
+ create mode 100644 tests/file_filter/keys
+ create mode 100644 tests/file_filter/keys.pub
+ create mode 100644 tests/file_filter/test.cfg
+ create mode 100644 tests/file_filter_test.in
+
+diff --git a/ChangeLog b/ChangeLog
+index c163cd5..91ea81f 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,6 +1,18 @@
+ 2014-12-05  Andrei Borzenkov  <arvidjaar@gmail.com>
+ 
+ 	* tests/util/grub-shell.in: Support --files also for netboot.
++	* tests/file_filter_test.in: New file with file filters tests.
++	* Makefile.util.def: Add file_filter_test.
++	* conf/Makefile.extra-dist: ... and here.
++	* tests/file_filter/file.gz: Test file for file_filter_test.
++	* tests/file_filter/file.gz.sig: Likewise.
++	* tests/file_filter/file.lzop: Likewise.
++	* tests/file_filter/file.lzop.sig: Likewise.
++	* tests/file_filter/file.xz: Likewise.
++	* tests/file_filter/file.xz.sig: Likewise.
++	* tests/file_filter/keys: Likewise.
++	* tests/file_filter/keys.pub: Likewise.
++	* tests/file_filter/test.cfg: Likewise.
+ 
+ 2014-12-01  Andrei Borzenkov  <arvidjaar@gmail.com>
+ 
+diff --git a/Makefile.util.def b/Makefile.util.def
+index a286a89..fed96d8 100644
+--- a/Makefile.util.def
++++ b/Makefile.util.def
+@@ -1150,6 +1150,12 @@ script = {
+   common = tests/grub_cmd_tr.in;
+ };
+ 
++script = {
++  testcase;
++  name = file_filter_test;
++  common = tests/file_filter_test.in;
++};
++
+ program = {
+   testcase;
+   name = example_unit_test;
+diff --git a/conf/Makefile.extra-dist b/conf/Makefile.extra-dist
+index 51f08c1..1b95ccd 100644
+--- a/conf/Makefile.extra-dist
++++ b/conf/Makefile.extra-dist
+@@ -110,3 +110,14 @@ EXTRA_DIST += tests/dfly-mbr-mbexample.mbr.img.gz
+ EXTRA_DIST += tests/dfly-mbr-mbexample.dfly.img.gz
+ 
+ EXTRA_DIST += coreboot.cfg
++
++EXTRA_DIST += tests/file_filter/file
++EXTRA_DIST += tests/file_filter/file.gz
++EXTRA_DIST += tests/file_filter/file.gz.sig
++EXTRA_DIST += tests/file_filter/file.lzop
++EXTRA_DIST += tests/file_filter/file.lzop.sig
++EXTRA_DIST += tests/file_filter/file.xz
++EXTRA_DIST += tests/file_filter/file.xz.sig
++EXTRA_DIST += tests/file_filter/keys
++EXTRA_DIST += tests/file_filter/keys.pub
++EXTRA_DIST += tests/file_filter/test.cfg
+diff --git a/tests/file_filter/file.gz b/tests/file_filter/file.gz
+new file mode 100644
+index 0000000000000000000000000000000000000000..a07ffcbe0cbad415ea51ec72bbe7b54094284d3d
+GIT binary patch
+literal 33
+pcmb2|=3qFtrZI$p`LoB_lP9kSYUuju20dY7FxvO)Cocm70|4R_48H&X
+
+literal 0
+HcmV?d00001
+
+diff --git a/tests/file_filter/file.gz.sig b/tests/file_filter/file.gz.sig
+new file mode 100644
+index 0000000000000000000000000000000000000000..602e6187e22d7fc288a52ac572f38cc1066083cb
+GIT binary patch
+literal 96
+zcmV-m0H6PeUIYLU2ml5J0#t#n2LK8Q5M~MT@8nv<3h9^t|7f?gmaE1LNh!Sm;mO#P
+zdLo*tTpkl+s!TB^f%Fh1{Q&^Tlz2`!Q4G<oG#0}qGOvRW#+GAgRi%IW@C=M*jB>iq
+Ct|zAe
+
+literal 0
+HcmV?d00001
+
+diff --git a/tests/file_filter/file.lzop b/tests/file_filter/file.lzop
+new file mode 100644
+index 0000000000000000000000000000000000000000..5f5a97171821de55168fcbdc9b1b335316d295b9
+GIT binary patch
+literal 67
+zcmeD5iSlRQ<&xqOFi>dVbYNs<W?<lDU}#(t(zxav0|=N;X4wLyfPxIX^2=GYJyLUW
+P@^utSi&Kjfxj+g4w}1^O
+
+literal 0
+HcmV?d00001
+
+diff --git a/tests/file_filter/file.lzop.sig b/tests/file_filter/file.lzop.sig
+new file mode 100644
+index 0000000000000000000000000000000000000000..7c68dcf931e438973f5c4bfe9a0f9d5ca68fbacc
+GIT binary patch
+literal 96
+zcmV-m0H6PeUIYLU2ml5J0#t#n5C94Z5M~MT@8nv<3Q2ST|3TGyOWf``exmR@&j2XX
+z!ZeX0$UFCBibkPCfL8Tos{sJ3$5~Z-z|*E$2u>jC(Bu@f@NKNp%ec7JvFb-Lz3O)*
+CVl0pV
+
+literal 0
+HcmV?d00001
+
+diff --git a/tests/file_filter/file.xz b/tests/file_filter/file.xz
+new file mode 100644
+index 0000000000000000000000000000000000000000..151a98029033dd0947d54f8ddad670da85a45185
+GIT binary patch
+literal 72
+zcmexsUKJ6=z`*kC+7>q^21Q0O1_p)_{ill=8F)NWb8_-^6iSOzixjzl!VG^@7(cF=
+Z)UCz9sLER?d1RaXw$HVUAPJVpC;$*f6z~85
+
+literal 0
+HcmV?d00001
+
+diff --git a/tests/file_filter/file.xz.sig b/tests/file_filter/file.xz.sig
+new file mode 100644
+index 0000000000000000000000000000000000000000..57569242e4742cdfb929307ec19440cf91f49e9a
+GIT binary patch
+literal 96
+zcmV-m0H6PeUIYLU2ml5J0#t#n3jhiU5M~MT@8nv<3OS$v{x;4Uj6+!wt^-rP*&N$|
+z+5zKQ7vOO`?M~+y=au4FasdGNRgV;Q;4TNc&v05)-JLjLl54~a(Q}0wbmOZ2ne0%w
+Ci77V#
+
+literal 0
+HcmV?d00001
+
+diff --git a/tests/file_filter/keys b/tests/file_filter/keys
+new file mode 100644
+index 0000000000000000000000000000000000000000..1afa71382364060d08bb0c28e36a1ff98d585fe8
+GIT binary patch
+literal 994
+zcmV<810DRC11<zqfvr#x2mrN_c<%4?RcT_~1IiW9$)HmyYPx{8bR458TRDw+p@RW_
+zW7baDpM2C~^J>@ew%2nM8awI88}g~WvBj*BJPpr^(@>)pd~ex-<$MMPxbNPGZV|BH
+zWj8IQR4<B^0N$w|4H8c5`LmZM&L)J`u<Y#ZaQWe4z~d3>B@uXKc3uaPJ1=^^Zq^DT
+zGR)3)y_E}*oM=>(9mHp}SKbH+oTA=g$}Y_>Yo72Jn4N$d^(*k!0WN3*`c`xB4p;&y
+zxUni$jurte*DGtmax;-CBK;ReR-(#??6SOFAtnGFD<a7oh*a$UF@GUCau37TKWxaF
+z2iboG_D7DpWMvd)#ZLhM`2L}Nz!4fj{~tj*UUEgO&=I<>6+^8CX~5LD{yPt|2mUMt
+zwJE)m>0ZFNaB_Tkn{@&~ymmqz6=oI&zK^|yp26yNF-zSkq2MW>GyFClY9q{@=2rys
+zhJs5IhyReW6c9&Zrk@1~&dA`O!?SH6dN^nA@=cwz&`Ezpv7R;6gk|My_?I8#%?Z*v
+z0G=T3S|-k)ND-11n=+U)J=DUmZ`*NlWO1qRl1d|e3jZ@ioyPN?bxzIto0ltfBGhMj
+z*HF^AUdvgzSm>LzM75fVG>0caAHZcq9dkq@E1ccwLg7IkAD-Uj9eRWey-8OeDLZtP
+zFGWnyh(8GDLvyN?Wb=5U*>gB4;O4Q~QA&IhlL~dxCca=f>yhv4IlbS9*wP37G*l-7
+z68Nu9XH0V?#<UFI<3k8q7W0`c6zoz*O-vNSi1JP_11206!xPM>8Mlr_|4bivnV+Xw
+zydOTU@TyjupFl11F8p`)R&210tm6Y4QE*AG%aIRbg##g$XGEjNV}o~RH4hXtsdF}8
+zgc#a=4BiAs$WhG?LV$*t4U}ex(o2%HHKsbzt@0q@tiFkDvxZ4j5EO=^&d${9btru+
+zAB}{L36Q;49P;3xdCKCi1x(1w?GNPIz7@+G3MU121``j|n!I&1(;|JmS_t_VuMTgP
+z(dkfWGS<qj9}LvnWkabON?e@Og08f)hOZaB+2l@})R3n!yP}+4zi{%iv@S<dRYD+C
+zWpi{OC{$&0bRcVGc_3zQav(=iRYD+gWoL3_b8~5LZXk4Jb98elh<gMR5eNVy1p-uo
+ztxy6R0|yHU2nPcK0R|Na0tpHW1Qr4V0RkQY0vCV)3JDNq3G(mcTEq(MOaTDr(EwV(
+z66?31G$X)Yc}L#-f1V|Ihs%o{ohXCXws^Jx{xf`Jh8hbK7OiUdLcWgg9!aO2P9rt8
+Qvrqb7BxSl5Vz2@L18Q-@j{pDw
+
+literal 0
+HcmV?d00001
+
+diff --git a/tests/file_filter/keys.pub b/tests/file_filter/keys.pub
+new file mode 100644
+index 0000000000000000000000000000000000000000..61d4e7a7bd3adf6c66a69b4e7bd10bdf7c7877c3
+GIT binary patch
+literal 990
+zcmV<410npG11<zqfvr#x2mrN_c<%4?RcT_~1IiW9$)HmyYPx{8bR458TRDw+p@RW_
+zW7baDpM2C~^J>@ew%2nM8awI88}g~WvBj*BJPpr^(@>)pd~ex-<$MMPxbNPGZV|BH
+zWj8IQR4<B^0N$w|4H8c5`LmZM&L)J`u<Y#ZaQWe4z~d3>B@uXKc3uaPJ1=^^Zq^DT
+zGR)3)y_E}*oM=>(9mHp}SKbH+oTA=g$}Y_>Yo72Jn4N$d^(*k!0WN3*`c`xB4p;&y
+zxUni$jurte*DGtmax;-CBK;ReR-(#??6SOFAtnGFD<a7oh*a$UF@GUCau37TKWxaF
+z2iboG_D7DpWMvd)#ZLhM`2L}Nz!4fj{~tj*UUEgO&=I<>6+^8CX~5LD{yPt|2mUMt
+zwJE)m>0ZFNaB_Tkn{@&~ymmqz6=oI&zK^|yp26yNF-zSkq2MW>GyFClY9q{@=2rys
+zhJs5IhyReW6c9&Zrk@1~&dA`O!?SH6dN^nA@=cwz&`Ezpv7R;6gk|My_?I8#%?Z*v
+z0G=T3S|-k)ND-11n=+U)J=DUmZ`*NlWO1qRl1d|e3jZ@ioyPN?bxzIto0ltfBGhMj
+z*HF^AUdvgzSm>LzM75fVG>0caAHZcq9dkq@E1ccwLg7IkAD-Uj9eRWey-8OeDLZtP
+zFGWnyh(8GDLvyN?Wb=5U*>gB4;O4Q~QA&IhlL~dxCca=f>yhv4IlbS9*wP37G*l-7
+z68Nu9XH0V?#<UFI<3k8q7W0`c6zoz*O-vNSi1JP_11206!xPM>8Mlr_|4bivnV+Xw
+zydOTU@TyjupFl11F8p`)R&210tm6Y4QE*AG%aIRbg##g$XGEjNV}o~RH4hXtsdF}8
+zgc#a=4BiAs$WhG?LV$*t4U}ex(o2%HHKsbzt@0q@tiFkDvxZ4j5EO=^&d${9btru+
+zAB}{L36Q;49P;3xdCKCi1x(1w?GNPIz7@+G3MU121``j|n!I&1(;|JmS_t_VuMTgP
+z(dkfWGS<qj9}LvnWkabON?e@Og08f)hOZaB+2l@})R3n!yP}+4zi{%iv@S<dRYD+C
+zWpi{OC{$&0bRcVGc_3zQav(=iRYD+gWoL3_b8~5LZXk4Jb98elh<gMR5eNVy1p-uo
+ztxy6R0|yHU2nPcK0R|Na0tpHW1Qr4V0RkQY0vCV)3JDNq3G(mcTEq(MOaTDr(EwV(
+z66?31G$X)Yc}L#-f1V|Ihs%o{ohXCXws^Jx{xf`Jh8hbK7OiUdLcWgg9!aO2P9rt8
+Mvrqb7BxSl5Vq6o#+5i9m
+
+literal 0
+HcmV?d00001
+
+diff --git a/tests/file_filter/test.cfg b/tests/file_filter/test.cfg
+new file mode 100644
+index 0000000..4308aac
+--- /dev/null
++++ b/tests/file_filter/test.cfg
+@@ -0,0 +1,6 @@
++trust /keys.pub
++set check_signatures=enforce
++cat /file.gz
++cat /file.xz
++cat /file.lzop
++set check_signatures=
+diff --git a/tests/file_filter_test.in b/tests/file_filter_test.in
+new file mode 100644
+index 0000000..8909e40
+--- /dev/null
++++ b/tests/file_filter_test.in
+@@ -0,0 +1,76 @@
++#! /bin/sh
++# Copyright (C) 2014  Free Software Foundation, Inc.
++#
++# GRUB is free software: you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation, either version 3 of the License, or
++# (at your option) any later version.
++#
++# GRUB is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with GRUB.  If not, see <http://www.gnu.org/licenses/>.
++
++set -e
++grubshell=@builddir@/grub-shell
++
++. "@builddir@/grub-core/modinfo.sh"
++
++filters="gzio xzio lzopio verify"
++modules="cat mpi"
++
++for mod in $(cut -d ' ' -f 2 "@builddir@/grub-core/crypto.lst"  | sort -u); do
++    modules="$modules $mod"
++done
++
++for file in file.gz file.xz file.lzop file.gz.sig file.xz.sig file.lzop.sig keys.pub; do
++    files="$files /$file=@srcdir@/tests/file_filter/$file"
++done
++
++# GRUB cat command adds extra newline after file
++result="Hello, user!
++
++Hello, user!
++
++Hello, user!"
++
++out="$("${grubshell}" --modules="$modules $filters" --files="$files" "@srcdir@/tests/file_filter/test.cfg")"
++if [ "$out" != "$result" ]; then
++   echo LOCAL FAIL
++   echo "$out"
++   exit 1
++fi
++
++# Taken from netboot_test
++case "${grub_modinfo_target_cpu}-${grub_modinfo_platform}" in
++    # PLATFORM: emu is different
++    *-emu)
++	exit 0;;
++    # PLATFORM: Flash targets
++    i386-qemu | i386-coreboot | mips-qemu_mips | mipsel-qemu_mips)
++	exit 0;;
++    # FIXME: currently grub-shell uses only -kernel for loongson
++    mipsel-loongson)
++	exit 0;;
++    # FIXME: no rtl8139 support
++    i386-multiboot)
++	exit 0;;
++    # FIXME: We don't fully support netboot on ARC
++    *-arc)
++	exit 0;;
++    # FIXME: Many QEMU firmware have no netboot capability
++    *-efi | i386-ieee1275 | powerpc-ieee1275 | sparc64-ieee1275)
++	exit 0;;
++esac
++
++out="$("${grubshell}" --boot=net --modules="$modules $filters" --files="$files" "@srcdir@/tests/file_filter/test.cfg")"
++if [ "$out" != "$result" ]; then
++   echo NET FAIL
++   echo "$out"
++   exit 1
++fi
++
++exit 0
+-- 
+2.4.3
+

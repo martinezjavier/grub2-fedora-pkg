@@ -1,0 +1,42 @@
+From ac8bac2496d6ebf74f678288293d89a6b315ff5b Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Tue, 20 Jan 2015 21:12:46 +0100
+Subject: [PATCH 165/506] haiku/getroot.c (grub_util_find_partition_start_os):
+ Avoid division by zero.
+
+---
+ ChangeLog                       | 5 +++++
+ grub-core/osdep/haiku/getroot.c | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/ChangeLog b/ChangeLog
+index 40ced5a..1670569 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,10 @@
+ 2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
+ 
++	* grub-core/osdep/haiku/getroot.c (grub_util_find_partition_start_os):
++	Avoid division by zero.
++
++2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
++
+ 	* grub-core/kern/generic/rtc_get_time_ms.c (grub_rtc_get_time_ms): Avoid
+ 	division by zero.
+ 
+diff --git a/grub-core/osdep/haiku/getroot.c b/grub-core/osdep/haiku/getroot.c
+index 0852c5e..4e123c0 100644
+--- a/grub-core/osdep/haiku/getroot.c
++++ b/grub-core/osdep/haiku/getroot.c
+@@ -65,7 +65,7 @@ grub_util_find_partition_start_os (const char *dev)
+   device_geometry geo;
+   if (ioctl (fd, B_GET_GEOMETRY, &geo, sizeof (geo)) < 0)
+     return 0;
+-  ret /= geo.bytes_per_sector;
++  ret /= geo.bytes_per_sector ? : 512;
+   close (fd);  
+   return ret;
+ }
+-- 
+2.4.3
+

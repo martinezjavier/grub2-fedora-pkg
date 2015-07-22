@@ -1,0 +1,30 @@
+From 12abe75aa03695dfa5f6963013a5eb20f656224d Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Fri, 30 Jan 2015 22:39:11 +0300
+Subject: [PATCH 278/506] net/pxe: fix error condition
+
+Test return value of grub_netbuff_reserve(), buf itself cannot be
+NULL here.
+
+Found by: Coverity scan.
+---
+ grub-core/net/drivers/i386/pc/pxe.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/grub-core/net/drivers/i386/pc/pxe.c b/grub-core/net/drivers/i386/pc/pxe.c
+index e8c0b22..3f4152d 100644
+--- a/grub-core/net/drivers/i386/pc/pxe.c
++++ b/grub-core/net/drivers/i386/pc/pxe.c
+@@ -218,8 +218,7 @@ grub_pxe_recv (struct grub_net_card *dev __attribute__ ((unused)))
+     return NULL;
+   /* Reserve 2 bytes so that 2 + 14/18 bytes of ethernet header is divisible
+      by 4. So that IP header is aligned on 4 bytes. */
+-  grub_netbuff_reserve (buf, 2);
+-  if (!buf)
++  if (grub_netbuff_reserve (buf, 2))
+     {
+       grub_netbuff_free (buf);
+       return NULL;
+-- 
+2.4.3
+

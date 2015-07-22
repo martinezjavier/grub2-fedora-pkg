@@ -1,0 +1,35 @@
+From fe4efe0d50482b433b46de677546f796de46d5ae Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Mon, 26 Jan 2015 22:39:08 +0300
+Subject: [PATCH 250/506] util/mkimage: fix memory leaks.
+
+Found by: Coverity scan.
+---
+ util/mkimage.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/util/mkimage.c b/util/mkimage.c
+index e6b799f..bccd703 100644
+--- a/util/mkimage.c
++++ b/util/mkimage.c
+@@ -1278,6 +1278,8 @@ grub_install_generate_image (const char *dir, const char *prefix,
+       free (core_img);
+       core_img = full_img;
+       core_size = full_size;
++      free (decompress_img);
++      free (decompress_path);
+     }
+ 
+   switch (image_target->id)
+@@ -1744,6 +1746,8 @@ grub_install_generate_image (const char *dir, const char *prefix,
+       free (core_img);
+       core_img = rom_img;
+       core_size = rom_size;
++      free (boot_img);
++      free (boot_path);
+     }
+     break;
+     case IMAGE_QEMU_MIPS_FLASH:
+-- 
+2.4.3
+

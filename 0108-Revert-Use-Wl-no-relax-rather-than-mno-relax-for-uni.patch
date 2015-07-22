@@ -1,0 +1,43 @@
+From 6d05b6383c0ea1a094cbfdbd503af31af0f6c393 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sun, 21 Sep 2014 19:02:11 +0200
+Subject: [PATCH 108/506] Revert "	Use -Wl,--no-relax rather than
+ -mno-relax for uniformity."
+
+This reverts commit 063f2a04d158ec1b275a925dfbae74b124708cde.
+---
+ ChangeLog            | 4 ----
+ conf/Makefile.common | 2 +-
+ 2 files changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/ChangeLog b/ChangeLog
+index 6b35a5c..6d786ba 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -988,10 +988,6 @@
+ 
+ 2013-12-18  Vladimir Serbinenko  <phcoder@gmail.com>
+ 
+-	Use -Wl,--no-relax rather than -mno-relax for uniformity.
+-
+-2013-12-18  Vladimir Serbinenko  <phcoder@gmail.com>
+-
+ 	* INSTALL: Update comment as to why sparc64 clang isn't usable.
+ 
+ 2013-12-18  Vladimir Serbinenko  <phcoder@gmail.com>
+diff --git a/conf/Makefile.common b/conf/Makefile.common
+index e4c301f..51fbaf9 100644
+--- a/conf/Makefile.common
++++ b/conf/Makefile.common
+@@ -8,7 +8,7 @@ unexport LC_ALL
+ # Platform specific options
+ if COND_sparc64_ieee1275
+   CFLAGS_PLATFORM += -mno-app-regs
+-  LDFLAGS_PLATFORM = -Wl,-melf64_sparc -Wl,--no-relax
++  LDFLAGS_PLATFORM = -Wl,-melf64_sparc -mno-relax
+ endif
+ if COND_sparc64_emu
+   CFLAGS_PLATFORM += -mno-app-regs
+-- 
+2.4.3
+

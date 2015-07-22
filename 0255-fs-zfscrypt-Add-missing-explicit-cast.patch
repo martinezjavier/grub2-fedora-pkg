@@ -1,0 +1,26 @@
+From 916733ea6ae90c56797d39bb41b72427da3e1e4f Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Tue, 27 Jan 2015 16:35:37 +0100
+Subject: [PATCH 255/506] fs/zfscrypt: Add missing explicit cast.
+
+Found by: Coverity scan.
+---
+ grub-core/fs/zfs/zfscrypt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/grub-core/fs/zfs/zfscrypt.c b/grub-core/fs/zfs/zfscrypt.c
+index 88dae72..91a0af6 100644
+--- a/grub-core/fs/zfs/zfscrypt.c
++++ b/grub-core/fs/zfs/zfscrypt.c
+@@ -238,7 +238,7 @@ grub_gcm_decrypt (grub_crypto_cipher_handle_t cipher,
+       grub_crypto_xor (out + 16 * i, in + 16 * i, mul, csize);
+     }
+   for (j = 0; j < 8; j++)
+-    mac[15 - j] ^= ((psize * 8) >> (8 * j));
++    mac[15 - j] ^= ((((grub_uint64_t) psize) * 8) >> (8 * j));
+   grub_gcm_mul (mac, h);
+ 
+   if (mac_out)
+-- 
+2.4.3
+

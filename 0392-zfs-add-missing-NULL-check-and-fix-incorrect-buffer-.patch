@@ -1,0 +1,51 @@
+From 6210b8e8f7b4640711dd449ca8301d06fee62334 Mon Sep 17 00:00:00 2001
+From: Andrei Borzenkov <arvidjaar@gmail.com>
+Date: Sun, 3 May 2015 18:55:13 +0300
+Subject: [PATCH 392/506] zfs: add missing NULL check and fix incorrect buffer
+ overwrite
+
+grub_memset should zero out padding after data end. It is not clear
+why it is needed at all - ZFS block is at least 512 bytes and power
+of two, so it is always multiple of 16 bytes. This grub_memset
+apparently never did anything.
+---
+ grub-core/fs/zfs/zfs.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/grub-core/fs/zfs/zfs.c b/grub-core/fs/zfs/zfs.c
+index 03d587d..08ed453 100644
+--- a/grub-core/fs/zfs/zfs.c
++++ b/grub-core/fs/zfs/zfs.c
+@@ -1887,14 +1887,12 @@ zio_read (blkptr_t *bp, grub_zfs_endian_t endian, void **buf,
+ 		       "compression algorithm %s not supported\n", decomp_table[comp].name);
+ 
+   if (comp != ZIO_COMPRESS_OFF)
+-    {
+-      /* It's not really necessary to align to 16, just for safety.  */
+-      compbuf = grub_malloc (ALIGN_UP (psize, 16));
+-      if (! compbuf)
+-	return grub_errno;
+-    }
++    /* It's not really necessary to align to 16, just for safety.  */
++    compbuf = grub_malloc (ALIGN_UP (psize, 16));
+   else
+     compbuf = *buf = grub_malloc (lsize);
++  if (! compbuf)
++    return grub_errno;
+ 
+   grub_dprintf ("zfs", "endian = %d\n", endian);
+   if (BP_IS_EMBEDDED(bp))
+@@ -1902,7 +1900,9 @@ zio_read (blkptr_t *bp, grub_zfs_endian_t endian, void **buf,
+   else
+     {
+       err = zio_read_data (bp, endian, compbuf, data);
+-      grub_memset (compbuf, 0, ALIGN_UP (psize, 16) - psize);
++      /* FIXME is it really necessary? */
++      if (comp != ZIO_COMPRESS_OFF)
++	grub_memset (compbuf + psize, 0, ALIGN_UP (psize, 16) - psize);
+     }
+   if (err)
+     {
+-- 
+2.4.3
+

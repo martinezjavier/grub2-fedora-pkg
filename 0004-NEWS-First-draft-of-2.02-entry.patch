@@ -1,7 +1,7 @@
-From c0e2febef52139e0e580e52f553bf3aa521e390c Mon Sep 17 00:00:00 2001
+From 30a338460ad97c190502a1067979dac2fc548f16 Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Fri, 27 Dec 2013 03:05:38 +0000
-Subject: [PATCH 004/152] * NEWS: First draft of 2.02 entry.
+Subject: [PATCH 004/506] * NEWS: First draft of 2.02 entry.
 
 ---
  ChangeLog |   4 +++
@@ -9,7 +9,7 @@ Subject: [PATCH 004/152] * NEWS: First draft of 2.02 entry.
  2 files changed, 123 insertions(+)
 
 diff --git a/ChangeLog b/ChangeLog
-index bbb0f31..82dc61d 100644
+index e61d48b..53f0481 100644
 --- a/ChangeLog
 +++ b/ChangeLog
 @@ -1,5 +1,9 @@
@@ -150,5 +150,5 @@ index 4bb5f98..577d9fd 100644
  
  * Appearance:
 -- 
-1.9.3
+2.4.3
 

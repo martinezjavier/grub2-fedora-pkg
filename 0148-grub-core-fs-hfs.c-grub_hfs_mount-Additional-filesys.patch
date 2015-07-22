@@ -1,0 +1,53 @@
+From 98f74998d5749c7e5b8293aaeaaaea5692240073 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Tue, 20 Jan 2015 14:59:40 +0100
+Subject: [PATCH 148/506] * grub-core/fs/hfs.c (grub_hfs_mount): Additional
+ filesystem sanity checks.
+
+---
+ ChangeLog          | 5 +++++
+ grub-core/fs/hfs.c | 6 ++++++
+ 2 files changed, 11 insertions(+)
+
+diff --git a/ChangeLog b/ChangeLog
+index a5d925a..473eb14 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,10 @@
+ 2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
+ 
++	* grub-core/fs/hfs.c (grub_hfs_mount): Additional filesystem
++	sanity checks.
++
++2015-01-20  Vladimir Serbinenko  <phcoder@gmail.com>
++
+ 	* grub-core/fs/minix.c: Additional filesystem
+ 	sanity checks.
+ 
+diff --git a/grub-core/fs/hfs.c b/grub-core/fs/hfs.c
+index d1dc015..f46f77a 100644
+--- a/grub-core/fs/hfs.c
++++ b/grub-core/fs/hfs.c
+@@ -330,6 +330,7 @@ grub_hfs_mount (grub_disk_t disk)
+ 
+   /* Check if this is a HFS filesystem.  */
+   if (grub_be_to_cpu16 (data->sblock.magic) != GRUB_HFS_MAGIC
++      || data->sblock.blksz == 0
+       || (data->sblock.blksz & grub_cpu_to_be32_compile_time (0xc00001ff)))
+     {
+       grub_error (GRUB_ERR_BAD_FS, "not an HFS filesystem");
+@@ -367,6 +368,11 @@ grub_hfs_mount (grub_disk_t disk)
+   data->cat_root = grub_be_to_cpu32 (treehead.head.root_node);
+   data->cat_size = grub_be_to_cpu16 (treehead.head.node_size);
+ 
++  if (data->cat_size == 0
++      || data->blksz < data->cat_size
++      || data->blksz < data->ext_size)
++    goto fail;
++
+   /* Lookup the root directory node in the catalog tree using the
+      volume name.  */
+   key.parent_dir = grub_cpu_to_be32_compile_time (1);
+-- 
+2.4.3
+

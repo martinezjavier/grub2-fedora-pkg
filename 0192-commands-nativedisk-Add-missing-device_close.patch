@@ -1,0 +1,33 @@
+From bd50aa323d30d064563c213ab7ee8b8846981609 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 24 Jan 2015 21:18:36 +0100
+Subject: [PATCH 192/506] commands/nativedisk: Add missing device_close.
+
+Found by: Coverity scan.
+---
+ grub-core/commands/nativedisk.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/grub-core/commands/nativedisk.c b/grub-core/commands/nativedisk.c
+index 33b6b99..b3bc463 100644
+--- a/grub-core/commands/nativedisk.c
++++ b/grub-core/commands/nativedisk.c
+@@ -57,6 +57,7 @@ get_uuid (const char *name, char **uuid, int getnative)
+   if (!dev->disk)
+     {
+       grub_dprintf ("nativedisk", "Skipping non-disk\n");
++      grub_device_close (dev);
+       return 0;
+     }
+ 
+@@ -90,6 +91,7 @@ get_uuid (const char *name, char **uuid, int getnative)
+     case GRUB_DISK_DEVICE_MEMDISK_ID:
+       grub_dprintf ("nativedisk", "Skipping native disk %s\n",
+ 		    dev->disk->name);
++      grub_device_close (dev);
+       return 0;
+ 
+       /* FIXME: those probably need special handling.  */
+-- 
+2.4.3
+

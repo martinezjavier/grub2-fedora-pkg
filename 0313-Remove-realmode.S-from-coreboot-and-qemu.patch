@@ -1,0 +1,37 @@
+From 44ff462e836cb24bde0de184fb1e3cdeedcdd572 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 21 Feb 2015 19:53:18 +0100
+Subject: [PATCH 313/506] Remove realmode.S from coreboot and qemu.
+
+It's not used there.
+---
+ grub-core/kern/i386/coreboot/startup.S | 5 -----
+ grub-core/kern/i386/qemu/startup.S     | 2 --
+ 2 files changed, 7 deletions(-)
+
+diff --git a/grub-core/kern/i386/coreboot/startup.S b/grub-core/kern/i386/coreboot/startup.S
+index 8c32838..c848654 100644
+--- a/grub-core/kern/i386/coreboot/startup.S
++++ b/grub-core/kern/i386/coreboot/startup.S
+@@ -61,8 +61,3 @@ multiboot_header:
+ 	/* checksum */
+ 	.long	-0x1BADB002 - MULTIBOOT_MEMORY_INFO
+ 
+-/*
+- *  prot_to_real and associated structures (but NOT real_to_prot, that is
+- *  only needed for BIOS gates).
+- */
+-#include "../realmode.S"
+diff --git a/grub-core/kern/i386/qemu/startup.S b/grub-core/kern/i386/qemu/startup.S
+index 3d47d1e..17aace9 100644
+--- a/grub-core/kern/i386/qemu/startup.S
++++ b/grub-core/kern/i386/qemu/startup.S
+@@ -73,5 +73,3 @@ codestart:
+ 1:	
+ 	hlt
+ 	jmp 1b
+-
+-#include "../realmode.S"
+-- 
+2.4.3
+

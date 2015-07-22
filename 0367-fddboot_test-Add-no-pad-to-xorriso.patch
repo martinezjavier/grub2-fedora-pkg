@@ -1,0 +1,24 @@
+From 237510486af6e2d73fa57075f72b407d24ad8874 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Fri, 20 Mar 2015 12:58:08 +0100
+Subject: [PATCH 367/506] fddboot_test: Add -no-pad to xorriso.
+
+---
+ tests/fddboot_test.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/fddboot_test.in b/tests/fddboot_test.in
+index a05eb3e..a59645b 100644
+--- a/tests/fddboot_test.in
++++ b/tests/fddboot_test.in
+@@ -46,6 +46,6 @@ case "${grub_modinfo_target_cpu}-${grub_modinfo_platform}" in
+ 	exit 0;;
+ esac
+ 
+-if [ "$(echo hello | "${grubshell}" --boot=fd --mkrescue-arg="--compress=xz --fonts= --locales= --themes=")" != "Hello World" ]; then
++if [ "$(echo hello | "${grubshell}" --boot=fd --mkrescue-arg="--compress=xz --fonts= --locales= --themes= -no-pad")" != "Hello World" ]; then
+    exit 1
+ fi
+-- 
+2.4.3
+

@@ -1,0 +1,27 @@
+From 14c9a720397e6674c8c46e2e0697c2bf2a7132ae Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 24 Jan 2015 20:12:51 +0100
+Subject: [PATCH 178/506] Makefile.am: Fix Changelog cutoff address.
+
+gitlog-to-changelog Doesn't generate entries for cutoff day, only
+for days after the cutoff date, adjust by one to compensate.
+---
+ Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index df0a728..a232eb1 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -440,7 +440,7 @@ windowszip: windowsdir
+ 
+ EXTRA_DIST += linguas.sh
+ 
+-changelog_start_date = 2015-01-24
++changelog_start_date = 2015-01-23
+ gitlog_to_changelog = $(top_srcdir)/build-aux/gitlog-to-changelog
+ 
+ ChangeLog: FORCE
+-- 
+2.4.3
+

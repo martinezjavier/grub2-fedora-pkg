@@ -1,0 +1,114 @@
+From f571dc1af85e2044141a1dfff3af85a18c30fcd5 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Sat, 21 Feb 2015 17:13:23 +0100
+Subject: [PATCH 308/506] i386: Move from explicit ADDR32/DATA32 prefixes to
+ instruction suffixes.
+
+Is more portable.
+Binary is unchanged (verified).
+---
+ grub-core/boot/i386/pc/startup_raw.S |  4 ++--
+ grub-core/boot/i386/qemu/boot.S      |  2 +-
+ grub-core/kern/i386/pc/startup.S     |  2 +-
+ grub-core/kern/i386/realmode.S       | 10 +++++-----
+ 4 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/grub-core/boot/i386/pc/startup_raw.S b/grub-core/boot/i386/pc/startup_raw.S
+index 2796740..812ff54 100644
+--- a/grub-core/boot/i386/pc/startup_raw.S
++++ b/grub-core/boot/i386/pc/startup_raw.S
+@@ -95,7 +95,7 @@ LOCAL (codestart):
+ 	int	$0x13
+ 
+ 	/* transition to protected mode */
+-	DATA32	call real_to_prot
++	calll	real_to_prot
+ 
+ 	/* The ".code32" directive takes GAS out of 16-bit mode. */
+ 	.code32
+@@ -149,7 +149,7 @@ gate_a20_try_bios:
+ 	movw	$0x2401, %ax
+ 	int	$0x15
+ 
+-	DATA32	call	real_to_prot
++	calll	real_to_prot
+ 	.code32
+ 
+ 	popl	%ebp
+diff --git a/grub-core/boot/i386/qemu/boot.S b/grub-core/boot/i386/qemu/boot.S
+index bdd68c7..8d97fc1 100644
+--- a/grub-core/boot/i386/qemu/boot.S
++++ b/grub-core/boot/i386/qemu/boot.S
+@@ -48,7 +48,7 @@ VARIABLE(grub_core_entry_addr)
+ 	/* Transition to protected mode.  We use pushl to force generation
+ 	   of a flat return address.  */
+ 	pushl	$1f
+-	DATA32	jmp real_to_prot
++	jmpl	real_to_prot
+ 	.code32
+ 	/* Ensure A20 is enabled. We're in qemu, so control port A works
+ 	   and there is no need to wait since there is no real logic, it's
+diff --git a/grub-core/kern/i386/pc/startup.S b/grub-core/kern/i386/pc/startup.S
+index 6bb36c6..b8a9b33 100644
+--- a/grub-core/kern/i386/pc/startup.S
++++ b/grub-core/kern/i386/pc/startup.S
+@@ -135,7 +135,7 @@ LOCAL(prot_to_real_addr):
+ 
+ 	.macro REAL_TO_PROT
+ 	movl	LOCAL(real_to_prot_addr), %eax
+-	DATA32	call	*%ax
++	calll	*%eax
+ 	.endm
+ 
+ /*
+diff --git a/grub-core/kern/i386/realmode.S b/grub-core/kern/i386/realmode.S
+index 541cedc..732697c 100644
+--- a/grub-core/kern/i386/realmode.S
++++ b/grub-core/kern/i386/realmode.S
+@@ -54,7 +54,7 @@ protstack:
+ 	.endm
+ 
+ 	.macro REAL_TO_PROT
+-	DATA32	call	real_to_prot
++	calll	real_to_prot
+ 	.endm
+ 
+ /*
+@@ -137,7 +137,7 @@ real_to_prot:
+ 	/* load the GDT register */
+ 	xorw	%ax, %ax
+ 	movw	%ax, %ds
+-	DATA32	ADDR32	lgdt	gdtdesc
++	ADDR32 lgdtl	gdtdesc
+ 
+ 	/* turn on protected mode */
+ 	movl	%cr0, %eax
+@@ -145,7 +145,7 @@ real_to_prot:
+ 	movl	%eax, %cr0
+ 
+ 	/* jump to relocation, flush prefetch queue, and reload %cs */
+-	DATA32	ljmp	$GRUB_MEMORY_MACHINE_PROT_MODE_CSEG, $protcseg
++	ljmpl	$GRUB_MEMORY_MACHINE_PROT_MODE_CSEG, $protcseg
+ 
+ 	.code32
+ protcseg:
+@@ -237,7 +237,7 @@ tmpcseg:
+ 	movl	%eax, %cr0
+ 
+ 	/* flush prefetch queue, reload %cs */
+-	DATA32	ljmp	$0, $realcseg
++	ljmpl	$0, $realcseg
+ 
+ realcseg:
+ 	/* we are in real mode now
+@@ -258,6 +258,6 @@ realcseg:
+ #endif
+ 
+ 	/* return on new stack! */
+-	DATA32	ret
++	retl
+ 
+ 	.code32
+-- 
+2.4.3
+

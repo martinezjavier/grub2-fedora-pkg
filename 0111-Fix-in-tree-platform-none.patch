@@ -1,0 +1,45 @@
+From 77063f4cb672f423272db7e21ca448cf3de98dcf Mon Sep 17 00:00:00 2001
+From: Colin Watson <cjwatson@ubuntu.com>
+Date: Thu, 25 Sep 2014 20:59:26 +0100
+Subject: [PATCH 111/506] Fix in-tree --platform=none
+
+* configure.ac: Only remove include/grub/cpu and
+include/grub/machine in the --platform=none case, not all of
+include/grub.
+---
+ ChangeLog    | 8 ++++++++
+ configure.ac | 2 +-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/ChangeLog b/ChangeLog
+index 08cc7c6..192e8bc 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,11 @@
++2014-09-25  Colin Watson  <cjwatson@ubuntu.com>
++
++	Fix in-tree --platform=none
++
++	* configure.ac: Only remove include/grub/cpu and
++	include/grub/machine in the --platform=none case, not all of
++	include/grub.
++
+ 2014-09-23  Colin Watson  <cjwatson@ubuntu.com>
+ 
+ 	Add a new "none" platform that only builds utilities
+diff --git a/configure.ac b/configure.ac
+index fdf0fdc..31d2b0b 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1755,7 +1755,7 @@ if test "$platform" != none; then
+ else
+   # Just enough to stop the compiler failing with -I$(srcdir)/include.
+   mkdir -p include 2>/dev/null
+-  rm -rf include/grub
++  rm -rf include/grub/cpu include/grub/machine
+ fi
+ 
+ AC_CONFIG_FILES([Makefile])
+-- 
+2.4.3
+

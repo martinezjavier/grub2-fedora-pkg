@@ -1,0 +1,44 @@
+From b23635fcff62b68b6d5bfde541350095d743a13a Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Mon, 16 Feb 2015 10:54:20 +0100
+Subject: [PATCH 288/506] syslinux_parse: Always output comments even if no
+ entries are found.
+
+---
+ grub-core/lib/syslinux_parse.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/grub-core/lib/syslinux_parse.c b/grub-core/lib/syslinux_parse.c
+index 2c874b1..46eff1e 100644
+--- a/grub-core/lib/syslinux_parse.c
++++ b/grub-core/lib/syslinux_parse.c
+@@ -1430,6 +1430,13 @@ config_file (struct output_buffer *outbuf,
+       print_string ("\n");
+     }
+ 
++  if (menu.comments)
++    {
++      err = print (outbuf, menu.comments, grub_strlen (menu.comments));
++      if (err)
++	return err;
++    }
++
+   if (menu.timeout == 0 && menu.entries && menu.def)
+     {
+       err = print_entry (outbuf, &menu, menu.def);
+@@ -1446,12 +1453,6 @@ config_file (struct output_buffer *outbuf,
+       if (err)
+ 	return err;
+       print_string ("\n");
+-      if (menu.comments)
+-	{
+-	  err = print (outbuf, menu.comments, grub_strlen (menu.comments));
+-	  if (err)
+-	    return err;
+-	}
+ 
+       if (menu.def)
+ 	{
+-- 
+2.4.3
+
