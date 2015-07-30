@@ -45,7 +45,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.17%{?dist}
+Release:        0.18%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -594,6 +594,9 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Thu Jul 30 2015 Peter Jones <pjones@redhat.com> - 2.02-0.18
+- Fix a build failure on aarch64
+
 * Wed Jul 22 2015 Peter Jones <pjones@redhat.com> - 2.02-0.17
 - Don't build hardened (fixes FTBFS) (pbrobinson)
 - Reconcile with the current upstream
