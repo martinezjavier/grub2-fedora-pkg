@@ -1,4 +1,4 @@
-From e00237f383d6c5cce444e3ac4c8991573b8a518c Mon Sep 17 00:00:00 2001
+From 6656c53125c328613529a52b3dcdf479d49ec475 Mon Sep 17 00:00:00 2001
 From: Robert Marshall <rmarshall@redhat.com>
 Date: Mon, 16 Mar 2015 14:14:19 -0400
 Subject: [PATCH 69/74] Use Distribution Package Sort for grub2-mkconfig
@@ -10,6 +10,16 @@ starting with the most recent. Added an option for rpm-based systems to
 use the rpm-sort library to sort kernels instead.
 
 Resolves rhbz#1124074
+
+And then later we discovered that was wrong and did:
+
+Reverse rpmvercmp return value (#1229329)
+
+RPM sort was returning kernels sorted from oldest to newest
+instead of newest to oldest. Flipped the sign on the return
+value to switch the order.
+
+Resolves: rhbz#1229329
 ---
  .gitignore                |   1 +
  Makefile.util.def         |  16 +++
@@ -160,7 +170,7 @@ index 0000000..8ce2148
 +.BR "info grub"
 diff --git a/util/grub-rpm-sort.c b/util/grub-rpm-sort.c
 new file mode 100644
-index 0000000..f33bd1e
+index 0000000..4bbba1f
 --- /dev/null
 +++ b/util/grub-rpm-sort.c
 @@ -0,0 +1,281 @@
@@ -283,19 +293,19 @@ index 0000000..f33bd1e
 +  vercmpflag = rpmvercmp ((lhs_name == NULL ? "" : lhs_name),
 +                          (rhs_name == NULL ? "" : rhs_name));
 +  if (vercmpflag != 0)
-+    return vercmpflag;
++    return -vercmpflag;
 +
 +  /* Check version and return if unequal */
 +  vercmpflag = rpmvercmp ((lhs_version == NULL ? "" : lhs_version),
 +                          (rhs_version == NULL ? "" : rhs_version));
 +  if (vercmpflag != 0)
-+    return vercmpflag;
++    return -vercmpflag;
 +
 +  /* Check release and return the version compare value */
 +  vercmpflag = rpmvercmp ((lhs_release == NULL ? "" : lhs_release),
 +                          (rhs_release == NULL ? "" : rhs_release));
 +
-+  return vercmpflag;
++  return -vercmpflag;
 +}
 +
 +static void

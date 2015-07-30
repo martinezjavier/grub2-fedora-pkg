@@ -45,7 +45,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.18%{?dist}
+Release:        0.19%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -594,6 +594,10 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Fri Jul 31 2015 Peter Jones <pjones@redhat.com> - 2.02-0.19
+- Fix grub2-mkconfig's sort to put kernels in the right order.
+  Related: rhbz#1124074
+
 * Thu Jul 30 2015 Peter Jones <pjones@redhat.com> - 2.02-0.18
 - Fix a build failure on aarch64
 
