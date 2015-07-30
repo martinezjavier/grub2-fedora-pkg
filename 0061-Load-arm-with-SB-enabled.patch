@@ -1,4 +1,4 @@
-From 56438f7e90e47de9c964272e6329ac5ef8ee9f0d Mon Sep 17 00:00:00 2001
+From aa0ad4b563fa2387e21a484895e23c4b9a45fb18 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 18 Sep 2014 11:26:14 -0400
 Subject: [PATCH 61/74] Load arm with SB enabled.
@@ -11,12 +11,12 @@ kernel command line, because we can't call systab->bs->LoadImage() if SB
 is enabled.
 ---
  grub-core/Makefile.core.def       |   2 +
- grub-core/loader/arm64/linux.c    | 113 +++++++++++++++++++++-----------------
- grub-core/loader/efi/linux.c      |  65 ++++++++++++++++++++++
- grub-core/loader/i386/efi/linux.c |  39 +------------
- include/grub/arm64/linux.h        |  13 +++--
- include/grub/efi/linux.h          |  31 +++++++++++
- 6 files changed, 170 insertions(+), 93 deletions(-)
+ grub-core/loader/arm64/linux.c    | 124 +++++++++++++++++++-------------------
+ grub-core/loader/efi/linux.c      |  65 ++++++++++++++++++++
+ grub-core/loader/i386/efi/linux.c |  39 +-----------
+ include/grub/arm64/linux.h        |  13 ++--
+ include/grub/efi/linux.h          |  31 ++++++++++
+ 6 files changed, 170 insertions(+), 104 deletions(-)
  create mode 100644 grub-core/loader/efi/linux.c
  create mode 100644 include/grub/efi/linux.h
 
@@ -41,7 +41,7 @@ index 98b6485..38291ce 100644
    enable = x86_64_efi;
  };
 diff --git a/grub-core/loader/arm64/linux.c b/grub-core/loader/arm64/linux.c
-index 987f5b9..80647d2 100644
+index 987f5b9..e18faf3 100644
 --- a/grub-core/loader/arm64/linux.c
 +++ b/grub-core/loader/arm64/linux.c
 @@ -27,6 +27,7 @@
@@ -129,39 +129,35 @@ index 987f5b9..80647d2 100644
    if (loaded_fdt)
      grub_free (loaded_fdt);
    loaded_fdt = NULL;
-@@ -239,60 +281,20 @@ out:
- grub_err_t
- grub_arm64_uefi_boot_image (grub_addr_t addr, grub_size_t size, char *args)
- {
+@@ -236,73 +278,22 @@ out:
+   return grub_errno;
+ }
+ 
+-grub_err_t
+-grub_arm64_uefi_boot_image (grub_addr_t addr, grub_size_t size, char *args)
+-{
 -  grub_efi_memory_mapped_device_path_t *mempath;
 -  grub_efi_handle_t image_handle;
 -  grub_efi_boot_services_t *b;
 -  grub_efi_status_t status;
 -  grub_efi_loaded_image_t *loaded_image;
 -  int len;
-+  grub_err_t retval;
- 
+-
 -  mempath = grub_malloc (2 * sizeof (grub_efi_memory_mapped_device_path_t));
 -  if (!mempath)
 -    return grub_errno;
-+  retval = finalize_params();
-+  if (retval != GRUB_ERR_NONE)
-+    return retval;
- 
+-
 -  mempath[0].header.type = GRUB_EFI_HARDWARE_DEVICE_PATH_TYPE;
 -  mempath[0].header.subtype = GRUB_EFI_MEMORY_MAPPED_DEVICE_PATH_SUBTYPE;
 -  mempath[0].header.length = grub_cpu_to_le16_compile_time (sizeof (*mempath));
 -  mempath[0].memory_type = GRUB_EFI_LOADER_DATA;
 -  mempath[0].start_address = addr;
 -  mempath[0].end_address = addr + size;
-+  grub_dprintf ("linux", "linux command line: '%s'\n", linux_args);
- 
+-
 -  mempath[1].header.type = GRUB_EFI_END_DEVICE_PATH_TYPE;
 -  mempath[1].header.subtype = GRUB_EFI_END_ENTIRE_DEVICE_PATH_SUBTYPE;
 -  mempath[1].header.length = sizeof (grub_efi_device_path_t);
-+  retval = grub_efi_linux_boot ((char *)kernel_addr, handover_offset,
-+				kernel_addr);
- 
+-
 -  b = grub_efi_system_table->boot_services;
 -  status = b->load_image (0, grub_efi_image_handle,
 -			  (grub_efi_device_path_t *) mempath,
@@ -194,13 +190,30 @@ index 987f5b9..80647d2 100644
 -		       BYTES_TO_PAGES (loaded_image->load_options_size));
 -
 -  return grub_errno;
+-}
+-
+ static grub_err_t
+ grub_linux_boot (void)
+ {
++  grub_err_t retval;
++
+   if (finalize_params_linux () != GRUB_ERR_NONE)
+     return grub_errno;
+ 
+-  return (grub_arm64_uefi_boot_image((grub_addr_t)kernel_addr,
+-                                     kernel_size, linux_args));
++  grub_dprintf ("linux", "linux command line: '%s'\n", linux_args);
++
++  retval = grub_efi_linux_boot ((grub_addr_t)kernel_addr, handover_offset,
++				linux_args);
++
 +  /* Never reached... */
 +  free_params();
 +  return retval;
  }
  
  static grub_err_t
-@@ -383,6 +385,7 @@ grub_cmd_linux (grub_command_t cmd __attribute__ ((unused)),
+@@ -383,6 +374,7 @@ grub_cmd_linux (grub_command_t cmd __attribute__ ((unused)),
  {
    grub_file_t file = 0;
    struct grub_arm64_linux_kernel_header lh;
@@ -208,7 +221,7 @@ index 987f5b9..80647d2 100644
  
    grub_dl_ref (my_mod);
  
-@@ -427,6 +430,15 @@ grub_cmd_linux (grub_command_t cmd __attribute__ ((unused)),
+@@ -427,6 +419,15 @@ grub_cmd_linux (grub_command_t cmd __attribute__ ((unused)),
  
    grub_dprintf ("linux", "kernel @ %p\n", kernel_addr);
  
@@ -224,7 +237,7 @@ index 987f5b9..80647d2 100644
    cmdline_size = grub_loader_cmdline_size (argc, argv) + sizeof (LINUX_IMAGE);
    linux_args = grub_malloc (cmdline_size);
    if (!linux_args)
-@@ -465,7 +477,6 @@ fail:
+@@ -465,7 +466,6 @@ fail:
    return grub_errno;
  }
  

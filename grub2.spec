@@ -63,7 +63,7 @@ Source6:	gitignore
 Patch0000: grub-2.02-beta2-to-origin-master.patch
 
 # generate all the patches after this with:
-# git format-patch origin/master..fedora-23
+# git format-patch fedora-diff-from-here..fedora-23
 Patch0001: 0001-Migrate-PPC-from-Yaboot-to-Grub2.patch
 Patch0002: 0002-Add-fw_path-variable-revised.patch
 Patch0003: 0003-Add-support-for-linuxefi.patch

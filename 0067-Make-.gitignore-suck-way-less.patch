@@ -1,4 +1,4 @@
-From 5ca1f600b419264e712b0a7e841837a4ce39418c Mon Sep 17 00:00:00 2001
+From 6790364166f755f4e6d9eb427fe3535059d2d9b1 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 7 Jul 2015 10:13:14 -0400
 Subject: [PATCH 67/74] Make .gitignore suck way less

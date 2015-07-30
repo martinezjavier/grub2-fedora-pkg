@@ -1,4 +1,4 @@
-From 402afd14075d41885ffeb48112343ec319b4af13 Mon Sep 17 00:00:00 2001
+From b8e1b5e1042a35bd66eaff00c1402ef058fc4479 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 4 Dec 2014 15:36:09 -0500
 Subject: [PATCH 64/74] Update to minilzo-2.08
