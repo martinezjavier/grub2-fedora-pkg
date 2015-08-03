@@ -1,4 +1,4 @@
-From 9466b1c5194e6c7d388349fa2691e288b4523bc3 Mon Sep 17 00:00:00 2001
+From a8b6f41df623cd777e41e0f6d44e25617f8388c9 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 7 Jul 2015 12:04:28 -0400
 Subject: [PATCH 72/74] Add some __unused__ where gcc 5.x is more picky about

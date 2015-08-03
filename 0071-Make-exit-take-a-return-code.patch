@@ -1,4 +1,4 @@
-From 77d0a87d5c1d1864f9a8409cde6fbd29d11bd996 Mon Sep 17 00:00:00 2001
+From 05c9156ed3cee62e6aa8f955b96998b5d9302425 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 7 Jul 2015 12:00:26 -0400
 Subject: [PATCH 71/74] Make "exit" take a return code.

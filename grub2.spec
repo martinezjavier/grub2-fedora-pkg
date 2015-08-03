@@ -45,7 +45,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.19%{?dist}
+Release:        0.20%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -138,6 +138,8 @@ Patch0071: 0071-Make-exit-take-a-return-code.patch
 Patch0072: 0072-Add-some-__unused__-where-gcc-5.x-is-more-picky-abou.patch
 Patch0073: 0073-Fix-race-in-EFI-validation.patch
 Patch0074: 0074-Mark-po-exclude.pot-as-binary-so-git-won-t-try-to-di.patch
+
+
 
 
 # And these are:
@@ -594,6 +596,10 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Mon Aug 03 2015 Peter Jones <pjones@redhat.com> - 2.02-0.20
+- The previous fix was completely not right, so fix it a different way.
+  Resolves: rhbz#1249668
+
 * Fri Jul 31 2015 Peter Jones <pjones@redhat.com> - 2.02-0.19
 - Fix grub2-mkconfig's sort to put kernels in the right order.
   Related: rhbz#1124074
