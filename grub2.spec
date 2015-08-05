@@ -45,7 +45,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.20%{?dist}
+Release:        0.21%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -148,7 +148,7 @@ Patch0074: 0074-Mark-po-exclude.pot-as-binary-so-git-won-t-try-to-di.patch
 Patch10001: 10001-Put-the-correct-.file-directives-in-our-.S-files.patch
 Patch10002: 10002-Make-efi-machines-load-an-env-block-from-a-variable.patch
 Patch10003: 10003-Make-it-possible-to-enabled-build-id-sha1.patch
-Patch10004: 10004-Don-t-tell-the-compiler-to-do-annoying-things-with-f.patch
+#Patch10004: 10004-Don-t-tell-the-compiler-to-do-annoying-things-with-f.patch
 Patch10005: 10005-Add-grub_qdprintf-grub_dprintf-without-the-file-line.patch
 Patch10006: 10006-Make-a-gdb-dprintf-that-tells-us-load-addresses.patch
 
@@ -596,6 +596,11 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Wed Aug 05 2015 Peter Jones <pjones@redhat.com> - 2.02-0.21
+- Back out one of the debuginfo generation patches; it doesn't work right on
+  aarch64 yet.
+  Resolves: rhbz#1250197
+
 * Mon Aug 03 2015 Peter Jones <pjones@redhat.com> - 2.02-0.20
 - The previous fix was completely not right, so fix it a different way.
   Resolves: rhbz#1249668
