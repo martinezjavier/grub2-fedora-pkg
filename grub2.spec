@@ -45,7 +45,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.23%{?dist}
+Release:        0.24%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -317,7 +317,7 @@ GRUB_MODULES+=" linux "
 %else
 GRUB_MODULES+=" backtrace usb usbserial_common "
 GRUB_MODULES+=" usbserial_pl2303 usbserial_ftdi usbserial_usbdebug "
-GRUB_MODULES+=" linuxefi multiboot2 multiboot "
+GRUB_MODULES+=" linuxefi"
 %endif
 ./grub-mkimage -O %{grubefiarch} -o %{grubefiname}.orig -p /EFI/%{efidir} \
 		-d grub-core ${GRUB_MODULES}
@@ -596,6 +596,10 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Fri Nov 20 2015 Peter Jones <pjones@redhat.com> - 2.02-0.24
+- Rebuild without multiboot* modules in the EFI image.
+  Related: rhbz#1264103
+
 * Sat Sep 05 2015 Kalev Lember <klember@redhat.com> - 2.02-0.23
 - Rebuilt for librpm soname bump
 
