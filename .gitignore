@@ -4,3 +4,5 @@ clog
 /unifont-5.1.20080820.pcf.gz
 /theme.tar.bz2
 kojilogs
+/grub-*/
+.build*.log

@@ -45,7 +45,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.24%{?dist}
+Release:        0.25%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -138,6 +138,8 @@ Patch0071: 0071-Make-exit-take-a-return-code.patch
 Patch0072: 0072-Add-some-__unused__-where-gcc-5.x-is-more-picky-abou.patch
 Patch0073: 0073-Fix-race-in-EFI-validation.patch
 Patch0074: 0074-Mark-po-exclude.pot-as-binary-so-git-won-t-try-to-di.patch
+Patch0075: 0075-Fix-security-issue-when-reading-username-and-passwor.patch
+Patch0076: 0076-01_users-Handle-GRUB_PASSWORD-better.patch
 
 
 
@@ -467,6 +469,34 @@ cp -a ${RPM_BUILD_ROOT}/usr/sbin %{finddebugroot}/usr/sbin
 %clean    
 rm -rf $RPM_BUILD_ROOT
 
+%pre tools
+if [ -f /boot/grub2/user.cfg ]; then
+    if grep -q '^GRUB_PASSWORD=' /boot/grub2/user.cfg ; then
+	sed -i 's/^GRUB_PASSWORD=/GRUB2_PASSWORD=/' /boot/grub2/user.cfg
+    fi
+elif [ -f /boot/efi/EFI/%{efidir}/user.cfg ]; then
+    if grep -q '^GRUB_PASSWORD=' /boot/efi/EFI/%{efidir}/user.cfg ; then
+	sed -i 's/^GRUB_PASSWORD=/GRUB2_PASSWORD=/' \
+	    /boot/efi/EFI/%{efidir}/user.cfg
+    fi
+elif [ -f /etc/grub.d/01_users ] && \
+	grep -q '^password_pbkdf2 root' /etc/grub.d/01_users ; then
+    if [ -f /boot/efi/EFI/%{efidir}/grub.cfg ]; then
+	# on EFI we don't get permissions on the file, but
+	# the directory is protected.
+	grep '^password_pbkdf2 root' /etc/grub.d/01_users | \
+		sed 's/^password_pbkdf2 root \(.*\)$/GRUB2_PASSWORD=\1/' \
+	    > /boot/efi/EFI/%{efidir}/user.cfg
+    fi
+    if [ -f /boot/grub2/grub.cfg ]; then
+	install -m 0600 /dev/null /boot/grub2/user.cfg
+	chmod 0600 /boot/grub2/user.cfg
+	grep '^password_pbkdf2 root' /etc/grub.d/01_users | \
+		sed 's/^password_pbkdf2 root \(.*\)$/GRUB2_PASSWORD=\1/' \
+	    > /boot/grub2/user.cfg
+    fi
+fi
+
 %post tools
 if [ "$1" = 1 ]; then
 	/sbin/install-info --info-dir=%{_infodir} %{_infodir}/%{name}.info.gz || :
@@ -596,6 +626,12 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Thu Dec 10 2015 Peter Jones <pjones@redhat.com> - 2.02-0.25
+- Fix security issue when reading username and password
+  Related: CVE-2015-8370
+- Do a better job of handling GRUB2_PASSWORD
+  Related: rhbz#1284370
+
 * Fri Nov 20 2015 Peter Jones <pjones@redhat.com> - 2.02-0.24
 - Rebuild without multiboot* modules in the EFI image.
   Related: rhbz#1264103
