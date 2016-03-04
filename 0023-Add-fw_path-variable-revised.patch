@@ -1,7 +1,7 @@
-From d90a70f58ecafc5e6da157345d35ccf68c207c14 Mon Sep 17 00:00:00 2001
+From a0c5493ead025948d40154dde08cb8504a1c840c Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Wed, 19 Sep 2012 21:22:55 -0300
-Subject: [PATCH 23/84] Add fw_path variable (revised)
+Subject: [PATCH 23/85] Add fw_path variable (revised)
 
 This patch makes grub look for its config file on efi where the app was
 found. It was originally written by Matthew Garrett, and adapted to fix the

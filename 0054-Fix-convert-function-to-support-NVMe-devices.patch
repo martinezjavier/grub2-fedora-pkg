@@ -1,7 +1,7 @@
-From af87ce308a376abc81477977292c0afd9ea01f7a Mon Sep 17 00:00:00 2001
+From f35eaf656ac008e23937d5a31ece0e41df9e69cf Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 18 Feb 2014 11:34:00 -0500
-Subject: [PATCH 54/84] Fix convert function to support NVMe devices
+Subject: [PATCH 54/85] Fix convert function to support NVMe devices
 
 This is adapted from the patch at
 https://bugzilla.redhat.com/show_bug.cgi?id=1019660 , which is against

@@ -57,12 +57,10 @@ Source0:        ftp://alpha.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
 Source4:	http://unifoundry.com/unifont-5.1.20080820.pcf.gz
 Source5:	theme.tar.bz2
 Source6:	gitignore
+Source7:	grub.patches
 
 # generate with do-rebase
-%include grub.patches
-
-
-
+%include %{SOURCE7}
 
 # And these are:
 # git checkout debuginfo

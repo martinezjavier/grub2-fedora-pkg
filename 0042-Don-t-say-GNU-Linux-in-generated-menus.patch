@@ -1,7 +1,7 @@
-From b3cb39e03253a964b07176c386d582e3f58cf8ac Mon Sep 17 00:00:00 2001
+From af21e1092f7b99e1815b5a4653a15586580fd398 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 14 Mar 2011 14:27:42 -0400
-Subject: [PATCH 42/84] Don't say "GNU/Linux" in generated menus.
+Subject: [PATCH 42/85] Don't say "GNU/Linux" in generated menus.
 
 ---
  util/grub.d/10_linux.in     | 4 ++--

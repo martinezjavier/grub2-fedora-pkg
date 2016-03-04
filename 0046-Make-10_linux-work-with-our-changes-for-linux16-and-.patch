@@ -1,7 +1,7 @@
-From 9581b69e619131f3d602284c62733c18678fcdaf Mon Sep 17 00:00:00 2001
+From ba2e29130c54c0082f2b9a6719e891c1a7397a03 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 14 Jan 2014 13:12:23 -0500
-Subject: [PATCH 46/84] Make 10_linux work with our changes for linux16 and
+Subject: [PATCH 46/85] Make 10_linux work with our changes for linux16 and
  linuxefi on aarch64
 
 Signed-off-by: Peter Jones <pjones@redhat.com>

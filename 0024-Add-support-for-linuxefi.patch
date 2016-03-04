@@ -1,7 +1,7 @@
-From 2e9bdf8a9adcfa26e3bd7bce548c104f220fea6a Mon Sep 17 00:00:00 2001
+From e7f9069fb31f0b112d7cd56872253287ab8c99a5 Mon Sep 17 00:00:00 2001
 From: Matthew Garrett <mjg@redhat.com>
 Date: Tue, 10 Jul 2012 11:58:52 -0400
-Subject: [PATCH 24/84] Add support for linuxefi
+Subject: [PATCH 24/85] Add support for linuxefi
 
 ---
  grub-core/Makefile.core.def       |   8 +

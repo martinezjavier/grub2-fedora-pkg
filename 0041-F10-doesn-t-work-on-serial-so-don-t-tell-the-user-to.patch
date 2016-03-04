@@ -1,7 +1,7 @@
-From 3f53f8ca96c9da0847d772e9a7a3074917caefac Mon Sep 17 00:00:00 2001
+From 9cbaea1b39567552e4e103cb35a7c18fdc36395a Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 28 Oct 2013 10:13:27 -0400
-Subject: [PATCH 41/84] F10 doesn't work on serial, so don't tell the user to
+Subject: [PATCH 41/85] F10 doesn't work on serial, so don't tell the user to
  hit it (#987443)
 
 Signed-off-by: Peter Jones <pjones@redhat.com>
