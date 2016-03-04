@@ -39,13 +39,13 @@
 
 %endif
 
-%global tarversion 2.02~beta2
+%global tarversion 2.02~beta3
 %undefine _missing_build_ids_terminate_build
 
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.25%{?dist}
+Release:        0.26%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -546,6 +546,9 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Fri Mar 04 2016 Peter Jones <pjones@redhat.com> - 2.02-0.26
+- Rebased to newer upstream (grub-2.02-beta3) for fedora-24
+
 * Thu Dec 10 2015 Peter Jones <pjones@redhat.com> - 2.02-0.25
 - Fix security issue when reading username and password
   Related: CVE-2015-8370

@@ -1,7 +1,7 @@
-From b1ce9da47f7d73a793f8e41ad4575d09e4ef9e9b Mon Sep 17 00:00:00 2001
+From 99cd396f6ea153326a77369decf679d8453f0058 Mon Sep 17 00:00:00 2001
 From: Matthew Garrett <mjg@redhat.com>
 Date: Tue, 10 Jul 2012 11:58:52 -0400
-Subject: [PATCH 03/74] Add support for linuxefi
+Subject: [PATCH 03/85] Add support for linuxefi
 
 ---
  grub-core/Makefile.core.def       |   8 +
@@ -13,10 +13,10 @@ Subject: [PATCH 03/74] Add support for linuxefi
  create mode 100644 grub-core/loader/i386/efi/linux.c
 
 diff --git a/grub-core/Makefile.core.def b/grub-core/Makefile.core.def
-index a6101de..a056b42 100644
+index 58b4208..2344a5e 100644
 --- a/grub-core/Makefile.core.def
 +++ b/grub-core/Makefile.core.def
-@@ -1692,6 +1692,14 @@ module = {
+@@ -1731,6 +1731,14 @@ module = {
  };
  
  module = {
@@ -478,5 +478,5 @@ index da0ca3b..fc36bda 100644
  
  /* Boot parameters for Linux based on 2.6.12. This is used by the setup
 -- 
-2.4.3
+2.5.0
 

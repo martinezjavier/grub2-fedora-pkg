@@ -1,7 +1,7 @@
-From 4b0168249752a531ddedbdc3884bc675cd24033d Mon Sep 17 00:00:00 2001
+From ac6b510c9866cede4aa01e61f1714aba3330019f Mon Sep 17 00:00:00 2001
 From: Fedora Ninjas <grub2-owner@fedoraproject.org>
 Date: Tue, 22 Jan 2013 06:31:38 +0100
-Subject: [PATCH 13/74] blscfg: add blscfg module to parse Boot Loader
+Subject: [PATCH 13/85] blscfg: add blscfg module to parse Boot Loader
  Specification snippets
 
 http://www.freedesktop.org/wiki/Specifications/BootLoaderSpec
@@ -21,10 +21,10 @@ Signed-off-by: Peter Jones <grub2-owner@fedoraproject.org>
  create mode 100644 grub-core/commands/blscfg.c
 
 diff --git a/grub-core/Makefile.core.def b/grub-core/Makefile.core.def
-index a056b42..98b6485 100644
+index 2344a5e..8dc731e 100644
 --- a/grub-core/Makefile.core.def
 +++ b/grub-core/Makefile.core.def
-@@ -733,6 +733,14 @@ module = {
+@@ -740,6 +740,14 @@ module = {
  };
  
  module = {
@@ -247,5 +247,5 @@ index 0000000..4274aca
 +  grub_unregister_extcmd (cmd);
 +}
 -- 
-2.4.3
+2.5.0
 

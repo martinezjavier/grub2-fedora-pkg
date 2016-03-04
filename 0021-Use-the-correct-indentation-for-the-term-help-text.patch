@@ -1,7 +1,7 @@
-From 38947a46ac4a1c8799a9d743381067324218038f Mon Sep 17 00:00:00 2001
+From 9d5eee2350a4897ea27986b6de49cbfadf601ec1 Mon Sep 17 00:00:00 2001
 From: William Jon McCann <william.jon.mccann@gmail.com>
 Date: Fri, 7 Jun 2013 14:08:49 -0400
-Subject: [PATCH 21/74] Use the correct indentation for the term help text
+Subject: [PATCH 21/85] Use the correct indentation for the term help text
 
 That is consistent with the menu help text
 ---
@@ -9,7 +9,7 @@ That is consistent with the menu help text
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/grub-core/normal/main.c b/grub-core/normal/main.c
-index 8e2ec37..725e441 100644
+index 3af349d..d98e868 100644
 --- a/grub-core/normal/main.c
 +++ b/grub-core/normal/main.c
 @@ -426,8 +426,8 @@ grub_normal_reader_init (int nested)
@@ -24,5 +24,5 @@ index 8e2ec37..725e441 100644
        grub_print_message_indented (msg_formatted, 0, 0, term);
      grub_putcode ('\n', term);
 -- 
-2.4.3
+2.5.0
 

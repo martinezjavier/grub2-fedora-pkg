@@ -1,7 +1,7 @@
-From 5c30a4744e7840cb9ae135d470b45416c41bb91e Mon Sep 17 00:00:00 2001
+From a2c0cf22de0845e951ec52d39cbc83465523c7cf Mon Sep 17 00:00:00 2001
 From: William Jon McCann <william.jon.mccann@gmail.com>
 Date: Wed, 15 May 2013 17:49:45 -0400
-Subject: [PATCH 18/74] Don't add '*' to highlighted row
+Subject: [PATCH 18/85] Don't add '*' to highlighted row
 
 It is already highlighted.
 ---
@@ -22,5 +22,5 @@ index e22bb91..a3d1f23 100644
    grub_print_ucs4_menu (unicode_title,
  			unicode_title + len,
 -- 
-2.4.3
+2.5.0
 

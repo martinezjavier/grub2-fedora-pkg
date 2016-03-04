@@ -1,7 +1,7 @@
-From 13ca7774359074df68cd1042889e44d99f85a695 Mon Sep 17 00:00:00 2001
+From c99c2cfb38de87af4b9922467531d6c6a7fea6d2 Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Thu, 20 Sep 2012 18:07:39 -0300
-Subject: [PATCH 08/74] IBM client architecture (CAS) reboot support
+Subject: [PATCH 08/85] IBM client architecture (CAS) reboot support
 
 This is an implementation of IBM client architecture (CAS) reboot for GRUB.
 
@@ -95,7 +95,7 @@ index ddb7783..6db8b98 100644
 +  return 0;
 +}
 diff --git a/grub-core/normal/main.c b/grub-core/normal/main.c
-index df12dfb..f805cb3 100644
+index df12dfb..759c475 100644
 --- a/grub-core/normal/main.c
 +++ b/grub-core/normal/main.c
 @@ -33,6 +33,9 @@
@@ -120,7 +120,7 @@ index df12dfb..f805cb3 100644
 +      if (! grub_ieee1275_cas_reboot (script))
 +        {
 +          char *dummy[1] = { NULL };
-+          if (! grub_script_execute_sourcecode (script, 0, dummy))
++          if (! grub_script_execute_sourcecode (script))
 +            boot = 1;
 +        }
 +      grub_free (script);
@@ -132,7 +132,7 @@ index df12dfb..f805cb3 100644
        grub_errno = GRUB_ERR_NONE;
      }
 diff --git a/grub-core/script/execute.c b/grub-core/script/execute.c
-index 2b9341f..0f7d143 100644
+index 2fd7831..cf6cd66 100644
 --- a/grub-core/script/execute.c
 +++ b/grub-core/script/execute.c
 @@ -27,6 +27,9 @@
@@ -145,7 +145,7 @@ index 2b9341f..0f7d143 100644
  
  /* Max digits for a char is 3 (0xFF is 255), similarly for an int it
     is sizeof (int) * 3, and one extra for a possible -ve sign.  */
-@@ -912,6 +915,10 @@ grub_script_execute_sourcecode (const char *source)
+@@ -908,6 +911,10 @@ grub_script_execute_sourcecode (const char *source)
    grub_err_t ret = 0;
    struct grub_script *parsed_script;
  
@@ -170,5 +170,5 @@ index 8e42513..9f26c69 100644
  #define FOR_IEEE1275_DEVALIASES(alias) for (grub_ieee1275_devalias_init_iterator (&(alias)); grub_ieee1275_devalias_next (&(alias));)
  
 -- 
-2.4.3
+2.5.0
 

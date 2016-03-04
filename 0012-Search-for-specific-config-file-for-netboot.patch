@@ -1,7 +1,7 @@
-From 0c18485577c42381f170a9dc1ddd89836cea91b3 Mon Sep 17 00:00:00 2001
+From effaaa4ab3cf09f93b124a6242a52f911a9b08b0 Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Tue, 27 Nov 2012 17:22:07 -0200
-Subject: [PATCH 12/74] Search for specific config file for netboot
+Subject: [PATCH 12/85] Search for specific config file for netboot
 
 This patch implements a search for a specific configuration when the config
 file is on a remoteserver. It uses the following order:
@@ -22,10 +22,10 @@ https://bugzilla.redhat.com/show_bug.cgi?id=873406
  3 files changed, 135 insertions(+), 4 deletions(-)
 
 diff --git a/grub-core/net/net.c b/grub-core/net/net.c
-index 21a4e94..cc68b0d 100644
+index 9424595..e53d9a0 100644
 --- a/grub-core/net/net.c
 +++ b/grub-core/net/net.c
-@@ -1704,6 +1704,124 @@ grub_net_restore_hw (void)
+@@ -1725,6 +1725,124 @@ grub_net_restore_hw (void)
    return GRUB_ERR_NONE;
  }
  
@@ -151,7 +151,7 @@ index 21a4e94..cc68b0d 100644
  
  static grub_command_t cmd_addaddr, cmd_deladdr, cmd_addroute, cmd_delroute;
 diff --git a/grub-core/normal/main.c b/grub-core/normal/main.c
-index f805cb3..23e2d3f 100644
+index 759c475..b2654ef 100644
 --- a/grub-core/normal/main.c
 +++ b/grub-core/normal/main.c
 @@ -33,6 +33,7 @@
@@ -187,10 +187,10 @@ index f805cb3..23e2d3f 100644
  	  grub_enter_normal_mode (config);
  	  grub_free (config);
 diff --git a/include/grub/net.h b/include/grub/net.h
-index 59e5975..88fc71c 100644
+index 96aa9fa..e13ae1e 100644
 --- a/include/grub/net.h
 +++ b/include/grub/net.h
-@@ -542,4 +542,7 @@ extern char *grub_net_default_server;
+@@ -565,4 +565,7 @@ extern char *grub_net_default_server;
  
  #define VLANTAG_IDENTIFIER 0x8100
  
@@ -199,5 +199,5 @@ index 59e5975..88fc71c 100644
 +
  #endif /* ! GRUB_NET_HEADER */
 -- 
-2.4.3
+2.5.0
 

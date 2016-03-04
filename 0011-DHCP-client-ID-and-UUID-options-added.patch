@@ -1,7 +1,7 @@
-From 8122de140b4941e6f733aa3b2789eb54284ec5b4 Mon Sep 17 00:00:00 2001
+From 6907d098d8bc7b11eef31579754c46adfcfcefa3 Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Tue, 27 Nov 2012 17:18:53 -0200
-Subject: [PATCH 11/74] DHCP client ID and UUID options added.
+Subject: [PATCH 11/85] DHCP client ID and UUID options added.
 
 ---
  grub-core/net/bootp.c | 87 ++++++++++++++++++++++++++++++++++++++++++++++-----
@@ -9,7 +9,7 @@ Subject: [PATCH 11/74] DHCP client ID and UUID options added.
  2 files changed, 81 insertions(+), 8 deletions(-)
 
 diff --git a/grub-core/net/bootp.c b/grub-core/net/bootp.c
-index 4fdeac3..8324aff 100644
+index a088244..4532177 100644
 --- a/grub-core/net/bootp.c
 +++ b/grub-core/net/bootp.c
 @@ -25,6 +25,49 @@
@@ -128,10 +128,10 @@ index 4fdeac3..8324aff 100644
  grub_cmd_dhcpopt (struct grub_command *cmd __attribute__ ((unused)),
  		  int argc, char **args)
 diff --git a/include/grub/net.h b/include/grub/net.h
-index a799e6b..59e5975 100644
+index 6ac9d72..96aa9fa 100644
 --- a/include/grub/net.h
 +++ b/include/grub/net.h
-@@ -433,6 +433,8 @@ enum
+@@ -456,6 +456,8 @@ enum
      GRUB_NET_BOOTP_DOMAIN = 0x0f,
      GRUB_NET_BOOTP_ROOT_PATH = 0x11,
      GRUB_NET_BOOTP_EXTENSIONS_PATH = 0x12,
@@ -141,5 +141,5 @@ index a799e6b..59e5975 100644
    };
  
 -- 
-2.4.3
+2.5.0
 

@@ -1,7 +1,7 @@
-From 5d7922cf7cc6799bd82f7192f6bb39329888d07a Mon Sep 17 00:00:00 2001
+From 351634e72bf586f8b32d0cd51bc046c11fa6faf1 Mon Sep 17 00:00:00 2001
 From: William Jon McCann <william.jon.mccann@gmail.com>
 Date: Fri, 7 Jun 2013 14:59:36 -0400
-Subject: [PATCH 23/74] Fix margins
+Subject: [PATCH 23/85] Fix margins
 
 ---
  grub-core/normal/menu_text.c | 8 +++-----
@@ -33,5 +33,5 @@ index ecc60f9..0e43f2c 100644
      - geo->timeout_lines /* timeout */
      - 1 /* empty final line  */;
 -- 
-2.4.3
+2.5.0
 

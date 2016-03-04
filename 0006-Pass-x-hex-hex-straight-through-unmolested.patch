@@ -1,7 +1,7 @@
-From 468d8909c5c86fec5e676df7ca1223a370bab703 Mon Sep 17 00:00:00 2001
+From fc4c2701e620c8b72ff13acde949d5718976259b Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 1 Oct 2012 13:24:37 -0400
-Subject: [PATCH 06/74] Pass "\x[[:hex:]][[:hex:]]" straight through
+Subject: [PATCH 06/85] Pass "\x[[:hex:]][[:hex:]]" straight through
  unmolested.
 
 ---
@@ -104,7 +104,7 @@ index d5e10ee..0a5b2af 100644
  
  	  *buf++ = *c;
 diff --git a/grub-core/script/execute.c b/grub-core/script/execute.c
-index bb70ebf..2b9341f 100644
+index a8502d9..2fd7831 100644
 --- a/grub-core/script/execute.c
 +++ b/grub-core/script/execute.c
 @@ -52,6 +52,12 @@ static struct grub_script_scope *scope = 0;
@@ -179,5 +179,5 @@ index bb70ebf..2b9341f 100644
        case '$':
  	if (escaped)
 -- 
-2.4.3
+2.5.0
 

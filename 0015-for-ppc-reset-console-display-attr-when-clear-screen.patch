@@ -1,7 +1,7 @@
-From 8c359782b598dfe24a6685fb2d181f76c9cc012f Mon Sep 17 00:00:00 2001
+From 6e0dd47fe5b4b7b25704fa0ebde930000d2614c9 Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Wed, 24 Apr 2013 10:51:48 -0300
-Subject: [PATCH 15/74] for ppc, reset console display attr when clear screen
+Subject: [PATCH 15/85] for ppc, reset console display attr when clear screen
 
 This should fix this bugzilla:
 https://bugzilla.redhat.com/show_bug.cgi?id=908519
@@ -23,5 +23,5 @@ index f0d3e3d..7cb7909 100644
        data->reverse_video_off = grub_strdup ("\e[m");
        if (grub_strcmp ("ieee1275", str) == 0)
 -- 
-2.4.3
+2.5.0
 

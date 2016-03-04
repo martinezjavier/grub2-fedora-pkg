@@ -1,7 +1,7 @@
-From 59371cdd4588470ced7b8fbf71ecda648c52b989 Mon Sep 17 00:00:00 2001
+From 9a80be91ab985c23d899d6ff5983b493e5ee6056 Mon Sep 17 00:00:00 2001
 From: Gustavo Luiz Duarte <gustavold@linux.vnet.ibm.com>
 Date: Tue, 25 Sep 2012 18:40:55 -0400
-Subject: [PATCH 07/74] Fix crash on http
+Subject: [PATCH 07/85] Fix crash on http
 
 Don't free file->data on receiving FIN flag since it is used all over without
 checking. http_close() will be called later to free that memory.
@@ -24,5 +24,5 @@ index 4684f8b..ef9538c 100644
    if (!data->sock)
      {
 -- 
-2.4.3
+2.5.0
 

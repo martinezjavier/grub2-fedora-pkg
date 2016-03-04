@@ -1,7 +1,7 @@
-From 8a516f33193744bbe67198fe03cadf1a67129630 Mon Sep 17 00:00:00 2001
+From 7ee9874ed9efbe050ee4c17782b7c716fffd2c35 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 28 Oct 2013 10:05:07 -0400
-Subject: [PATCH 27/74] Use linux16 when appropriate (#880840)
+Subject: [PATCH 27/85] Use linux16 when appropriate (#880840)
 
 The kernel group really would prefer that we use the 16 bit entry point
 on x86 bios machines.
@@ -14,10 +14,10 @@ Signed-off-by: Peter Jones <pjones@redhat.com>
  1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/util/grub.d/10_linux.in b/util/grub.d/10_linux.in
-index 70f3169..013b7f0 100644
+index f09011f..c425c90 100644
 --- a/util/grub.d/10_linux.in
 +++ b/util/grub.d/10_linux.in
-@@ -74,6 +74,11 @@ linux_entry ()
+@@ -76,6 +76,11 @@ linux_entry ()
    type="$3"
    args="$4"
  
@@ -29,7 +29,7 @@ index 70f3169..013b7f0 100644
    if [ -z "$boot_device_id" ]; then
        boot_device_id="$(grub_get_device_id "${GRUB_DEVICE}")"
    fi
-@@ -132,7 +137,7 @@ linux_entry ()
+@@ -134,7 +139,7 @@ linux_entry ()
  EOF
    else
      sed "s/^/$submenu_indentation/" << EOF
@@ -38,7 +38,7 @@ index 70f3169..013b7f0 100644
  EOF
    fi
    if test -n "${initrd}" ; then
-@@ -142,7 +147,7 @@ EOF
+@@ -144,7 +149,7 @@ EOF
  EOF
      else
        sed "s/^/$submenu_indentation/" << EOF
@@ -48,5 +48,5 @@ index 70f3169..013b7f0 100644
      fi
    fi
 -- 
-2.4.3
+2.5.0
 

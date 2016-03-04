@@ -1,7 +1,7 @@
-From 63642951c9e35985a3e35ab218d8d0831d60d239 Mon Sep 17 00:00:00 2001
+From 0aad785ba452e8b07def0d7af4536e4db3a43e3f Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Fri, 21 Jun 2013 14:44:08 -0400
-Subject: [PATCH 26/74] Use -2 instead of -1 for our right-hand margin, so
+Subject: [PATCH 26/85] Use -2 instead of -1 for our right-hand margin, so
  linewrapping works (#976643).
 
 Signed-off-by: Peter Jones <grub2-owner@fedoraproject.org>
@@ -23,5 +23,5 @@ index 0e43f2c..537d4bf 100644
    geo->first_entry_y = 3; /* three empty lines*/
  
 -- 
-2.4.3
+2.5.0
 

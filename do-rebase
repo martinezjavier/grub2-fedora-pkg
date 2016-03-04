@@ -100,14 +100,14 @@ Date:  Wed Jul 22 10:18:00 2015 -0400
 Subject: Stop trying to "git format-patch" across a merge that confuses it
 
 EOF
-git diff --full-index --binary refs/tags/grub-2.02-beta2..refs/remotes/github/master
-) > grub-2.02-beta2-to-origin-master.patch
+git diff --full-index --binary refs/tags/grub-2.02-beta3..refs/remotes/github/master
+) > grub-2.02-beta3-to-origin-master.patch
 
 patches=$(git format-patch refs/remotes/github/master..refs/remotes/github/${releasever})
-echo Patch0000: grub-2.02-beta2-to-origin-master.patch > grub.patches
+echo Patch0000: grub-2.02-beta3-to-origin-master.patch > grub.patches
 for x in $patches ; do
 	echo Patch$(echo ${x} | cut -d- -f1): ${x} >> grub.patches
 done
 rpmdev-bumpspec -c "- Rebased to newer upstream for ${releasever}" grub2.spec
-git add 0*.patch grub2.spec grub-2.02-beta2-to-origin-master.patch grub.patches
+git add 0*.patch grub2.spec grub-2.02-beta3-to-origin-master.patch grub.patches
 fedpkg commit -s -c
