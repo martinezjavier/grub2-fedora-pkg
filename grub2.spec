@@ -111,7 +111,7 @@ provides support for PC BIOS systems.
 
 %ifarch %{efiarchs}
 %package efi
-Summary:	GRUB for EFI systems.
+Summary:	GRUB for EFI systems
 Group:		System Environment/Base
 Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
 Obsoletes:	grub2-efi <= 1:2.00-20%{?dist}
@@ -136,7 +136,7 @@ provides support for rebuilding your own grub.efi on EFI systems.
 %endif
 
 %package tools
-Summary:	Support tools for GRUB.
+Summary:	Support tools for GRUB
 Group:		System Environment/Base
 Requires:	gettext os-prober which file system-logos
 
@@ -147,7 +147,7 @@ file systems, computer architectures and hardware devices.  This subpackage
 provides tools for support of all platforms.
 
 %package starfield-theme
-Summary:	An example theme for GRUB.
+Summary:	An example theme for GRUB
 Group:		System Environment/Base
 Requires:	system-logos
 Obsoletes:	grub2 <= 1:2.00-20%{?dist}
