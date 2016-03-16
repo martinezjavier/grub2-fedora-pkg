@@ -73,9 +73,9 @@ Patch10005: 10005-Add-grub_qdprintf-grub_dprintf-without-the-file-line.patch
 Patch10006: 10006-Make-a-gdb-dprintf-that-tells-us-load-addresses.patch
 
 BuildRequires:  flex bison binutils python
-BuildRequires:  ncurses-devel xz-devel bzip2-devel
+BuildRequires:  pkgconfig(ncurses) xz-devel bzip2-devel
 BuildRequires:  freetype-devel libusb-devel
-BuildRequires:	rpm-devel
+BuildRequires:	pkgconfig(rpm)
 %ifarch %{sparc} x86_64 aarch64 ppc64le
 # sparc builds need 64 bit glibc-devel - also for 32 bit userland
 BuildRequires:  /usr/lib64/crt1.o glibc-static
