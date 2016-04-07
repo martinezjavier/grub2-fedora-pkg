@@ -1,7 +1,7 @@
-From bdcd66a767a861370e55a3c2d624383a1f2ec2f5 Mon Sep 17 00:00:00 2001
+From 5334ed8ae9c8f15928139be986a1e877e9837630 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 25 Jun 2015 15:41:06 -0400
-Subject: [PATCH 3/6] Make it possible to enabled --build-id=sha1
+Subject: [PATCH 10002/10006] Make it possible to enabled --build-id=sha1
 
 Signed-off-by: Peter Jones <pjones@redhat.com>
 ---
@@ -10,7 +10,7 @@ Signed-off-by: Peter Jones <pjones@redhat.com>
  2 files changed, 27 insertions(+)
 
 diff --git a/acinclude.m4 b/acinclude.m4
-index 609c4f2..8dd0989 100644
+index 526f97a..48ccecc 100644
 --- a/acinclude.m4
 +++ b/acinclude.m4
 @@ -136,6 +136,25 @@ if test "x$grub_cv_prog_ld_build_id_none" = xyes; then
@@ -40,10 +40,10 @@ index 609c4f2..8dd0989 100644
  AC_DEFUN([grub_PROG_NM_WORKS],
  [AC_MSG_CHECKING([whether nm works])
 diff --git a/configure.ac b/configure.ac
-index 991cb15..8d780e3 100644
+index d6ef6c3..3e897bd 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1202,7 +1202,15 @@ grub_PROG_TARGET_CC
+@@ -1323,7 +1323,15 @@ grub_PROG_TARGET_CC
  if test "x$TARGET_APPLE_LINKER" != x1 ; then
  grub_PROG_OBJCOPY_ABSOLUTE
  fi
@@ -60,5 +60,5 @@ index 991cb15..8d780e3 100644
    if test "$platform" != emu && test "x$TARGET_APPLE_LINKER" != x1 ; then
      if test ! -z "$TARGET_IMG_LDSCRIPT"; then
 -- 
-2.4.3
+2.5.0
 

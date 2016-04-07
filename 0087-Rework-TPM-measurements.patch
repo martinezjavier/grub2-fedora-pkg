@@ -1,4 +1,4 @@
-From 1388967d903a07c92a39fa4e8573f7ba12f45357 Mon Sep 17 00:00:00 2001
+From dd5035e338e7362db6ef5560e3dff09a255ef797 Mon Sep 17 00:00:00 2001
 From: Matthew Garrett <mjg59@coreos.com>
 Date: Wed, 23 Mar 2016 17:03:43 -0700
 Subject: [PATCH 87/88] Rework TPM measurements

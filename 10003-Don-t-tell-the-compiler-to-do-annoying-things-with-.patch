@@ -1,14 +1,15 @@
-From 22ba237a041b493cd0b7bb3e1c3fcd0a34dbdc2d Mon Sep 17 00:00:00 2001
+From ddc6702d0b258e12f67f0df7c3c915a04ede1067 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Sun, 28 Jun 2015 17:57:24 -0400
-Subject: [PATCH 4/6] Don't tell the compiler to do annoying things with -f.
+Subject: [PATCH 10003/10006] Don't tell the compiler to do annoying things
+ with -f.
 
 ---
- configure.ac | 34 ++--------------------------------
- 1 file changed, 2 insertions(+), 32 deletions(-)
+ configure.ac | 48 ++----------------------------------------------
+ 1 file changed, 2 insertions(+), 46 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 8d780e3..5e2529a 100644
+index 3e897bd..65f7f43 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -548,8 +548,8 @@ LDFLAGS="$TARGET_LDFLAGS"
@@ -22,7 +23,7 @@ index 8d780e3..5e2529a 100644
  
  if test "x$target_cpu" != xi386 && test "x$target_cpu" != xx86_64; then
  TARGET_CFLAGS="$TARGET_CFLAGS -Wcast-align"
-@@ -809,21 +809,6 @@ if test x"$target_cpu" = xsparc64 ; then
+@@ -908,21 +908,6 @@ if test x"$target_cpu" = xsparc64 ; then
    TARGET_LDFLAGS="$TARGET_LDFLAGS $grub_cv_target_cc_mno_relax"
  fi
  
@@ -44,16 +45,17 @@ index 8d780e3..5e2529a 100644
  if test x"$target_os" = xcygwin; then
    AC_CACHE_CHECK([whether option -fno-reorder-functions works], grub_cv_cc_no_reorder_functions, [
      CFLAGS="$TARGET_CFLAGS -fno-reorder-functions"
-@@ -837,21 +822,6 @@ if test x"$target_os" = xcygwin && test "x$grub_cv_cc_no_reorder_functions" = xy
-   TARGET_CFLAGS="$TARGET_CFLAGS -fno-reorder-functions"
+@@ -947,37 +932,8 @@ if test "x$grub_cv_cc_mno_stack_arg_probe" = xyes; then
+   TARGET_CFLAGS="$TARGET_CFLAGS -mno-stack-arg-probe"
  fi
  
+-
 -# By default, GCC 4.6 generates .eh_frame sections containing unwind
 -# information in some cases where it previously did not. GRUB doesn't need
 -# these and they just use up vital space. Restore the old compiler
 -# behaviour.
 -AC_CACHE_CHECK([whether -fno-asynchronous-unwind-tables works], [grub_cv_cc_fno_asynchronous_unwind_tables], [
--  CFLAGS="$TARGET_CFLAGS -fno-dwarf2-cfi-asm"
+-  CFLAGS="$TARGET_CFLAGS -fno-asynchronous-unwind-tables"
 -  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[]])],
 -      [grub_cv_cc_fno_asynchronous_unwind_tables=yes],
 -      [grub_cv_cc_fno_asynchronous_unwind_tables=no])
@@ -63,9 +65,24 @@ index 8d780e3..5e2529a 100644
 -  TARGET_CFLAGS="$TARGET_CFLAGS -fno-asynchronous-unwind-tables"
 -fi
 -
- AC_ARG_ENABLE([efiemu],
- 	      [AS_HELP_STRING([--enable-efiemu],
-                              [build and install the efiemu runtimes (default=guessed)])])
+-AC_CACHE_CHECK([whether -fno-unwind-tables works], [grub_cv_cc_fno_unwind_tables], [
+-  CFLAGS="$TARGET_CFLAGS -fno-unwind-tables"
+-  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[]])],
+-      [grub_cv_cc_fno_unwind_tables=yes],
+-      [grub_cv_cc_fno_unwind_tables=no])
+-])
+-
+-if test "x$grub_cv_cc_fno_unwind_tables" = xyes; then
+-  TARGET_CFLAGS="$TARGET_CFLAGS -fno-unwind-tables"
+-fi
+-
+-
+ CFLAGS="$TARGET_CFLAGS"
+ 
+-
+ if test x"$platform" = xemu ; then
+   TARGET_OBJ2ELF=
+   grub_cv_target_cc_link_format=
 -- 
-2.4.3
+2.5.0
 

@@ -1,7 +1,8 @@
-From 2053c4610482deff681feb96f2637933c44f8f3f Mon Sep 17 00:00:00 2001
+From 5dbc4254266d8d8d64d5d2fe2ad02ff200f4a7a6 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 25 Jun 2015 15:11:36 -0400
-Subject: [PATCH 6/6] Make a "gdb" dprintf that tells us load addresses.
+Subject: [PATCH 10005/10006] Make a "gdb" dprintf that tells us load
+ addresses.
 
 This makes a grub_dprintf() call during platform init and during module
 loading that tells us the virtual addresses of the .text and .data
@@ -20,10 +21,10 @@ Signed-off-by: Peter Jones <pjones@redhat.com>
  4 files changed, 81 insertions(+), 4 deletions(-)
 
 diff --git a/grub-core/kern/dl.c b/grub-core/kern/dl.c
-index 58931fa..82c7abd 100644
+index 247cd0a..f29691c 100644
 --- a/grub-core/kern/dl.c
 +++ b/grub-core/kern/dl.c
-@@ -453,6 +453,24 @@ grub_dl_find_section (Elf_Ehdr *e, const char *name)
+@@ -457,6 +457,24 @@ grub_dl_find_section (Elf_Ehdr *e, const char *name)
    return NULL;
  }
  
@@ -48,7 +49,7 @@ index 58931fa..82c7abd 100644
  /* Me, Vladimir Serbinenko, hereby I add this module check as per new
     GNU module policy. Note that this license check is informative only.
     Modules have to be licensed under GPLv3 or GPLv3+ (optionally
-@@ -593,6 +611,38 @@ grub_dl_relocate_symbols (grub_dl_t mod, void *ehdr)
+@@ -600,6 +618,38 @@ grub_dl_relocate_symbols (grub_dl_t mod, void *ehdr)
    return GRUB_ERR_NONE;
  }
  
@@ -87,7 +88,7 @@ index 58931fa..82c7abd 100644
  /* Load a module from core memory.  */
  grub_dl_t
  grub_dl_load_core_noinit (void *addr, grub_size_t size)
-@@ -651,6 +701,8 @@ grub_dl_load_core_noinit (void *addr, grub_size_t size)
+@@ -658,6 +708,8 @@ grub_dl_load_core_noinit (void *addr, grub_size_t size)
    grub_dprintf ("modules", "module name: %s\n", mod->name);
    grub_dprintf ("modules", "init function: %p\n", mod->init);
  
@@ -97,10 +98,10 @@ index 58931fa..82c7abd 100644
      {
        grub_dl_unload (mod);
 diff --git a/grub-core/kern/efi/efi.c b/grub-core/kern/efi/efi.c
-index 95c75d4..d757b2a 100644
+index 101307f..7492f9d 100644
 --- a/grub-core/kern/efi/efi.c
 +++ b/grub-core/kern/efi/efi.c
-@@ -298,7 +298,7 @@ grub_efi_secure_boot (void)
+@@ -274,7 +274,7 @@ grub_efi_get_variable (const char *var, const grub_efi_guid_t *guid,
  /* Search the mods section from the PE32/PE32+ image. This code uses
     a PE32 header, but should work with PE32+ as well.  */
  grub_addr_t
@@ -109,7 +110,7 @@ index 95c75d4..d757b2a 100644
  {
    grub_efi_loaded_image_t *image;
    struct grub_pe32_header *header;
-@@ -312,6 +312,7 @@ grub_efi_modules_addr (void)
+@@ -288,6 +288,7 @@ grub_efi_modules_addr (void)
    if (! image)
      return 0;
  
@@ -117,7 +118,7 @@ index 95c75d4..d757b2a 100644
    header = image->image_base;
    coff_header = &(header->coff_header);
    sections
-@@ -323,7 +324,7 @@ grub_efi_modules_addr (void)
+@@ -299,7 +300,7 @@ grub_efi_modules_addr (void)
         i < coff_header->num_sections;
         i++, section++)
      {
@@ -127,7 +128,7 @@ index 95c75d4..d757b2a 100644
      }
  
 diff --git a/grub-core/kern/efi/init.c b/grub-core/kern/efi/init.c
-index d17d18e..86935c6 100644
+index a5b6c1d..9939fde 100644
 --- a/grub-core/kern/efi/init.c
 +++ b/grub-core/kern/efi/init.c
 @@ -59,10 +59,33 @@ grub_efi_env_init (void)
@@ -174,10 +175,10 @@ index d17d18e..86935c6 100644
  }
  
 diff --git a/include/grub/efi/efi.h b/include/grub/efi/efi.h
-index 2245632..6aa0106 100644
+index 9a2da0e..37d57d8 100644
 --- a/include/grub/efi/efi.h
 +++ b/include/grub/efi/efi.h
-@@ -85,7 +85,7 @@ extern void (*EXPORT_VAR(grub_efi_net_config)) (grub_efi_handle_t hnd,
+@@ -84,7 +84,7 @@ extern void (*EXPORT_VAR(grub_efi_net_config)) (grub_efi_handle_t hnd,
  						char **device,
  						char **path);
  
@@ -187,5 +188,5 @@ index 2245632..6aa0106 100644
  void grub_efi_mm_init (void);
  void grub_efi_mm_fini (void);
 -- 
-2.4.3
+2.5.0
 

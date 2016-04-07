@@ -1,4 +1,4 @@
-From 54d0f8d24fc634b71e8525703a6eea8c23f4c9e5 Mon Sep 17 00:00:00 2001
+From e78fda79e6171ab84d1d332197e46455b695f259 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 30 Jun 2015 15:50:41 -0400
 Subject: [PATCH 85/88] Handle rssd storage devices.

@@ -45,7 +45,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.27%{?dist}
+Release:        0.29%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -66,16 +66,16 @@ Source7:	grub.patches
 # git checkout debuginfo
 # git format-patch fedora-23..
 Patch10001: 10001-Put-the-correct-.file-directives-in-our-.S-files.patch
-Patch10002: 10002-Make-efi-machines-load-an-env-block-from-a-variable.patch
-Patch10003: 10003-Make-it-possible-to-enabled-build-id-sha1.patch
-#Patch10004: 10004-Don-t-tell-the-compiler-to-do-annoying-things-with-f.patch
-Patch10005: 10005-Add-grub_qdprintf-grub_dprintf-without-the-file-line.patch
-Patch10006: 10006-Make-a-gdb-dprintf-that-tells-us-load-addresses.patch
+Patch10002: 10002-Make-it-possible-to-enabled-build-id-sha1.patch
+#Patch10003: 10003-Don-t-tell-the-compiler-to-do-annoying-things-with-.patch
+Patch10004: 10004-Add-grub_qdprintf-grub_dprintf-without-the-file-lin.patch
+Patch10005: 10005-Make-a-gdb-dprintf-that-tells-us-load-addresses.patch
+#Patch10006: 10006-Try-it-in-gentpl-again.patch
 
 BuildRequires:  flex bison binutils python
-BuildRequires:  pkgconfig(ncurses) xz-devel bzip2-devel
+BuildRequires:  ncurses-devel xz-devel bzip2-devel
 BuildRequires:  freetype-devel libusb-devel
-BuildRequires:	pkgconfig(rpm)
+BuildRequires:	rpm-devel
 %ifarch %{sparc} x86_64 aarch64 ppc64le
 # sparc builds need 64 bit glibc-devel - also for 32 bit userland
 BuildRequires:  /usr/lib64/crt1.o glibc-static
@@ -111,7 +111,7 @@ provides support for PC BIOS systems.
 
 %ifarch %{efiarchs}
 %package efi
-Summary:	GRUB for EFI systems
+Summary:	GRUB for EFI systems.
 Group:		System Environment/Base
 Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
 Obsoletes:	grub2-efi <= 1:2.00-20%{?dist}
@@ -136,7 +136,7 @@ provides support for rebuilding your own grub.efi on EFI systems.
 %endif
 
 %package tools
-Summary:	Support tools for GRUB
+Summary:	Support tools for GRUB.
 Group:		System Environment/Base
 Requires:	gettext os-prober which file system-logos
 
@@ -147,7 +147,7 @@ file systems, computer architectures and hardware devices.  This subpackage
 provides tools for support of all platforms.
 
 %package starfield-theme
-Summary:	An example theme for GRUB
+Summary:	An example theme for GRUB.
 Group:		System Environment/Base
 Requires:	system-logos
 Obsoletes:	grub2 <= 1:2.00-20%{?dist}
@@ -544,9 +544,15 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Thu Apr 07 2016 Peter Jones <pjones@redhat.com> - 2.02-0.29
+- Fix ppc64 build failure and rebase to newer f24 code.
+
 * Tue Apr 05 2016 pjones <pjones@redhat.com> - 1:2.02-0.27
 - Pull TPM updates from mjg59.
   Resolves: rhbz#1318067
+
+* Tue Mar 08 2016 pjones <pjones@redhat.com> - 1:2.02-0.27
+- Fix aarch64 build problem.
 
 * Fri Mar 04 2016 Peter Jones <pjones@redhat.com> - 2.02-0.26
 - Rebased to newer upstream (grub-2.02-beta3) for fedora-24

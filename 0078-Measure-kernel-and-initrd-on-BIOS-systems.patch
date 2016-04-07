@@ -1,4 +1,4 @@
-From 05f686df4b9a012035854b082bb4c3b7c745da28 Mon Sep 17 00:00:00 2001
+From 443457897a9b415e6b7f7f41e93f78947b15d206 Mon Sep 17 00:00:00 2001
 From: Matthew Garrett <mjg59@coreos.com>
 Date: Sun, 9 Aug 2015 16:28:29 -0700
 Subject: [PATCH 78/88] Measure kernel and initrd on BIOS systems

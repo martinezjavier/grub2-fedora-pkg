@@ -21,6 +21,7 @@ if ! git status | grep -q 'nothing to commit, working directory clean' ; then
 fi
 
 releasever=""
+amend=""
 
 declare -a savedargs
 while [ $# -gt 0 ]; do
@@ -34,6 +35,9 @@ while [ $# -gt 0 ]; do
 	--dist)
 		shift
 		releasever=$1
+		;;
+	--amend)
+		amend="--amend"
 		;;
 	*)
 		savedargs[${#savedargs[@]}]="$1"
@@ -108,6 +112,12 @@ echo Patch0000: grub-2.02-beta3-to-origin-master.patch > grub.patches
 for x in $patches ; do
 	echo Patch$(echo ${x} | cut -d- -f1): ${x} >> grub.patches
 done
-rpmdev-bumpspec -c "- Rebased to newer upstream for ${releasever}" grub2.spec
+if [ -z "$amend" ];  then
+    rpmdev-bumpspec -c "- Rebased to newer upstream for ${releasever}" grub2.spec
+fi
 git add 0*.patch grub2.spec grub-2.02-beta3-to-origin-master.patch grub.patches
-fedpkg commit -s -c
+if [ -z "$amend" ]; then
+	fedpkg commit -s -c $amend
+else
+	git commit -m "" --amend
+fi

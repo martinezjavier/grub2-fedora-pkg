@@ -1,4 +1,4 @@
-From ee0acf80b073cf652a949673bd750e7a9a302d37 Mon Sep 17 00:00:00 2001
+From cdcff708c76890986b9e3ae9be084da6b152adde Mon Sep 17 00:00:00 2001
 From: Matthew Garrett <mjg59@coreos.com>
 Date: Tue, 1 Sep 2015 16:02:55 -0700
 Subject: [PATCH 81/88] Measure multiboot images and modules

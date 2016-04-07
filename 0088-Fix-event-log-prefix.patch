@@ -1,4 +1,4 @@
-From 3fded5274e9d0968fac6d37ee16f2f2d53b8594d Mon Sep 17 00:00:00 2001
+From 84b0d0562f890820097726827e98f27a789011fc Mon Sep 17 00:00:00 2001
 From: Matthew Garrett <mjg59@coreos.com>
 Date: Tue, 29 Mar 2016 15:36:49 -0700
 Subject: [PATCH 88/88] Fix event log prefix

@@ -1,4 +1,4 @@
-From 47beae47e49806881000c479a5912d3bf2990da4 Mon Sep 17 00:00:00 2001
+From 7774b9780271782da56834b49f4f4ffd8e5b40c4 Mon Sep 17 00:00:00 2001
 From: Matthew Garrett <mjg59@coreos.com>
 Date: Sun, 9 Aug 2015 16:12:39 -0700
 Subject: [PATCH 76/88] Rework linux command
