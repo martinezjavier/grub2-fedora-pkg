@@ -1,7 +1,7 @@
 From 6b35fd42bdd803b1b38fd3b04eb642ff822b700f Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 14 Jan 2014 16:15:46 -0500
-Subject: [PATCH 43/88] Don't print during fdt loading method.
+Subject: [PATCH 43/89] Don't print during fdt loading method.
 
 Signed-off-by: Peter Jones <pjones@redhat.com>
 ---

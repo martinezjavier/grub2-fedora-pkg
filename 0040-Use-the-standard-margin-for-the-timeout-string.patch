@@ -1,7 +1,7 @@
 From 06c049445cc4fd428072e849c3098796dc9becd7 Mon Sep 17 00:00:00 2001
 From: William Jon McCann <william.jon.mccann@gmail.com>
 Date: Fri, 7 Jun 2013 10:52:32 -0400
-Subject: [PATCH 40/88] Use the standard margin for the timeout string
+Subject: [PATCH 40/89] Use the standard margin for the timeout string
 
 So that it aligns with the other messages
 ---

@@ -1,7 +1,7 @@
 From fbc0fcdfd649c1c053be735311ca15deea7a40ff Mon Sep 17 00:00:00 2001
 From: Fedora Ninjas <grub2-owner@fedoraproject.org>
 Date: Tue, 22 Jan 2013 06:31:38 +0100
-Subject: [PATCH 25/88] blscfg: add blscfg module to parse Boot Loader
+Subject: [PATCH 25/89] blscfg: add blscfg module to parse Boot Loader
  Specification snippets
 
 http://www.freedesktop.org/wiki/Specifications/BootLoaderSpec

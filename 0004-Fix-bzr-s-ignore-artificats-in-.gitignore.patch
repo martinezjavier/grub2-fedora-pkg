@@ -1,7 +1,7 @@
 From 668d1227194fc45d19dec7c90b4d004378c822af Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 7 Jul 2015 10:13:14 -0400
-Subject: [PATCH 04/88] Fix bzr's ignore artificats in .gitignore
+Subject: [PATCH 04/89] Fix bzr's ignore artificats in .gitignore
 
 We lost a man page because of incompatibilities between bzr's ignore
 system and .gitignore, so solve that slightly better.

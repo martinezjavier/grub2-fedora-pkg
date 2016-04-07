@@ -1,7 +1,7 @@
 From ff07352c36d9d307428f55881d951f0513af40fa Mon Sep 17 00:00:00 2001
 From: Prarit Bhargava <prarit@redhat.com>
 Date: Wed, 12 Mar 2014 10:58:16 -0400
-Subject: [PATCH 16/88] Fix bad test on GRUB_DISABLE_SUBMENU.
+Subject: [PATCH 16/89] Fix bad test on GRUB_DISABLE_SUBMENU.
 
 The file /etc/grub.d/10_linux does
 

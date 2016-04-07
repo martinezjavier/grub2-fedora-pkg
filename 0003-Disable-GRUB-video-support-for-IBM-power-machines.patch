@@ -1,7 +1,7 @@
 From 4b4bbc963438157b29fec6b38b6567e16d1e2e56 Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Tue, 11 Jun 2013 15:14:05 -0300
-Subject: [PATCH 03/88] Disable GRUB video support for IBM power machines
+Subject: [PATCH 03/89] Disable GRUB video support for IBM power machines
 
 Should fix the problem in bugzilla:
 https://bugzilla.redhat.com/show_bug.cgi?id=973205

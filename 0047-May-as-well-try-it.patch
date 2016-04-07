@@ -1,7 +1,7 @@
 From 1f68f3b40b8b476e95f29eac40c76dbba892cd17 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 4 Mar 2014 11:00:23 -0500
-Subject: [PATCH 47/88] May as well try it.
+Subject: [PATCH 47/89] May as well try it.
 
 ---
  conf/Makefile.extra-dist          |   1 -
