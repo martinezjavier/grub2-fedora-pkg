@@ -1,7 +1,7 @@
-From 3dca3dbb01a52fdc90f548a2461c8fc8e04336ab Mon Sep 17 00:00:00 2001
+From 5b77e510eb6e4b649c53ab0790cdc9fdf0c85be9 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Wed, 3 Apr 2013 14:35:34 -0400
-Subject: [PATCH 06/89] Move bash completion script (#922997)
+Subject: [PATCH 06/87] Move bash completion script (#922997)
 
 Apparently these go in a new place now.
 ---
@@ -10,7 +10,7 @@ Apparently these go in a new place now.
  2 files changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/configure.ac b/configure.ac
-index 57e1713..21023ae 100644
+index 9ddfc53..ab9134c 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -287,6 +287,14 @@ AC_SUBST(grubdirname)
@@ -28,7 +28,7 @@ index 57e1713..21023ae 100644
  #
  # Checks for build programs.
  #
-@@ -475,6 +483,9 @@ HOST_CFLAGS="$HOST_CFLAGS $grub_cv_cc_w_extra_flags"
+@@ -476,6 +484,9 @@ HOST_CFLAGS="$HOST_CFLAGS $grub_cv_cc_w_extra_flags"
  # Check for target programs.
  #
  
@@ -51,5 +51,5 @@ index 136287c..61108f0 100644
  
  $(bash_completion_script): $(bash_completion_source) $(top_builddir)/config.status
 -- 
-2.5.5
+2.7.4
 

@@ -66,10 +66,20 @@ index c9a975219fcc24162858e461f439886c4cb3841e..572eadb3ef27138481e91643b8bb60d2
  * Revision control moved to git.
  
 diff --git a/configure.ac b/configure.ac
-index a85b134ec58296e4f128b116918cb1c64ee17ecc..57e17138eb72aa4d4f985c525998d300f7121ccd 100644
+index a85b134ec58296e4f128b116918cb1c64ee17ecc..9ddfc53235396f7542a1c3f3b8076e0bddefe0a5 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1185,9 +1185,9 @@ CFLAGS="$TARGET_CFLAGS"
+@@ -388,7 +388,8 @@ fi
+ 
+ # Check for functions and headers.
+ AC_CHECK_FUNCS(posix_memalign memalign getextmntent)
+-AC_CHECK_HEADERS(sys/param.h sys/mount.h sys/mnttab.h sys/mkdev.h limits.h)
++AC_CHECK_HEADERS(sys/param.h sys/mount.h sys/mnttab.h limits.h)
++AC_HEADER_MAJOR
+ 
+ AC_CHECK_MEMBERS([struct statfs.f_fstypename],,,[$ac_includes_default
+ #include <sys/param.h>
+@@ -1185,9 +1186,9 @@ CFLAGS="$TARGET_CFLAGS"
  # Position independent executable.
  grub_CHECK_PIE
  [# Need that, because some distributions ship compilers that include
@@ -179,6 +189,123 @@ index a088244b4cb1ce9f21d02c1f3024a99e681ccb1a..189551a483ab9413cdca27650b202672
      }
  
    return grub_error (GRUB_ERR_BAD_ARGUMENT,
+diff --git a/grub-core/net/http.c b/grub-core/net/http.c
+index 4684f8b333c2a7bca2e1b398f2a9891380fa6696..5aa4ad3befc15ba427797c7f1454d8a322d51b2f 100644
+--- a/grub-core/net/http.c
++++ b/grub-core/net/http.c
+@@ -381,9 +381,8 @@ http_establish (struct grub_file *file, grub_off_t offset, int initial)
+       ptr = nb->tail;
+       grub_snprintf ((char *) ptr,
+ 		     sizeof ("Range: bytes=XXXXXXXXXXXXXXXXXXXX-"
+-			     "\r\n"
+ 			     "\r\n"),
+-		     "Range: bytes=%" PRIuGRUB_UINT64_T "-\r\n\r\n",
++		     "Range: bytes=%" PRIuGRUB_UINT64_T "-\r\n",
+ 		     offset);
+       grub_netbuff_put (nb, grub_strlen ((char *) ptr));
+     }
+@@ -450,6 +449,7 @@ http_seek (struct grub_file *file, grub_off_t off)
+     }
+ 
+   file->device->net->stall = 0;
++  file->device->net->eof = 0;
+   file->device->net->offset = off;
+ 
+   data = grub_zalloc (sizeof (*data));
+diff --git a/grub-core/net/net.c b/grub-core/net/net.c
+index 9424595278c1a09174a32ad0f467d7790a5225e8..10773fc3435fc7a1baf19e9b7cffe3cdcbf7998c 100644
+--- a/grub-core/net/net.c
++++ b/grub-core/net/net.c
+@@ -1346,6 +1346,15 @@ grub_net_open_real (const char *name)
+ 		continue;
+ 	    }
+ 
++	  if (grub_strncmp (prefdev, "pxe", sizeof ("pxe") - 1) == 0 &&
++	      (!prefdev[sizeof ("pxe") - 1] || (prefdev[sizeof("pxe") - 1] == ':')))
++	    {
++	      grub_free (prefdev);
++	      prefdev = grub_strdup ("tftp");
++	      if (!prefdev)
++		continue;
++	    }
++
+ 	  comma = grub_strchr (prefdev, ',');
+ 	  if (comma)
+ 	    *comma = '\0';
+@@ -1672,6 +1681,7 @@ grub_net_seek_real (struct grub_file *file, grub_off_t offset)
+     file->device->net->packs.last = NULL;
+     file->device->net->offset = 0;
+     file->device->net->eof = 0;
++    file->device->net->stall = 0;
+     err = file->device->net->protocol->open (file, file->device->net->name);
+     if (err)
+       return err;
+diff --git a/grub-core/osdep/devmapper/getroot.c b/grub-core/osdep/devmapper/getroot.c
+index 05eda500a4060ac76aef94c6a16d9a1116f6aa39..72e5582752a9cd64d305d847c771b49677e0a0e9 100644
+--- a/grub-core/osdep/devmapper/getroot.c
++++ b/grub-core/osdep/devmapper/getroot.c
+@@ -40,6 +40,12 @@
+ #include <limits.h>
+ #endif
+ 
++#if defined(MAJOR_IN_MKDEV)
++#include <sys/mkdev.h>
++#elif defined(MAJOR_IN_SYSMACROS)
++#include <sys/sysmacros.h>
++#endif
++
+ #include <libdevmapper.h>
+ 
+ #include <grub/types.h>
+diff --git a/grub-core/osdep/devmapper/hostdisk.c b/grub-core/osdep/devmapper/hostdisk.c
+index 19c1101fdaca7f5abdef7d22b28a13e180a7e467..a697bcb4d8d91cd97343179fe7977d6806d4191e 100644
+--- a/grub-core/osdep/devmapper/hostdisk.c
++++ b/grub-core/osdep/devmapper/hostdisk.c
+@@ -24,6 +24,11 @@
+ #include <errno.h>
+ #include <limits.h>
+ 
++#if defined(MAJOR_IN_MKDEV)
++#include <sys/mkdev.h>
++#elif defined(MAJOR_IN_SYSMACROS)
++#include <sys/sysmacros.h>
++#endif
+ 
+ #ifdef HAVE_DEVICE_MAPPER
+ # include <libdevmapper.h>
+diff --git a/grub-core/osdep/linux/getroot.c b/grub-core/osdep/linux/getroot.c
+index 10480b646241d6ca8ede25427e433178c00cea57..09e7e6e6d6644a5bad6607bea6aaaa40ce45a873 100644
+--- a/grub-core/osdep/linux/getroot.c
++++ b/grub-core/osdep/linux/getroot.c
+@@ -35,6 +35,12 @@
+ #include <limits.h>
+ #endif
+ 
++#if defined(MAJOR_IN_MKDEV)
++#include <sys/mkdev.h>
++#elif defined(MAJOR_IN_SYSMACROS)
++#include <sys/sysmacros.h>
++#endif
++
+ #include <grub/types.h>
+ #include <sys/ioctl.h>         /* ioctl */
+ #include <sys/mount.h>
+diff --git a/grub-core/osdep/unix/getroot.c b/grub-core/osdep/unix/getroot.c
+index 1079a919d112f24a2856f0735a1fdcd097d45c3a..4bf37b027be660a14994fb316f08dd478490c4e2 100644
+--- a/grub-core/osdep/unix/getroot.c
++++ b/grub-core/osdep/unix/getroot.c
+@@ -51,8 +51,10 @@
+ #endif
+ 
+ #include <sys/types.h>
+-#if defined(HAVE_SYS_MKDEV_H)
++#if defined(MAJOR_IN_MKDEV)
+ #include <sys/mkdev.h>
++#elif defined(MAJOR_IN_SYSMACROS)
++#include <sys/sysmacros.h>
+ #endif
+ 
+ #if defined(HAVE_LIBZFS) && defined(HAVE_LIBNVPAIR)
 diff --git a/include/multiboot2.h b/include/multiboot2.h
 index 9d4862759af38eb5a9d0fecb1807ef50ba791dee..8b8c1568ae32239d73ad80a3ca64010556d57099 100644
 --- a/include/multiboot2.h

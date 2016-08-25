@@ -1,7 +1,7 @@
-From c448414b19a09f4f2815e8a65de4e3d1a8e65330 Mon Sep 17 00:00:00 2001
+From 11abe391636d0819902357591aebf0ea01b88130 Mon Sep 17 00:00:00 2001
 From: Robert Marshall <rmarshall@redhat.com>
 Date: Mon, 16 Mar 2015 14:14:19 -0400
-Subject: [PATCH 65/89] Use Distribution Package Sort for grub2-mkconfig
+Subject: [PATCH 65/87] Use Distribution Package Sort for grub2-mkconfig
  (#1124074)
 
 Users reported that newly installed kernels on their systems installed
@@ -61,7 +61,7 @@ index 2061104..d846b81 100644
    name = grub-mkconfig;
    common = util/grub-mkconfig.in;
 diff --git a/configure.ac b/configure.ac
-index e976e85..ad2cff3 100644
+index 9937a82..d5e8d90 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -65,6 +65,7 @@ grub_TRANSFORM([grub-mkrelpath])
@@ -80,7 +80,7 @@ index e976e85..ad2cff3 100644
  grub_TRANSFORM([grub-reboot.3])
  grub_TRANSFORM([grub-render-label.3])
  grub_TRANSFORM([grub-script-check.3])
-@@ -1742,6 +1744,33 @@ fi
+@@ -1743,6 +1745,33 @@ fi
  
  AC_SUBST([LIBDEVMAPPER])
  
@@ -456,5 +456,5 @@ index 0000000..f33bd1e
 +  return 0;
 +}
 -- 
-2.5.5
+2.7.4
 

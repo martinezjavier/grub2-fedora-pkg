@@ -1,7 +1,7 @@
-From 668d1227194fc45d19dec7c90b4d004378c822af Mon Sep 17 00:00:00 2001
+From 512fe6865738286c94f87da64ca6b475bc3e2f38 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 7 Jul 2015 10:13:14 -0400
-Subject: [PATCH 04/89] Fix bzr's ignore artificats in .gitignore
+Subject: [PATCH 04/87] Fix bzr's ignore artificats in .gitignore
 
 We lost a man page because of incompatibilities between bzr's ignore
 system and .gitignore, so solve that slightly better.
@@ -367,5 +367,5 @@ index 18ab8e8..06c9f3a 100644
 -/grub-fs-tester
 +xzcompress_test
 -- 
-2.5.5
+2.7.4
 

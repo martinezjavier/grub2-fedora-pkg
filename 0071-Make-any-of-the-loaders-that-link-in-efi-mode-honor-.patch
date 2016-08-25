@@ -1,7 +1,7 @@
-From 50f24247c94609c146042aa1a260267b2abba412 Mon Sep 17 00:00:00 2001
+From c1d31b6a26e5542142d569c94a70f1dc8e07afd6 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 6 Oct 2015 16:09:25 -0400
-Subject: [PATCH 71/89] Make any of the loaders that link in efi mode honor
+Subject: [PATCH 71/87] Make any of the loaders that link in efi mode honor
  secure boot.
 
 And in this case "honor" means "even if somebody does link this in, they
@@ -24,11 +24,17 @@ Signed-off-by: Peter Jones <pjones@redhat.com>
  grub-core/loader/xnu.c             |  7 +++++
  include/grub/efi/efi.h             |  1 -
  include/grub/efi/sb.h              | 29 +++++++++++++++++++
- include/grub/powerpc/linux.h       | 23 +++++++++++++++
- 16 files changed, 169 insertions(+), 29 deletions(-)
+ include/grub/ia64/linux.h          |  0
+ include/grub/mips/linux.h          |  0
+ include/grub/powerpc/linux.h       |  0
+ include/grub/sparc64/linux.h       |  0
+ 19 files changed, 146 insertions(+), 29 deletions(-)
  create mode 100644 grub-core/kern/efi/sb.c
  create mode 100644 include/grub/efi/sb.h
+ create mode 100644 include/grub/ia64/linux.h
+ create mode 100644 include/grub/mips/linux.h
  create mode 100644 include/grub/powerpc/linux.h
+ create mode 100644 include/grub/sparc64/linux.h
 
 diff --git a/grub-core/Makefile.am b/grub-core/Makefile.am
 index 04e9395..fd715a8 100644
@@ -471,35 +477,18 @@ index 0000000..9629fbb
 +int EXPORT_FUNC (grub_efi_secure_boot) (void);
 +
 +#endif /* ! GRUB_EFI_SB_HEADER */
+diff --git a/include/grub/ia64/linux.h b/include/grub/ia64/linux.h
+new file mode 100644
+index 0000000..e69de29
+diff --git a/include/grub/mips/linux.h b/include/grub/mips/linux.h
+new file mode 100644
+index 0000000..e69de29
 diff --git a/include/grub/powerpc/linux.h b/include/grub/powerpc/linux.h
 new file mode 100644
-index 0000000..6cecb2e
---- /dev/null
-+++ b/include/grub/powerpc/linux.h
-@@ -0,0 +1,23 @@
-+/* linux.h - PowerPC linux specific definitions */
-+/*
-+ *  GRUB  --  GRand Unified Bootloader
-+ *  Copyright (C) 2013  Free Software Foundation, Inc.
-+ *
-+ *  GRUB is free software: you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation, either version 3 of the License, or
-+ *  (at your option) any later version.
-+ *
-+ *  GRUB is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with GRUB.  If not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#ifndef GRUB_LINUX_CPU_HEADER
-+#define GRUB_LINUX_CPU_HEADER 1
-+
-+#endif /* ! GRUB_LINUX_CPU_HEADER */
+index 0000000..e69de29
+diff --git a/include/grub/sparc64/linux.h b/include/grub/sparc64/linux.h
+new file mode 100644
+index 0000000..e69de29
 -- 
-2.5.5
+2.7.4
 

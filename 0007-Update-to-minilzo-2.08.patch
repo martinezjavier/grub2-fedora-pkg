@@ -1,7 +1,7 @@
-From fcbba25979fc9e26ab8e6eed5c84668a5f134b12 Mon Sep 17 00:00:00 2001
+From 579ecb682efc5221b4a13b8009af1731f5349912 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 4 Dec 2014 15:36:09 -0500
-Subject: [PATCH 07/89] Update to minilzo-2.08
+Subject: [PATCH 07/87] Update to minilzo-2.08
 
 This fixes CVE-2014-4607 - lzo: lzo1x_decompress_safe() integer overflow
 
@@ -8786,5 +8786,5 @@ index 74fefa9..7937454 100644
  
  
 -- 
-2.5.5
+2.7.4
 

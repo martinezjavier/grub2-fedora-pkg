@@ -45,7 +45,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.30%{?dist}
+Release:        0.34%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -488,6 +488,7 @@ fi
 %{_datarootdir}/grub/*
 %{_sbindir}/%{name}-bios-setup
 %{_sbindir}/%{name}-install
+%{_sbindir}/%{name}-get-kernel-settings
 %{_sbindir}/%{name}-macbless
 %{_sbindir}/%{name}-mkconfig
 %{_sbindir}/%{name}-ofpathname
@@ -544,6 +545,11 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Thu Aug 25 2016 Peter Jones <pjones@redhat.com> - 2.02-0.34
+- Update to be newer than f24's branch.
+- Add grub2-get-kernel-settings
+  Related: rhbz#1226325
+
 * Thu Apr 07 2016 pjones <pjones@redhat.com> - 1:2.02-0.30
 - Revert 27e66193, which was replaced by upstream's 49426e9fd
   Resolves: rhbz#1251600

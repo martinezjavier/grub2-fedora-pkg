@@ -1,7 +1,7 @@
-From 99745ca3450dbbd364569a13b61fbf2a36cb3a88 Mon Sep 17 00:00:00 2001
+From de423b22780b0fd225a1ee476166777af29d53d0 Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Tue, 30 Oct 2012 15:19:39 -0200
-Subject: [PATCH 08/89] Add vlan-tag support on IBM PPC machines
+Subject: [PATCH 08/87] Add vlan-tag support on IBM PPC machines
 
 This patch adds support for virtual LAN (VLAN) tagging. VLAN tagging allows
 multiple VLANs in a bridged network to share the same physical network link but
@@ -182,5 +182,5 @@ index 2192fa1..6ac9d72 100644
 +
  #endif /* ! GRUB_NET_HEADER */
 -- 
-2.5.5
+2.7.4
 
