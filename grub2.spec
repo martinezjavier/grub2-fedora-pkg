@@ -45,7 +45,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.34%{?dist}
+Release:        0.35%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -71,6 +71,12 @@ Patch10002: 10002-Make-it-possible-to-enabled-build-id-sha1.patch
 Patch10004: 10004-Add-grub_qdprintf-grub_dprintf-without-the-file-lin.patch
 Patch10005: 10005-Make-a-gdb-dprintf-that-tells-us-load-addresses.patch
 #Patch10006: 10006-Try-it-in-gentpl-again.patch
+
+# This is: https://bugzilla.redhat.com/attachment.cgi?id=1222471
+# From: https://bugzilla.redhat.com/show_bug.cgi?id=1347291
+# Patch by Laszlo Ersek to fix a bad sanity check which causes issues
+# with UEFI Windows dual boot. Should be sent upstream.
+Patch20000: 20000-efi-chainloader-fix-wrong-sanity-check-in-relocate_c.patch
 
 BuildRequires:  flex bison binutils python
 BuildRequires:  ncurses-devel xz-devel bzip2-devel
@@ -547,6 +553,8 @@ fi
 %changelog
 * Thu Dec 01 2016 Peter Jones <pjones@redhat.com> - 2.02-0.34
 - Fix power6 makefile bits for newer autoconf defaults.
+- efi/chainloader: fix wrong sanity check in relocate_coff() (Laszlo Ersek)
+  Resolves: rhbz#1347291
 
 * Thu Aug 25 2016 Peter Jones <pjones@redhat.com> - 2.02-0.34
 - Update to be newer than f24's branch.
