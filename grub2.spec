@@ -551,6 +551,9 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Thu Dec 01 2016 pjones <pjones@redhat.com> - 1:2.02-0.35
+- Rebased to newer upstream for fedora-26
+
 * Thu Dec 01 2016 Peter Jones <pjones@redhat.com> - 2.02-0.34
 - Fix power6 makefile bits for newer autoconf defaults.
 - efi/chainloader: fix wrong sanity check in relocate_coff() (Laszlo Ersek)

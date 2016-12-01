@@ -1,7 +1,7 @@
 From c1d31b6a26e5542142d569c94a70f1dc8e07afd6 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 6 Oct 2015 16:09:25 -0400
-Subject: [PATCH 71/87] Make any of the loaders that link in efi mode honor
+Subject: [PATCH 71/89] Make any of the loaders that link in efi mode honor
  secure boot.
 
 And in this case "honor" means "even if somebody does link this in, they
@@ -490,5 +490,5 @@ diff --git a/include/grub/sparc64/linux.h b/include/grub/sparc64/linux.h
 new file mode 100644
 index 0000000..e69de29
 -- 
-2.7.4
+2.9.3
 
