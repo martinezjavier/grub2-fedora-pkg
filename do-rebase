@@ -15,7 +15,7 @@ usage()
 	exit $retcode
 }
 
-if ! git status | grep -q 'nothing to commit, working directory clean' ; then
+if ! git status | grep -q 'nothing to commit, working .* clean' ; then
 	echo "Working directory is not clean, cannot rebase." 1>&2
 	exit 1
 fi
