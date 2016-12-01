@@ -72,12 +72,6 @@ Patch10004: 10004-Add-grub_qdprintf-grub_dprintf-without-the-file-lin.patch
 Patch10005: 10005-Make-a-gdb-dprintf-that-tells-us-load-addresses.patch
 #Patch10006: 10006-Try-it-in-gentpl-again.patch
 
-# This is: https://bugzilla.redhat.com/attachment.cgi?id=1222471
-# From: https://bugzilla.redhat.com/show_bug.cgi?id=1347291
-# Patch by Laszlo Ersek to fix a bad sanity check which causes issues
-# with UEFI Windows dual boot. Should be sent upstream.
-Patch20000: 20000-efi-chainloader-fix-wrong-sanity-check-in-relocate_c.patch
-
 BuildRequires:  flex bison binutils python
 BuildRequires:  ncurses-devel xz-devel bzip2-devel
 BuildRequires:  freetype-devel libusb-devel
