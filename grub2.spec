@@ -273,7 +273,7 @@ cd grub-%{tarversion}
 		-e 's/-fexceptions//g'				\
 		-e 's/-m64//g'					\
 		-e 's/-fasynchronous-unwind-tables//g'		\
-		-e 's/-mcpu=power7/-mcpu=power6/g'		\
+		-e 's/-mcpu=power[[:alnum:]]+/-mcpu=power6/g'	\
 		-e 's/^/ -fno-strict-aliasing /' )"		\
 	TARGET_LDFLAGS=-static					\
         --with-platform=%{platform}				\
@@ -545,6 +545,9 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Thu Dec 01 2016 Peter Jones <pjones@redhat.com> - 2.02-0.34
+- Fix power6 makefile bits for newer autoconf defaults.
+
 * Thu Aug 25 2016 Peter Jones <pjones@redhat.com> - 2.02-0.34
 - Update to be newer than f24's branch.
 - Add grub2-get-kernel-settings
