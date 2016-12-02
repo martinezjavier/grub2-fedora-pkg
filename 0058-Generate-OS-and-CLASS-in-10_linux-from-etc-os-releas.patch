@@ -1,7 +1,7 @@
 From 14b8db374bfc41fffa278ec33084324008384417 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 4 Sep 2014 14:23:23 -0400
-Subject: [PATCH 58/89] Generate OS and CLASS in 10_linux from /etc/os-release
+Subject: [PATCH 58/90] Generate OS and CLASS in 10_linux from /etc/os-release
 
 This makes us use pretty names in the titles we generate in
 grub2-mkconfig when GRUB_DISTRIBUTOR isn't set.

@@ -1,7 +1,7 @@
 From 54d9b46779dab340984dde1077c4f2b685caf0b1 Mon Sep 17 00:00:00 2001
 From: Laszlo Ersek <lersek@redhat.com>
 Date: Mon, 21 Nov 2016 15:34:00 +0100
-Subject: [PATCH 89/89] efi/chainloader: fix wrong sanity check in
+Subject: [PATCH 89/90] efi/chainloader: fix wrong sanity check in
  relocate_coff()
 
 In relocate_coff(), the relocation entries are parsed from the original

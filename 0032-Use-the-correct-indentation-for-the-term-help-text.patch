@@ -1,7 +1,7 @@
 From 748c629f47f4191c66011646e010cdf5ab506b90 Mon Sep 17 00:00:00 2001
 From: William Jon McCann <william.jon.mccann@gmail.com>
 Date: Fri, 7 Jun 2013 14:08:49 -0400
-Subject: [PATCH 32/89] Use the correct indentation for the term help text
+Subject: [PATCH 32/90] Use the correct indentation for the term help text
 
 That is consistent with the menu help text
 ---

@@ -1,7 +1,7 @@
 From 0b86b309de12b4f3ea920124faa60841ffedf472 Mon Sep 17 00:00:00 2001
 From: Matthew Garrett <mjg59@coreos.com>
 Date: Sun, 9 Aug 2015 16:20:58 -0700
-Subject: [PATCH 75/89] Rework linux16 command
+Subject: [PATCH 75/90] Rework linux16 command
 
 We want a single buffer that contains the entire kernel image in order to
 perform a TPM measurement. Allocate one and copy the entire kernel int it

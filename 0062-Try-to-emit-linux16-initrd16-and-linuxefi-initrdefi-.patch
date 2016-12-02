@@ -1,7 +1,7 @@
 From 8e6fc0ea14aa01817cc9103ffd5e328a78e56857 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 27 Oct 2014 09:22:55 -0400
-Subject: [PATCH 62/89] Try to emit linux16/initrd16 and linuxefi/initrdefi in
+Subject: [PATCH 62/90] Try to emit linux16/initrd16 and linuxefi/initrdefi in
  30-os_prober.
 
 Resolves: rhbz#1108296

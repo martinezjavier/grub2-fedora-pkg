@@ -1,7 +1,7 @@
 From 4f82466e3b1fcf3370d82432e406f51906e1fa46 Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Wed, 24 Apr 2013 10:51:48 -0300
-Subject: [PATCH 02/89] for ppc, reset console display attr when clear screen
+Subject: [PATCH 02/90] for ppc, reset console display attr when clear screen
 
 v2: Also use \x0c instead of a literal ^L to make future patches less
 awkward.

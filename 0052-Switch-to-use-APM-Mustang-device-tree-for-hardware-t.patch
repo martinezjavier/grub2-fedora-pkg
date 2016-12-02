@@ -1,7 +1,7 @@
 From 6900527741a21097f57a72854944f3e078a0ee42 Mon Sep 17 00:00:00 2001
 From: Fedora Ninjas <grub2-owner@fedoraproject.org>
 Date: Mon, 10 Feb 2014 16:13:10 -0500
-Subject: [PATCH 52/89] Switch to use APM Mustang device tree, for hardware
+Subject: [PATCH 52/90] Switch to use APM Mustang device tree, for hardware
  testing.
 
 Signed-off-by: David A. Marlin <d.marlin@redhat.com>

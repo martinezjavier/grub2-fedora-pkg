@@ -1,7 +1,7 @@
 From c28ddef07d11d790d89ee6ec8e3a8cc7e1aace0d Mon Sep 17 00:00:00 2001
 From: Fedora Ninjas <grub2-owner@fedoraproject.org>
 Date: Wed, 19 Feb 2014 15:58:43 -0500
-Subject: [PATCH 49/89] use fw_path prefix when fallback searching for grub
+Subject: [PATCH 49/90] use fw_path prefix when fallback searching for grub
  config
 
 When PXE booting via UEFI firmware, grub was searching for grub.cfg

@@ -1,7 +1,7 @@
 From 4cc90ad7d495b896e0b6b2677285ced8ce70cee1 Mon Sep 17 00:00:00 2001
 From: William Jon McCann <william.jon.mccann@gmail.com>
 Date: Fri, 7 Jun 2013 11:09:04 -0400
-Subject: [PATCH 30/89] Message string cleanups
+Subject: [PATCH 30/90] Message string cleanups
 
 Make use of terminology consistent. Remove jargon.
 ---

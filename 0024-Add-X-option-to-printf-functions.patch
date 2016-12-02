@@ -1,7 +1,7 @@
 From c482ec700b2ba4b1fabccaa5848cccae466d3a12 Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Tue, 27 Nov 2012 16:58:39 -0200
-Subject: [PATCH 24/89] Add %X option to printf functions.
+Subject: [PATCH 24/90] Add %X option to printf functions.
 
 ---
  grub-core/kern/misc.c | 7 +++++--

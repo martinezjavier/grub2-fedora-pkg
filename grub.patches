@@ -88,3 +88,4 @@ Patch0086: 0086-ppc64le-has-no-separate-boot-mount-1261926.patch
 Patch0087: 0087-Add-grub-get-kernel-settings-and-use-it-in-10_linux.patch
 Patch0088: 0088-Normalize-slashes-in-tftp-paths.patch
 Patch0089: 0089-efi-chainloader-fix-wrong-sanity-check-in-relocate_c.patch
+Patch0090: 0090-efi-chainloader-truncate-overlong-relocation-section.patch

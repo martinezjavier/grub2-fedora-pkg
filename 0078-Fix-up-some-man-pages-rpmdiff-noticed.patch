@@ -1,7 +1,7 @@
 From 216188f920d3ade19626d6e8fe450cea2c427e53 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 23 Sep 2014 09:58:49 -0400
-Subject: [PATCH 78/89] Fix up some man pages rpmdiff noticed.
+Subject: [PATCH 78/90] Fix up some man pages rpmdiff noticed.
 
 ---
  configure.ac             |  2 ++

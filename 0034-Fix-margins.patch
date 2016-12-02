@@ -1,7 +1,7 @@
 From ee7064d8667cf51d12f2cc5ead9b428446c563ad Mon Sep 17 00:00:00 2001
 From: William Jon McCann <william.jon.mccann@gmail.com>
 Date: Fri, 7 Jun 2013 14:59:36 -0400
-Subject: [PATCH 34/89] Fix margins
+Subject: [PATCH 34/90] Fix margins
 
 ---
  grub-core/normal/menu_text.c | 8 +++-----

@@ -1,7 +1,7 @@
 From 5468ac6eef409220e59741ccf1073d92916cdddf Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 18 Feb 2014 09:37:49 -0500
-Subject: [PATCH 47/89] Don't emit "Booting ..." message.
+Subject: [PATCH 47/90] Don't emit "Booting ..." message.
 
 UI team still hates this stuff, so we're disabling it for RHEL 7.
 

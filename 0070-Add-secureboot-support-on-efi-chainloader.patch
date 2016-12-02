@@ -1,7 +1,7 @@
 From 9cbf35d19f4ffafdf2683acf7b6a320b55bbdfca Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 6 Oct 2015 13:04:37 -0400
-Subject: [PATCH 70/89] Add secureboot support on efi chainloader
+Subject: [PATCH 70/90] Add secureboot support on efi chainloader
 
 Expand the chainloader to be able to verify the image by means of shim
 lock protocol. The PE/COFF image is loaded and relocated by the

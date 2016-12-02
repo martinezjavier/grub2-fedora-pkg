@@ -1,7 +1,7 @@
 From f0daa044a90c508f8f60d23e5ef39597ec80c2cc Mon Sep 17 00:00:00 2001
 From: Matthew Garrett <matthew.garrett@nebula.com>
 Date: Wed, 12 Jun 2013 11:51:49 -0400
-Subject: [PATCH 17/89] Add support for UEFI operating systems returned by
+Subject: [PATCH 17/90] Add support for UEFI operating systems returned by
  os-prober
 
 os-prober returns UEFI operating systems in the form:

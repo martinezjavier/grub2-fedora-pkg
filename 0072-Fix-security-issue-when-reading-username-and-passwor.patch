@@ -1,7 +1,7 @@
 From 5a0d703884a73f93a68753c6ed64bdf08797c82a Mon Sep 17 00:00:00 2001
 From: Hector Marco-Gisbert <hecmargi@upv.es>
 Date: Fri, 13 Nov 2015 16:21:09 +0100
-Subject: [PATCH 72/89] Fix security issue when reading username and password
+Subject: [PATCH 72/90] Fix security issue when reading username and password
 
   This patch fixes two integer underflows at:
     * grub-core/lib/crypto.c
