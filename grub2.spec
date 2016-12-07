@@ -273,7 +273,7 @@ cd grub-%{tarversion}
 		-e 's/-fexceptions//g'				\
 		-e 's/-m64//g'					\
 		-e 's/-fasynchronous-unwind-tables//g'		\
-		-e 's/-mcpu=power[[:alnum:]]+/-mcpu=power6/g'	\
+		-e 's/-mcpu=power[[:alnum:]]\+/-mcpu=power6/g'	\
 		-e 's/^/ -fno-strict-aliasing /' )"		\
 	TARGET_LDFLAGS=-static					\
         --with-platform=%{platform}				\
