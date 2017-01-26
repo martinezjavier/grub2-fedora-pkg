@@ -94,14 +94,10 @@ BuildRequires:	pesign >= 0.99-8
 %endif
 %endif
 
-Requires:	gettext which file
-Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
-Requires:	os-prober >= 1.58-11
-Requires(pre):  dracut
-Requires(post): dracut
-
+Provides	grub2-base = %{epoch}:%{version}-%{release}
 ExcludeArch:	s390 s390x %{arm}
 Obsoletes:	grub2 <= 1:2.00-20%{?dist}
+Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
 
 %description
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
@@ -115,6 +111,7 @@ Summary:	GRUB for EFI systems.
 Group:		System Environment/Base
 Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
 Obsoletes:	grub2-efi <= 1:2.00-20%{?dist}
+Provides	grub2-base = %{epoch}:%{version}-%{release}
 
 %description efi
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
@@ -138,7 +135,11 @@ provides support for rebuilding your own grub.efi on EFI systems.
 %package tools
 Summary:	Support tools for GRUB.
 Group:		System Environment/Base
-Requires:	gettext os-prober which file system-logos
+Requires:	gettext which file system-logos
+Requires:	os-prober >= 1.58-11
+Requires:	grub2-base
+Requires(pre):  dracut
+Requires(post): dracut
 
 %description tools
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
@@ -548,6 +549,7 @@ fi
 %changelog
 * Wed Feb 01 2017 Stephen Gallagher <sgallagh@redhat.com> - 2.02-0.39
 - Add missing %%license macro
+- Fix deps that should have moved to -tools but didn't.
 
 * Thu Dec 08 2016 Peter Jones <pjones@redhat.com> - 2.02-0.38
 - Fix regexp in power compile flags, and synchronize release number with
