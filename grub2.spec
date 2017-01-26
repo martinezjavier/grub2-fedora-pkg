@@ -94,7 +94,7 @@ BuildRequires:	pesign >= 0.99-8
 %endif
 %endif
 
-Provides	grub2-base = %{epoch}:%{version}-%{release}
+Provides:	grub2-base = %{epoch}:%{version}-%{release}
 ExcludeArch:	s390 s390x %{arm}
 Obsoletes:	grub2 <= 1:2.00-20%{?dist}
 Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
@@ -111,7 +111,7 @@ Summary:	GRUB for EFI systems.
 Group:		System Environment/Base
 Requires:	%{name}-tools = %{epoch}:%{version}-%{release}
 Obsoletes:	grub2-efi <= 1:2.00-20%{?dist}
-Provides	grub2-base = %{epoch}:%{version}-%{release}
+Provides:	grub2-base = %{epoch}:%{version}-%{release}
 
 %description efi
 The GRand Unified Bootloader (GRUB) is a highly configurable and customizable
