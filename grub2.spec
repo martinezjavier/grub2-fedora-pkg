@@ -45,7 +45,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.38%{?dist}
+Release:        0.39%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -458,7 +458,7 @@ fi
 %{_libdir}/grub/*-%{platform}/
 %config(noreplace) %{_sysconfdir}/%{name}.cfg
 %ghost %config(noreplace) /boot/%{name}/grub.cfg
-%doc grub-%{tarversion}/COPYING
+%license grub-%{tarversion}/COPYING
 %config(noreplace) %ghost /boot/grub2/grubenv
 %endif
 
@@ -469,7 +469,7 @@ fi
 %attr(0755,root,root)/boot/efi/EFI/%{efidir}
 %attr(0755,root,root)/boot/efi/EFI/%{efidir}/fonts
 %ghost %config(noreplace) /boot/efi/EFI/%{efidir}/grub.cfg
-%doc grub-%{tarversion}/COPYING
+%license grub-%{tarversion}/COPYING
 /boot/grub2/grubenv
 # I know 0700 seems strange, but it lives on FAT so that's what it'll
 # get no matter what we do.
@@ -531,12 +531,13 @@ fi
 %exclude %{_datarootdir}/grub/themes/
 %{_infodir}/%{name}*
 %{_datadir}/man/man?/*
-%doc grub-%{tarversion}/COPYING grub-%{tarversion}/INSTALL
+%license grub-%{tarversion}/COPYING
+%doc grub-%{tarversion}/INSTALL
 %doc grub-%{tarversion}/NEWS grub-%{tarversion}/README
 %doc grub-%{tarversion}/THANKS grub-%{tarversion}/TODO
 %doc grub-%{tarversion}/grub.html
 %doc grub-%{tarversion}/grub-dev.html grub-%{tarversion}/docs/font_char_metrics.png
-%doc grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
+%license grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %files starfield-theme
 %dir /boot/%{name}/themes/
@@ -545,6 +546,9 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Wed Feb 01 2017 Stephen Gallagher <sgallagh@redhat.com> - 2.02-0.39
+- Add missing %%license macro
+
 * Thu Dec 08 2016 Peter Jones <pjones@redhat.com> - 2.02-0.38
 - Fix regexp in power compile flags, and synchronize release number with
   other branches.
