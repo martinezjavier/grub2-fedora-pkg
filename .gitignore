@@ -6,3 +6,4 @@ clog
 kojilogs
 /grub-*/
 .build*.log
+.*.git/

@@ -1,8 +1,12 @@
 #!/bin/bash
 set -e
+set -u
 shopt -qu globstar
+shopt -qs expand_aliases
 export LC_COLLATE=C
 export LC_ALL=C
+
+alias othergit="GIT_DIR=$PWD/.rhboot.git GIT_WORK_TREE=$PWD git"
 
 usage()
 {
@@ -24,6 +28,7 @@ releasever=""
 amend=""
 
 declare -a savedargs
+savedargs=()
 while [ $# -gt 0 ]; do
 	case $1 in
 	--help|-h|--usage|-?|-u)
@@ -65,6 +70,10 @@ else
 		releasever=$(echo $dist | \
 			sed 's/^\.\([[:alpha:]]\+\)\([[:digit:]]\+\)$/\1-\2/')
 		;;
+	rhel*)
+		releasever=${dist}
+		dist=.el${releasever##rhel-}
+		;;
 	esac
 	if [ -z "${releasever}" -o "${releasever}" = "${dist}" ]; then
 		echo "Could not figure out distro release version" 1>&2
@@ -82,40 +91,42 @@ if [ $# -ge 1 ]; then
 	usage 1
 fi
 
-if ! git remote show -n github >/dev/null 2>&1 ; then
-	git remote add \
-		github git@github.com:vathpela/grub2-fedora.git >/dev/null 2>&1
-	echo "Could not add remote: github" 1>&2
-	exit 1
+if [ ! -d $PWD/.rhboot.git ]; then
+	othergit init
+	if ! othergit remote add \
+		 rhboot git@github.com:rhboot/grub2.git \
+		  >/dev/null 2>&1 ; then
+		echo "Could not add remote: rhboot" 1>&2
+		exit 1
+	fi
+elif othergit remote show -n rhboot | grep -q "URL: github$" ; then
+	if ! othergit remote add \
+		 rhboot git@github.com:rhboot/grub2.git \
+		  >/dev/null 2>&1 ; then
+		echo "Could not add remote: rhboot" 1>&2
+		exit 1
+	fi
 fi
 
-git fetch github
-remote=$(git branch --list -r "github/${releasever}" 2>/dev/null)
-if [ "${remote}" != "  github/${releasever}" ]; then
+othergit fetch rhboot
+remote=$(othergit branch --list -r "rhboot/${releasever}" 2>/dev/null)
+if [ "${remote}" != "  rhboot/${releasever}" ]; then
 	echo branch \"${releasever}\" does not appear to exist 1>&2
 	exit 1
 fi
 
 unset LC_ALL
 git rm -q 0*.patch
-(cat <<EOF
-From: Peter Jones <pjones@redhat.com>
-Date:  Wed Jul 22 10:18:00 2015 -0400
-Subject: Stop trying to "git format-patch" across a merge that confuses it
 
-EOF
-git diff --full-index --binary refs/tags/grub-2.02-beta3..refs/remotes/github/master
-) > grub-2.02-beta3-to-origin-master.patch
-
-patches=$(git format-patch refs/remotes/github/master..refs/remotes/github/${releasever})
-echo Patch0000: grub-2.02-beta3-to-origin-master.patch > grub.patches
+> grub.patches
+patches=$(othergit format-patch refs/remotes/rhboot/master..refs/remotes/rhboot/${releasever})
 for x in $patches ; do
 	echo Patch$(echo ${x} | cut -d- -f1): ${x} >> grub.patches
 done
 if [ -z "$amend" ];  then
     rpmdev-bumpspec -c "- Rebased to newer upstream for ${releasever}" grub2.spec
 fi
-git add 0*.patch grub2.spec grub-2.02-beta3-to-origin-master.patch grub.patches
+git add 0*.patch grub2.spec grub.patches
 if [ -z "$amend" ]; then
 	fedpkg commit -s -c $amend
 else
