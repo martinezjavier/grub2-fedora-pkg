@@ -1,8 +1,7 @@
-From 5dbc4254266d8d8d64d5d2fe2ad02ff200f4a7a6 Mon Sep 17 00:00:00 2001
+From f936ec025e26ed98ae25786a2d931035cf482949 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 25 Jun 2015 15:11:36 -0400
-Subject: [PATCH 10005/10006] Make a "gdb" dprintf that tells us load
- addresses.
+Subject: [PATCH] Make a "gdb" dprintf that tells us load addresses.
 
 This makes a grub_dprintf() call during platform init and during module
 loading that tells us the virtual addresses of the .text and .data
@@ -14,20 +13,20 @@ to any such binaries.
 
 Signed-off-by: Peter Jones <pjones@redhat.com>
 ---
- grub-core/kern/dl.c       | 52 +++++++++++++++++++++++++++++++++++++++++++++++
- grub-core/kern/efi/efi.c  |  5 +++--
+ grub-core/kern/dl.c       | 50 +++++++++++++++++++++++++++++++++++++++++++++++
+ grub-core/kern/efi/efi.c  |  4 ++--
  grub-core/kern/efi/init.c | 26 +++++++++++++++++++++++-
  include/grub/efi/efi.h    |  2 +-
- 4 files changed, 81 insertions(+), 4 deletions(-)
+ 4 files changed, 78 insertions(+), 4 deletions(-)
 
 diff --git a/grub-core/kern/dl.c b/grub-core/kern/dl.c
-index 247cd0a..f29691c 100644
+index 6210709..a314ac7 100644
 --- a/grub-core/kern/dl.c
 +++ b/grub-core/kern/dl.c
-@@ -457,6 +457,24 @@ grub_dl_find_section (Elf_Ehdr *e, const char *name)
+@@ -456,6 +456,23 @@ grub_dl_find_section (Elf_Ehdr *e, const char *name)
+       return s;
    return NULL;
  }
- 
 +static long
 +grub_dl_find_section_index (Elf_Ehdr *e, const char *name)
 +{
@@ -45,14 +44,13 @@ index 247cd0a..f29691c 100644
 +      return (long)i;
 +  return -1;
 +}
-+
+ 
  /* Me, Vladimir Serbinenko, hereby I add this module check as per new
     GNU module policy. Note that this license check is informative only.
-    Modules have to be licensed under GPLv3 or GPLv3+ (optionally
-@@ -600,6 +618,38 @@ grub_dl_relocate_symbols (grub_dl_t mod, void *ehdr)
+@@ -599,6 +616,37 @@ grub_dl_relocate_symbols (grub_dl_t mod, void *ehdr)
+ 
    return GRUB_ERR_NONE;
  }
- 
 +static void
 +grub_dl_print_gdb_info (grub_dl_t mod, Elf_Ehdr *e)
 +{
@@ -84,11 +82,10 @@ index 247cd0a..f29691c 100644
 +		  GRUB_TARGET_CPU, GRUB_PLATFORM,
 +		  mod->name, text);
 +}
-+
+ 
  /* Load a module from core memory.  */
  grub_dl_t
- grub_dl_load_core_noinit (void *addr, grub_size_t size)
-@@ -658,6 +708,8 @@ grub_dl_load_core_noinit (void *addr, grub_size_t size)
+@@ -658,6 +706,8 @@ grub_dl_load_core_noinit (void *addr, grub_size_t size)
    grub_dprintf ("modules", "module name: %s\n", mod->name);
    grub_dprintf ("modules", "init function: %p\n", mod->init);
  
@@ -98,7 +95,7 @@ index 247cd0a..f29691c 100644
      {
        grub_dl_unload (mod);
 diff --git a/grub-core/kern/efi/efi.c b/grub-core/kern/efi/efi.c
-index 101307f..7492f9d 100644
+index 1f3ac5e..d70d091 100644
 --- a/grub-core/kern/efi/efi.c
 +++ b/grub-core/kern/efi/efi.c
 @@ -274,7 +274,7 @@ grub_efi_get_variable (const char *var, const grub_efi_guid_t *guid,
@@ -110,15 +107,7 @@ index 101307f..7492f9d 100644
  {
    grub_efi_loaded_image_t *image;
    struct grub_pe32_header *header;
-@@ -288,6 +288,7 @@ grub_efi_modules_addr (void)
-   if (! image)
-     return 0;
- 
-+
-   header = image->image_base;
-   coff_header = &(header->coff_header);
-   sections
-@@ -299,7 +300,7 @@ grub_efi_modules_addr (void)
+@@ -299,7 +299,7 @@ grub_efi_modules_addr (void)
         i < coff_header->num_sections;
         i++, section++)
      {
@@ -128,7 +117,7 @@ index 101307f..7492f9d 100644
      }
  
 diff --git a/grub-core/kern/efi/init.c b/grub-core/kern/efi/init.c
-index a5b6c1d..9939fde 100644
+index f7782b6..79243b3 100644
 --- a/grub-core/kern/efi/init.c
 +++ b/grub-core/kern/efi/init.c
 @@ -59,10 +59,33 @@ grub_efi_env_init (void)
@@ -175,12 +164,12 @@ index a5b6c1d..9939fde 100644
  }
  
 diff --git a/include/grub/efi/efi.h b/include/grub/efi/efi.h
-index 9a2da0e..37d57d8 100644
+index 4f3c1a4..77ef79b 100644
 --- a/include/grub/efi/efi.h
 +++ b/include/grub/efi/efi.h
-@@ -84,7 +84,7 @@ extern void (*EXPORT_VAR(grub_efi_net_config)) (grub_efi_handle_t hnd,
- 						char **device,
- 						char **path);
+@@ -115,7 +115,7 @@ extern void (*EXPORT_VAR(grub_efi_net_config)) (grub_efi_handle_t hnd,
+ void *EXPORT_FUNC(grub_efi_get_firmware_fdt)(void);
+ #endif
  
 -grub_addr_t grub_efi_modules_addr (void);
 +grub_addr_t grub_efi_section_addr (const char *section);
@@ -188,5 +177,5 @@ index 9a2da0e..37d57d8 100644
  void grub_efi_mm_init (void);
  void grub_efi_mm_fini (void);
 -- 
-2.5.0
+2.13.0
 

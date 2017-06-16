@@ -39,13 +39,13 @@
 
 %endif
 
-%global tarversion 2.02~beta3
+%global tarversion 2.02
 %undefine _missing_build_ids_terminate_build
 
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.39%{?dist}
+Release:        1%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -58,6 +58,7 @@ Source4:	http://unifoundry.com/unifont-5.1.20080820.pcf.gz
 Source5:	theme.tar.bz2
 Source6:	gitignore
 Source7:	grub.patches
+Source8:	strtoull_test.c
 
 # generate with do-rebase
 %include %{SOURCE7}
@@ -168,9 +169,12 @@ cd grub-%{tarversion}
 # place unifont in the '.' from which configure is run
 cp %{SOURCE4} unifont.pcf.gz
 cp %{SOURCE6} .gitignore
+cp %{SOURCE8} ./grub-core/tests/strtoull_test.c
 git init
 echo '![[:digit:]][[:digit:]]_*.in' > util/grub.d/.gitignore
 echo '!*.[[:digit:]]' > util/.gitignore
+echo '!config.h' > grub-core/efiemu/runtime/.gitignore
+echo '!config.h' > include/grub/emu/.gitignore
 git config user.email "%{name}-owner@fedoraproject.org"
 git config user.name "Fedora Ninjas"
 git config gc.auto 0
@@ -191,9 +195,12 @@ cd grub-%{tarversion}
 # place unifont in the '.' from which configure is run
 cp %{SOURCE4} unifont.pcf.gz
 cp %{SOURCE6} .gitignore
+cp %{SOURCE8} ./grub-core/tests/strtoull_test.c
 git init
 echo '![[:digit:]][[:digit:]]_*.in' > util/grub.d/.gitignore
 echo '!*.[[:digit:]]' > util/.gitignore
+echo '!config.h' > grub-core/efiemu/runtime/.gitignore
+echo '!config.h' > include/grub/emu/.gitignore
 git config user.email "%{name}-owner@fedoraproject.org"
 git config user.name "Fedora Ninjas"
 git config gc.auto 0
@@ -332,8 +339,11 @@ ln -s ../boot/%{name}/grub.cfg $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.cfg
 
 cp -a $RPM_BUILD_ROOT%{_datarootdir}/locale/en\@quot $RPM_BUILD_ROOT%{_datarootdir}/locale/en
 
-mv $RPM_BUILD_ROOT%{_infodir}/grub.info $RPM_BUILD_ROOT%{_infodir}/%{name}.info
-mv $RPM_BUILD_ROOT%{_infodir}/grub-dev.info $RPM_BUILD_ROOT%{_infodir}/%{name}-dev.info
+cp -a docs/grub.info $RPM_BUILD_ROOT%{_infodir}/%{name}.info
+cp -a docs/grub-dev.info $RPM_BUILD_ROOT%{_infodir}/%{name}-dev.info
+cp -a grub.html %{name}.html
+cp -a grub-dev.html %{name}-dev.html
+mv docs/font_char_metrics.png .
 rm $RPM_BUILD_ROOT%{_infodir}/dir
 
 # Defaults
@@ -536,8 +546,9 @@ fi
 %doc grub-%{tarversion}/INSTALL
 %doc grub-%{tarversion}/NEWS grub-%{tarversion}/README
 %doc grub-%{tarversion}/THANKS grub-%{tarversion}/TODO
-%doc grub-%{tarversion}/grub.html
-%doc grub-%{tarversion}/grub-dev.html grub-%{tarversion}/docs/font_char_metrics.png
+%doc grub-%{tarversion}/%{name}.html
+%doc grub-%{tarversion}/%{name}-dev.html
+%doc grub-%{tarversion}/font_char_metrics.png
 %license grub-%{tarversion}/themes/starfield/COPYING.CC-BY-SA-3.0
 
 %files starfield-theme
@@ -547,6 +558,9 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Mon Jul 10 2017 Peter Jones <pjones@redhat.com> - 2.02-1
+- Rebased to newer upstream for fedora-27
+
 * Wed Feb 01 2017 Stephen Gallagher <sgallagh@redhat.com> - 2.02-0.39
 - Add missing %%license macro
 - Fix deps that should have moved to -tools but didn't.
