@@ -1,7 +1,7 @@
-From c4be6106eae8c1b479c325f531a1f81188f400e8 Mon Sep 17 00:00:00 2001
+From e339e5df918882dce0e3d1c436f47a16a6b501ca Mon Sep 17 00:00:00 2001
 From: Robert Marshall <rmarshall@redhat.com>
 Date: Mon, 16 Mar 2015 16:34:51 -0400
-Subject: [PATCH 64/90] Update info with grub.cfg netboot selection order
+Subject: [PATCH 64/97] Update info with grub.cfg netboot selection order
  (#1148650)
 
 Added documentation to the grub info page that specifies the order
@@ -13,7 +13,7 @@ Resolves rhbz#1148650
  1 file changed, 42 insertions(+)
 
 diff --git a/docs/grub.texi b/docs/grub.texi
-index 98d4d0d..4c6323b 100644
+index 98d4d0d52df5..4c6323b3937b 100644
 --- a/docs/grub.texi
 +++ b/docs/grub.texi
 @@ -2414,6 +2414,48 @@ grub-mknetdir --net-directory=/srv/tftp --subdir=/boot/grub -d /usr/lib/grub/i38
@@ -66,5 +66,5 @@ index 98d4d0d..4c6323b 100644
  @samp{(tftp)} device.
  
 -- 
-2.9.3
+2.13.0
 

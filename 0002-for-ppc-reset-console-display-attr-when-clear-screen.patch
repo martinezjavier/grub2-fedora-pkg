@@ -1,7 +1,7 @@
-From 4f82466e3b1fcf3370d82432e406f51906e1fa46 Mon Sep 17 00:00:00 2001
+From 79655a145cf78a2edc32c3c4a91b90c56f1e1fc5 Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Wed, 24 Apr 2013 10:51:48 -0300
-Subject: [PATCH 02/90] for ppc, reset console display attr when clear screen
+Subject: [PATCH 02/97] for ppc, reset console display attr when clear screen
 
 v2: Also use \x0c instead of a literal ^L to make future patches less
 awkward.
@@ -15,7 +15,7 @@ Signed-off-by: Peter Jones <pjones@redhat.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/grub-core/term/terminfo.c b/grub-core/term/terminfo.c
-index f0d3e3d..9bb75c1 100644
+index f0d3e3debc60..9bb75c1736cc 100644
 --- a/grub-core/term/terminfo.c
 +++ b/grub-core/term/terminfo.c
 @@ -151,7 +151,7 @@ grub_terminfo_set_current (struct grub_term_output *term,
@@ -28,5 +28,5 @@ index f0d3e3d..9bb75c1 100644
        data->reverse_video_off = grub_strdup ("\e[m");
        if (grub_strcmp ("ieee1275", str) == 0)
 -- 
-2.9.3
+2.13.0
 

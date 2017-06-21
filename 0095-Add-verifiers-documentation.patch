@@ -1,0 +1,83 @@
+From db4a49d07f19f3483d9a7cb6b4b8812c7864a370 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Tue, 9 May 2017 16:39:38 +0200
+Subject: [PATCH 95/97] Add verifiers documentation
+
+---
+ docs/grub-dev.texi | 53 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
+
+diff --git a/docs/grub-dev.texi b/docs/grub-dev.texi
+index a9f4de6318c6..591fd80f9859 100644
+--- a/docs/grub-dev.texi
++++ b/docs/grub-dev.texi
+@@ -84,6 +84,7 @@ This edition documents version @value{VERSION}.
+ * Video Subsystem::
+ * PFF2 Font File Format::
+ * Graphical Menu Software Design::
++* Verifiers framework::
+ * Copying This Manual::         Copying This Manual
+ * Index::
+ @end menu
+@@ -1949,6 +1950,58 @@ the graphics mode that was in use before @code{grub_video_setup()} was called
+ might fix some of the problems.
+ 
+ 
++@node Verifiers framework
++@chapter Verifiers framework
++
++To register your own verifier call @samp{grub_verifier_register} with a
++structure pointing to your functions.
++
++The interface is inspired by hash interface with @samp{init}/@samp{write}/@samp{fini}.
++
++There are eesntially 2 ways of using it: hashing and whole-file verification:
++
++With hashing approach:
++During @samp{init} you decide whether you want to check given file and init context.
++In @samp{write} you update you hashing state.
++In @samp{fini} you check that hash matches the expected value/passes some check/...
++
++With whole-file verification:
++During @samp{init} you decide whether you want to check given file and init context.
++In @samp{write} you verify file and return error if it fails.
++You don't have @samp{fini}.
++
++Additional @samp{verify_string} receives various strings like kernel parameters to
++verify. Returning no error means successful verification and an error stops the current
++action.
++
++Detailed description of API:
++
++Every time a file is opened your @samp{init} function is called with file descriptor
++and file type. Your function can have following outcomes:
++
++@itemize
++
++@item returning no error and setting @samp{*flags} to @samp{GRUB_VERIFY_FLAGS_SKIP_VERIFICATION}.
++In this case your verifier will not be called anymore and your verifier is considered
++to have skipped verification
++
++@item returning error. Then opening of the fail will fail due to failed verification.
++
++@item returning no error and not setting @samp{*flags} to @samp{GRUB_VERIFY_FLAGS_SKIP_VERIFICATION}
++In this case verification is done as described in following section
++
++@end itemize
++
++In the third case your @samp{write} will be called with chunks of file. If you need the whole file in a single
++chunk then during @samp{init} set bit @samp{GRUB_VERIFY_FLAGS_SINGLE_CHUNK} in @samp{*flags}.
++During @samp{init} you may set @samp{*context} if you need additional context. At every iteration you may return
++an error and the the file will be considered as having failed the verification. If you return no error then
++verification continues.
++
++Optionally at the end of the file @samp{fini} if it exists is called with just the context. If you return
++no error during any of @samp{init}, @samp{write} and @samp{fini} then the file is considered as having
++succeded verification.
++
+ @node Copying This Manual
+ @appendix Copying This Manual
+ 
+-- 
+2.13.0
+

@@ -1,7 +1,7 @@
-From 12a2215a6f13f2503a9e38d84fff64789c6a34b7 Mon Sep 17 00:00:00 2001
+From 87a19f6b5733228671a2d17ecc2d28d493022e6a Mon Sep 17 00:00:00 2001
 From: Robert Marshall <rmarshall@redhat.com>
 Date: Fri, 17 Jun 2016 11:47:34 -0400
-Subject: [PATCH 86/90] ppc64le has no separate /boot mount (#1261926)
+Subject: [PATCH 86/97] ppc64le has no separate /boot mount (#1261926)
 
 The patch for rhbz#1212114 ensures that ppc64le systems sync grub config
 changes to disk prior to grub-mkconfig completion and a reboot.
@@ -23,7 +23,7 @@ Resolves: rhbz#1261926
  1 file changed, 9 deletions(-)
 
 diff --git a/util/grub-mkconfig.in b/util/grub-mkconfig.in
-index 73a18f7..fb87247 100644
+index 73a18f723d1b..fb8724708b5d 100644
 --- a/util/grub-mkconfig.in
 +++ b/util/grub-mkconfig.in
 @@ -294,12 +294,3 @@ fi
@@ -40,5 +40,5 @@ index 73a18f7..fb87247 100644
 -    sync && mountpoint -q /boot &&fsfreeze -f /boot && fsfreeze -u /boot
 -fi
 -- 
-2.9.3
+2.13.0
 

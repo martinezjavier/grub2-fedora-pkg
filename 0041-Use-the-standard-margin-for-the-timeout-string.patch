@@ -1,7 +1,7 @@
-From 3aeba4760755b9b263ed4ba60dc0431352b63fe7 Mon Sep 17 00:00:00 2001
+From 9b75b7855dba032bdf96b23e6f2621258363f8e0 Mon Sep 17 00:00:00 2001
 From: William Jon McCann <william.jon.mccann@gmail.com>
 Date: Fri, 7 Jun 2013 10:52:32 -0400
-Subject: [PATCH 41/90] Use the standard margin for the timeout string
+Subject: [PATCH 41/97] Use the standard margin for the timeout string
 
 So that it aligns with the other messages
 ---
@@ -9,7 +9,7 @@ So that it aligns with the other messages
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/grub-core/normal/menu_text.c b/grub-core/normal/menu_text.c
-index 1ed2bd9..7681f7d 100644
+index 1ed2bd92cf87..7681f7d28933 100644
 --- a/grub-core/normal/menu_text.c
 +++ b/grub-core/normal/menu_text.c
 @@ -372,7 +372,7 @@ grub_menu_init_page (int nested, int edit,
@@ -39,5 +39,5 @@ index 1ed2bd9..7681f7d 100644
      }
  
 -- 
-2.9.3
+2.13.0
 

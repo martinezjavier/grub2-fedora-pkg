@@ -1,7 +1,7 @@
-From c37a4f02e5fd0c3aa5f54baaeaf32eed0e3c110b Mon Sep 17 00:00:00 2001
+From 388bdcdefc9a56365d663575d0e03d59a4967590 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Wed, 27 Jan 2016 09:22:42 -0500
-Subject: [PATCH 73/90] Make grub_fatal() also backtrace.
+Subject: [PATCH 73/97] Make grub_fatal() also backtrace.
 
 ---
  grub-core/Makefile.core.def     |  3 ++
@@ -13,7 +13,7 @@ Subject: [PATCH 73/90] Make grub_fatal() also backtrace.
  create mode 100644 grub-core/lib/arm64/backtrace.c
 
 diff --git a/grub-core/Makefile.core.def b/grub-core/Makefile.core.def
-index ac195d1..990e41b 100644
+index ac195d10e5a8..990e41b55b9d 100644
 --- a/grub-core/Makefile.core.def
 +++ b/grub-core/Makefile.core.def
 @@ -157,6 +157,9 @@ kernel = {
@@ -27,7 +27,7 @@ index ac195d1..990e41b 100644
    i386_xen = kern/i386/dl.c;
  
 diff --git a/grub-core/kern/misc.c b/grub-core/kern/misc.c
-index 81be344..d7dcd97 100644
+index 81be34424508..d7dcd9725eab 100644
 --- a/grub-core/kern/misc.c
 +++ b/grub-core/kern/misc.c
 @@ -24,6 +24,7 @@
@@ -55,7 +55,7 @@ index 81be344..d7dcd97 100644
  #endif
 diff --git a/grub-core/lib/arm64/backtrace.c b/grub-core/lib/arm64/backtrace.c
 new file mode 100644
-index 0000000..1079b53
+index 000000000000..1079b5380e1b
 --- /dev/null
 +++ b/grub-core/lib/arm64/backtrace.c
 @@ -0,0 +1,62 @@
@@ -122,7 +122,7 @@ index 0000000..1079b53
 +}
 +
 diff --git a/grub-core/lib/backtrace.c b/grub-core/lib/backtrace.c
-index 825a880..c0ad6ab 100644
+index 825a8800e25d..c0ad6ab8be1c 100644
 --- a/grub-core/lib/backtrace.c
 +++ b/grub-core/lib/backtrace.c
 @@ -29,6 +29,7 @@ GRUB_MOD_LICENSE ("GPLv3+");
@@ -142,7 +142,7 @@ index 825a880..c0ad6ab 100644
  }
  
 diff --git a/grub-core/lib/i386/backtrace.c b/grub-core/lib/i386/backtrace.c
-index c3e03c7..c67273d 100644
+index c3e03c7275c5..c67273db3aed 100644
 --- a/grub-core/lib/i386/backtrace.c
 +++ b/grub-core/lib/i386/backtrace.c
 @@ -15,11 +15,23 @@
@@ -171,5 +171,5 @@ index c3e03c7..c67273d 100644
  #include <grub/term.h>
  #include <grub/backtrace.h>
 -- 
-2.9.3
+2.13.0
 

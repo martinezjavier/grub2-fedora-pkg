@@ -1,7 +1,7 @@
-From 5a69c7fbfff14bcea80e781fcd6acad07c904e22 Mon Sep 17 00:00:00 2001
+From 2f78e2ba64904d38ab1c12b131f56caf15320618 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Wed, 3 Sep 2014 10:01:03 -0400
-Subject: [PATCH 56/90] Add grub_util_readlink()
+Subject: [PATCH 56/97] Add grub_util_readlink()
 
 Add grub_util_readlink().  This requires pulling in stat and readlink from
 gnulib, which pulls in stat and related headers, but after that the
@@ -53,7 +53,7 @@ Reviewed-by: Adam Jackson <ajax@redhat.com>
  create mode 100644 m4/time_h.m4
 
 diff --git a/grub-core/gnulib/Makefile.am b/grub-core/gnulib/Makefile.am
-index 3444397..b7c5e60 100644
+index 3444397fe373..b7c5e60e1c30 100644
 --- a/grub-core/gnulib/Makefile.am
 +++ b/grub-core/gnulib/Makefile.am
 @@ -21,7 +21,7 @@
@@ -284,7 +284,7 @@ index 3444397..b7c5e60 100644
  BUILT_SOURCES += unistd.h
 diff --git a/grub-core/gnulib/gettimeofday.c b/grub-core/gnulib/gettimeofday.c
 new file mode 100644
-index 0000000..8b2058e
+index 000000000000..8b2058e8c87f
 --- /dev/null
 +++ b/grub-core/gnulib/gettimeofday.c
 @@ -0,0 +1,154 @@
@@ -444,7 +444,7 @@ index 0000000..8b2058e
 +}
 diff --git a/grub-core/gnulib/pathmax.h b/grub-core/gnulib/pathmax.h
 new file mode 100644
-index 0000000..33fc355
+index 000000000000..33fc3553d756
 --- /dev/null
 +++ b/grub-core/gnulib/pathmax.h
 @@ -0,0 +1,83 @@
@@ -533,7 +533,7 @@ index 0000000..33fc355
 +#endif /* _PATHMAX_H */
 diff --git a/grub-core/gnulib/readlink.c b/grub-core/gnulib/readlink.c
 new file mode 100644
-index 0000000..4c49639
+index 000000000000..4c4963951764
 --- /dev/null
 +++ b/grub-core/gnulib/readlink.c
 @@ -0,0 +1,74 @@
@@ -613,7 +613,7 @@ index 0000000..4c49639
 +#endif /* HAVE_READLINK */
 diff --git a/grub-core/gnulib/stat.c b/grub-core/gnulib/stat.c
 new file mode 100644
-index 0000000..35f4b0b
+index 000000000000..35f4b0b1a51b
 --- /dev/null
 +++ b/grub-core/gnulib/stat.c
 @@ -0,0 +1,138 @@
@@ -757,7 +757,7 @@ index 0000000..35f4b0b
 +}
 diff --git a/grub-core/gnulib/sys_stat.in.h b/grub-core/gnulib/sys_stat.in.h
 new file mode 100644
-index 0000000..b47a7ff
+index 000000000000..b47a7ff0ae7e
 --- /dev/null
 +++ b/grub-core/gnulib/sys_stat.in.h
 @@ -0,0 +1,732 @@
@@ -1495,7 +1495,7 @@ index 0000000..b47a7ff
 +#endif
 diff --git a/grub-core/gnulib/sys_time.in.h b/grub-core/gnulib/sys_time.in.h
 new file mode 100644
-index 0000000..30057ad
+index 000000000000..30057ad49fd7
 --- /dev/null
 +++ b/grub-core/gnulib/sys_time.in.h
 @@ -0,0 +1,213 @@
@@ -1713,7 +1713,7 @@ index 0000000..30057ad
 +#endif /* _CYGWIN_SYS_TIME_H */
 +#endif /* _@GUARD_PREFIX@_SYS_TIME_H */
 diff --git a/grub-core/gnulib/sys_types.in.h b/grub-core/gnulib/sys_types.in.h
-index d7da356..9520c09 100644
+index d7da35623b1e..9520c09030c5 100644
 --- a/grub-core/gnulib/sys_types.in.h
 +++ b/grub-core/gnulib/sys_types.in.h
 @@ -23,7 +23,9 @@
@@ -1728,7 +1728,7 @@ index d7da356..9520c09 100644
  #define _@GUARD_PREFIX@_SYS_TYPES_H
 diff --git a/grub-core/gnulib/time.h b/grub-core/gnulib/time.h
 new file mode 100644
-index 0000000..b9203d5
+index 000000000000..b9203d5569ad
 --- /dev/null
 +++ b/grub-core/gnulib/time.h
 @@ -0,0 +1,586 @@
@@ -2320,7 +2320,7 @@ index 0000000..b9203d5
 +#endif
 diff --git a/grub-core/gnulib/time.in.h b/grub-core/gnulib/time.in.h
 new file mode 100644
-index 0000000..81abdf4
+index 000000000000..81abdf46e0bb
 --- /dev/null
 +++ b/grub-core/gnulib/time.in.h
 @@ -0,0 +1,274 @@
@@ -2599,7 +2599,7 @@ index 0000000..81abdf4
 +
 +#endif
 diff --git a/grub-core/osdep/windows/hostdisk.c b/grub-core/osdep/windows/hostdisk.c
-index 85507af..6f49df4 100644
+index 85507af88e39..6f49df465d70 100644
 --- a/grub-core/osdep/windows/hostdisk.c
 +++ b/grub-core/osdep/windows/hostdisk.c
 @@ -353,6 +353,12 @@ grub_util_mkdir (const char *dir)
@@ -2616,7 +2616,7 @@ index 85507af..6f49df4 100644
  grub_util_rename (const char *from, const char *to)
  {
 diff --git a/include/grub/osdep/hostfile_aros.h b/include/grub/osdep/hostfile_aros.h
-index a059c0f..161fbb7 100644
+index a059c0fa40a5..161fbb7bdfd6 100644
 --- a/include/grub/osdep/hostfile_aros.h
 +++ b/include/grub/osdep/hostfile_aros.h
 @@ -68,6 +68,12 @@ grub_util_rename (const char *from, const char *to)
@@ -2633,7 +2633,7 @@ index a059c0f..161fbb7 100644
  
  struct grub_util_fd
 diff --git a/include/grub/osdep/hostfile_unix.h b/include/grub/osdep/hostfile_unix.h
-index 9ffe46f..17cd3aa 100644
+index 9ffe46fa3ca5..17cd3aa8b304 100644
 --- a/include/grub/osdep/hostfile_unix.h
 +++ b/include/grub/osdep/hostfile_unix.h
 @@ -71,6 +71,12 @@ grub_util_rename (const char *from, const char *to)
@@ -2650,7 +2650,7 @@ index 9ffe46f..17cd3aa 100644
  
  #if defined (__NetBSD__)
 diff --git a/include/grub/osdep/hostfile_windows.h b/include/grub/osdep/hostfile_windows.h
-index bf6451b..8c92d05 100644
+index bf6451b6db49..8c92d0591bb4 100644
 --- a/include/grub/osdep/hostfile_windows.h
 +++ b/include/grub/osdep/hostfile_windows.h
 @@ -41,6 +41,8 @@ typedef struct grub_util_fd_dir *grub_util_fd_dir_t;
@@ -2664,7 +2664,7 @@ index bf6451b..8c92d05 100644
  void
 diff --git a/m4/gettimeofday.m4 b/m4/gettimeofday.m4
 new file mode 100644
-index 0000000..1c2d66e
+index 000000000000..1c2d66ee261f
 --- /dev/null
 +++ b/m4/gettimeofday.m4
 @@ -0,0 +1,138 @@
@@ -2807,7 +2807,7 @@ index 0000000..1c2d66e
 +  AC_CHECK_FUNCS([_ftime])
 +])
 diff --git a/m4/gnulib-cache.m4 b/m4/gnulib-cache.m4
-index 4089184..ef2ec5b 100644
+index 408918440b66..ef2ec5bcce02 100644
 --- a/m4/gnulib-cache.m4
 +++ b/m4/gnulib-cache.m4
 @@ -27,7 +27,7 @@
@@ -2828,7 +2828,7 @@ index 4089184..ef2ec5b 100644
  ])
  gl_AVOID([])
 diff --git a/m4/gnulib-comp.m4 b/m4/gnulib-comp.m4
-index 7a19f60..66fd0ed 100644
+index 7a19f60d85e6..66fd0eda901e 100644
 --- a/m4/gnulib-comp.m4
 +++ b/m4/gnulib-comp.m4
 @@ -60,10 +60,13 @@ AC_DEFUN([gl_EARLY],
@@ -3035,7 +3035,7 @@ index 7a19f60..66fd0ed 100644
    m4/vasnprintf.m4
 diff --git a/m4/largefile.m4 b/m4/largefile.m4
 new file mode 100644
-index 0000000..a1b564a
+index 000000000000..a1b564ad9afb
 --- /dev/null
 +++ b/m4/largefile.m4
 @@ -0,0 +1,146 @@
@@ -3187,7 +3187,7 @@ index 0000000..a1b564a
 +])
 diff --git a/m4/pathmax.m4 b/m4/pathmax.m4
 new file mode 100644
-index 0000000..114f91f
+index 000000000000..114f91f04b55
 --- /dev/null
 +++ b/m4/pathmax.m4
 @@ -0,0 +1,42 @@
@@ -3235,7 +3235,7 @@ index 0000000..114f91f
 +])
 diff --git a/m4/readlink.m4 b/m4/readlink.m4
 new file mode 100644
-index 0000000..f9ce868
+index 000000000000..f9ce868c2e49
 --- /dev/null
 +++ b/m4/readlink.m4
 @@ -0,0 +1,71 @@
@@ -3312,7 +3312,7 @@ index 0000000..f9ce868
 +])
 diff --git a/m4/stat.m4 b/m4/stat.m4
 new file mode 100644
-index 0000000..1ae327b
+index 000000000000..1ae327b36845
 --- /dev/null
 +++ b/m4/stat.m4
 @@ -0,0 +1,71 @@
@@ -3389,7 +3389,7 @@ index 0000000..1ae327b
 +AC_DEFUN([gl_PREREQ_STAT], [:])
 diff --git a/m4/sys_stat_h.m4 b/m4/sys_stat_h.m4
 new file mode 100644
-index 0000000..eaa7642
+index 000000000000..eaa7642ba311
 --- /dev/null
 +++ b/m4/sys_stat_h.m4
 @@ -0,0 +1,96 @@
@@ -3491,7 +3491,7 @@ index 0000000..eaa7642
 +])
 diff --git a/m4/sys_time_h.m4 b/m4/sys_time_h.m4
 new file mode 100644
-index 0000000..5c79300
+index 000000000000..5c79300f8ec6
 --- /dev/null
 +++ b/m4/sys_time_h.m4
 @@ -0,0 +1,110 @@
@@ -3607,7 +3607,7 @@ index 0000000..5c79300
 +])
 diff --git a/m4/time_h.m4 b/m4/time_h.m4
 new file mode 100644
-index 0000000..9852778
+index 000000000000..9852778f9a5d
 --- /dev/null
 +++ b/m4/time_h.m4
 @@ -0,0 +1,118 @@
@@ -3730,5 +3730,5 @@ index 0000000..9852778
 +  REPLACE_LOCALTIME=0;                   AC_SUBST([REPLACE_LOCALTIME])
 +])
 -- 
-2.9.3
+2.13.0
 

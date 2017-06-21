@@ -1,14 +1,14 @@
-From 333159a74035a726841c6c888f43d983a40ed959 Mon Sep 17 00:00:00 2001
+From 947eebcae8cdb2de4df7a88b763c27ffafb55ce7 Mon Sep 17 00:00:00 2001
 From: Fedora Ninjas <grub2-owner@fedoraproject.org>
 Date: Mon, 13 Jan 2014 21:50:59 -0500
-Subject: [PATCH 42/90] Add .eh_frame to list of relocations stripped
+Subject: [PATCH 42/97] Add .eh_frame to list of relocations stripped
 
 ---
  conf/Makefile.common | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/conf/Makefile.common b/conf/Makefile.common
-index 11296b5..a476ab5 100644
+index 11296b550a7c..a476ab580722 100644
 --- a/conf/Makefile.common
 +++ b/conf/Makefile.common
 @@ -38,7 +38,7 @@ CFLAGS_KERNEL = $(CFLAGS_PLATFORM) -ffreestanding
@@ -21,5 +21,5 @@ index 11296b5..a476ab5 100644
  CFLAGS_MODULE = $(CFLAGS_PLATFORM) -ffreestanding
  LDFLAGS_MODULE = $(LDFLAGS_PLATFORM) -nostdlib $(TARGET_LDFLAGS_OLDMAGIC) -Wl,-r,-d
 -- 
-2.9.3
+2.13.0
 

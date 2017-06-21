@@ -1,7 +1,7 @@
-From e14c5369fea76d1e067ca9f7e5e55bfe615cb639 Mon Sep 17 00:00:00 2001
+From 2d07123df7e9b3399043435a2c3e529a28e85166 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 7 Dec 2015 14:20:49 -0500
-Subject: [PATCH 13/90] Make efi machines load an env block from a variable
+Subject: [PATCH 13/97] Make efi machines load an env block from a variable
 
 Signed-off-by: Peter Jones <pjones@redhat.com>
 ---
@@ -10,7 +10,7 @@ Signed-off-by: Peter Jones <pjones@redhat.com>
  2 files changed, 34 insertions(+), 1 deletion(-)
 
 diff --git a/grub-core/Makefile.core.def b/grub-core/Makefile.core.def
-index 58b4208..f8d4634 100644
+index 58b4208b013b..f8d46342aafc 100644
 --- a/grub-core/Makefile.core.def
 +++ b/grub-core/Makefile.core.def
 @@ -173,6 +173,7 @@ kernel = {
@@ -22,7 +22,7 @@ index 58b4208..f8d4634 100644
    i386_multiboot = kern/i386/pc/acpi.c;
    i386_coreboot = kern/acpi.c;
 diff --git a/grub-core/kern/efi/init.c b/grub-core/kern/efi/init.c
-index e9c85de..a5b6c1d 100644
+index e9c85de12513..a5b6c1dfe17b 100644
 --- a/grub-core/kern/efi/init.c
 +++ b/grub-core/kern/efi/init.c
 @@ -25,9 +25,40 @@
@@ -80,5 +80,5 @@ index e9c85de..a5b6c1d 100644
  			     char **path);
  
 -- 
-2.9.3
+2.13.0
 

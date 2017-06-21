@@ -1,14 +1,14 @@
-From ee7064d8667cf51d12f2cc5ead9b428446c563ad Mon Sep 17 00:00:00 2001
+From 526fc7e28e7bd69660b439bc3739c2aa91a446fd Mon Sep 17 00:00:00 2001
 From: William Jon McCann <william.jon.mccann@gmail.com>
 Date: Fri, 7 Jun 2013 14:59:36 -0400
-Subject: [PATCH 34/90] Fix margins
+Subject: [PATCH 34/97] Fix margins
 
 ---
  grub-core/normal/menu_text.c | 8 +++-----
  1 file changed, 3 insertions(+), 5 deletions(-)
 
 diff --git a/grub-core/normal/menu_text.c b/grub-core/normal/menu_text.c
-index ecc60f9..0e43f2c 100644
+index ecc60f99fc33..0e43f2c10ccd 100644
 --- a/grub-core/normal/menu_text.c
 +++ b/grub-core/normal/menu_text.c
 @@ -333,17 +333,15 @@ grub_menu_init_page (int nested, int edit,
@@ -33,5 +33,5 @@ index ecc60f9..0e43f2c 100644
      - geo->timeout_lines /* timeout */
      - 1 /* empty final line  */;
 -- 
-2.9.3
+2.13.0
 

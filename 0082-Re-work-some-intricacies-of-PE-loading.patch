@@ -1,7 +1,7 @@
-From e2b22111a8ec58091603fc785f54b1b998888735 Mon Sep 17 00:00:00 2001
+From a9754936a359d613ede0dd4a3d52b69b04e11ac8 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 9 Jun 2016 12:22:29 -0400
-Subject: [PATCH 82/90] Re-work some intricacies of PE loading.
+Subject: [PATCH 82/97] Re-work some intricacies of PE loading.
 
 The PE spec is not a well written document, and awesomely every place
 where there's an ambiguous way to read something, Windows' bootmgfw.efi
@@ -12,7 +12,7 @@ takes a different read than either of them.
  2 files changed, 152 insertions(+), 36 deletions(-)
 
 diff --git a/grub-core/loader/efi/chainloader.c b/grub-core/loader/efi/chainloader.c
-index c4184fa..323f873 100644
+index c4184fa6457e..323f8738bb88 100644
 --- a/grub-core/loader/efi/chainloader.c
 +++ b/grub-core/loader/efi/chainloader.c
 @@ -297,7 +297,7 @@ image_is_64_bit (grub_pe_header_t *pe_hdr)
@@ -293,7 +293,7 @@ index c4184fa..323f873 100644
        efi_call_1 (b->free_pool, buffer);
  
 diff --git a/include/grub/efi/pe32.h b/include/grub/efi/pe32.h
-index f79782e..8396bde 100644
+index f79782e1bde9..8396bde4917a 100644
 --- a/include/grub/efi/pe32.h
 +++ b/include/grub/efi/pe32.h
 @@ -227,12 +227,18 @@ struct grub_pe32_section_table
@@ -349,5 +349,5 @@ index f79782e..8396bde 100644
  
  struct grub_pe32_header
 -- 
-2.9.3
+2.13.0
 

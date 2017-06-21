@@ -1,7 +1,7 @@
-From c2a19ee447623af8765254b87ff83cbb5b8253bc Mon Sep 17 00:00:00 2001
+From 2707b0a6ab79da7a85de3dad6c441023cb5856cc Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 1 Oct 2012 13:24:37 -0400
-Subject: [PATCH 23/90] Pass "\x[[:hex:]][[:hex:]]" straight through
+Subject: [PATCH 23/97] Pass "\x[[:hex:]][[:hex:]]" straight through
  unmolested.
 
 ---
@@ -11,7 +11,7 @@ Subject: [PATCH 23/90] Pass "\x[[:hex:]][[:hex:]]" straight through
  3 files changed, 84 insertions(+), 9 deletions(-)
 
 diff --git a/grub-core/commands/wildcard.c b/grub-core/commands/wildcard.c
-index 9b4e727..02c46f9 100644
+index 9b4e72766ff5..02c46f9fdfae 100644
 --- a/grub-core/commands/wildcard.c
 +++ b/grub-core/commands/wildcard.c
 @@ -462,6 +462,12 @@ check_file (const char *dir, const char *basename)
@@ -45,7 +45,7 @@ index 9b4e727..02c46f9 100644
  	  *optr++ = iptr[1];
  	  iptr += 2;
 diff --git a/grub-core/lib/cmdline.c b/grub-core/lib/cmdline.c
-index d5e10ee..0a5b2af 100644
+index d5e10ee8798c..0a5b2afb94b0 100644
 --- a/grub-core/lib/cmdline.c
 +++ b/grub-core/lib/cmdline.c
 @@ -20,6 +20,12 @@
@@ -104,7 +104,7 @@ index d5e10ee..0a5b2af 100644
  
  	  *buf++ = *c;
 diff --git a/grub-core/script/execute.c b/grub-core/script/execute.c
-index ab78ca8..cf6cd66 100644
+index ab78ca87f905..cf6cd6601d69 100644
 --- a/grub-core/script/execute.c
 +++ b/grub-core/script/execute.c
 @@ -55,6 +55,12 @@ static struct grub_script_scope *scope = 0;
@@ -179,5 +179,5 @@ index ab78ca8..cf6cd66 100644
        case '$':
  	if (escaped)
 -- 
-2.9.3
+2.13.0
 

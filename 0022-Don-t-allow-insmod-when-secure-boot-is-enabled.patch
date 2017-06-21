@@ -1,7 +1,7 @@
-From 9d70f7f9a356d965ed48963e2ead12af8de97615 Mon Sep 17 00:00:00 2001
+From e062cdbe60a62580b869781bd95d41344b8a7ecc Mon Sep 17 00:00:00 2001
 From: Colin Watson <cjwatson@ubuntu.com>
 Date: Tue, 23 Oct 2012 10:40:49 -0400
-Subject: [PATCH 22/90] Don't allow insmod when secure boot is enabled.
+Subject: [PATCH 22/97] Don't allow insmod when secure boot is enabled.
 
 Hi,
 
@@ -23,7 +23,7 @@ moves the check into grub_dl_load_file.
  3 files changed, 51 insertions(+)
 
 diff --git a/grub-core/kern/dl.c b/grub-core/kern/dl.c
-index e394cd9..6210709 100644
+index e394cd96f8c0..621070918d42 100644
 --- a/grub-core/kern/dl.c
 +++ b/grub-core/kern/dl.c
 @@ -32,12 +32,21 @@
@@ -69,7 +69,7 @@ index e394cd9..6210709 100644
  
    file = grub_file_open (filename);
 diff --git a/grub-core/kern/efi/efi.c b/grub-core/kern/efi/efi.c
-index 101307f..0859910 100644
+index 101307fc71ea..08599101aef4 100644
 --- a/grub-core/kern/efi/efi.c
 +++ b/grub-core/kern/efi/efi.c
 @@ -269,6 +269,34 @@ grub_efi_get_variable (const char *var, const grub_efi_guid_t *guid,
@@ -108,7 +108,7 @@ index 101307f..0859910 100644
  
  /* Search the mods section from the PE32/PE32+ image. This code uses
 diff --git a/include/grub/efi/efi.h b/include/grub/efi/efi.h
-index 9a2da0e..2245632 100644
+index 9a2da0eb38d0..22456327e138 100644
 --- a/include/grub/efi/efi.h
 +++ b/include/grub/efi/efi.h
 @@ -76,6 +76,7 @@ EXPORT_FUNC (grub_efi_set_variable) (const char *var,
@@ -120,5 +120,5 @@ index 9a2da0e..2245632 100644
  EXPORT_FUNC (grub_efi_compare_device_paths) (const grub_efi_device_path_t *dp1,
  					     const grub_efi_device_path_t *dp2);
 -- 
-2.9.3
+2.13.0
 

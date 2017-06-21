@@ -1,7 +1,7 @@
-From 700c631b4c887778951503346afe5b7ee70bf7dd Mon Sep 17 00:00:00 2001
+From 943408fb8a24e00e96d9621fb8c11f4a55fadcb2 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 4 Sep 2014 15:52:08 -0400
-Subject: [PATCH 59/90] Minimize the sort ordering for .debug and -rescue-
+Subject: [PATCH 59/97] Minimize the sort ordering for .debug and -rescue-
  kernels.
 
 Resolves: rhbz#1065360
@@ -11,7 +11,7 @@ Signed-off-by: Peter Jones <pjones@redhat.com>
  1 file changed, 8 insertions(+)
 
 diff --git a/util/grub-mkconfig_lib.in b/util/grub-mkconfig_lib.in
-index cf35e41..10fabee 100644
+index cf35e4174707..10fabee5e14d 100644
 --- a/util/grub-mkconfig_lib.in
 +++ b/util/grub-mkconfig_lib.in
 @@ -248,6 +248,14 @@ version_test_gt ()
@@ -30,5 +30,5 @@ index cf35e41..10fabee 100644
    version_test_numeric "$version_test_gt_a" "$version_test_gt_cmp" "$version_test_gt_b"
    return "$?"
 -- 
-2.9.3
+2.13.0
 

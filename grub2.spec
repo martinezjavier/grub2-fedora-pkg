@@ -45,7 +45,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        0.39%{?dist}
+Release:        0.40%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -546,6 +546,9 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Wed Jun 21 2017 Javier Martinez Canillas <javierm@redhat.com> - 2.02-0.40
+- Port verify framework and EFI TPM support.
+
 * Wed Feb 01 2017 Stephen Gallagher <sgallagh@redhat.com> - 2.02-0.39
 - Add missing %%license macro
 

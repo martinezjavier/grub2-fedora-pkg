@@ -1,7 +1,7 @@
-From 5a0d703884a73f93a68753c6ed64bdf08797c82a Mon Sep 17 00:00:00 2001
+From c1649cd7e55f4f71973c705e66e2e18f0ebeb232 Mon Sep 17 00:00:00 2001
 From: Hector Marco-Gisbert <hecmargi@upv.es>
 Date: Fri, 13 Nov 2015 16:21:09 +0100
-Subject: [PATCH 72/90] Fix security issue when reading username and password
+Subject: [PATCH 72/97] Fix security issue when reading username and password
 
   This patch fixes two integer underflows at:
     * grub-core/lib/crypto.c
@@ -17,7 +17,7 @@ Signed-off-by: Ismael Ripoll-Ripoll <iripoll@disca.upv.es>
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/grub-core/lib/crypto.c b/grub-core/lib/crypto.c
-index 683a8aa..c5ab9eb 100644
+index 683a8aaa711c..c5ab9eb181f9 100644
 --- a/grub-core/lib/crypto.c
 +++ b/grub-core/lib/crypto.c
 @@ -468,7 +468,7 @@ grub_password_get (char buf[], unsigned buf_size)
@@ -30,7 +30,7 @@ index 683a8aa..c5ab9eb 100644
  	  if (cur_len)
  	    cur_len--;
 diff --git a/grub-core/normal/auth.c b/grub-core/normal/auth.c
-index 7338f82..6d6dc7d 100644
+index 7338f8245e3a..6d6dc7ded902 100644
 --- a/grub-core/normal/auth.c
 +++ b/grub-core/normal/auth.c
 @@ -172,7 +172,7 @@ grub_username_get (char buf[], unsigned buf_size)
@@ -43,5 +43,5 @@ index 7338f82..6d6dc7d 100644
  	  if (cur_len)
  	    {
 -- 
-2.9.3
+2.13.0
 

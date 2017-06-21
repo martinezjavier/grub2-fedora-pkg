@@ -1,7 +1,7 @@
-From 3e83ff704af9a967fa55d60cc3917bc4ccd85f32 Mon Sep 17 00:00:00 2001
+From 29efbfd0347cc06e82c9e84ed4cdbbeea4d5ec49 Mon Sep 17 00:00:00 2001
 From: William Jon McCann <william.jon.mccann@gmail.com>
 Date: Wed, 15 May 2013 13:30:20 -0400
-Subject: [PATCH 27/90] Don't write messages to the screen
+Subject: [PATCH 27/97] Don't write messages to the screen
 
 Writing messages to the screen before the menus or boot splash
 happens so quickly it looks like something is wrong and isn't
@@ -15,7 +15,7 @@ very appealing.
  5 files changed, 5 insertions(+), 40 deletions(-)
 
 diff --git a/grub-core/boot/i386/pc/boot.S b/grub-core/boot/i386/pc/boot.S
-index 2bd0b2d..ea167fe 100644
+index 2bd0b2d2866b..ea167fe12062 100644
 --- a/grub-core/boot/i386/pc/boot.S
 +++ b/grub-core/boot/i386/pc/boot.S
 @@ -249,9 +249,6 @@ real_start:
@@ -29,7 +29,7 @@ index 2bd0b2d..ea167fe 100644
  	movw	$disk_address_packet, %si
  
 diff --git a/grub-core/boot/i386/pc/diskboot.S b/grub-core/boot/i386/pc/diskboot.S
-index 1ee4cf5..c8b87ed 100644
+index 1ee4cf5b2e0f..c8b87ed293c9 100644
 --- a/grub-core/boot/i386/pc/diskboot.S
 +++ b/grub-core/boot/i386/pc/diskboot.S
 @@ -50,11 +50,6 @@ _start:
@@ -45,7 +45,7 @@ index 1ee4cf5..c8b87ed 100644
  	movw	$LOCAL(firstlist), %di
  
 diff --git a/grub-core/gettext/gettext.c b/grub-core/gettext/gettext.c
-index 4880cef..b22e1bc 100644
+index 4880cefe3f8a..b22e1bcc94b1 100644
 --- a/grub-core/gettext/gettext.c
 +++ b/grub-core/gettext/gettext.c
 @@ -434,16 +434,12 @@ static char *
@@ -127,7 +127,7 @@ index 4880cef..b22e1bc 100644
    grub_register_variable_hook ("locale_dir", NULL, read_main);
    grub_register_variable_hook ("secondary_locale_dir", NULL, read_secondary);
 diff --git a/grub-core/kern/main.c b/grub-core/kern/main.c
-index 8ab7794..da47b18 100644
+index 8ab7794c47b7..da47b18b50ec 100644
 --- a/grub-core/kern/main.c
 +++ b/grub-core/kern/main.c
 @@ -268,11 +268,6 @@ grub_main (void)
@@ -143,7 +143,7 @@ index 8ab7794..da47b18 100644
  
    grub_boot_time ("Before loading embedded modules.");
 diff --git a/util/grub.d/10_linux.in b/util/grub.d/10_linux.in
-index 8ccf012..a3d9711 100644
+index 8ccf012f747e..a3d9711d607e 100644
 --- a/util/grub.d/10_linux.in
 +++ b/util/grub.d/10_linux.in
 @@ -128,29 +128,22 @@ linux_entry ()
@@ -177,5 +177,5 @@ index 8ccf012..a3d9711 100644
  EOF
      fi
 -- 
-2.9.3
+2.13.0
 

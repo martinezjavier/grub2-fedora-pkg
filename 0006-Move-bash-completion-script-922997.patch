@@ -1,7 +1,7 @@
-From 5b77e510eb6e4b649c53ab0790cdc9fdf0c85be9 Mon Sep 17 00:00:00 2001
+From 8d53968632fba6711b740d75b9d13e75578e7fe2 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Wed, 3 Apr 2013 14:35:34 -0400
-Subject: [PATCH 06/90] Move bash completion script (#922997)
+Subject: [PATCH 06/97] Move bash completion script (#922997)
 
 Apparently these go in a new place now.
 ---
@@ -10,7 +10,7 @@ Apparently these go in a new place now.
  2 files changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/configure.ac b/configure.ac
-index 9ddfc53..ab9134c 100644
+index 9ddfc5323539..ab9134c86007 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -287,6 +287,14 @@ AC_SUBST(grubdirname)
@@ -39,7 +39,7 @@ index 9ddfc53..ab9134c 100644
  if test "x$target_alias" != x && test "x$host_alias" != "x$target_alias"; then
    tmp_ac_tool_prefix="$ac_tool_prefix"
 diff --git a/util/bash-completion.d/Makefile.am b/util/bash-completion.d/Makefile.am
-index 136287c..61108f0 100644
+index 136287cf1bfe..61108f05429f 100644
 --- a/util/bash-completion.d/Makefile.am
 +++ b/util/bash-completion.d/Makefile.am
 @@ -6,7 +6,6 @@ EXTRA_DIST = $(bash_completion_source)
@@ -51,5 +51,5 @@ index 136287c..61108f0 100644
  
  $(bash_completion_script): $(bash_completion_source) $(top_builddir)/config.status
 -- 
-2.9.3
+2.13.0
 

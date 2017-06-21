@@ -1,7 +1,7 @@
-From edaa6c877917816d57603e26d660107c82ffbb5d Mon Sep 17 00:00:00 2001
+From 2e7d36afe46d89fd7560e42c02c34134944e98ed Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Fri, 4 Mar 2016 16:29:13 -0500
-Subject: [PATCH 76/90] Make grub-editenv build again.
+Subject: [PATCH 76/97] Make grub-editenv build again.
 
 36212460d3565b18439a3a8130b28e6c97702c6a split how some of the mkimage
 utility functions are defined, and they wind up being linked into
@@ -13,7 +13,7 @@ Signed-off-by: Peter Jones <pjones@redhat.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/Makefile.util.def b/Makefile.util.def
-index 226c46b..8007de9 100644
+index 226c46b2d797..8007de9459dc 100644
 --- a/Makefile.util.def
 +++ b/Makefile.util.def
 @@ -236,6 +236,8 @@ program = {
@@ -26,5 +26,5 @@ index 226c46b..8007de9 100644
    common = util/config.c;
    common = util/resolve.c;
 -- 
-2.9.3
+2.13.0
 

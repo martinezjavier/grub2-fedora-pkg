@@ -1,7 +1,7 @@
-From 0b72348759eaec7d1d488e9788e724a2d48ce3f7 Mon Sep 17 00:00:00 2001
+From 2bce906db8068f36c5b9b87f9de332643d7aa9d7 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 28 Oct 2013 10:09:27 -0400
-Subject: [PATCH 37/90] Enable pager by default. (#985860)
+Subject: [PATCH 37/97] Enable pager by default. (#985860)
 
 Signed-off-by: Peter Jones <pjones@redhat.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Peter Jones <pjones@redhat.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/util/grub.d/00_header.in b/util/grub.d/00_header.in
-index 93a9023..858b526 100644
+index 93a90233ead4..858b526c925f 100644
 --- a/util/grub.d/00_header.in
 +++ b/util/grub.d/00_header.in
 @@ -43,6 +43,8 @@ if [ "x${GRUB_DEFAULT_BUTTON}" = "xsaved" ] ; then GRUB_DEFAULT_BUTTON='${saved_
@@ -22,5 +22,5 @@ index 93a9023..858b526 100644
    load_env
  fi
 -- 
-2.9.3
+2.13.0
 

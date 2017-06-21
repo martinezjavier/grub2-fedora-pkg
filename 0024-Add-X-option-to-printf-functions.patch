@@ -1,14 +1,14 @@
-From c482ec700b2ba4b1fabccaa5848cccae466d3a12 Mon Sep 17 00:00:00 2001
+From 8ce55124104bd0afdf73192c6a08402aa89106fd Mon Sep 17 00:00:00 2001
 From: Paulo Flabiano Smorigo <pfsmorigo@br.ibm.com>
 Date: Tue, 27 Nov 2012 16:58:39 -0200
-Subject: [PATCH 24/90] Add %X option to printf functions.
+Subject: [PATCH 24/97] Add %X option to printf functions.
 
 ---
  grub-core/kern/misc.c | 7 +++++--
  1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/grub-core/kern/misc.c b/grub-core/kern/misc.c
-index 6bb0351..81be344 100644
+index 6bb03517589f..81be34424508 100644
 --- a/grub-core/kern/misc.c
 +++ b/grub-core/kern/misc.c
 @@ -587,7 +587,7 @@ grub_divmod64 (grub_uint64_t n, grub_uint64_t d, grub_uint64_t *r)
@@ -54,5 +54,5 @@ index 6bb0351..81be344 100644
  	case 'd':
  	  {
 -- 
-2.9.3
+2.13.0
 

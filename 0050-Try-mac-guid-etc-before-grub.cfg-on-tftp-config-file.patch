@@ -1,7 +1,7 @@
-From 82812e4ade82c9aa4f2e8f091b60b714ecfd82e5 Mon Sep 17 00:00:00 2001
+From e3cd56ba321d3a51bab211729789bcc59e7975f7 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 6 Mar 2014 11:51:33 -0500
-Subject: [PATCH 50/90] Try mac/guid/etc before grub.cfg on tftp config files.
+Subject: [PATCH 50/97] Try mac/guid/etc before grub.cfg on tftp config files.
 
 Signed-off-by: Peter Jones <pjones@redhat.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Peter Jones <pjones@redhat.com>
  1 file changed, 43 insertions(+), 37 deletions(-)
 
 diff --git a/grub-core/normal/main.c b/grub-core/normal/main.c
-index a3713ef..7d9c4f0 100644
+index a3713efcd902..7d9c4f09b9b1 100644
 --- a/grub-core/normal/main.c
 +++ b/grub-core/normal/main.c
 @@ -341,53 +341,59 @@ grub_cmd_normal (struct grub_command *cmd __attribute__ ((unused)),
@@ -110,5 +110,5 @@ index a3713ef..7d9c4f0 100644
    else
      grub_enter_normal_mode (argv[0]);
 -- 
-2.9.3
+2.13.0
 

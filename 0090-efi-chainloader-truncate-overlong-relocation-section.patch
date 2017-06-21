@@ -1,7 +1,7 @@
-From e85054f3b65bdb2afe2a71062f8145d9fef63051 Mon Sep 17 00:00:00 2001
+From d0de74c3216296a9693e1e123cd6c30da9960111 Mon Sep 17 00:00:00 2001
 From: Laszlo Ersek <lersek@redhat.com>
 Date: Wed, 23 Nov 2016 06:27:09 +0100
-Subject: [PATCH 90/90] efi/chainloader: truncate overlong relocation section
+Subject: [PATCH 90/97] efi/chainloader: truncate overlong relocation section
 
 The UEFI Windows 7 boot loader ("EFI/Microsoft/Boot/bootmgfw.efi", SHA1
 31b410e029bba87d2068c65a80b88882f9f8ea25) has inconsistent headers.
@@ -63,7 +63,7 @@ Signed-off-by: Laszlo Ersek <lersek@redhat.com>
  1 file changed, 21 insertions(+), 5 deletions(-)
 
 diff --git a/grub-core/loader/efi/chainloader.c b/grub-core/loader/efi/chainloader.c
-index 1bd7ffb..70c95ee 100644
+index 1bd7ffb3160e..70c95ee35d99 100644
 --- a/grub-core/loader/efi/chainloader.c
 +++ b/grub-core/loader/efi/chainloader.c
 @@ -592,7 +592,7 @@ handle_image (void *data, grub_efi_uint32_t datasize)
@@ -109,5 +109,5 @@ index 1bd7ffb..70c95ee 100644
  	      grub_dprintf ("chain", " section is not reloc section?\n");
  	      grub_dprintf ("chain", " rds: 0x%08x, vs: %08x\n",
 -- 
-2.9.3
+2.13.0
 

@@ -89,3 +89,10 @@ Patch0087: 0087-Add-grub-get-kernel-settings-and-use-it-in-10_linux.patch
 Patch0088: 0088-Normalize-slashes-in-tftp-paths.patch
 Patch0089: 0089-efi-chainloader-fix-wrong-sanity-check-in-relocate_c.patch
 Patch0090: 0090-efi-chainloader-truncate-overlong-relocation-section.patch
+Patch0091: 0091-File-type-for-fine-grained-signature-verification-co.patch
+Patch0092: 0092-verify-framework.patch
+Patch0093: 0093-Adjustment-proposed-by-dkiper.patch
+Patch0094: 0094-Add-possibility-to-verify-kernel-command-lines.patch
+Patch0095: 0095-Add-verifiers-documentation.patch
+Patch0096: 0096-Verify-commands-executed-by-grub.patch
+Patch0097: 0097-Core-TPM-support.patch

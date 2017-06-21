@@ -1,0 +1,1911 @@
+From 7c04a59910a7322306019de62a4e063313374e56 Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Wed, 21 Jun 2017 11:28:38 +0200
+Subject: [PATCH 91/97] File type for fine-grained signature-verification
+ controlling
+
+---
+ grub-core/commands/acpi.c                    |   2 +-
+ grub-core/commands/blocklist.c               |   4 +-
+ grub-core/commands/blscfg.c                  |   2 +-
+ grub-core/commands/cat.c                     |   2 +-
+ grub-core/commands/cmp.c                     |   4 +-
+ grub-core/commands/efi/loadbios.c            |   4 +-
+ grub-core/commands/file.c                    |   5 +-
+ grub-core/commands/hashsum.c                 |  22 ++--
+ grub-core/commands/hexdump.c                 |   2 +-
+ grub-core/commands/i386/nthibr.c             |  79 ++++++++++++++
+ grub-core/commands/i386/pc/play.c            |   2 +-
+ grub-core/commands/keylayouts.c              |   2 +-
+ grub-core/commands/legacycfg.c               |   2 +-
+ grub-core/commands/loadenv.c                 |  24 +++--
+ grub-core/commands/ls.c                      |   8 +-
+ grub-core/commands/minicmd.c                 |   2 +-
+ grub-core/commands/nativedisk.c              |   3 +-
+ grub-core/commands/parttool.c                |   2 +-
+ grub-core/commands/search.c                  |   4 +-
+ grub-core/commands/test.c                    |   4 +-
+ grub-core/commands/testload.c                |   2 +-
+ grub-core/commands/testspeed.c               |   2 +-
+ grub-core/commands/verify.c                  |  53 ++++-----
+ grub-core/disk/loopback.c                    |   3 +-
+ grub-core/efiemu/main.c                      |   2 +-
+ grub-core/font/font.c                        |   4 +-
+ grub-core/fs/zfs/zfscrypt.c                  |   2 +-
+ grub-core/gettext/gettext.c                  |   2 +-
+ grub-core/gfxmenu/theme_loader.c             |   2 +-
+ grub-core/io/bufio.c                         |  10 +-
+ grub-core/io/gzio.c                          |   5 +-
+ grub-core/io/lzopio.c                        |   6 +-
+ grub-core/io/offset.c                        |   7 +-
+ grub-core/io/xzio.c                          |   6 +-
+ grub-core/kern/dl.c                          |   2 +-
+ grub-core/kern/elf.c                         |   4 +-
+ grub-core/kern/file.c                        |  22 ++--
+ grub-core/lib/syslinux_parse.c               |   2 +-
+ grub-core/loader/efi/chainloader.c           |   2 +-
+ grub-core/loader/i386/bsd.c                  |  16 +--
+ grub-core/loader/i386/coreboot/chainloader.c |   2 +-
+ grub-core/loader/i386/efi/linux.c            |   5 +-
+ grub-core/loader/i386/linux.c                |   2 +-
+ grub-core/loader/i386/pc/chainloader.c       |   4 +-
+ grub-core/loader/i386/pc/freedos.c           |   2 +-
+ grub-core/loader/i386/pc/linux.c             |   2 +-
+ grub-core/loader/i386/pc/ntldr.c             |   2 +-
+ grub-core/loader/i386/pc/plan9.c             |   2 +-
+ grub-core/loader/i386/pc/pxechainloader.c    |   2 +-
+ grub-core/loader/i386/pc/truecrypt.c         |   2 +-
+ grub-core/loader/i386/xen.c                  |   7 +-
+ grub-core/loader/i386/xen_file.c             |   2 +-
+ grub-core/loader/i386/xnu.c                  |   2 +-
+ grub-core/loader/linux.c                     |   6 +-
+ grub-core/loader/macho.c                     |   4 +-
+ grub-core/loader/mips/linux.c                |   2 +-
+ grub-core/loader/multiboot.c                 |   8 +-
+ grub-core/loader/xnu.c                       |  16 +--
+ grub-core/loader/xnu_resume.c                |   4 +-
+ grub-core/net/net.c                          |   2 +-
+ grub-core/normal/autofs.c                    |  11 +-
+ grub-core/normal/crypto.c                    |   2 +-
+ grub-core/normal/dyncmd.c                    |   2 +-
+ grub-core/normal/main.c                      |   4 +-
+ grub-core/normal/term.c                      |   2 +-
+ grub-core/video/readers/jpeg.c               |   2 +-
+ grub-core/video/readers/png.c                |   2 +-
+ grub-core/video/readers/tga.c                |   2 +-
+ include/grub/bufio.h                         |   6 +-
+ include/grub/elfload.h                       |   2 +-
+ include/grub/file.h                          | 154 +++++++++++++++++++--------
+ include/grub/machoload.h                     |   3 +-
+ util/grub-fstest.c                           |   6 +-
+ util/grub-mount.c                            |   6 +-
+ 74 files changed, 384 insertions(+), 231 deletions(-)
+ create mode 100644 grub-core/commands/i386/nthibr.c
+
+diff --git a/grub-core/commands/acpi.c b/grub-core/commands/acpi.c
+index b5c2f27c1ad5..ff4fbec4f235 100644
+--- a/grub-core/commands/acpi.c
++++ b/grub-core/commands/acpi.c
+@@ -635,7 +635,7 @@ grub_cmd_acpi (struct grub_extcmd_context *ctxt, int argc, char **args)
+       grub_size_t size;
+       char *buf;
+ 
+-      file = grub_file_open (args[i]);
++      file = grub_file_open (args[i], GRUB_FILE_TYPE_ACPI_TABLE);
+       if (! file)
+ 	{
+ 	  free_tables ();
+diff --git a/grub-core/commands/blocklist.c b/grub-core/commands/blocklist.c
+index d1a47b504bf2..944449b77d4b 100644
+--- a/grub-core/commands/blocklist.c
++++ b/grub-core/commands/blocklist.c
+@@ -121,8 +121,8 @@ grub_cmd_blocklist (grub_command_t cmd __attribute__ ((unused)),
+   if (argc < 1)
+     return grub_error (GRUB_ERR_BAD_ARGUMENT, N_("filename expected"));
+ 
+-  grub_file_filter_disable_compression ();
+-  file = grub_file_open (args[0]);
++  file = grub_file_open (args[0], GRUB_FILE_TYPE_PRINT_BLOCKLIST
++			 | GRUB_FILE_TYPE_NO_DECOMPRESS);
+   if (! file)
+     return grub_errno;
+ 
+diff --git a/grub-core/commands/blscfg.c b/grub-core/commands/blscfg.c
+index 4274aca5a9dc..7bebd4c8b1f3 100644
+--- a/grub-core/commands/blscfg.c
++++ b/grub-core/commands/blscfg.c
+@@ -69,7 +69,7 @@ static int parse_entry (
+ 
+   p = grub_xasprintf (GRUB_BLS_CONFIG_PATH "%s", filename);
+ 
+-  f = grub_file_open (p);
++  f = grub_file_open (p, GRUB_FILE_TYPE_BLSCFG);
+   if (!f)
+     goto finish;
+ 
+diff --git a/grub-core/commands/cat.c b/grub-core/commands/cat.c
+index 88d90443602e..ba5f0061aa57 100644
+--- a/grub-core/commands/cat.c
++++ b/grub-core/commands/cat.c
+@@ -56,7 +56,7 @@ grub_cmd_cat (grub_extcmd_context_t ctxt, int argc, char **args)
+   if (argc != 1)
+     return grub_error (GRUB_ERR_BAD_ARGUMENT, N_("filename expected"));
+ 
+-  file = grub_file_open (args[0]);
++  file = grub_file_open (args[0], GRUB_FILE_TYPE_CAT);
+   if (! file)
+     return grub_errno;
+ 
+diff --git a/grub-core/commands/cmp.c b/grub-core/commands/cmp.c
+index cc23ee67ea37..e9c3b25d34cb 100644
+--- a/grub-core/commands/cmp.c
++++ b/grub-core/commands/cmp.c
+@@ -45,8 +45,8 @@ grub_cmd_cmp (grub_command_t cmd __attribute__ ((unused)),
+   grub_printf_ (N_("Compare file `%s' with `%s':\n"), args[0],
+ 		args[1]);
+ 
+-  file1 = grub_file_open (args[0]);
+-  file2 = grub_file_open (args[1]);
++  file1 = grub_file_open (args[0], GRUB_FILE_TYPE_CMP);
++  file2 = grub_file_open (args[1], GRUB_FILE_TYPE_CMP);
+   if (! file1 || ! file2)
+     goto cleanup;
+ 
+diff --git a/grub-core/commands/efi/loadbios.c b/grub-core/commands/efi/loadbios.c
+index 132cadbc7643..d41d521a4aeb 100644
+--- a/grub-core/commands/efi/loadbios.c
++++ b/grub-core/commands/efi/loadbios.c
+@@ -169,7 +169,7 @@ grub_cmd_loadbios (grub_command_t cmd __attribute__ ((unused)),
+ 
+   if (argc > 1)
+     {
+-      file = grub_file_open (argv[1]);
++      file = grub_file_open (argv[1], GRUB_FILE_TYPE_VBE_DUMP);
+       if (! file)
+ 	return grub_errno;
+ 
+@@ -183,7 +183,7 @@ grub_cmd_loadbios (grub_command_t cmd __attribute__ ((unused)),
+ 	return grub_errno;
+     }
+ 
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_VBE_DUMP);
+   if (! file)
+     return grub_errno;
+ 
+diff --git a/grub-core/commands/file.c b/grub-core/commands/file.c
+index 12fba99e06a2..9cacebf785da 100644
+--- a/grub-core/commands/file.c
++++ b/grub-core/commands/file.c
+@@ -163,7 +163,7 @@ grub_cmd_file (grub_extcmd_context_t ctxt, int argc, char **args)
+   if (type == -1)
+     return grub_error (GRUB_ERR_BAD_ARGUMENT, "no type specified");
+ 
+-  file = grub_file_open (args[0]);
++  file = grub_file_open (args[0], GRUB_FILE_TYPE_XNU_KERNEL);
+   if (!file)
+     return grub_errno;
+   switch (type)
+@@ -546,7 +546,8 @@ grub_cmd_file (grub_extcmd_context_t ctxt, int argc, char **args)
+     case IS_XNU64:
+     case IS_XNU32:
+       {
+-	macho = grub_macho_open (args[0], (type == IS_XNU64));
++	macho = grub_macho_open (args[0], GRUB_FILE_TYPE_XNU_KERNEL,
++				 (type == IS_XNU64));
+ 	if (!macho)
+ 	  break;
+ 	/* FIXME: more checks?  */
+diff --git a/grub-core/commands/hashsum.c b/grub-core/commands/hashsum.c
+index d18687351a57..0f18f2cc16f2 100644
+--- a/grub-core/commands/hashsum.c
++++ b/grub-core/commands/hashsum.c
+@@ -113,7 +113,7 @@ check_list (const gcry_md_spec_t *hash, const char *hashfilename,
+   if (hash->mdlen > GRUB_CRYPTO_MAX_MDLEN)
+     return grub_error (GRUB_ERR_BUG, "mdlen is too long");
+ 
+-  hashlist = grub_file_open (hashfilename);
++  hashlist = grub_file_open (hashfilename, GRUB_FILE_TYPE_HASHLIST);
+   if (!hashlist)
+     return grub_errno;
+   
+@@ -141,17 +141,15 @@ check_list (const gcry_md_spec_t *hash, const char *hashfilename,
+ 	  filename = grub_xasprintf ("%s/%s", prefix, p);
+ 	  if (!filename)
+ 	    return grub_errno;
+-	  if (!uncompress)
+-	    grub_file_filter_disable_compression ();
+-	  file = grub_file_open (filename);
++	  file = grub_file_open (filename, GRUB_FILE_TYPE_TO_HASH
++				 | (!uncompress ? GRUB_FILE_TYPE_NO_DECOMPRESS
++				    : 0));
+ 	  grub_free (filename);
+ 	}
+       else
+-	{
+-	  if (!uncompress)
+-	    grub_file_filter_disable_compression ();
+-	  file = grub_file_open (p);
+-	}
++	file = grub_file_open (p, GRUB_FILE_TYPE_TO_HASH
++			       | (!uncompress ? GRUB_FILE_TYPE_NO_DECOMPRESS
++				  : 0));
+       if (!file)
+ 	{
+ 	  grub_file_close (hashlist);
+@@ -242,9 +240,9 @@ grub_cmd_hashsum (struct grub_extcmd_context *ctxt,
+       grub_file_t file;
+       grub_err_t err;
+       unsigned j;
+-      if (!uncompress)
+-	grub_file_filter_disable_compression ();
+-      file = grub_file_open (args[i]);
++      file = grub_file_open (args[i], GRUB_FILE_TYPE_TO_HASH
++			     | (!uncompress ? GRUB_FILE_TYPE_NO_DECOMPRESS
++				: 0));
+       if (!file)
+ 	{
+ 	  if (!keep)
+diff --git a/grub-core/commands/hexdump.c b/grub-core/commands/hexdump.c
+index 4c884b3a19a4..eaa12465bb38 100644
+--- a/grub-core/commands/hexdump.c
++++ b/grub-core/commands/hexdump.c
+@@ -90,7 +90,7 @@ grub_cmd_hexdump (grub_extcmd_context_t ctxt, int argc, char **args)
+     {
+       grub_file_t file;
+ 
+-      file = grub_file_open (args[0]);
++      file = grub_file_open (args[0], GRUB_FILE_TYPE_HEXCAT);
+       if (! file)
+ 	return 0;
+ 
+diff --git a/grub-core/commands/i386/nthibr.c b/grub-core/commands/i386/nthibr.c
+new file mode 100644
+index 000000000000..b33f41e01545
+--- /dev/null
++++ b/grub-core/commands/i386/nthibr.c
+@@ -0,0 +1,79 @@
++/* nthibr.c - tests whether an MS Windows system partition is hibernated */
++/*
++ *  GRUB  --  GRand Unified Bootloader
++ *  Copyright (C) 2013  Peter Lustig
++ *  Copyright (C) 2013  Free Software Foundation, Inc.
++ *
++ *  GRUB is free software: you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation, either version 3 of the License, or
++ *  (at your option) any later version.
++ *
++ *  GRUB is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with GRUB.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
++#include <grub/types.h>
++#include <grub/mm.h>
++#include <grub/file.h>
++#include <grub/misc.h>
++#include <grub/dl.h>
++#include <grub/command.h>
++#include <grub/err.h>
++#include <grub/i18n.h>
++
++GRUB_MOD_LICENSE ("GPLv3+");
++
++static grub_err_t
++grub_cmd_nthibr (grub_command_t cmd __attribute__ ((unused)),
++                 int argc, char **args)
++{
++  grub_uint8_t hibr_file_magic[4];
++  grub_file_t hibr_file = 0;
++
++  if (argc != 1)
++    return grub_error (GRUB_ERR_BAD_ARGUMENT, N_("one argument expected"));
++
++  hibr_file = grub_file_open (args[0], GRUB_FILE_TYPE_FILE_ID);
++  if (!hibr_file)
++    return grub_errno;
++
++  /* Try to read magic number of 'hiberfil.sys' */
++  if (grub_file_read (hibr_file, hibr_file_magic,
++		      sizeof (hibr_file_magic))
++      != (grub_ssize_t) sizeof (hibr_file_magic))
++    {
++      if (!grub_errno)
++	grub_error (GRUB_ERR_TEST_FAILURE, "false");
++      goto exit;
++    }
++
++  if (!(grub_memcmp ("hibr", hibr_file_magic, sizeof (hibr_file_magic)) == 0
++	|| grub_memcmp ("HIBR", hibr_file_magic, sizeof (hibr_file_magic)) == 0))
++    grub_error (GRUB_ERR_TEST_FAILURE, "false");
++
++ exit:
++  grub_file_close (hibr_file);
++
++  return grub_errno;
++}
++
++static grub_command_t cmd;
++
++GRUB_MOD_INIT (check_nt_hiberfil)
++{
++  cmd = grub_register_command ("check_nt_hiberfil", grub_cmd_nthibr,
++                               N_("FILE"),
++                               N_("Test whether a hiberfil.sys is "
++                                  "in hibernated state."));
++}
++
++GRUB_MOD_FINI (check_nt_hiberfil)
++{
++  grub_unregister_command (cmd);
++}
+diff --git a/grub-core/commands/i386/pc/play.c b/grub-core/commands/i386/pc/play.c
+index 7712e2a36a17..c8181310515b 100644
+--- a/grub-core/commands/i386/pc/play.c
++++ b/grub-core/commands/i386/pc/play.c
+@@ -93,7 +93,7 @@ grub_cmd_play (grub_command_t cmd __attribute__ ((unused)),
+       grub_uint32_t tempo;
+       grub_file_t file;
+ 
+-      file = grub_file_open (args[0]);
++      file = grub_file_open (args[0], GRUB_FILE_TYPE_AUDIO);
+ 
+       if (! file)
+         return grub_errno;
+diff --git a/grub-core/commands/keylayouts.c b/grub-core/commands/keylayouts.c
+index f4b7730208ab..e36d3ac6727f 100644
+--- a/grub-core/commands/keylayouts.c
++++ b/grub-core/commands/keylayouts.c
+@@ -220,7 +220,7 @@ grub_cmd_keymap (struct grub_command *cmd __attribute__ ((unused)),
+   else
+     filename = argv[0];
+ 
+-  file = grub_file_open (filename);
++  file = grub_file_open (filename, GRUB_FILE_TYPE_KEYBOARD_LAYOUT);
+   if (! file)
+     goto fail;
+ 
+diff --git a/grub-core/commands/legacycfg.c b/grub-core/commands/legacycfg.c
+index dd9d9f18fe38..a80b80c10af9 100644
+--- a/grub-core/commands/legacycfg.c
++++ b/grub-core/commands/legacycfg.c
+@@ -55,7 +55,7 @@ legacy_file (const char *filename)
+   if (!suffix)
+     return grub_errno;
+ 
+-  file = grub_file_open (filename);
++  file = grub_file_open (filename, GRUB_FILE_TYPE_CONFIG);
+   if (! file)
+     {
+       grub_free (suffix);
+diff --git a/grub-core/commands/loadenv.c b/grub-core/commands/loadenv.c
+index acd93d123ed3..ada72df4081b 100644
+--- a/grub-core/commands/loadenv.c
++++ b/grub-core/commands/loadenv.c
+@@ -44,7 +44,8 @@ static const struct grub_arg_option options[] =
+    PUBKEY filter (that insists upon properly signed files) as well.  PUBKEY
+    filter is restored before the function returns. */
+ static grub_file_t
+-open_envblk_file (char *filename, int untrusted)
++open_envblk_file (char *filename,
++		  enum grub_file_type type)
+ {
+   grub_file_t file;
+   char *buf = 0;
+@@ -72,13 +73,7 @@ open_envblk_file (char *filename, int untrusted)
+       grub_strcpy (filename + len + 1, GRUB_ENVBLK_DEFCFG);
+     }
+ 
+-  /* The filters that are disabled will be re-enabled by the call to
+-     grub_file_open() after this particular file is opened. */
+-  grub_file_filter_disable_compression ();
+-  if (untrusted)
+-    grub_file_filter_disable_pubkey ();
+-
+-  file = grub_file_open (filename);
++  file = grub_file_open (filename, type);
+ 
+   grub_free (buf);
+   return file;
+@@ -171,7 +166,10 @@ grub_cmd_load_env (grub_extcmd_context_t ctxt, int argc, char **args)
+   whitelist.list = args;
+ 
+   /* state[0] is the -f flag; state[1] is the --skip-sig flag */
+-  file = open_envblk_file ((state[0].set) ? state[0].arg : 0, state[1].set);
++  file = open_envblk_file ((state[0].set) ? state[0].arg : 0,
++			   GRUB_FILE_TYPE_LOADENV
++			   | (state[1].set
++			      ? GRUB_FILE_TYPE_SKIP_SIGNATURE : 0));
+   if (! file)
+     return grub_errno;
+ 
+@@ -206,7 +204,10 @@ grub_cmd_list_env (grub_extcmd_context_t ctxt,
+   grub_file_t file;
+   grub_envblk_t envblk;
+ 
+-  file = open_envblk_file ((state[0].set) ? state[0].arg : 0, 0);
++  file = open_envblk_file ((state[0].set) ? state[0].arg : 0,
++			   GRUB_FILE_TYPE_LOADENV
++			   | (state[1].set
++			      ? GRUB_FILE_TYPE_SKIP_SIGNATURE : 0));
+   if (! file)
+     return grub_errno;
+ 
+@@ -390,7 +391,8 @@ grub_cmd_save_env (grub_extcmd_context_t ctxt, int argc, char **args)
+     return grub_error (GRUB_ERR_BAD_ARGUMENT, "no variable is specified");
+ 
+   file = open_envblk_file ((state[0].set) ? state[0].arg : 0,
+-                           1 /* allow untrusted */);
++			   GRUB_FILE_TYPE_SAVEENV
++			   | GRUB_FILE_TYPE_SKIP_SIGNATURE);
+   if (! file)
+     return grub_errno;
+ 
+diff --git a/grub-core/commands/ls.c b/grub-core/commands/ls.c
+index 0eaf83652794..f0d3c1caec44 100644
+--- a/grub-core/commands/ls.c
++++ b/grub-core/commands/ls.c
+@@ -129,8 +129,8 @@ print_files_long (const char *filename, const struct grub_dirhook_info *info,
+ 
+       /* XXX: For ext2fs symlinks are detected as files while they
+ 	 should be reported as directories.  */
+-      grub_file_filter_disable_compression ();
+-      file = grub_file_open (pathname);
++      file = grub_file_open (pathname, GRUB_FILE_TYPE_GET_SIZE
++			     | GRUB_FILE_TYPE_NO_DECOMPRESS);
+       if (! file)
+ 	{
+ 	  grub_errno = 0;
+@@ -225,8 +225,8 @@ grub_ls_list_files (char *dirname, int longlist, int all, int human)
+ 	  struct grub_dirhook_info info;
+ 	  grub_errno = 0;
+ 
+-	  grub_file_filter_disable_compression ();
+-	  file = grub_file_open (dirname);
++	  file = grub_file_open (dirname, GRUB_FILE_TYPE_GET_SIZE
++				 | GRUB_FILE_TYPE_NO_DECOMPRESS);
+ 	  if (! file)
+ 	    goto fail;
+ 
+diff --git a/grub-core/commands/minicmd.c b/grub-core/commands/minicmd.c
+index b25ca4b9f17e..46bf135e8f05 100644
+--- a/grub-core/commands/minicmd.c
++++ b/grub-core/commands/minicmd.c
+@@ -43,7 +43,7 @@ grub_mini_cmd_cat (struct grub_command *cmd __attribute__ ((unused)),
+   if (argc < 1)
+     return grub_error (GRUB_ERR_BAD_ARGUMENT, N_("filename expected"));
+ 
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_CAT);
+   if (! file)
+     return grub_errno;
+ 
+diff --git a/grub-core/commands/nativedisk.c b/grub-core/commands/nativedisk.c
+index 345f97c4d452..5262e46be283 100644
+--- a/grub-core/commands/nativedisk.c
++++ b/grub-core/commands/nativedisk.c
+@@ -241,7 +241,8 @@ grub_cmd_nativedisk (grub_command_t cmd __attribute__ ((unused)),
+       if (! filename)
+ 	goto fail;
+ 
+-      file = grub_file_open (filename);
++      file = grub_file_open (filename,
++			     GRUB_FILE_TYPE_GRUB_MODULE);
+       grub_free (filename);
+       if (! file)
+ 	goto fail;
+diff --git a/grub-core/commands/parttool.c b/grub-core/commands/parttool.c
+index 693e2cb42fc2..22b46b187415 100644
+--- a/grub-core/commands/parttool.c
++++ b/grub-core/commands/parttool.c
+@@ -193,7 +193,7 @@ grub_cmd_parttool (grub_command_t cmd __attribute__ ((unused)),
+ 	  {
+ 	    grub_file_t file;
+ 
+-	    file = grub_file_open (filename);
++	    file = grub_file_open (filename, GRUB_FILE_TYPE_GRUB_MODULE_LIST);
+ 	    if (file)
+ 	      {
+ 		char *buf = 0;
+diff --git a/grub-core/commands/search.c b/grub-core/commands/search.c
+index 7dd32e445c9b..ddda6e7c5906 100644
+--- a/grub-core/commands/search.c
++++ b/grub-core/commands/search.c
+@@ -81,8 +81,8 @@ iterate_device (const char *name, void *data)
+       if (! buf)
+ 	return 1;
+ 
+-      grub_file_filter_disable_compression ();
+-      file = grub_file_open (buf);
++      file = grub_file_open (buf, GRUB_FILE_TYPE_FS_SEARCH
++			     | GRUB_FILE_TYPE_NO_DECOMPRESS);
+       if (file)
+ 	{
+ 	  found = 1;
+diff --git a/grub-core/commands/test.c b/grub-core/commands/test.c
+index 5f06642f6c69..13c6ed9534af 100644
+--- a/grub-core/commands/test.c
++++ b/grub-core/commands/test.c
+@@ -355,8 +355,8 @@ test_parse (char **args, int *argn, int argc)
+ 	  if (grub_strcmp (args[*argn], "-s") == 0)
+ 	    {
+ 	      grub_file_t file;
+-	      grub_file_filter_disable_compression ();
+-	      file = grub_file_open (args[*argn + 1]);
++	      file = grub_file_open (args[*argn + 1], GRUB_FILE_TYPE_GET_SIZE
++				     | GRUB_FILE_TYPE_NO_DECOMPRESS);
+ 	      update_val (file && (grub_file_size (file) != 0), &ctx);
+ 	      if (file)
+ 		grub_file_close (file);
+diff --git a/grub-core/commands/testload.c b/grub-core/commands/testload.c
+index cfab6763dc3f..ff01a0516dd7 100644
+--- a/grub-core/commands/testload.c
++++ b/grub-core/commands/testload.c
+@@ -57,7 +57,7 @@ grub_cmd_testload (struct grub_command *cmd __attribute__ ((unused)),
+   if (argc < 1)
+     return grub_error (GRUB_ERR_BAD_ARGUMENT, N_("filename expected"));
+ 
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_TESTLOAD);
+   if (! file)
+     return grub_errno;
+ 
+diff --git a/grub-core/commands/testspeed.c b/grub-core/commands/testspeed.c
+index 042645f8d264..c13a9b8d8d22 100644
+--- a/grub-core/commands/testspeed.c
++++ b/grub-core/commands/testspeed.c
+@@ -61,7 +61,7 @@ grub_cmd_testspeed (grub_extcmd_context_t ctxt, int argc, char **args)
+   if (buffer == NULL)
+     return grub_errno;
+ 
+-  file = grub_file_open (args[0]);
++  file = grub_file_open (args[0], GRUB_FILE_TYPE_TESTLOAD);
+   if (file == NULL)
+     goto quit;
+ 
+diff --git a/grub-core/commands/verify.c b/grub-core/commands/verify.c
+index 67cb1c785095..3616318676f2 100644
+--- a/grub-core/commands/verify.c
++++ b/grub-core/commands/verify.c
+@@ -680,10 +680,12 @@ grub_cmd_trust (grub_extcmd_context_t ctxt,
+   if (argc < 1)
+     return grub_error (GRUB_ERR_BAD_ARGUMENT, N_("one argument expected"));
+ 
+-  grub_file_filter_disable_compression ();
+-  if (ctxt->state[OPTION_SKIP_SIG].set)
+-    grub_file_filter_disable_pubkey ();
+-  pkf = grub_file_open (args[0]);
++  pkf = grub_file_open (args[0],
++			GRUB_FILE_TYPE_PUBLIC_KEY_TRUST
++			| GRUB_FILE_TYPE_NO_DECOMPRESS
++			| (ctxt->state[OPTION_SKIP_SIG].set
++			   ? GRUB_FILE_TYPE_SKIP_SIGNATURE
++			   : 0));
+   if (!pkf)
+     return grub_errno;
+   pk = grub_load_public_key (pkf);
+@@ -771,10 +773,12 @@ grub_cmd_verify_signature (grub_extcmd_context_t ctxt,
+   if (argc > 2)
+     {
+       grub_file_t pkf;
+-      grub_file_filter_disable_compression ();
+-      if (ctxt->state[OPTION_SKIP_SIG].set)
+-	grub_file_filter_disable_pubkey ();
+-      pkf = grub_file_open (args[2]);
++      pkf = grub_file_open (args[2],
++			    GRUB_FILE_TYPE_PUBLIC_KEY
++			    | GRUB_FILE_TYPE_NO_DECOMPRESS
++			    | (ctxt->state[OPTION_SKIP_SIG].set
++			       ? GRUB_FILE_TYPE_SKIP_SIGNATURE
++			       : 0));
+       if (!pkf)
+ 	return grub_errno;
+       pk = grub_load_public_key (pkf);
+@@ -786,16 +790,16 @@ grub_cmd_verify_signature (grub_extcmd_context_t ctxt,
+       grub_file_close (pkf);
+     }
+ 
+-  grub_file_filter_disable_all ();
+-  f = grub_file_open (args[0]);
++  f = grub_file_open (args[0], GRUB_FILE_TYPE_VERIFY_SIGNATURE);
+   if (!f)
+     {
+       err = grub_errno;
+       goto fail;
+     }
+ 
+-  grub_file_filter_disable_all ();
+-  sig = grub_file_open (args[1]);
++  sig = grub_file_open (args[1],
++			GRUB_FILE_TYPE_SIGNATURE
++			| GRUB_FILE_TYPE_NO_DECOMPRESS);
+   if (!sig)
+     {
+       err = grub_errno;
+@@ -858,33 +862,32 @@ struct grub_fs verified_fs =
+ };
+ 
+ static grub_file_t
+-grub_pubkey_open (grub_file_t io, const char *filename)
++grub_pubkey_open (grub_file_t io, enum grub_file_type type)
+ {
+   grub_file_t sig;
+   char *fsuf, *ptr;
+   grub_err_t err;
+-  grub_file_filter_t curfilt[GRUB_FILE_FILTER_MAX];
+   grub_file_t ret;
+   grub_verified_t verified;
+ 
++  if ((type & GRUB_FILE_TYPE_MASK) == GRUB_FILE_TYPE_SIGNATURE
++      || (type & GRUB_FILE_TYPE_MASK) == GRUB_FILE_TYPE_VERIFY_SIGNATURE
++      || (type & GRUB_FILE_TYPE_SKIP_SIGNATURE))
++    return io;
++
+   if (!sec)
+     return io;
+   if (io->device->disk && 
+       (io->device->disk->dev->id == GRUB_DISK_DEVICE_MEMDISK_ID
+        || io->device->disk->dev->id == GRUB_DISK_DEVICE_PROCFS_ID))
+     return io;
+-  fsuf = grub_malloc (grub_strlen (filename) + sizeof (".sig"));
++  fsuf = grub_malloc (grub_strlen (io->name) + sizeof (".sig"));
+   if (!fsuf)
+     return NULL;
+-  ptr = grub_stpcpy (fsuf, filename);
++  ptr = grub_stpcpy (fsuf, io->name);
+   grub_memcpy (ptr, ".sig", sizeof (".sig"));
+ 
+-  grub_memcpy (curfilt, grub_file_filters_enabled,
+-	       sizeof (curfilt));
+-  grub_file_filter_disable_all ();
+-  sig = grub_file_open (fsuf);
+-  grub_memcpy (grub_file_filters_enabled, curfilt,
+-	       sizeof (curfilt));
++  sig = grub_file_open (fsuf, GRUB_FILE_TYPE_SIGNATURE);
+   grub_free (fsuf);
+   if (!sig)
+     return NULL;
+@@ -892,7 +895,7 @@ grub_pubkey_open (grub_file_t io, const char *filename)
+   ret = grub_malloc (sizeof (*ret));
+   if (!ret)
+     {
+-      grub_file_close (sig);
++      grub_free (fsuf);
+       return NULL;
+     }
+   *ret = *io;
+@@ -918,7 +921,7 @@ grub_pubkey_open (grub_file_t io, const char *filename)
+   if (!verified->buf)
+     {
+       grub_file_close (sig);
+-      grub_free (verified);
++      verified_free (verified);
+       grub_free (ret);
+       return NULL;
+     }
+@@ -926,7 +929,7 @@ grub_pubkey_open (grub_file_t io, const char *filename)
+     {
+       if (!grub_errno)
+ 	grub_error (GRUB_ERR_FILE_READ_ERROR, N_("premature end of file %s"),
+-		    filename);
++		    io->name);
+       grub_file_close (sig);
+       verified_free (verified);
+       grub_free (ret);
+diff --git a/grub-core/disk/loopback.c b/grub-core/disk/loopback.c
+index 2d8deaeafbd1..9406d931cdd8 100644
+--- a/grub-core/disk/loopback.c
++++ b/grub-core/disk/loopback.c
+@@ -92,7 +92,8 @@ grub_cmd_loopback (grub_extcmd_context_t ctxt, int argc, char **args)
+   if (argc < 2)
+     return grub_error (GRUB_ERR_BAD_ARGUMENT, N_("filename expected"));
+ 
+-  file = grub_file_open (args[1]);
++  file = grub_file_open (args[1], GRUB_FILE_TYPE_LOOPBACK
++			 | GRUB_FILE_TYPE_NO_DECOMPRESS);
+   if (! file)
+     return grub_errno;
+ 
+diff --git a/grub-core/efiemu/main.c b/grub-core/efiemu/main.c
+index f6813b1ed15f..a81934725bea 100644
+--- a/grub-core/efiemu/main.c
++++ b/grub-core/efiemu/main.c
+@@ -187,7 +187,7 @@ grub_efiemu_load_file (const char *filename)
+   grub_file_t file;
+   grub_err_t err;
+ 
+-  file = grub_file_open (filename);
++  file = grub_file_open (filename, GRUB_FILE_TYPE_GRUB_MODULE);
+   if (! file)
+     return grub_errno;
+ 
+diff --git a/grub-core/font/font.c b/grub-core/font/font.c
+index 53d76a64d042..85a292557ac7 100644
+--- a/grub-core/font/font.c
++++ b/grub-core/font/font.c
+@@ -418,7 +418,7 @@ grub_font_load (const char *filename)
+ #endif
+ 
+   if (filename[0] == '(' || filename[0] == '/' || filename[0] == '+')
+-    file = grub_buffile_open (filename, 1024);
++    file = grub_buffile_open (filename, GRUB_FILE_TYPE_FONT, 1024);
+   else
+     {
+       const char *prefix = grub_env_get ("prefix");
+@@ -438,7 +438,7 @@ grub_font_load (const char *filename)
+       ptr = grub_stpcpy (ptr, filename);
+       ptr = grub_stpcpy (ptr, ".pf2");
+       *ptr = 0;
+-      file = grub_buffile_open (fullname, 1024);
++      file = grub_buffile_open (fullname, GRUB_FILE_TYPE_FONT, 1024);
+       grub_free (fullname);
+     }
+   if (!file)
+diff --git a/grub-core/fs/zfs/zfscrypt.c b/grub-core/fs/zfs/zfscrypt.c
+index 87eef621d6da..1402e0bc29be 100644
+--- a/grub-core/fs/zfs/zfscrypt.c
++++ b/grub-core/fs/zfs/zfscrypt.c
+@@ -425,7 +425,7 @@ grub_cmd_zfs_key (grub_extcmd_context_t ctxt, int argc, char **args)
+   if (argc > 0)
+     {
+       grub_file_t file;
+-      file = grub_file_open (args[0]);
++      file = grub_file_open (args[0], GRUB_FILE_TYPE_ZFS_ENCRYPTION_KEY);
+       if (!file)
+ 	return grub_errno;
+       real_size = grub_file_read (file, buf, 1024);
+diff --git a/grub-core/gettext/gettext.c b/grub-core/gettext/gettext.c
+index b22e1bcc94b1..84d520cd494f 100644
+--- a/grub-core/gettext/gettext.c
++++ b/grub-core/gettext/gettext.c
+@@ -291,7 +291,7 @@ grub_mofile_open (struct grub_gettext_context *ctx,
+   /* Using fd_mo and not another variable because
+      it's needed for grub_gettext_get_info.  */
+ 
+-  fd = grub_file_open (filename);
++  fd = grub_file_open (filename, GRUB_FILE_TYPE_GETTEXT_CATALOG);
+ 
+   if (!fd)
+     return grub_errno;
+diff --git a/grub-core/gfxmenu/theme_loader.c b/grub-core/gfxmenu/theme_loader.c
+index 02978392ccc1..d6829bb5e907 100644
+--- a/grub-core/gfxmenu/theme_loader.c
++++ b/grub-core/gfxmenu/theme_loader.c
+@@ -743,7 +743,7 @@ grub_gfxmenu_view_load_theme (grub_gfxmenu_view_t view, const char *theme_path)
+   p.view = view;
+   p.theme_dir = grub_get_dirname (theme_path);
+ 
+-  file = grub_file_open (theme_path);
++  file = grub_file_open (theme_path, GRUB_FILE_TYPE_THEME);
+   if (! file)
+     {
+       grub_free (p.theme_dir);
+diff --git a/grub-core/io/bufio.c b/grub-core/io/bufio.c
+index 22438277d745..1049f5fbc8da 100644
+--- a/grub-core/io/bufio.c
++++ b/grub-core/io/bufio.c
+@@ -43,7 +43,8 @@ typedef struct grub_bufio *grub_bufio_t;
+ static struct grub_fs grub_bufio_fs;
+ 
+ grub_file_t
+-grub_bufio_open (grub_file_t io, int size)
++grub_bufio_open (grub_file_t io,
++		 grub_size_t size)
+ {
+   grub_file_t file;
+   grub_bufio_t bufio = 0;
+@@ -57,7 +58,7 @@ grub_bufio_open (grub_file_t io, int size)
+   else if (size > GRUB_BUFIO_MAX_SIZE)
+     size = GRUB_BUFIO_MAX_SIZE;
+ 
+-  if ((size < 0) || ((unsigned) size > io->size))
++  if (size > io->size)
+     size = ((io->size > GRUB_BUFIO_MAX_SIZE) ? GRUB_BUFIO_MAX_SIZE :
+             io->size);
+ 
+@@ -81,11 +82,12 @@ grub_bufio_open (grub_file_t io, int size)
+ }
+ 
+ grub_file_t
+-grub_buffile_open (const char *name, int size)
++grub_buffile_open (const char *name, enum grub_file_type type,
++		   grub_size_t size)
+ {
+   grub_file_t io, file;
+ 
+-  io = grub_file_open (name);
++  io = grub_file_open (name, type);
+   if (! io)
+     return 0;
+ 
+diff --git a/grub-core/io/gzio.c b/grub-core/io/gzio.c
+index 0f2ea6bd8452..def5bc9698df 100644
+--- a/grub-core/io/gzio.c
++++ b/grub-core/io/gzio.c
+@@ -1125,11 +1125,14 @@ initialize_tables (grub_gzio_t gzio)
+    even if IO does not contain data compressed by gzip, return a valid file
+    object. Note that this function won't close IO, even if an error occurs.  */
+ static grub_file_t
+-grub_gzio_open (grub_file_t io, const char *name __attribute__ ((unused)))
++grub_gzio_open (grub_file_t io, enum grub_file_type type)
+ {
+   grub_file_t file;
+   grub_gzio_t gzio = 0;
+ 
++  if (type & GRUB_FILE_TYPE_NO_DECOMPRESS)
++    return io;
++
+   file = (grub_file_t) grub_zalloc (sizeof (*file));
+   if (! file)
+     return 0;
+diff --git a/grub-core/io/lzopio.c b/grub-core/io/lzopio.c
+index 7559c6c9cab9..84edf6dd2dc8 100644
+--- a/grub-core/io/lzopio.c
++++ b/grub-core/io/lzopio.c
+@@ -407,12 +407,14 @@ CORRUPTED:
+ }
+ 
+ static grub_file_t
+-grub_lzopio_open (grub_file_t io,
+-		  const char *name __attribute__ ((unused)))
++grub_lzopio_open (grub_file_t io, enum grub_file_type type)
+ {
+   grub_file_t file;
+   grub_lzopio_t lzopio;
+ 
++  if (type & GRUB_FILE_TYPE_NO_DECOMPRESS)
++    return io;
++
+   file = (grub_file_t) grub_zalloc (sizeof (*file));
+   if (!file)
+     return 0;
+diff --git a/grub-core/io/offset.c b/grub-core/io/offset.c
+index ebed0ebe63e1..ec8e2320871d 100644
+--- a/grub-core/io/offset.c
++++ b/grub-core/io/offset.c
+@@ -69,7 +69,8 @@ grub_file_offset_close (grub_file_t file)
+ }
+ 
+ grub_file_t
+-grub_file_offset_open (grub_file_t parent, grub_off_t start, grub_off_t size)
++grub_file_offset_open (grub_file_t parent, enum grub_file_type type,
++		       grub_off_t start, grub_off_t size)
+ {
+   struct grub_offset_file *off_data;
+   grub_file_t off_file, last_off_file;
+@@ -95,10 +96,10 @@ grub_file_offset_open (grub_file_t parent, grub_off_t start, grub_off_t size)
+   last_off_file = NULL;
+   for (filter = GRUB_FILE_FILTER_COMPRESSION_FIRST;
+        off_file && filter <= GRUB_FILE_FILTER_COMPRESSION_LAST; filter++)
+-    if (grub_file_filters_enabled[filter])
++    if (grub_file_filters[filter])
+       {
+ 	last_off_file = off_file;
+-	off_file = grub_file_filters_enabled[filter] (off_file, parent->name);
++	off_file = grub_file_filters[filter] (off_file, type);
+       }
+ 
+   if (!off_file)
+diff --git a/grub-core/io/xzio.c b/grub-core/io/xzio.c
+index a3536ad73b19..42afeedcd640 100644
+--- a/grub-core/io/xzio.c
++++ b/grub-core/io/xzio.c
+@@ -169,12 +169,14 @@ ERROR:
+ }
+ 
+ static grub_file_t
+-grub_xzio_open (grub_file_t io,
+-		const char *name __attribute__ ((unused)))
++grub_xzio_open (grub_file_t io, enum grub_file_type type)
+ {
+   grub_file_t file;
+   grub_xzio_t xzio;
+ 
++  if (type & GRUB_FILE_TYPE_NO_DECOMPRESS)
++    return io;
++
+   file = (grub_file_t) grub_zalloc (sizeof (*file));
+   if (!file)
+     return 0;
+diff --git a/grub-core/kern/dl.c b/grub-core/kern/dl.c
+index 621070918d42..996747bc9e81 100644
+--- a/grub-core/kern/dl.c
++++ b/grub-core/kern/dl.c
+@@ -710,7 +710,7 @@ grub_dl_load_file (const char *filename)
+ 
+   grub_boot_time ("Loading module %s", filename);
+ 
+-  file = grub_file_open (filename);
++  file = grub_file_open (filename, GRUB_FILE_TYPE_GRUB_MODULE);
+   if (! file)
+     return 0;
+ 
+diff --git a/grub-core/kern/elf.c b/grub-core/kern/elf.c
+index 4f282c9cf431..9d7149b38927 100644
+--- a/grub-core/kern/elf.c
++++ b/grub-core/kern/elf.c
+@@ -136,12 +136,12 @@ fail:
+ }
+ 
+ grub_elf_t
+-grub_elf_open (const char *name)
++grub_elf_open (const char *name, enum grub_file_type type)
+ {
+   grub_file_t file;
+   grub_elf_t elf;
+ 
+-  file = grub_file_open (name);
++  file = grub_file_open (name, type);
+   if (! file)
+     return 0;
+ 
+diff --git a/grub-core/kern/file.c b/grub-core/kern/file.c
+index 668f8930b196..643154237208 100644
+--- a/grub-core/kern/file.c
++++ b/grub-core/kern/file.c
+@@ -28,8 +28,7 @@
+ 
+ void (*EXPORT_VAR (grub_grubnet_fini)) (void);
+ 
+-grub_file_filter_t grub_file_filters_all[GRUB_FILE_FILTER_MAX];
+-grub_file_filter_t grub_file_filters_enabled[GRUB_FILE_FILTER_MAX];
++grub_file_filter_t grub_file_filters[GRUB_FILE_FILTER_MAX];
+ 
+ /* Get the device part of the filename NAME. It is enclosed by parentheses.  */
+ char *
+@@ -59,7 +58,7 @@ grub_file_get_device_name (const char *name)
+ }
+ 
+ grub_file_t
+-grub_file_open (const char *name)
++grub_file_open (const char *name, enum grub_file_type type)
+ {
+   grub_device_t device = 0;
+   grub_file_t file = 0, last_file = 0;
+@@ -114,18 +113,20 @@ grub_file_open (const char *name)
+   file->name = grub_strdup (name);
+   grub_errno = GRUB_ERR_NONE;
+ 
+-  for (filter = 0; file && filter < ARRAY_SIZE (grub_file_filters_enabled);
++  for (filter = 0; file && filter < ARRAY_SIZE (grub_file_filters);
+        filter++)
+-    if (grub_file_filters_enabled[filter])
++    if (grub_file_filters[filter])
+       {
+ 	last_file = file;
+-	file = grub_file_filters_enabled[filter] (file, name);
++	file = grub_file_filters[filter] (file, type);
++	if (file && file != last_file)
++	  {
++	    file->name = grub_strdup (name);
++	    grub_errno = GRUB_ERR_NONE;
++	  }
+       }
+   if (!file)
+     grub_file_close (last_file);
+-    
+-  grub_memcpy (grub_file_filters_enabled, grub_file_filters_all,
+-	       sizeof (grub_file_filters_enabled));
+ 
+   return file;
+ 
+@@ -137,9 +138,6 @@ grub_file_open (const char *name)
+ 
+   grub_free (file);
+ 
+-  grub_memcpy (grub_file_filters_enabled, grub_file_filters_all,
+-	       sizeof (grub_file_filters_enabled));
+-
+   return 0;
+ }
+ 
+diff --git a/grub-core/lib/syslinux_parse.c b/grub-core/lib/syslinux_parse.c
+index 28ba3aef0bb0..c96d85ee515e 100644
+--- a/grub-core/lib/syslinux_parse.c
++++ b/grub-core/lib/syslinux_parse.c
+@@ -696,7 +696,7 @@ syslinux_parse_real (struct syslinux_menu *menu)
+   char *buf = NULL;
+   grub_err_t err = GRUB_ERR_NONE;
+ 
+-  file = grub_file_open (menu->filename);
++  file = grub_file_open (menu->filename, GRUB_FILE_TYPE_CONFIG);
+   if (!file)
+     return grub_errno;
+   while ((grub_free (buf), buf = grub_file_getline (file)))
+diff --git a/grub-core/loader/efi/chainloader.c b/grub-core/loader/efi/chainloader.c
+index 70c95ee35d99..7439fcac9989 100644
+--- a/grub-core/loader/efi/chainloader.c
++++ b/grub-core/loader/efi/chainloader.c
+@@ -920,7 +920,7 @@ grub_cmd_chainloader (grub_command_t cmd __attribute__ ((unused)),
+       *(--p16) = 0;
+     }
+ 
+-  file = grub_file_open (filename);
++  file = grub_file_open (filename, GRUB_FILE_TYPE_EFI_CHAINLOADED_IMAGE);
+   if (! file)
+     goto fail;
+ 
+diff --git a/grub-core/loader/i386/bsd.c b/grub-core/loader/i386/bsd.c
+index 87709aa23e85..d6769caec1e2 100644
+--- a/grub-core/loader/i386/bsd.c
++++ b/grub-core/loader/i386/bsd.c
+@@ -1458,7 +1458,7 @@ grub_bsd_load (int argc, char *argv[])
+       goto fail;
+     }
+ 
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_BSD_KERNEL);
+   if (!file)
+     goto fail;
+ 
+@@ -1535,7 +1535,7 @@ grub_cmd_freebsd (grub_extcmd_context_t ctxt, int argc, char *argv[])
+ 	  if (err)
+ 	    return err;
+ 
+-	  file = grub_file_open (argv[0]);
++	  file = grub_file_open (argv[0], GRUB_FILE_TYPE_BSD_KERNEL);
+ 	  if (! file)
+ 	    return grub_errno;
+ 
+@@ -1694,7 +1694,7 @@ grub_cmd_netbsd (grub_extcmd_context_t ctxt, int argc, char *argv[])
+ 	{
+ 	  grub_file_t file;
+ 
+-	  file = grub_file_open (argv[0]);
++	  file = grub_file_open (argv[0], GRUB_FILE_TYPE_BSD_KERNEL);
+ 	  if (! file)
+ 	    return grub_errno;
+ 
+@@ -1803,7 +1803,7 @@ grub_cmd_freebsd_loadenv (grub_command_t cmd __attribute__ ((unused)),
+       goto fail;
+     }
+ 
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_FREEBSD_ENV);
+   if ((!file) || (!file->size))
+     goto fail;
+ 
+@@ -1908,7 +1908,7 @@ grub_cmd_freebsd_module (grub_command_t cmd __attribute__ ((unused)),
+       return 0;
+     }
+ 
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_FREEBSD_MODULE);
+   if ((!file) || (!file->size))
+     goto fail;
+ 
+@@ -1959,7 +1959,7 @@ grub_netbsd_module_load (char *filename, grub_uint32_t type)
+   void *src;
+   grub_err_t err;
+ 
+-  file = grub_file_open (filename);
++  file = grub_file_open (filename, GRUB_FILE_TYPE_NETBSD_MODULE);
+   if ((!file) || (!file->size))
+     goto fail;
+ 
+@@ -2049,7 +2049,7 @@ grub_cmd_freebsd_module_elf (grub_command_t cmd __attribute__ ((unused)),
+       return 0;
+     }
+ 
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_FREEBSD_MODULE_ELF);
+   if (!file)
+     return grub_errno;
+   if (!file->size)
+@@ -2089,7 +2089,7 @@ grub_cmd_openbsd_ramdisk (grub_command_t cmd __attribute__ ((unused)),
+   if (!openbsd_ramdisk.max_size)
+     return grub_error (GRUB_ERR_BAD_OS, "your kOpenBSD doesn't support ramdisk");
+ 
+-  file = grub_file_open (args[0]);
++  file = grub_file_open (args[0], GRUB_FILE_TYPE_OPENBSD_RAMDISK);
+   if (! file)
+     return grub_errno;
+ 
+diff --git a/grub-core/loader/i386/coreboot/chainloader.c b/grub-core/loader/i386/coreboot/chainloader.c
+index d4cc40b7f243..57e2fe5271ee 100644
+--- a/grub-core/loader/i386/coreboot/chainloader.c
++++ b/grub-core/loader/i386/coreboot/chainloader.c
+@@ -438,7 +438,7 @@ grub_cmd_chain (grub_command_t cmd __attribute__ ((unused)),
+ 
+   grub_loader_unset ();
+ 
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_COREBOOT_CHAINLOADER);
+   if (!file)
+     return grub_errno;
+ 
+diff --git a/grub-core/loader/i386/efi/linux.c b/grub-core/loader/i386/efi/linux.c
+index 010bf982d808..468a2e992ea5 100644
+--- a/grub-core/loader/i386/efi/linux.c
++++ b/grub-core/loader/i386/efi/linux.c
+@@ -98,8 +98,7 @@ grub_cmd_initrd (grub_command_t cmd __attribute__ ((unused)),
+ 
+   for (i = 0; i < argc; i++)
+     {
+-      grub_file_filter_disable_compression ();
+-      files[i] = grub_file_open (argv[i]);
++      files[i] = grub_file_open (argv[i], GRUB_FILE_TYPE_LINUX_INITRD | GRUB_FILE_TYPE_NO_DECOMPRESS);
+       if (! files[i])
+         goto fail;
+       nfiles++;
+@@ -165,7 +164,7 @@ grub_cmd_linux (grub_command_t cmd __attribute__ ((unused)),
+       goto fail;
+     }
+ 
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_LINUX_KERNEL);
+   if (! file)
+     goto fail;
+ 
+diff --git a/grub-core/loader/i386/linux.c b/grub-core/loader/i386/linux.c
+index 5eb7d17db4a6..15e3f17ba41a 100644
+--- a/grub-core/loader/i386/linux.c
++++ b/grub-core/loader/i386/linux.c
+@@ -697,7 +697,7 @@ grub_cmd_linux (grub_command_t cmd __attribute__ ((unused)),
+       goto fail;
+     }
+ 
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_LINUX_KERNEL);
+   if (! file)
+     goto fail;
+ 
+diff --git a/grub-core/loader/i386/pc/chainloader.c b/grub-core/loader/i386/pc/chainloader.c
+index c79c4fe0fc99..54d7171828b1 100644
+--- a/grub-core/loader/i386/pc/chainloader.c
++++ b/grub-core/loader/i386/pc/chainloader.c
+@@ -156,8 +156,8 @@ grub_chainloader_cmd (const char *filename, grub_chainloader_flags_t flags)
+ 
+   grub_dl_ref (my_mod);
+ 
+-  grub_file_filter_disable_compression ();
+-  file = grub_file_open (filename);
++  file = grub_file_open (filename, GRUB_FILE_TYPE_PCCHAINLOADER
++			 | GRUB_FILE_TYPE_NO_DECOMPRESS);
+   if (! file)
+     goto fail;
+ 
+diff --git a/grub-core/loader/i386/pc/freedos.c b/grub-core/loader/i386/pc/freedos.c
+index 478f3c5139d4..aac6c9715f69 100644
+--- a/grub-core/loader/i386/pc/freedos.c
++++ b/grub-core/loader/i386/pc/freedos.c
+@@ -110,7 +110,7 @@ grub_cmd_freedos (grub_command_t cmd __attribute__ ((unused)),
+   if (!rel)
+     goto fail;
+ 
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_FREEDOS);
+   if (! file)
+     goto fail;
+ 
+diff --git a/grub-core/loader/i386/pc/linux.c b/grub-core/loader/i386/pc/linux.c
+index b864e5403332..d49d2757de5a 100644
+--- a/grub-core/loader/i386/pc/linux.c
++++ b/grub-core/loader/i386/pc/linux.c
+@@ -141,7 +141,7 @@ grub_cmd_linux (grub_command_t cmd __attribute__ ((unused)),
+       goto fail;
+     }
+ 
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_LINUX_KERNEL);
+   if (! file)
+     goto fail;
+ 
+diff --git a/grub-core/loader/i386/pc/ntldr.c b/grub-core/loader/i386/pc/ntldr.c
+index 1b88f40d8719..f0d74145b38d 100644
+--- a/grub-core/loader/i386/pc/ntldr.c
++++ b/grub-core/loader/i386/pc/ntldr.c
+@@ -90,7 +90,7 @@ grub_cmd_ntldr (grub_command_t cmd __attribute__ ((unused)),
+   if (!rel)
+     goto fail;
+ 
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_NTLDR);
+   if (! file)
+     goto fail;
+ 
+diff --git a/grub-core/loader/i386/pc/plan9.c b/grub-core/loader/i386/pc/plan9.c
+index 814a49d5071f..0351090daf81 100644
+--- a/grub-core/loader/i386/pc/plan9.c
++++ b/grub-core/loader/i386/pc/plan9.c
+@@ -413,7 +413,7 @@ grub_cmd_plan9 (grub_extcmd_context_t ctxt, int argc, char *argv[])
+   if (!rel)
+     goto fail;
+ 
+-  fill_ctx.file = grub_file_open (argv[0]);
++  fill_ctx.file = grub_file_open (argv[0], GRUB_FILE_TYPE_PLAN9_KERNEL);
+   if (! fill_ctx.file)
+     goto fail;
+ 
+diff --git a/grub-core/loader/i386/pc/pxechainloader.c b/grub-core/loader/i386/pc/pxechainloader.c
+index e60c62b1badd..acb061169b94 100644
+--- a/grub-core/loader/i386/pc/pxechainloader.c
++++ b/grub-core/loader/i386/pc/pxechainloader.c
+@@ -99,7 +99,7 @@ grub_cmd_pxechain (grub_command_t cmd __attribute__ ((unused)),
+   if (!rel)
+     goto fail;
+ 
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_PXECHAINLOADER);
+   if (! file)
+     goto fail;
+ 
+diff --git a/grub-core/loader/i386/pc/truecrypt.c b/grub-core/loader/i386/pc/truecrypt.c
+index 9ea4fde42a56..cbeeec7beaea 100644
+--- a/grub-core/loader/i386/pc/truecrypt.c
++++ b/grub-core/loader/i386/pc/truecrypt.c
+@@ -99,7 +99,7 @@ grub_cmd_truecrypt (grub_command_t cmd __attribute__ ((unused)),
+ 
+   grub_dl_ref (my_mod);
+ 
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_TRUECRYPT);
+   if (! file)
+     goto fail;
+ 
+diff --git a/grub-core/loader/i386/xen.c b/grub-core/loader/i386/xen.c
+index c4d9689f75c0..0d3fa6443704 100644
+--- a/grub-core/loader/i386/xen.c
++++ b/grub-core/loader/i386/xen.c
+@@ -412,7 +412,7 @@ grub_cmd_xen (grub_command_t cmd __attribute__ ((unused)),
+ 			      (char *) next_start.cmd_line,
+ 			      sizeof (next_start.cmd_line) - 1);
+ 
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_LINUX_KERNEL);
+   if (!file)
+     return grub_errno;
+ 
+@@ -637,9 +637,8 @@ grub_cmd_module (grub_command_t cmd __attribute__ ((unused)),
+ 
+   max_addr = ALIGN_UP (max_addr, PAGE_SIZE);
+ 
+-  if (nounzip)
+-    grub_file_filter_disable_compression ();
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_LINUX_INITRD |
++			 (nounzip ? GRUB_FILE_TYPE_NO_DECOMPRESS : 0));
+   if (!file)
+     return grub_errno;
+   size = grub_file_size (file);
+diff --git a/grub-core/loader/i386/xen_file.c b/grub-core/loader/i386/xen_file.c
+index 37f9ad8ac008..bf9e44071eed 100644
+--- a/grub-core/loader/i386/xen_file.c
++++ b/grub-core/loader/i386/xen_file.c
+@@ -57,7 +57,7 @@ grub_xen_file (grub_file_t file)
+ 		+ lh.payload_offset,
+ 		(unsigned long long) lh.payload_length);
+ 
+-  off_file = grub_file_offset_open (file, (lh.setup_sects + 1) * 512
++  off_file = grub_file_offset_open (file, GRUB_FILE_TYPE_LINUX_KERNEL, (lh.setup_sects + 1) * 512
+ 				    + lh.payload_offset,
+ 				    lh.payload_length);
+   if (!off_file)
+diff --git a/grub-core/loader/i386/xnu.c b/grub-core/loader/i386/xnu.c
+index 59ef73a73850..e64ed08f580f 100644
+--- a/grub-core/loader/i386/xnu.c
++++ b/grub-core/loader/i386/xnu.c
+@@ -487,7 +487,7 @@ grub_cmd_devprop_load (grub_command_t cmd __attribute__ ((unused)),
+   if (argc != 1)
+     return grub_error (GRUB_ERR_BAD_ARGUMENT, N_("filename expected"));
+ 
+-  file = grub_file_open (args[0]);
++  file = grub_file_open (args[0], GRUB_FILE_XNU_DEVPROP);
+   if (! file)
+     return grub_errno;
+   size = grub_file_size (file);
+diff --git a/grub-core/loader/linux.c b/grub-core/loader/linux.c
+index be6fa0f4d451..471b214d6c37 100644
+--- a/grub-core/loader/linux.c
++++ b/grub-core/loader/linux.c
+@@ -173,7 +173,6 @@ grub_initrd_init (int argc, char *argv[],
+ 	  eptr = grub_strchr (ptr, ':');
+ 	  if (eptr)
+ 	    {
+-	      grub_file_filter_disable_compression ();
+ 	      initrd_ctx->components[i].newc_name = grub_strndup (ptr, eptr - ptr);
+ 	      if (!initrd_ctx->components[i].newc_name)
+ 		{
+@@ -198,8 +197,9 @@ grub_initrd_init (int argc, char *argv[],
+ 	  root = 0;
+ 	  newc = 0;
+ 	}
+-      grub_file_filter_disable_compression ();
+-      initrd_ctx->components[i].file = grub_file_open (fname);
++      initrd_ctx->components[i].file = grub_file_open (fname,
++						       GRUB_FILE_TYPE_LINUX_INITRD
++						       | GRUB_FILE_TYPE_NO_DECOMPRESS);
+       if (!initrd_ctx->components[i].file)
+ 	{
+ 	  grub_initrd_close (initrd_ctx);
+diff --git a/grub-core/loader/macho.c b/grub-core/loader/macho.c
+index 59b195e27eab..085f9c6890a3 100644
+--- a/grub-core/loader/macho.c
++++ b/grub-core/loader/macho.c
+@@ -188,12 +188,12 @@ fail:
+ }
+ 
+ grub_macho_t
+-grub_macho_open (const char *name, int is_64bit)
++grub_macho_open (const char *name, enum grub_file_type type, int is_64bit)
+ {
+   grub_file_t file;
+   grub_macho_t macho;
+ 
+-  file = grub_file_open (name);
++  file = grub_file_open (name, type);
+   if (! file)
+     return 0;
+ 
+diff --git a/grub-core/loader/mips/linux.c b/grub-core/loader/mips/linux.c
+index 5f383be3d076..7b28ba731669 100644
+--- a/grub-core/loader/mips/linux.c
++++ b/grub-core/loader/mips/linux.c
+@@ -237,7 +237,7 @@ grub_cmd_linux (grub_command_t cmd __attribute__ ((unused)),
+   if (argc == 0)
+     return grub_error (GRUB_ERR_BAD_ARGUMENT, N_("filename expected"));
+ 
+-  elf = grub_elf_open (argv[0]);
++  elf = grub_elf_open (argv[0], GRUB_FILE_TYPE_LINUX_KERNEL);
+   if (! elf)
+     return grub_errno;
+ 
+diff --git a/grub-core/loader/multiboot.c b/grub-core/loader/multiboot.c
+index 64a651322483..bc6c9e09dcf0 100644
+--- a/grub-core/loader/multiboot.c
++++ b/grub-core/loader/multiboot.c
+@@ -267,7 +267,7 @@ grub_cmd_multiboot (grub_command_t cmd __attribute__ ((unused)),
+   if (argc == 0)
+     return grub_error (GRUB_ERR_BAD_ARGUMENT, N_("filename expected"));
+ 
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_MULTIBOOT_KERNEL);
+   if (! file)
+     return grub_errno;
+ 
+@@ -333,10 +333,8 @@ grub_cmd_module (grub_command_t cmd __attribute__ ((unused)),
+     return grub_error (GRUB_ERR_BAD_ARGUMENT,
+ 		       N_("you need to load the kernel first"));
+ 
+-  if (nounzip)
+-    grub_file_filter_disable_compression ();
+-
+-  file = grub_file_open (argv[0]);
++  file = grub_file_open (argv[0], GRUB_FILE_TYPE_MULTIBOOT_MODULE
++			 | (nounzip ? GRUB_FILE_TYPE_NO_DECOMPRESS : 0));
+   if (! file)
+     return grub_errno;
+ 
+diff --git a/grub-core/loader/xnu.c b/grub-core/loader/xnu.c
+index df8dfdb4ba09..caf1e24866ca 100644
+--- a/grub-core/loader/xnu.c
++++ b/grub-core/loader/xnu.c
+@@ -352,7 +352,7 @@ grub_cmd_xnu_kernel (grub_command_t cmd __attribute__ ((unused)),
+ 
+   grub_xnu_unload ();
+ 
+-  macho = grub_macho_open (args[0], 0);
++  macho = grub_macho_open (args[0], GRUB_FILE_TYPE_XNU_KERNEL, 0);
+   if (! macho)
+     return grub_errno;
+ 
+@@ -457,7 +457,7 @@ grub_cmd_xnu_kernel64 (grub_command_t cmd __attribute__ ((unused)),
+ 
+   grub_xnu_unload ();
+ 
+-  macho = grub_macho_open (args[0], 1);
++  macho = grub_macho_open (args[0], GRUB_FILE_TYPE_XNU_KERNEL, 1);
+   if (! macho)
+     return grub_errno;
+ 
+@@ -675,7 +675,7 @@ grub_xnu_load_driver (char *infoplistname, grub_file_t binaryfile,
+     macho = 0;
+ 
+   if (infoplistname)
+-    infoplist = grub_file_open (infoplistname);
++    infoplist = grub_file_open (infoplistname, GRUB_FILE_TYPE_XNU_INFO_PLIST);
+   else
+     infoplist = 0;
+   grub_errno = GRUB_ERR_NONE;
+@@ -772,7 +772,7 @@ grub_cmd_xnu_mkext (grub_command_t cmd __attribute__ ((unused)),
+   if (! grub_xnu_heap_size)
+     return grub_error (GRUB_ERR_BAD_OS, N_("you need to load the kernel first"));
+ 
+-  file = grub_file_open (args[0]);
++  file = grub_file_open (args[0], GRUB_FILE_TYPE_XNU_MKEXT);
+   if (! file)
+     return grub_errno;
+ 
+@@ -886,7 +886,7 @@ grub_cmd_xnu_ramdisk (grub_command_t cmd __attribute__ ((unused)),
+   if (! grub_xnu_heap_size)
+     return grub_error (GRUB_ERR_BAD_OS, N_("you need to load the kernel first"));
+ 
+-  file = grub_file_open (args[0]);
++  file = grub_file_open (args[0], GRUB_FILE_TYPE_XNU_RAMDISK);
+   if (! file)
+     return grub_errno;
+ 
+@@ -926,7 +926,7 @@ grub_xnu_check_os_bundle_required (char *plistname,
+   if (binname)
+     *binname = 0;
+ 
+-  file = grub_file_open (plistname);
++  file = grub_file_open (plistname, GRUB_FILE_TYPE_XNU_INFO_PLIST);
+   if (! file)
+     return 0;
+ 
+@@ -1211,7 +1211,7 @@ grub_xnu_load_kext_from_dir (char *dirname, const char *osbundlerequired,
+ 		grub_strcpy (binname + grub_strlen (binname), "/");
+ 	      grub_strcpy (binname + grub_strlen (binname), binsuffix);
+ 	      grub_dprintf ("xnu", "%s:%s\n", ctx.plistname, binname);
+-	      binfile = grub_file_open (binname);
++	      binfile = grub_file_open (binname, GRUB_FILE_TYPE_XNU_KEXT);
+ 	      if (! binfile)
+ 		grub_errno = GRUB_ERR_NONE;
+ 
+@@ -1254,7 +1254,7 @@ grub_cmd_xnu_kext (grub_command_t cmd __attribute__ ((unused)),
+       /* User explicitly specified plist and binary. */
+       if (grub_strcmp (args[1], "-") != 0)
+ 	{
+-	  binfile = grub_file_open (args[1]);
++	  binfile = grub_file_open (args[1], GRUB_FILE_TYPE_XNU_KEXT);
+ 	  if (! binfile)
+ 	    return grub_errno;
+ 	}
+diff --git a/grub-core/loader/xnu_resume.c b/grub-core/loader/xnu_resume.c
+index 534a74438b2b..8089804d4822 100644
+--- a/grub-core/loader/xnu_resume.c
++++ b/grub-core/loader/xnu_resume.c
+@@ -53,8 +53,8 @@ grub_xnu_resume (char *imagename)
+   grub_addr_t target_image;
+   grub_err_t err;
+ 
+-  grub_file_filter_disable_compression ();
+-  file = grub_file_open (imagename);
++  file = grub_file_open (imagename, GRUB_FILE_TYPE_XNU_HIBERNATE_IMAGE
++			 | GRUB_FILE_TYPE_NO_DECOMPRESS);
+   if (! file)
+     return 0;
+ 
+diff --git a/grub-core/net/net.c b/grub-core/net/net.c
+index 16d2ce06d5a1..c7fb03a1ecfe 100644
+--- a/grub-core/net/net.c
++++ b/grub-core/net/net.c
+@@ -1749,7 +1749,7 @@ grub_net_search_configfile (char *config)
+ 	  grub_dprintf ("net", "probe %s\n", config);
+ 
+           grub_file_t file;
+-          file = grub_file_open (config);
++          file = grub_file_open (config, GRUB_FILE_TYPE_CONFIG);
+ 
+           if (file)
+             {
+diff --git a/grub-core/normal/autofs.c b/grub-core/normal/autofs.c
+index 721b9c3256db..7a7cf2b0f7e3 100644
+--- a/grub-core/normal/autofs.c
++++ b/grub-core/normal/autofs.c
+@@ -33,12 +33,6 @@ autoload_fs_module (void)
+ {
+   grub_named_list_t p;
+   int ret = 0;
+-  grub_file_filter_t grub_file_filters_was[GRUB_FILE_FILTER_MAX];
+-
+-  grub_memcpy (grub_file_filters_was, grub_file_filters_enabled,
+-	       sizeof (grub_file_filters_enabled));
+-  grub_memcpy (grub_file_filters_enabled, grub_file_filters_all,
+-	       sizeof (grub_file_filters_enabled));
+ 
+   while ((p = fs_module_list) != NULL)
+     {
+@@ -56,9 +50,6 @@ autoload_fs_module (void)
+       grub_free (p);
+     }
+ 
+-  grub_memcpy (grub_file_filters_enabled, grub_file_filters_was,
+-	       sizeof (grub_file_filters_enabled));
+-
+   return ret;
+ }
+ 
+@@ -82,7 +73,7 @@ read_fs_list (const char *prefix)
+ 	  tmp_autoload_hook = grub_fs_autoload_hook;
+ 	  grub_fs_autoload_hook = NULL;
+ 
+-	  file = grub_file_open (filename);
++	  file = grub_file_open (filename, GRUB_FILE_TYPE_GRUB_MODULE_LIST);
+ 	  if (file)
+ 	    {
+ 	      /* Override previous fs.lst.  */
+diff --git a/grub-core/normal/crypto.c b/grub-core/normal/crypto.c
+index 2bfd67c8ef38..d5443380284a 100644
+--- a/grub-core/normal/crypto.c
++++ b/grub-core/normal/crypto.c
+@@ -94,7 +94,7 @@ read_crypto_list (const char *prefix)
+       return;
+     }
+ 
+-  file = grub_file_open (filename);
++  file = grub_file_open (filename, GRUB_FILE_TYPE_GRUB_MODULE_LIST);
+   grub_free (filename);
+   if (!file)
+     {
+diff --git a/grub-core/normal/dyncmd.c b/grub-core/normal/dyncmd.c
+index 169c126f5080..719ebf477f2f 100644
+--- a/grub-core/normal/dyncmd.c
++++ b/grub-core/normal/dyncmd.c
+@@ -106,7 +106,7 @@ read_command_list (const char *prefix)
+ 	{
+ 	  grub_file_t file;
+ 
+-	  file = grub_file_open (filename);
++	  file = grub_file_open (filename, GRUB_FILE_TYPE_GRUB_MODULE_LIST);
+ 	  if (file)
+ 	    {
+ 	      char *buf = NULL;
+diff --git a/grub-core/normal/main.c b/grub-core/normal/main.c
+index b69f9e738fa4..5e18a23a655e 100644
+--- a/grub-core/normal/main.c
++++ b/grub-core/normal/main.c
+@@ -127,7 +127,7 @@ read_config_file (const char *config)
+     }
+ 
+   /* Try to open the config file.  */
+-  rawfile = grub_file_open (config);
++  rawfile = grub_file_open (config, GRUB_FILE_TYPE_CONFIG);
+   if (! rawfile)
+     return 0;
+ 
+@@ -362,7 +362,7 @@ grub_try_normal (const char *variable)
+ 	if (config)
+ 	  {
+ 	    grub_file_t file;
+-	    file = grub_file_open (config);
++	    file = grub_file_open (config, GRUB_FILE_TYPE_CONFIG);
+ 	    if (file)
+ 	      {
+ 		grub_file_close (file);
+diff --git a/grub-core/normal/term.c b/grub-core/normal/term.c
+index ac5d69f0fb5e..a1e5c5a0daf6 100644
+--- a/grub-core/normal/term.c
++++ b/grub-core/normal/term.c
+@@ -331,7 +331,7 @@ read_terminal_list (const char *prefix)
+       return;
+     }
+ 
+-  file = grub_file_open (filename);
++  file = grub_file_open (filename, GRUB_FILE_TYPE_GRUB_MODULE_LIST);
+   grub_free (filename);
+   if (!file)
+     {
+diff --git a/grub-core/video/readers/jpeg.c b/grub-core/video/readers/jpeg.c
+index c3e0df240d92..26d3de55c5b9 100644
+--- a/grub-core/video/readers/jpeg.c
++++ b/grub-core/video/readers/jpeg.c
+@@ -771,7 +771,7 @@ grub_video_reader_jpeg (struct grub_video_bitmap **bitmap,
+   grub_file_t file;
+   struct grub_jpeg_data *data;
+ 
+-  file = grub_buffile_open (filename, 0);
++  file = grub_buffile_open (filename, GRUB_FILE_TYPE_PIXMAP, 0);
+   if (!file)
+     return grub_errno;
+ 
+diff --git a/grub-core/video/readers/png.c b/grub-core/video/readers/png.c
+index e1a01e99fd09..777e71334cb2 100644
+--- a/grub-core/video/readers/png.c
++++ b/grub-core/video/readers/png.c
+@@ -1086,7 +1086,7 @@ grub_video_reader_png (struct grub_video_bitmap **bitmap,
+   grub_file_t file;
+   struct grub_png_data *data;
+ 
+-  file = grub_buffile_open (filename, 0);
++  file = grub_buffile_open (filename, GRUB_FILE_TYPE_PIXMAP, 0);
+   if (!file)
+     return grub_errno;
+ 
+diff --git a/grub-core/video/readers/tga.c b/grub-core/video/readers/tga.c
+index c7a16fa9cc47..7cb9d1d2a0cb 100644
+--- a/grub-core/video/readers/tga.c
++++ b/grub-core/video/readers/tga.c
+@@ -297,7 +297,7 @@ grub_video_reader_tga (struct grub_video_bitmap **bitmap,
+ 
+   grub_memset (&data, 0, sizeof (data));
+ 
+-  data.file = grub_buffile_open (filename, 0);
++  data.file = grub_buffile_open (filename, GRUB_FILE_TYPE_PIXMAP, 0);
+   if (! data.file)
+     return grub_errno;
+ 
+diff --git a/include/grub/bufio.h b/include/grub/bufio.h
+index acdd0c882c6b..0ff72d1033c1 100644
+--- a/include/grub/bufio.h
++++ b/include/grub/bufio.h
+@@ -22,7 +22,9 @@
+ 
+ #include <grub/file.h>
+ 
+-grub_file_t EXPORT_FUNC (grub_bufio_open) (grub_file_t io, int size);
+-grub_file_t EXPORT_FUNC (grub_buffile_open) (const char *name, int size);
++grub_file_t EXPORT_FUNC (grub_bufio_open) (grub_file_t io, grub_size_t size);
++grub_file_t EXPORT_FUNC (grub_buffile_open) (const char *name,
++					     enum grub_file_type type,
++					     grub_size_t size);
+ 
+ #endif /* ! GRUB_BUFIO_H */
+diff --git a/include/grub/elfload.h b/include/grub/elfload.h
+index 9a7ae4ebb30a..dbb609c9b207 100644
+--- a/include/grub/elfload.h
++++ b/include/grub/elfload.h
+@@ -42,7 +42,7 @@ typedef int (*grub_elf32_phdr_iterate_hook_t)
+ typedef int (*grub_elf64_phdr_iterate_hook_t)
+   (grub_elf_t elf, Elf64_Phdr *phdr, void *arg);
+ 
+-grub_elf_t grub_elf_open (const char *);
++grub_elf_t grub_elf_open (const char *, enum grub_file_type type);
+ grub_elf_t grub_elf_file (grub_file_t file, const char *filename);
+ grub_err_t grub_elf_close (grub_elf_t);
+ 
+diff --git a/include/grub/file.h b/include/grub/file.h
+index 739488cbe59a..92c818d0c211 100644
+--- a/include/grub/file.h
++++ b/include/grub/file.h
+@@ -25,6 +25,111 @@
+ #include <grub/fs.h>
+ #include <grub/disk.h>
+ 
++enum grub_file_type
++  {
++    /* GRUB module to be loaded.  */
++    GRUB_FILE_TYPE_GRUB_MODULE,
++    /* Loopback file to be represented as disk.  */
++    GRUB_FILE_TYPE_LOOPBACK,
++    /* Linux kernel to be loaded.  */
++    GRUB_FILE_TYPE_LINUX_KERNEL,
++    /* Linux initrd.  */
++    GRUB_FILE_TYPE_LINUX_INITRD,
++
++    /* Multiboot kernel.  */
++    GRUB_FILE_TYPE_MULTIBOOT_KERNEL,
++    /* Multiboot module.  */
++    GRUB_FILE_TYPE_MULTIBOOT_MODULE,
++
++    GRUB_FILE_TYPE_BSD_KERNEL,
++    GRUB_FILE_TYPE_FREEBSD_ENV,
++    GRUB_FILE_TYPE_FREEBSD_MODULE,
++    GRUB_FILE_TYPE_FREEBSD_MODULE_ELF,
++    GRUB_FILE_TYPE_NETBSD_MODULE,
++    GRUB_FILE_TYPE_OPENBSD_RAMDISK,
++
++    GRUB_FILE_TYPE_XNU_INFO_PLIST,
++    GRUB_FILE_TYPE_XNU_MKEXT,
++    GRUB_FILE_TYPE_XNU_KEXT,
++    GRUB_FILE_TYPE_XNU_KERNEL,
++    GRUB_FILE_TYPE_XNU_RAMDISK,
++    GRUB_FILE_TYPE_XNU_HIBERNATE_IMAGE,
++    GRUB_FILE_XNU_DEVPROP,
++
++    GRUB_FILE_TYPE_PLAN9_KERNEL,
++
++    GRUB_FILE_TYPE_NTLDR,
++    GRUB_FILE_TYPE_TRUECRYPT,
++    GRUB_FILE_TYPE_FREEDOS,
++    GRUB_FILE_TYPE_PXECHAINLOADER,
++    GRUB_FILE_TYPE_PCCHAINLOADER,
++
++    GRUB_FILE_TYPE_COREBOOT_CHAINLOADER,
++
++    GRUB_FILE_TYPE_EFI_CHAINLOADED_IMAGE,
++
++    /* File holding signature.  */
++    GRUB_FILE_TYPE_SIGNATURE,
++    /* File holding public key to verify signature once.  */
++    GRUB_FILE_TYPE_PUBLIC_KEY,
++    /* File holding public key to add to trused keys.  */
++    GRUB_FILE_TYPE_PUBLIC_KEY_TRUST,
++    /* File of which we intend to print a blocklist to the user.  */
++    GRUB_FILE_TYPE_PRINT_BLOCKLIST,
++    /* File we intend to use for test loading or testing speed.  */
++    GRUB_FILE_TYPE_TESTLOAD,
++    /* File we open only to get its size. E.g. in ls output.  */
++    GRUB_FILE_TYPE_GET_SIZE,
++    /* Font file.  */
++    GRUB_FILE_TYPE_FONT,
++    /* File holding encryption key for encrypted ZFS.  */
++    GRUB_FILE_TYPE_ZFS_ENCRYPTION_KEY,
++    /* File we open n grub-fstest.  */
++    GRUB_FILE_TYPE_FSTEST,
++    /* File we open n grub-mount.  */
++    GRUB_FILE_TYPE_MOUNT,
++    /* File which we attempt to identify the type of.  */
++    GRUB_FILE_TYPE_FILE_ID,
++    /* File holding ACPI table.  */
++    GRUB_FILE_TYPE_ACPI_TABLE,
++    /* File we intend show to user.  */
++    GRUB_FILE_TYPE_CAT,
++    GRUB_FILE_TYPE_HEXCAT,
++    /* One of pair of files we intend to compare.  */
++    GRUB_FILE_TYPE_CMP,
++    /* List of hashes for hashsum.  */
++    GRUB_FILE_TYPE_HASHLIST,
++    /* File hashed by hashsum.  */
++    GRUB_FILE_TYPE_TO_HASH,
++    /* Keyboard layout.  */
++    GRUB_FILE_TYPE_KEYBOARD_LAYOUT,
++    /* Picture file.  */
++    GRUB_FILE_TYPE_PIXMAP,
++    /* *.lst shipped by GRUB.  */
++    GRUB_FILE_TYPE_GRUB_MODULE_LIST,
++    /* config file.  */
++    GRUB_FILE_TYPE_CONFIG,
++    GRUB_FILE_TYPE_THEME,
++    GRUB_FILE_TYPE_GETTEXT_CATALOG,
++    GRUB_FILE_TYPE_FS_SEARCH,
++    GRUB_FILE_TYPE_AUDIO,
++    GRUB_FILE_TYPE_VBE_DUMP,
++
++    GRUB_FILE_TYPE_LOADENV,
++    GRUB_FILE_TYPE_SAVEENV,
++
++    /* Boot loader spec config file */
++    GRUB_FILE_TYPE_BLSCFG,
++
++    GRUB_FILE_TYPE_VERIFY_SIGNATURE,
++
++    GRUB_FILE_TYPE_MASK = 0xffff,
++
++    /* --skip-sig is specified.  */
++    GRUB_FILE_TYPE_SKIP_SIGNATURE = 0x10000,
++    GRUB_FILE_TYPE_NO_DECOMPRESS = 0x20000,
++  };
++
+ /* File description.  */
+ struct grub_file
+ {
+@@ -77,61 +182,26 @@ typedef enum grub_file_filter_id
+     GRUB_FILE_FILTER_COMPRESSION_LAST = GRUB_FILE_FILTER_LZOPIO,
+   } grub_file_filter_id_t;
+ 
+-typedef grub_file_t (*grub_file_filter_t) (grub_file_t in, const char *filename);
++typedef grub_file_t (*grub_file_filter_t) (grub_file_t in, enum grub_file_type type);
+ 
+-extern grub_file_filter_t EXPORT_VAR(grub_file_filters_all)[GRUB_FILE_FILTER_MAX];
+-extern grub_file_filter_t EXPORT_VAR(grub_file_filters_enabled)[GRUB_FILE_FILTER_MAX];
++extern grub_file_filter_t EXPORT_VAR(grub_file_filters)[GRUB_FILE_FILTER_MAX];
+ 
+ static inline void
+ grub_file_filter_register (grub_file_filter_id_t id, grub_file_filter_t filter)
+ {
+-  grub_file_filters_all[id] = filter;
+-  grub_file_filters_enabled[id] = filter;
++  grub_file_filters[id] = filter;
+ }
+ 
+ static inline void
+ grub_file_filter_unregister (grub_file_filter_id_t id)
+ {
+-  grub_file_filters_all[id] = 0;
+-  grub_file_filters_enabled[id] = 0;
+-}
+-
+-static inline void
+-grub_file_filter_disable (grub_file_filter_id_t id)
+-{
+-  grub_file_filters_enabled[id] = 0;
+-}
+-
+-static inline void
+-grub_file_filter_disable_compression (void)
+-{
+-  grub_file_filter_id_t id;
+-
+-  for (id = GRUB_FILE_FILTER_COMPRESSION_FIRST;
+-       id <= GRUB_FILE_FILTER_COMPRESSION_LAST; id++)
+-    grub_file_filters_enabled[id] = 0;
+-}
+-
+-static inline void
+-grub_file_filter_disable_all (void)
+-{
+-  grub_file_filter_id_t id;
+-
+-  for (id = 0;
+-       id < GRUB_FILE_FILTER_MAX; id++)
+-    grub_file_filters_enabled[id] = 0;
+-}
+-
+-static inline void
+-grub_file_filter_disable_pubkey (void)
+-{
+-  grub_file_filters_enabled[GRUB_FILE_FILTER_PUBKEY] = 0;
++  grub_file_filters[id] = 0;
+ }
+ 
+ /* Get a device name from NAME.  */
+ char *EXPORT_FUNC(grub_file_get_device_name) (const char *name);
+ 
+-grub_file_t EXPORT_FUNC(grub_file_open) (const char *name);
++grub_file_t EXPORT_FUNC(grub_file_open) (const char *name, enum grub_file_type type);
+ grub_ssize_t EXPORT_FUNC(grub_file_read) (grub_file_t file, void *buf,
+ 					  grub_size_t len);
+ grub_off_t EXPORT_FUNC(grub_file_seek) (grub_file_t file, grub_off_t offset);
+@@ -159,8 +229,8 @@ grub_file_seekable (const grub_file_t file)
+ }
+ 
+ grub_file_t
+-grub_file_offset_open (grub_file_t parent, grub_off_t start,
+-		       grub_off_t size);
++grub_file_offset_open (grub_file_t parent, enum grub_file_type type,
++		       grub_off_t start, grub_off_t size);
+ void
+ grub_file_offset_close (grub_file_t file);
+ 
+diff --git a/include/grub/machoload.h b/include/grub/machoload.h
+index 1eec118f15f7..f1157f4105b7 100644
+--- a/include/grub/machoload.h
++++ b/include/grub/machoload.h
+@@ -49,7 +49,8 @@ struct grub_macho_file
+ };
+ typedef struct grub_macho_file *grub_macho_t;
+ 
+-grub_macho_t grub_macho_open (const char *, int is_64bit);
++grub_macho_t grub_macho_open (const char *, enum grub_file_type type,
++			      int is_64bit);
+ grub_macho_t grub_macho_file (grub_file_t file, const char *filename,
+ 			      int is_64bit);
+ grub_err_t grub_macho_close (grub_macho_t);
+diff --git a/util/grub-fstest.c b/util/grub-fstest.c
+index a358ae47152b..f0a17d00bb0e 100644
+--- a/util/grub-fstest.c
++++ b/util/grub-fstest.c
+@@ -120,9 +120,9 @@ read_file (char *pathname, int (*hook) (grub_off_t ofs, char *buf, int len, void
+       return;
+     }
+ 
+-  if (uncompress == 0)
+-    grub_file_filter_disable_compression ();
+-  file = grub_file_open (pathname);
++  file = grub_file_open (pathname, ((uncompress == 0)
++				    ? GRUB_FILE_TYPE_NO_DECOMPRESS : 0)
++			 | GRUB_FILE_TYPE_FSTEST);
+   if (!file)
+     {
+       grub_util_error (_("cannot open `%s': %s"), pathname,
+diff --git a/util/grub-mount.c b/util/grub-mount.c
+index aca5f82e3f59..07ef24233041 100644
+--- a/util/grub-mount.c
++++ b/util/grub-mount.c
+@@ -208,7 +208,7 @@ fuse_getattr (const char *path, struct stat *st)
+   if (!ctx.file_info.dir)
+     {
+       grub_file_t file;
+-      file = grub_file_open (path);
++      file = grub_file_open (path, GRUB_FILE_TYPE_GET_SIZE);
+       if (! file && grub_errno == GRUB_ERR_BAD_FILE_TYPE)
+ 	{
+ 	  grub_errno = GRUB_ERR_NONE;
+@@ -244,7 +244,7 @@ static int
+ fuse_open (const char *path, struct fuse_file_info *fi __attribute__ ((unused)))
+ {
+   grub_file_t file;
+-  file = grub_file_open (path);
++  file = grub_file_open (path, GRUB_FILE_TYPE_MOUNT);
+   if (! file)
+     return translate_error ();
+   files[first_fd++] = file;
+@@ -308,7 +308,7 @@ fuse_readdir_call_fill (const char *filename,
+       grub_file_t file;
+       char *tmp;
+       tmp = xasprintf ("%s/%s", ctx->path, filename);
+-      file = grub_file_open (tmp);
++      file = grub_file_open (tmp, GRUB_FILE_TYPE_GET_SIZE);
+       free (tmp);
+       /* Symlink to directory.  */
+       if (! file && grub_errno == GRUB_ERR_BAD_FILE_TYPE)
+-- 
+2.13.0
+

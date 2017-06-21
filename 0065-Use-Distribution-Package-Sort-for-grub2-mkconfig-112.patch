@@ -1,7 +1,7 @@
-From 11abe391636d0819902357591aebf0ea01b88130 Mon Sep 17 00:00:00 2001
+From bef261e0b9e303f3996c2f8c3beff98af7800b17 Mon Sep 17 00:00:00 2001
 From: Robert Marshall <rmarshall@redhat.com>
 Date: Mon, 16 Mar 2015 14:14:19 -0400
-Subject: [PATCH 65/90] Use Distribution Package Sort for grub2-mkconfig
+Subject: [PATCH 65/97] Use Distribution Package Sort for grub2-mkconfig
  (#1124074)
 
 Users reported that newly installed kernels on their systems installed
@@ -22,7 +22,7 @@ Resolves rhbz#1124074
  create mode 100644 util/grub-rpm-sort.c
 
 diff --git a/.gitignore b/.gitignore
-index 06c9f3a..7697877 100644
+index 06c9f3ab7ac0..7697877cac5d 100644
 --- a/.gitignore
 +++ b/.gitignore
 @@ -124,6 +124,7 @@ grub-ofpathname
@@ -34,7 +34,7 @@ index 06c9f3a..7697877 100644
  grub-set-default
  grub-shell
 diff --git a/Makefile.util.def b/Makefile.util.def
-index 2061104..d846b81 100644
+index 206110458938..d846b81b5f98 100644
 --- a/Makefile.util.def
 +++ b/Makefile.util.def
 @@ -684,6 +684,22 @@ program = {
@@ -61,7 +61,7 @@ index 2061104..d846b81 100644
    name = grub-mkconfig;
    common = util/grub-mkconfig.in;
 diff --git a/configure.ac b/configure.ac
-index 9937a82..d5e8d90 100644
+index 9937a827f8f2..d5e8d90f3da5 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -65,6 +65,7 @@ grub_TRANSFORM([grub-mkrelpath])
@@ -115,7 +115,7 @@ index 9937a82..d5e8d90 100644
  if test x$host_kernel = xkfreebsd; then
    AC_CHECK_LIB([geom], [geom_gettree], [],
 diff --git a/util/grub-mkconfig_lib.in b/util/grub-mkconfig_lib.in
-index 10fabee..9c410ea 100644
+index 10fabee5e14d..9c410eae4936 100644
 --- a/util/grub-mkconfig_lib.in
 +++ b/util/grub-mkconfig_lib.in
 @@ -33,6 +33,9 @@ fi
@@ -152,7 +152,7 @@ index 10fabee..9c410ea 100644
      return 1
 diff --git a/util/grub-rpm-sort.8 b/util/grub-rpm-sort.8
 new file mode 100644
-index 0000000..8ce2148
+index 000000000000..8ce214884485
 --- /dev/null
 +++ b/util/grub-rpm-sort.8
 @@ -0,0 +1,12 @@
@@ -170,7 +170,7 @@ index 0000000..8ce2148
 +.BR "info grub"
 diff --git a/util/grub-rpm-sort.c b/util/grub-rpm-sort.c
 new file mode 100644
-index 0000000..f33bd1e
+index 000000000000..f33bd1ed5684
 --- /dev/null
 +++ b/util/grub-rpm-sort.c
 @@ -0,0 +1,281 @@
@@ -456,5 +456,5 @@ index 0000000..f33bd1e
 +  return 0;
 +}
 -- 
-2.9.3
+2.13.0
 

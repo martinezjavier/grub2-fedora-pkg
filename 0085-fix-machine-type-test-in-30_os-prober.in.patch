@@ -1,7 +1,7 @@
-From be4d338b0c086e9cbbd2d353cd88abad67c000c9 Mon Sep 17 00:00:00 2001
+From 46121f58d1821bfe11ee72d51d3306fb9e8ec04e Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 11 Jul 2016 13:36:45 -0400
-Subject: [PATCH 85/90] fix machine type test in 30_os-prober.in
+Subject: [PATCH 85/97] fix machine type test in 30_os-prober.in
 
 Signed-off-by: Peter Jones <pjones@redhat.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Peter Jones <pjones@redhat.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/util/grub.d/30_os-prober.in b/util/grub.d/30_os-prober.in
-index dc98eac..e40274f 100644
+index dc98eace9345..e40274fc0f42 100644
 --- a/util/grub.d/30_os-prober.in
 +++ b/util/grub.d/30_os-prober.in
 @@ -144,6 +144,7 @@ for OS in ${OSPROBED} ; do
@@ -21,5 +21,5 @@ index dc98eac..e40274f 100644
      i?86|x86_64)
        sixteenbit="16"
 -- 
-2.9.3
+2.13.0
 

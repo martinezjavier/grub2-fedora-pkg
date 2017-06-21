@@ -1,0 +1,34 @@
+From 20937607bbc4f5468f365b51760054b2ba7a8cea Mon Sep 17 00:00:00 2001
+From: Vladimir Serbinenko <phcoder@gmail.com>
+Date: Mon, 6 Feb 2017 17:12:09 +0100
+Subject: [PATCH 93/97] Adjustment proposed by dkiper
+
+---
+ grub-core/commands/verify_helper.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/grub-core/commands/verify_helper.c b/grub-core/commands/verify_helper.c
+index 198745357857..fe5ad03c6848 100644
+--- a/grub-core/commands/verify_helper.c
++++ b/grub-core/commands/verify_helper.c
+@@ -124,7 +124,7 @@ grub_verify_helper_open (grub_file_t io, enum grub_file_type type)
+   if (err)
+     goto fail;
+ 
+-  err = ver->fini (context);
++  err = ver->fini ? ver->fini (context) : GRUB_ERR_NONE;
+   if (err)
+     goto fail;
+ 
+@@ -142,7 +142,7 @@ grub_verify_helper_open (grub_file_t io, enum grub_file_type type)
+       if (err)
+ 	goto fail;
+ 
+-      err = ver->fini (context);
++      err = ver->fini ? ver->fini (context) : GRUB_ERR_NONE;
+       if (err)
+ 	goto fail;
+ 
+-- 
+2.13.0
+

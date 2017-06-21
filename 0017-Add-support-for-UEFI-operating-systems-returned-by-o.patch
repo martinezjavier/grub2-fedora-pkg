@@ -1,7 +1,7 @@
-From f0daa044a90c508f8f60d23e5ef39597ec80c2cc Mon Sep 17 00:00:00 2001
+From 91f0c3256b16aba9536c85279c546ff144d743c7 Mon Sep 17 00:00:00 2001
 From: Matthew Garrett <matthew.garrett@nebula.com>
 Date: Wed, 12 Jun 2013 11:51:49 -0400
-Subject: [PATCH 17/90] Add support for UEFI operating systems returned by
+Subject: [PATCH 17/97] Add support for UEFI operating systems returned by
  os-prober
 
 os-prober returns UEFI operating systems in the form:
@@ -15,7 +15,7 @@ contrast to legacy OSes, where path is the device string. Handle this case.
  1 file changed, 18 insertions(+), 3 deletions(-)
 
 diff --git a/util/grub.d/30_os-prober.in b/util/grub.d/30_os-prober.in
-index 515a68c..9b8f596 100644
+index 515a68c7aa02..9b8f5968e2d7 100644
 --- a/util/grub.d/30_os-prober.in
 +++ b/util/grub.d/30_os-prober.in
 @@ -328,8 +328,23 @@ EOF
@@ -46,5 +46,5 @@ index 515a68c..9b8f596 100644
    esac
  done
 -- 
-2.9.3
+2.13.0
 
