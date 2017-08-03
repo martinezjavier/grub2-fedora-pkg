@@ -66,11 +66,11 @@ Source8:	strtoull_test.c
 # And these are:
 # git checkout debuginfo
 # git format-patch fedora-23..
-Patch10001: 10001-Put-the-correct-.file-directives-in-our-.S-files.patch
+#Patch10001: 10001-Put-the-correct-.file-directives-in-our-.S-files.patch
 #Patch10002: 10002-Make-it-possible-to-enabled-build-id-sha1.patch
 #Patch10003: 10003-Don-t-tell-the-compiler-to-do-annoying-things-with-.patch
-Patch10004: 10004-Add-grub_qdprintf-grub_dprintf-without-the-file-lin.patch
-Patch10005: 10005-Make-a-gdb-dprintf-that-tells-us-load-addresses.patch
+#Patch10004: 10004-Add-grub_qdprintf-grub_dprintf-without-the-file-lin.patch
+#Patch10005: 10005-Make-a-gdb-dprintf-that-tells-us-load-addresses.patch
 #Patch10006: 10006-Try-it-in-gentpl-again.patch
 
 BuildRequires:  flex bison binutils python
