@@ -1,7 +1,7 @@
 From d4b4a2dfd552c7018699752fcb9a0d07008b73df Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Wed, 24 May 2017 12:42:32 -0400
-Subject: [PATCH 159/176] macos: just build chainloader entries, don't try any
+Subject: [PATCH 159/177] macos: just build chainloader entries, don't try any
  xnu xnu.
 
 Since our bugs tell us that the xnu boot entries really just don't work
@@ -124,5 +124,5 @@ index e40274fc0..d979de198 100644
      hurd)
        onstr="$(gettext_printf "(on %s)" "${DEVICE}")"
 -- 
-2.13.0
+2.13.3
 

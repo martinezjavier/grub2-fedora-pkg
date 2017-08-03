@@ -1,7 +1,7 @@
 From 85de6a1e7740161c10b000964d098d62cee8e19f Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 28 Apr 2015 11:15:03 -0400
-Subject: [PATCH 117/176] Make grub2-mkconfig construct titles that look like
+Subject: [PATCH 117/177] Make grub2-mkconfig construct titles that look like
  the ones we want elsewhere.
 
 Resolves: rhbz#1215839
@@ -64,5 +64,5 @@ index 121524185..584ad1f46 100644
  	  replacement_title="$(echo "Advanced options for ${OS}" | sed 's,>,>>,g')>$(echo "$title" | sed 's,>,>>,g')"
  	  quoted="$(echo "$GRUB_ACTUAL_DEFAULT" | grub_quote)"
 -- 
-2.13.0
+2.13.3
 

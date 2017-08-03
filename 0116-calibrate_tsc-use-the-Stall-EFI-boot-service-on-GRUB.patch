@@ -1,7 +1,7 @@
 From 703ac12cc7b710cf5fd8ed08fdaaa760ffdff501 Mon Sep 17 00:00:00 2001
 From: Laszlo Ersek <lersek@redhat.com>
 Date: Fri, 10 Oct 2014 11:11:09 +0200
-Subject: [PATCH 116/176] calibrate_tsc(): use the Stall() EFI boot service on
+Subject: [PATCH 116/177] calibrate_tsc(): use the Stall() EFI boot service on
  GRUB_MACHINE_EFI
 
 Bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1150698
@@ -99,5 +99,5 @@ index 2e85289d8..0787b6f3e 100644
  
  void
 -- 
-2.13.0
+2.13.3
 

@@ -45,7 +45,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -235,9 +235,9 @@ make %{?_smp_mflags}
 
 GRUB_MODULES="	all_video boot btrfs cat chain configfile echo \
 		efifwsetup efinet ext2 fat font gfxmenu gfxterm gzio halt \
-		hfsplus iso9660 jpeg loadenv loopback lvm mdraid09 mdraid1x \
-		minicmd normal part_apple part_msdos part_gpt \
-		password_pbkdf2 png \
+		hfsplus iso9660 jpeg loadenv loopback lvm lsefi \
+		mdraid09 mdraid1x minicmd normal part_apple part_msdos \
+		part_gpt password_pbkdf2 png \
 		reboot search search_fs_uuid search_fs_file search_label \
 		serial sleep syslinuxcfg test tftp video xfs"
 %ifarch aarch64
@@ -558,6 +558,11 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Thu Aug 03 2017 Peter Jones <pjones@redhat.com> - 2.02-3
+- Rebuild so it gets SB signed correctly.
+  Related: rhbz#1335533
+- Enable lsefi
+
 * Mon Jul 24 2017 Michael Cronenworth <mike@cchtml.com> - 2.02-2
 - Fix symlink to work on both EFI and BIOS machines
   Resolves: rhbz#1335533

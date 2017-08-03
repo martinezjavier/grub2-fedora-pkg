@@ -1,7 +1,7 @@
 From 929ad582b4546319866cd75f4abfe1096676278a Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 28 Oct 2013 10:13:27 -0400
-Subject: [PATCH 086/176] F10 doesn't work on serial, so don't tell the user to
+Subject: [PATCH 086/177] F10 doesn't work on serial, so don't tell the user to
  hit it (#987443)
 
 Signed-off-by: Peter Jones <pjones@redhat.com>
@@ -23,5 +23,5 @@ index 537d4bf86..452d55bf9 100644
  					       STANDARD_MARGIN, STANDARD_MARGIN,
  					       term, dry_run);
 -- 
-2.13.0
+2.13.3
 

@@ -1,7 +1,7 @@
 From 42223d1e900e73d8ec48f3188f26f3429e421f59 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Wed, 8 Jun 2016 21:03:37 -0400
-Subject: [PATCH 131/176] efinet and bootp: add support for dhcpv6
+Subject: [PATCH 131/177] efinet and bootp: add support for dhcpv6
 
 Signed-off-by: Peter Jones <pjones@redhat.com>
 ---
@@ -663,5 +663,5 @@ index 50d62ab0c..f8f3ec13a 100644
  grub_net_add_ipv4_local (struct grub_net_network_level_interface *inf,
  			 int mask);
 -- 
-2.13.0
+2.13.3
 

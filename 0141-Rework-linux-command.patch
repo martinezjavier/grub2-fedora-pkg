@@ -1,7 +1,7 @@
 From 9f0d557a54ff3763de10f7f8ac93d99f4493b3a6 Mon Sep 17 00:00:00 2001
 From: Matthew Garrett <mjg59@coreos.com>
 Date: Sun, 9 Aug 2015 16:12:39 -0700
-Subject: [PATCH 141/176] Rework linux command
+Subject: [PATCH 141/177] Rework linux command
 
 We want a single buffer that contains the entire kernel image in order to
 perform a TPM measurement. Allocate one and copy the entire kernel into it
@@ -103,5 +103,5 @@ index b2438547d..e4b8342f5 100644
      grub_file_close (file);
  
 -- 
-2.13.0
+2.13.3
 

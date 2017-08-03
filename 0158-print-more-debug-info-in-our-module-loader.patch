@@ -1,7 +1,7 @@
 From 76cdf466430b1ee462f72f7e6e9cb8d717d11b7b Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 1 May 2017 11:19:40 -0400
-Subject: [PATCH 158/176] print more debug info in our module loader.
+Subject: [PATCH 158/177] print more debug info in our module loader.
 
 Signed-off-by: Peter Jones <pjones@redhat.com>
 ---
@@ -40,5 +40,5 @@ index 684ca93f8..1f3ac5e1d 100644
  }
  
 -- 
-2.13.0
+2.13.3
 

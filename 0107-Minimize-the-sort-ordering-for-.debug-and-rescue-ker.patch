@@ -1,7 +1,7 @@
 From e7b099e5a78ffc103d53ff37b7a9a9175aea8e97 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 4 Sep 2014 15:52:08 -0400
-Subject: [PATCH 107/176] Minimize the sort ordering for .debug and -rescue-
+Subject: [PATCH 107/177] Minimize the sort ordering for .debug and -rescue-
  kernels.
 
 Resolves: rhbz#1065360
@@ -30,5 +30,5 @@ index cf35e4174..10fabee5e 100644
    version_test_numeric "$version_test_gt_a" "$version_test_gt_cmp" "$version_test_gt_b"
    return "$?"
 -- 
-2.13.0
+2.13.3
 

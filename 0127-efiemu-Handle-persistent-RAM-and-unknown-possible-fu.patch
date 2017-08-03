@@ -1,7 +1,7 @@
 From ce78e6dd0ab8326b48919d98662a7319ce34dd8f Mon Sep 17 00:00:00 2001
 From: Robert Elliott <elliott@hpe.com>
 Date: Fri, 22 Jan 2016 13:32:30 +0100
-Subject: [PATCH 127/176] efiemu: Handle persistent RAM and unknown possible
+Subject: [PATCH 127/177] efiemu: Handle persistent RAM and unknown possible
  future additions.
 
 (cherry picked from commit ae3b83a4d4df75a01198a2fed7542391e7c449e0)
@@ -27,5 +27,5 @@ index 52a032f7b..92e7df7e5 100644
  					GRUB_EFI_PERSISTENT_MEMORY);
        default:
 -- 
-2.13.0
+2.13.3
 

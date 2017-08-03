@@ -1,7 +1,7 @@
 From 4751dd389b5de3f7431742d87e233e9a3af23357 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 1 Jun 2017 10:07:50 -0400
-Subject: [PATCH 171/176] Add PRIxGRUB_EFI_STATUS and use it.
+Subject: [PATCH 171/177] Add PRIxGRUB_EFI_STATUS and use it.
 
 This avoids syntax checkers getting confused about if it's llx or lx.
 
@@ -45,5 +45,5 @@ index 02488ec35..ddc5ecfb0 100644
  #define GRUB_EFI_ERROR_CODE(value)	\
    ((((grub_efi_status_t) 1) << (sizeof (grub_efi_status_t) * 8 - 1)) | (value))
 -- 
-2.13.0
+2.13.3
 

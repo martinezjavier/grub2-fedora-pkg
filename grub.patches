@@ -174,3 +174,4 @@ Patch0173: 0173-don-t-ignore-const.patch
 Patch0174: 0174-don-t-use-int-for-efi-status.patch
 Patch0175: 0175-make-GRUB_MOD_INIT-declare-its-function-prototypes.patch
 Patch0176: 0176-Clean-up-some-errors-in-the-linuxefi-loader.patch
+Patch0177: 0177-Fix-a-segfault-in-lsefi.patch

@@ -1,7 +1,7 @@
 From 5e60d131579d787af81a6a32278c41abb84c50f5 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 9 Jun 2016 12:22:29 -0400
-Subject: [PATCH 145/176] Re-work some intricacies of PE loading.
+Subject: [PATCH 145/177] Re-work some intricacies of PE loading.
 
 The PE spec is not a well written document, and awesomely every place
 where there's an ambiguous way to read something, Windows' bootmgfw.efi
@@ -349,5 +349,5 @@ index f79782e1b..8396bde49 100644
  
  struct grub_pe32_header
 -- 
-2.13.0
+2.13.3
 

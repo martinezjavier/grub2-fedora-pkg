@@ -1,7 +1,7 @@
 From e16fb5db722d3282fdeef18be7d3e507684aa815 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 23 Jun 2016 11:01:39 -0400
-Subject: [PATCH 132/176] Add grub-get-kernel-settings and use it in 10_linux
+Subject: [PATCH 132/177] Add grub-get-kernel-settings and use it in 10_linux
 
 This patch adds grub-get-kernel-settings, which reads the system kernel
 installation configuration from /etc/sysconfig/kernel, and outputs
@@ -298,5 +298,5 @@ index 584ad1f46..c9bf223f2 100644
    fi
  
 -- 
-2.13.0
+2.13.3
 

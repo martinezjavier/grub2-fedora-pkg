@@ -1,7 +1,7 @@
 From 7759ceeceef6a2c1c90e6e5d51e9efd56aacd508 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 16 Jul 2012 18:57:11 -0400
-Subject: [PATCH 069/176] Use "linuxefi" and "initrdefi" where appropriate.
+Subject: [PATCH 069/177] Use "linuxefi" and "initrdefi" where appropriate.
 
 ---
  util/grub.d/10_linux.in | 18 ++++++++++++++++--
@@ -46,5 +46,5 @@ index cf6331f2a..8ccf012f7 100644
    sed "s/^/$submenu_indentation/" << EOF
  }
 -- 
-2.13.0
+2.13.3
 

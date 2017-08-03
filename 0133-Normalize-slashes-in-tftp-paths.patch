@@ -1,7 +1,7 @@
 From 50b36d55b9d86a12021e0548762d2c5a3298f2a7 Mon Sep 17 00:00:00 2001
 From: Lenny Szubowicz <lszubowi@redhat.com>
 Date: Mon, 29 Aug 2016 11:04:48 -0400
-Subject: [PATCH 133/176] Normalize slashes in tftp paths.
+Subject: [PATCH 133/177] Normalize slashes in tftp paths.
 
 Some tftp servers do not handle multiple consecutive slashes correctly;
 this patch avoids sending tftp requests with non-normalized paths.
@@ -54,5 +54,5 @@ index 1157524fc..5ca0a96a6 100644
    rrq += grub_strlen (filename) + 1;
  
 -- 
-2.13.0
+2.13.3
 

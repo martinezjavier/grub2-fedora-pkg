@@ -1,7 +1,7 @@
 From 46835789f3f7458f976d8ee61f49e391a0380c4b Mon Sep 17 00:00:00 2001
 From: Mark Salter <msalter@redhat.com>
 Date: Mon, 17 Apr 2017 08:44:29 -0400
-Subject: [PATCH 155/176] arm64: make sure fdt has #address-cells and
+Subject: [PATCH 155/177] arm64: make sure fdt has #address-cells and
  #size-cells properties
 
 Recent upstream changes to kexec-tools relies on #address-cells
@@ -41,5 +41,5 @@ index f83820e61..f32151f3b 100644
    if (node < 1)
      goto failure;
 -- 
-2.13.0
+2.13.3
 

@@ -1,7 +1,7 @@
 From 229239b69319cd39d36d85551144dfe7ebf0d5e1 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 7 Jul 2015 10:13:14 -0400
-Subject: [PATCH 050/176] Fix bzr's ignore artificats in .gitignore
+Subject: [PATCH 050/177] Fix bzr's ignore artificats in .gitignore
 
 We lost a man page because of incompatibilities between bzr's ignore
 system and .gitignore, so solve that slightly better.
@@ -357,5 +357,5 @@ index eca17bec9..e82aa55b1 100644
  grub-core/build-grub-module-verifier
 +xzcompress_test
 -- 
-2.13.0
+2.13.3
 

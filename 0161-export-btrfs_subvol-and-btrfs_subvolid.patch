@@ -1,7 +1,7 @@
 From 18aa92cc523624676f9dd1bb39e03a3ee22d3346 Mon Sep 17 00:00:00 2001
 From: Michael Chang <mchang@suse.com>
 Date: Wed, 18 Dec 2013 09:57:04 +0000
-Subject: [PATCH 161/176] export btrfs_subvol and btrfs_subvolid
+Subject: [PATCH 161/177] export btrfs_subvol and btrfs_subvolid
 
 We should export btrfs_subvol and btrfs_subvolid to have both visible
 to subsidiary configuration files loaded using configfile.
@@ -25,5 +25,5 @@ index 38facf3cb..396296166 100644
  
  GRUB_MOD_FINI (btrfs)
 -- 
-2.13.0
+2.13.3
 

@@ -1,7 +1,7 @@
 From 91a2c66635f7a1b9fb94736e098f76dfc01a9df8 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 7 Apr 2016 10:58:06 -0400
-Subject: [PATCH 129/176] Revert "reopen SNP protocol for exclusive use by
+Subject: [PATCH 129/177] Revert "reopen SNP protocol for exclusive use by
  grub"
 
 I *think* this should have been replaced by upstream's
@@ -65,5 +65,5 @@ index b870d3f19..a3ce4c67c 100644
    }
  }
 -- 
-2.13.0
+2.13.3
 

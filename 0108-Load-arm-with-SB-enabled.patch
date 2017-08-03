@@ -1,7 +1,7 @@
 From 13b617ad326bf90d713cfde77a668f20939bce1a Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 18 Sep 2014 11:26:14 -0400
-Subject: [PATCH 108/176] Load arm with SB enabled.
+Subject: [PATCH 108/177] Load arm with SB enabled.
 
 Make sure we actually try to validate secure boot on this platform (even
 though we're not shipping it enabled by default.)
@@ -424,5 +424,5 @@ index 000000000..d9ede3677
 +
 +#endif /* ! GRUB_EFI_LINUX_HEADER */
 -- 
-2.13.0
+2.13.3
 

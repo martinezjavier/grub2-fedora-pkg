@@ -1,7 +1,7 @@
 From bc2e5ed91a4aff3612378675e67c8cde0e2ef2e7 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 1 Jun 2017 09:59:56 -0400
-Subject: [PATCH 169/176] Add grub_efi_allocate_pool() and grub_efi_free_pool()
+Subject: [PATCH 169/177] Add grub_efi_allocate_pool() and grub_efi_free_pool()
  wrappers.
 
 Signed-off-by: Peter Jones <pjones@redhat.com>
@@ -71,5 +71,5 @@ index 764cd11f5..89938bcaa 100644
  
  struct grub_net_card;
 -- 
-2.13.0
+2.13.3
 

@@ -1,7 +1,7 @@
 From 3166b161eb1b6ea023558067cf58c1872f52ec0c Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 7 Dec 2015 14:20:49 -0500
-Subject: [PATCH 061/176] Make efi machines load an env block from a variable
+Subject: [PATCH 061/177] Make efi machines load an env block from a variable
 
 Signed-off-by: Peter Jones <pjones@redhat.com>
 ---
@@ -80,5 +80,5 @@ index 2c31847bf..f7782b6e1 100644
  			     char **path);
  
 -- 
-2.13.0
+2.13.3
 

@@ -1,7 +1,7 @@
 From 5fcbbf442dfa3b1d922bff02038ec480ea02c866 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Fri, 5 Sep 2014 10:07:04 -0400
-Subject: [PATCH 057/176] Allow "fallback" to include entries by title, not
+Subject: [PATCH 057/177] Allow "fallback" to include entries by title, not
  just number.
 
 Resolves: rhbz#1026084
@@ -140,5 +140,5 @@ index 719e2fb1c..2e8a7bd89 100644
  static int
  get_entry_number (grub_menu_t menu, const char *name)
 -- 
-2.13.0
+2.13.3
 

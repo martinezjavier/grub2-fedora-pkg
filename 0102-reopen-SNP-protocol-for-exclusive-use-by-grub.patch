@@ -1,7 +1,7 @@
 From 6d9ce9d5bb1d2cf5ae0b81f4dea62a9da1671daf Mon Sep 17 00:00:00 2001
 From: Fedora Ninjas <grub2-owner@fedoraproject.org>
 Date: Sat, 15 Feb 2014 15:10:22 -0500
-Subject: [PATCH 102/176] reopen SNP protocol for exclusive use by grub
+Subject: [PATCH 102/177] reopen SNP protocol for exclusive use by grub
 
 ---
  grub-core/net/drivers/efi/efinet.c | 16 ++++++++++++++++
@@ -42,5 +42,5 @@ index 5388f952b..ea0e0ca36 100644
    }
  }
 -- 
-2.13.0
+2.13.3
 

@@ -1,7 +1,7 @@
 From 1c44d6203c0e783b3b50c33e24b78445ff8dabb3 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Wed, 24 May 2017 15:58:18 -0400
-Subject: [PATCH 176/176] Clean up some errors in the linuxefi loader
+Subject: [PATCH 176/177] Clean up some errors in the linuxefi loader
 
 Signed-off-by: Peter Jones <pjones@redhat.com>
 ---
@@ -65,5 +65,5 @@ index ed8cc40a0..19950d2f2 100644
  			 linux_cmdline,
  			 BYTES_TO_PAGES(lh->cmdline_size + 1));
 -- 
-2.13.0
+2.13.3
 

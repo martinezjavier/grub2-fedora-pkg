@@ -1,7 +1,7 @@
 From 5104251f96e3dc2827934d79f23f2371f12184e1 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Fri, 4 Mar 2016 16:29:13 -0500
-Subject: [PATCH 143/176] Make grub-editenv build again.
+Subject: [PATCH 143/177] Make grub-editenv build again.
 
 36212460d3565b18439a3a8130b28e6c97702c6a split how some of the mkimage
 utility functions are defined, and they wind up being linked into
@@ -26,5 +26,5 @@ index ed27351eb..38cdf4ccc 100644
    common = util/config.c;
    common = util/resolve.c;
 -- 
-2.13.0
+2.13.3
 
