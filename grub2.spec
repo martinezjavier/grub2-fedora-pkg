@@ -45,7 +45,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -558,7 +558,10 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
-* Thu Aug 10 2017 Igor Gnatenko <ignatenko@redhat.com>
+* Thu Aug 10 2017 Kevin Fenzi <kevin@scrye.com> - 2.02-5
+- Rebuild for rpm soname bump again.
+
+* Thu Aug 10 2017 Igor Gnatenko <ignatenko@redhat.com> - 2.02-4
 - Rebuilt for RPM soname bump
 
 * Thu Aug 03 2017 Peter Jones <pjones@redhat.com> - 2.02-3
