@@ -45,7 +45,7 @@
 Name:           grub2
 Epoch:          1
 Version:        2.02
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Bootloader with support for Linux, Multiboot and more
 
 Group:          System Environment/Base
@@ -558,6 +558,9 @@ fi
 %{_datarootdir}/grub/themes/starfield
 
 %changelog
+* Thu Aug 10 2017 Igor Gnatenko <ignatenko@redhat.com>
+- Rebuilt for RPM soname bump
+
 * Thu Aug 03 2017 Peter Jones <pjones@redhat.com> - 2.02-3
 - Rebuild so it gets SB signed correctly.
   Related: rhbz#1335533
