@@ -7,3 +7,5 @@ kojilogs
 /grub-*/
 .build*.log
 .*.git/
+tmp/
+.*.sw?
