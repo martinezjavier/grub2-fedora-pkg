@@ -1,4 +1,4 @@
-From ba44a4863d38296e61ee7be3e71841fafe655b71 Mon Sep 17 00:00:00 2001
+From 31eb7da21d59107afb5e1e0d4f732d1dc269a2c0 Mon Sep 17 00:00:00 2001
 From: Hector Marco-Gisbert <hecmargi@upv.es>
 Date: Fri, 13 Nov 2015 16:21:09 +0100
 Subject: [PATCH 138/192] Fix security issue when reading username and password

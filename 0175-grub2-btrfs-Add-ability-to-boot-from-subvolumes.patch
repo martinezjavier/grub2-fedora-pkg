@@ -1,4 +1,4 @@
-From 2820f28d209a67dda25b74527150be87bceb1efd Mon Sep 17 00:00:00 2001
+From a3eaa70d8fec7f0fc5c13c4886bc67d3eab8ba6e Mon Sep 17 00:00:00 2001
 From: Jeff Mahoney <jeffm@suse.com>
 Date: Wed, 18 Dec 2013 09:57:04 +0000
 Subject: [PATCH 175/192] grub2/btrfs: Add ability to boot from subvolumes

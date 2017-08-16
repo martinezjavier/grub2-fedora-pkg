@@ -1,4 +1,4 @@
-From b80f9447368083bc90d2a2642e790fb0b8ae1010 Mon Sep 17 00:00:00 2001
+From 6711c5bb2641789ac5e24bf880283eef65532518 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 26 Jun 2017 12:44:59 -0400
 Subject: [PATCH 189/192] don't use int for efi status

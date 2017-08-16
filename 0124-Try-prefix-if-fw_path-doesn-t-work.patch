@@ -1,4 +1,4 @@
-From 55734dd999108c3658a3b866fffc3102737c10a5 Mon Sep 17 00:00:00 2001
+From 9f6d403d5d3e782759276c158736e431e5c9de3f Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Fri, 3 Oct 2014 11:08:03 -0400
 Subject: [PATCH 124/192] Try $prefix if $fw_path doesn't work.

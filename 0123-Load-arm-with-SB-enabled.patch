@@ -1,4 +1,4 @@
-From 6e8a67f6e4d0699d47c6fe86343d122252491f09 Mon Sep 17 00:00:00 2001
+From 89cc931e0faf05a4cf79cf8554037d035b829d0a Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 18 Sep 2014 11:26:14 -0400
 Subject: [PATCH 123/192] Load arm with SB enabled.
@@ -42,7 +42,7 @@ index 7f3d5a2bf..5ae70204c 100644
    enable = x86_64_efi;
  };
 diff --git a/grub-core/loader/arm64/linux.c b/grub-core/loader/arm64/linux.c
-index 746edd104..450d1a1de 100644
+index 746edd104..03ff83563 100644
 --- a/grub-core/loader/arm64/linux.c
 +++ b/grub-core/loader/arm64/linux.c
 @@ -28,6 +28,7 @@
@@ -86,8 +86,8 @@ index 746edd104..450d1a1de 100644
 +  loaded_image->load_options_size = len =
 +    (grub_strlen (linux_args) + 1) * sizeof (grub_efi_char16_t);
 +  loaded_image->load_options =
-+    grub_efi_allocate_pages (0,
-+			     GRUB_EFI_BYTES_TO_PAGES (loaded_image->load_options_size));
++    grub_efi_allocate_pages_max (0,
++				 GRUB_EFI_BYTES_TO_PAGES (loaded_image->load_options_size));
 +  if (!loaded_image->load_options)
 +    return grub_error(GRUB_ERR_BAD_OS, "failed to create kernel parameters");
 +

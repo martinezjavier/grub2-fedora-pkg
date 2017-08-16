@@ -1,4 +1,4 @@
-From 0d943cd642131e4f6d6ca9edde9d9373294ec1db Mon Sep 17 00:00:00 2001
+From d5f0e3cb0b3e038f35cdddf798e095cb1c9b8d00 Mon Sep 17 00:00:00 2001
 From: Michael Chang <mchang@suse.com>
 Date: Thu, 21 Aug 2014 03:39:11 +0000
 Subject: [PATCH 179/192] grub2-btrfs-05-grub2-mkconfig

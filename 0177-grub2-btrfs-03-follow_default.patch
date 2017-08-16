@@ -1,4 +1,4 @@
-From ab593d129dd76437dc05e328852106e917d6fc7e Mon Sep 17 00:00:00 2001
+From c92dacf72b436c42f7a417b161852017bd95ac72 Mon Sep 17 00:00:00 2001
 From: Michael Chang <mchang@suse.com>
 Date: Thu, 21 Aug 2014 03:39:11 +0000
 Subject: [PATCH 177/192] grub2-btrfs-03-follow_default
