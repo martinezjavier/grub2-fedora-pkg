@@ -12,7 +12,7 @@
 %global cc_equals %{nil}
 %endif
 
-%global efi_cflags %(echo %{optflags} | 			\\\
+%global cflags_sed						\\\
 	sed							\\\
 		-e 's/-O. //g'					\\\
 		-e 's/-g /-g3 /g'				\\\
@@ -22,14 +22,18 @@
 		-e 's/-mregparm=3/-mregparm=4/g'		\\\
 		-e 's/-fexceptions//g'				\\\
 		-e 's/-fasynchronous-unwind-tables//g'		\\\
-		-e 's/$/ -I$(pwd)/'				\\\
-		-e 's/^/ -fno-strict-aliasing /' ) %{nil}
-%global legacy_cflags %(echo %{efi_cflags} |			\\\
-	sed							\\\
+		-e 's/^/ -fno-strict-aliasing /'		\\\
+		%{nil}
+
+%global efi_cflags						\\\
+	%{expand:%%(echo %{optflags} | %{cflags_sed})}
+
+%global legacy_cflags						\\\
+	%{expand:%%(echo %{optflags} | 				\\\
+	%{cflags_sed}						\\\
 		-e 's/-m64//g'					\\\
 		-e 's/-mcpu=power[[:alnum:]]\\+/-mcpu=power6/g'	\\\
-		) %{nil}
-
+	)}
 
 %global with_efi_arch 0
 %global with_alt_efi_arch 0
@@ -94,10 +98,11 @@
 %global alt_grub_target_name i386-efi
 %global alt_platform efi
 %global alt_package_arch efi-ia32
-%global alt_efi_cflags %(echo %{efi_cflags} |			\\\
-	sed							\\\
-		-e 's/-m64//g'				\\\
-	) %{nil}
+%global alt_efi_cflags						\\\
+	%{expand:%%(echo %{optflags} | 				\\\
+	%{cflags_sed}						\\\
+		-e 's/-m64//g'					\\\
+	)}
 %endif
 
 %ifarch aarch64
@@ -267,7 +272,7 @@ makeinfo --html --no-split -I docs -o docs/grub.html		\\\
 %define do_efi_configure()					\
 %configure							\\\
 	%{cc_equals}						\\\
-	CFLAGS="%{2}"						\\\
+	CFLAGS="%{2} -I$(pwd)"					\\\
 	TARGET_LDFLAGS=-static					\\\
         --with-platform=efi					\\\
 	--target=%{1}						\\\
@@ -345,7 +350,7 @@ cd ..								\
 cd grub-%{1}-%{tarversion}					\
 %configure							\\\
 	%{cc_equals}						\\\
-	CFLAGS="%{legacy_cflags}"				\\\
+	CFLAGS="%{legacy_cflags} -I$(pwd)"			\\\
 	TARGET_LDFLAGS=-static					\\\
         --with-platform=%{platform}				\\\
 	--target=%{_target_platform}				\\\
@@ -409,11 +414,11 @@ if [ -f $RPM_BUILD_ROOT%{_infodir}/grub-dev.info ]; then	\
 fi								\
 ln -s ../boot/%{name}/grub.cfg					\\\
 	${RPM_BUILD_ROOT}%{_sysconfdir}/grub2.cfg		\
-cd ..								\
 if [ -f $RPM_BUILD_ROOT/%{_libdir}/grub/%{1}/grub2.chrp ]; then \
 	mv $RPM_BUILD_ROOT/%{_libdir}/grub/%{1}/grub2.chrp	\\\
 	   $RPM_BUILD_ROOT/%{_libdir}/grub/%{1}/grub.chrp	\
 fi								\
+cd ..								\
 %{nil}
 
 %define do_common_install()					\
@@ -451,7 +456,7 @@ touch ${RPM_BUILD_ROOT}/boot/%{name}/grub.cfg			\
 %dir %{_libdir}/grub/%{2}/					\
 %{_libdir}/grub/%{2}/*						\
 %exclude %{_libdir}/grub/%{2}/*.module				\
-%exclude %{_libdir}/grub/%{2}/{boot,boot_hybrid,cdboot,diskboot,lzma_decompress,pxeboot}.{image,img}						\
+%exclude %{_libdir}/grub/%{2}/{boot,boot_hybrid,cdboot,diskboot,lzma_decompress,pxeboot}.{image,img}	\
 %exclude %{_libdir}/grub/%{2}/*.o				\
 %{nil}
 
