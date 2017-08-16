@@ -395,9 +395,6 @@ install -m 755 %{2} $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/%{2}	\
 install -m 755 %{3} $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/%{3} \
 install -D -m 644 unicode.pf2					\\\
 	$RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/fonts/unicode.pf2\
-ln -sf ../efi/EFI/%{efidir}/grubenv				\\\
-	$RPM_BUILD_ROOT/boot/grub2/grubenv			\
-./grub-editenv ${RPM_BUILD_ROOT}/boot/grub2/grubenv create	\
 cd ..								\
 %{nil}
 
@@ -412,7 +409,6 @@ if [ -f $RPM_BUILD_ROOT%{_infodir}/grub-dev.info ]; then	\
 fi								\
 ln -s ../boot/%{name}/grub.cfg					\\\
 	${RPM_BUILD_ROOT}%{_sysconfdir}/grub2.cfg		\
-./grub-editenv ${RPM_BUILD_ROOT}/boot/grub2/grubenv create	\
 cd ..								\
 if [ -f $RPM_BUILD_ROOT/%{_libdir}/grub/%{1}/grub2.chrp ]; then \
 	mv $RPM_BUILD_ROOT/%{_libdir}/grub/%{1}/grub2.chrp	\\\
@@ -439,6 +435,8 @@ install -d -m 0755 ${RPM_BUILD_ROOT}%{_sysconfdir}/sysconfig	\
 touch ${RPM_BUILD_ROOT}%{_sysconfdir}/default/grub		\
 ln -sf ../default/grub						\\\
 	${RPM_BUILD_ROOT}%{_sysconfdir}/sysconfig/grub		\
+ln -sf ../efi/EFI/%{efidir}/grubenv				\\\
+	$RPM_BUILD_ROOT/boot/grub2/grubenv			\
 touch ${RPM_BUILD_ROOT}/boot/%{name}/grub.cfg			\
 %{nil}
 
