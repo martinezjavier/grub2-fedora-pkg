@@ -198,6 +198,7 @@ rm -fr $RPM_BUILD_ROOT
 %if 0%{with_legacy_arch}
 %{expand:%do_legacy_install %%{grublegacyarch} %%{alt_grub_target_name}}
 %endif
+${RPM_BUILD_ROOT}/%{_bindir}/%{name}-editenv ${RPM_BUILD_ROOT}/boot/efi/EFI/%{efidir}/grubenv create
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
 %find_lang grub
