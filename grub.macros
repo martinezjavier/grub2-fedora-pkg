@@ -351,7 +351,6 @@ cd grub-%{1}-%{tarversion}					\
 %configure							\\\
 	%{cc_equals}						\\\
 	CFLAGS="%{legacy_cflags} -I$(pwd)"			\\\
-	CPPFLAGS="%{legacy_cflags} -I$(pwd)"			\\\
 	TARGET_LDFLAGS=-static					\\\
         --with-platform=%{platform}				\\\
 	--target=%{_target_platform}				\\\
