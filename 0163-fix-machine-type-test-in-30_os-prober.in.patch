@@ -1,4 +1,4 @@
-From e091c46338bf077d93e3b99d6e326e78afcf902f Mon Sep 17 00:00:00 2001
+From 5368a034f371af6614de303b057fdc092892611a Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 11 Jul 2016 13:36:45 -0400
 Subject: [PATCH 163/192] fix machine type test in 30_os-prober.in

@@ -1,4 +1,4 @@
-From 9365f56c0ff31b62a4334f583c04da8ddd5a3274 Mon Sep 17 00:00:00 2001
+From 8ed119f11ac2981a123f192ba9229c31d4ecb287 Mon Sep 17 00:00:00 2001
 From: Mark Salter <msalter@redhat.com>
 Date: Mon, 17 Apr 2017 08:44:29 -0400
 Subject: [PATCH 170/192] arm64: make sure fdt has #address-cells and
@@ -14,7 +14,7 @@ make sure they exist.
  1 file changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/grub-core/loader/arm64/linux.c b/grub-core/loader/arm64/linux.c
-index 854971ae6..83f5a6de2 100644
+index 34f34e65a..530c4ba2d 100644
 --- a/grub-core/loader/arm64/linux.c
 +++ b/grub-core/loader/arm64/linux.c
 @@ -79,7 +79,21 @@ finalize_params_linux (void)

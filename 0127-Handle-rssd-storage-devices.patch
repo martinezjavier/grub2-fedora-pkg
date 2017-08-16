@@ -1,4 +1,4 @@
-From 6865b4f0ee030c7575ecf7d1bf31bdef3981d43b Mon Sep 17 00:00:00 2001
+From cdbc94f3f51b2575535a51c952238b2cd5b34639 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 30 Jun 2015 15:50:41 -0400
 Subject: [PATCH 127/192] Handle rssd storage devices.

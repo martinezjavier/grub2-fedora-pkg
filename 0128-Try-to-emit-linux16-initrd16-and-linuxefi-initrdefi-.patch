@@ -1,4 +1,4 @@
-From 426b12a33d84f11e896c19cc2e1fdc5a695ebdc3 Mon Sep 17 00:00:00 2001
+From ce0866787ab88f37c346595c639921ef8922975e Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 27 Oct 2014 09:22:55 -0400
 Subject: [PATCH 128/192] Try to emit linux16/initrd16 and linuxefi/initrdefi

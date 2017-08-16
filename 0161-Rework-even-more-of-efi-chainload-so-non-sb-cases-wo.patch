@@ -1,4 +1,4 @@
-From 341c267c6e2613b3fc5341578ee9ec3524fb7098 Mon Sep 17 00:00:00 2001
+From b25aeee879c5b5dc8bf642c11090feb9b3ed875f Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Fri, 10 Jun 2016 14:06:15 -0400
 Subject: [PATCH 161/192] Rework even more of efi chainload so non-sb cases
@@ -80,7 +80,7 @@ index a41b6c5b8..d74778b0c 100644
    if (*secure_boot && !*setup_mode)
      ret = 1;
 diff --git a/grub-core/loader/arm64/linux.c b/grub-core/loader/arm64/linux.c
-index 450d1a1de..854971ae6 100644
+index 03ff83563..34f34e65a 100644
 --- a/grub-core/loader/arm64/linux.c
 +++ b/grub-core/loader/arm64/linux.c
 @@ -248,6 +248,7 @@ grub_cmd_linux (grub_command_t cmd __attribute__ ((unused)),

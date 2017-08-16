@@ -1,4 +1,4 @@
-From 8d52adac75a53452e6b1e6ed527b90b7cbaac7a6 Mon Sep 17 00:00:00 2001
+From 2e6a1b095ea2acab1b16a80f199e34d9a287a6da Mon Sep 17 00:00:00 2001
 From: Laszlo Ersek <lersek@redhat.com>
 Date: Fri, 10 Oct 2014 11:11:09 +0200
 Subject: [PATCH 131/192] calibrate_tsc(): use the Stall() EFI boot service on

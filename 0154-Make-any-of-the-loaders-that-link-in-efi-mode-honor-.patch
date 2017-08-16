@@ -1,4 +1,4 @@
-From 23965f6becb9ab6e8e83495d70dbdf650811b630 Mon Sep 17 00:00:00 2001
+From 4c768f9b3ee1f26b1d7cedc6f5aa79e9a77a0f1b Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 6 Oct 2015 16:09:25 -0400
 Subject: [PATCH 154/192] Make any of the loaders that link in efi mode honor

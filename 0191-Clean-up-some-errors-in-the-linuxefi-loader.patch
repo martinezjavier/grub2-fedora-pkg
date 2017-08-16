@@ -1,4 +1,4 @@
-From 3baddd2a95ca1026951e2d8bb0b39b9e22471eb1 Mon Sep 17 00:00:00 2001
+From 7d1c68137a2c4c69e3b4407d9771ccb51f3341fe Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Wed, 24 May 2017 15:58:18 -0400
 Subject: [PATCH 191/192] Clean up some errors in the linuxefi loader

@@ -1,4 +1,4 @@
-From 61e77dd153b356351235c0e548ab52f81fe473b9 Mon Sep 17 00:00:00 2001
+From 8da9508faa25ba5add92267cce1286c0d44541e7 Mon Sep 17 00:00:00 2001
 From: Robert Marshall <rmarshall@redhat.com>
 Date: Mon, 16 Mar 2015 14:14:19 -0400
 Subject: [PATCH 126/192] Use Distribution Package Sort for grub2-mkconfig
