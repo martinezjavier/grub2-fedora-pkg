@@ -14,6 +14,8 @@ URL:		http://www.gnu.org/software/grub/
 Obsoletes:	grub < 1:0.98
 Source0:	ftp://alpha.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
 #Source0:	ftp://ftp.gnu.org/gnu/grub/grub-%%{tarversion}.tar.xz
+Source1:	grub.macros
+Source2:	grub.patches
 Source4:	http://unifoundry.com/unifont-5.1.20080820.pcf.gz
 Source5:	theme.tar.bz2
 Source6:	gitignore
