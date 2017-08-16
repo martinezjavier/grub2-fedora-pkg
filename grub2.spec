@@ -52,8 +52,8 @@ BuildRequires:	/usr/lib64/crt1.o glibc-static(x86-64) glibc-devel(x86-64)
 %if 0%{?centos}%{?mock}
 BuildRequires:	/usr/lib/crt1.o glibc-static(x86-32) glibc-devel(x86-32)
 %else
-# BuildRequires:	/usr/lib/crt1.o glibc32
-BuildRequires:	/usr/lib/crt1.o glibc-static(x86-32)
+BuildRequires:	/usr/lib/crt1.o glibc32
+#BuildRequires:	/usr/lib/crt1.o glibc-static(x86-32)
 %endif
 %else
 # ppc64 builds need the ppc crt1.o
@@ -197,6 +197,11 @@ This subpackage provides tools for support of all platforms.
 %{expand:%do_legacy_build %%{grublegacyarch}}
 %endif
 %do_common_build
+%ifnarch x86_64
+rm -vf %{_bindir}/%{name}-render-label %{_sbindir}/%{name}-bios-setup %{_sbindir}/%{name}-macbless
+%endif
+
+
 
 %install
 set -e
@@ -363,11 +368,6 @@ fi
 %doc docs/grub.html
 %doc docs/grub-dev.html
 %doc docs/font_char_metrics.png
-%ifnarch x86_64 %{ix86}
-%exclude %{_bindir}/%{name}-render-label
-%exclude %{_sbindir}/%{name}-bios-setup
-%exclude %{_sbindir}/%{name}-macbless
-%endif
 
 %files tools-minimal
 %defattr(-,root,root,-)
@@ -384,7 +384,7 @@ fi
 %{_datadir}/man/man1/%{name}-editenv*
 %{_datadir}/man/man1/%{name}-mkpasswd-*
 
-%ifarch x86_64 %{ix86}
+%ifarch x86_64
 %files tools-efi
 %defattr(-,root,root,-)
 %{_sbindir}/%{name}-macbless
@@ -439,7 +439,7 @@ fi
 
 %if %{with_legacy_arch}
 %{_sbindir}/%{name}-install
-%ifarch %{ix86} x86_64
+%ifarch x86_64
 %{_sbindir}/%{name}-bios-setup
 %else
 %exclude %{_sbindir}/%{name}-bios-setup
