@@ -91,6 +91,20 @@ hardware devices.\
 %description
 %{desc}
 
+# temporary
+%ifarch x86_64 aarch64
+%package efi
+Summary:	Bootloader with support for Linux, Multiboot, and more
+Group:		System Environment/Base
+Requires:	%{name}-tools-minimal = %{evr}
+Requires:	%{name}-tools-extra = %{evr}
+Requires:	%{name}-tools = %{evr}
+
+%description efi
+%{desc}
+This subpackage provides support for %{_arch} EFI systems
+%endif
+
 %package common
 Summary:	grub2 common layout
 Group:		System Environment/Base
@@ -305,6 +319,23 @@ if [ "$1" = 0 ]; then
 fi
 
 %files
+
+# temporary
+%ifarch x86_64 aarch64
+%files efi
+%defattr(-,root,root,-)
+%config(noreplace) %{_sysconfdir}/%{name}-efi.cfg
+%dir %attr(0755,root,root)/boot/efi/EFI/%{efidir}
+%dir %attr(0755,root,root)/boot/efi/EFI/%{efidir}/fonts
+%ghost %config(noreplace) /boot/efi/EFI/%{efidir}/grub.cfg
+/boot/grub2/grubenv
+%ghost %config(noreplace) %attr(0700,root,root)/boot/efi/EFI/%{efidir}/grubenv
+/boot/efi/EFI/%{efidir}/fonts/unicode.pf2
+/boot/efi/EFI/%{efidir}/gcd%{efiarch}.efi
+/boot/efi/EFI/%{efidir}/grub%{efiarch}.efi
+/boot/grub2/grubenv
+%license COPYING
+%endif
 
 %files common -f grub.lang
 %dir %{_libdir}/grub/
