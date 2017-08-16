@@ -6,6 +6,8 @@
 %{expand:%%{!?buildsubdir:%%global buildsubdir grub-%{tarversion}}}
 %{expand:%%{!?_licensedir:%%global license %%%%doc}}
 
+%global _configure_gnuconfig_hack 0
+
 %if %{?_with_ccache: 1}%{?!_with_ccache: 0}
 %global cc_equals CC=/usr/%{_lib}/ccache/gcc
 %else
