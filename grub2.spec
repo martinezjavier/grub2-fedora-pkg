@@ -2,6 +2,7 @@
 
 %global tarversion 2.02
 %undefine _missing_build_ids_terminate_build
+%global _configure_gnuconfig_hack 0
 
 Name:		grub2
 Epoch:		1
@@ -41,25 +42,6 @@ BuildRequires:	ncurses-devel xz-devel bzip2-devel
 BuildRequires:	freetype-devel libusb-devel
 BuildRequires:	rpm-devel
 BuildRequires:	rpm-devel rpm-libs
-%ifarch %{sparc} aarch64 ppc64le
-# sparc builds need 64 bit glibc-devel - also for 32 bit userland
-BuildRequires:	/usr/lib64/crt1.o glibc-static
-%else
-%ifarch x86_64
-BuildRequires:	/usr/lib64/crt1.o glibc-static(x86-64) glibc-devel(x86-64)
-# glibc32 is what will be in the buildroots, but glibc-static(x86-32) is what
-# will be in an epel-7 (i.e. centos) mock root.  I think.
-%if 0%{?centos}%{?mock}
-BuildRequires:	/usr/lib/crt1.o glibc-static(x86-32) glibc-devel(x86-32)
-%else
-BuildRequires:	/usr/lib/crt1.o glibc32
-#BuildRequires:	/usr/lib/crt1.o glibc-static(x86-32)
-%endif
-%else
-# ppc64 builds need the ppc crt1.o
-BuildRequires:	/usr/lib/crt1.o glibc-static glibc-devel
-%endif
-%endif
 BuildRequires:	autoconf automake autogen device-mapper-devel
 BuildRequires:	freetype-devel gettext-devel git
 BuildRequires:	texinfo
@@ -197,11 +179,6 @@ This subpackage provides tools for support of all platforms.
 %{expand:%do_legacy_build %%{grublegacyarch}}
 %endif
 %do_common_build
-%ifnarch x86_64
-rm -vf %{_bindir}/%{name}-render-label %{_sbindir}/%{name}-bios-setup %{_sbindir}/%{name}-macbless
-%endif
-
-
 
 %install
 set -e
@@ -219,6 +196,11 @@ rm -fr $RPM_BUILD_ROOT
 %endif
 ${RPM_BUILD_ROOT}/%{_bindir}/%{name}-editenv ${RPM_BUILD_ROOT}/boot/efi/EFI/%{efidir}/grubenv create
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
+%ifnarch x86_64
+rm -vf ${RPM_BUILD_ROOT}/%{_bindir}/%{name}-render-label
+rm -vf ${RPM_BUILD_ROOT}/%{_sbindir}/%{name}-bios-setup
+rm -vf ${RPM_BUILD_ROOT}/%{_sbindir}/%{name}-macbless
+%endif
 
 %find_lang grub
 
