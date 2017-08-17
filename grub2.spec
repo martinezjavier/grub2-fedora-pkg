@@ -156,16 +156,18 @@ This subpackage provides tools for support of all platforms.
 %endif
 
 %prep
-# %%setup -T -c -n grub-%%{tarversion}
 %do_common_setup
 %if 0%{with_efi_arch}
-%{expand:%do_setup %%{grubefiarch}}
+mkdir grub-%{grubefiarch}-%{tarversion}
+cp %{SOURCE4} grub-%{grubefiarch}-%{tarversion}/unifont.pcf.gz
 %endif
 %if 0%{with_alt_efi_arch}
-%{expand:%do_setup %%{grubaltefiarch}}
+mkdir grub-%{grubaltefiarch}-%{tarversion}
+cp %{SOURCE4} grub-%{grubaltefiarch}-%{tarversion}/unifont.pcf.gz
 %endif
 %if 0%{with_legacy_arch}
-%{expand: %do_setup %%{grublegacyarch}}
+mkdir grub-%{grublegacyarch}-%{tarversion}
+cp %{SOURCE4} grub-%{grublegacyarch}-%{tarversion}/unifont.pcf.gz
 %endif
 
 %build
@@ -178,7 +180,14 @@ This subpackage provides tools for support of all platforms.
 %if 0%{with_legacy_arch}
 %{expand:%do_legacy_build %%{grublegacyarch}}
 %endif
-%do_common_build
+makeinfo --info --no-split -I docs -o docs/grub-dev.info \
+	docs/grub-dev.texi
+makeinfo --info --no-split -I docs -o docs/grub.info \
+	docs/grub.texi
+makeinfo --html --no-split -I docs -o docs/grub-dev.html \
+	docs/grub-dev.texi
+makeinfo --html --no-split -I docs -o docs/grub.html \
+	docs/grub.texi
 
 %install
 set -e
