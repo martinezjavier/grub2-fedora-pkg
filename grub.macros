@@ -6,6 +6,7 @@
 %{expand:%%{!?buildsubdir:%%global buildsubdir grub-%{tarversion}}}
 %{expand:%%{!?_licensedir:%%global license %%%%doc}}
 
+%global _configure ../configure
 
 %if %{?_with_ccache: 1}%{?!_with_ccache: 0}
 %global cc_equals CC=/usr/%{_lib}/ccache/gcc
@@ -251,23 +252,6 @@ git commit -a -q -m "%{tarversion} baseline."			\
 git am %%{patches} </dev/null					\
 git config --unset user.email					\
 git config --unset user.name					\
-%global _configure ../configure					\
-%{nil}
-
-%global do_setup()						\
-mkdir grub-%{1}-%{tarversion}					\
-cp %{SOURCE4} grub-%{1}-%{tarversion}/unifont.pcf.gz		\
-%{nil}
-
-%global do_common_build()					\
-makeinfo --info --no-split -I docs -o docs/grub-dev.info	\\\
-	docs/grub-dev.texi					\
-makeinfo --info --no-split -I docs -o docs/grub.info		\\\
-	docs/grub.texi						\
-makeinfo --html --no-split -I docs -o docs/grub-dev.html	\\\
-	docs/grub-dev.texi					\
-makeinfo --html --no-split -I docs -o docs/grub.html		\\\
-	docs/grub.texi						\
 %{nil}
 
 %define do_efi_configure()					\
