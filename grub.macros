@@ -6,7 +6,6 @@
 %{expand:%%{!?buildsubdir:%%global buildsubdir grub-%{tarversion}}}
 %{expand:%%{!?_licensedir:%%global license %%%%doc}}
 
-%global _configure_gnuconfig_hack 0
 
 %if %{?_with_ccache: 1}%{?!_with_ccache: 0}
 %global cc_equals CC=/usr/%{_lib}/ccache/gcc
@@ -275,6 +274,7 @@ makeinfo --html --no-split -I docs -o docs/grub.html		\\\
 %configure							\\\
 	%{cc_equals}						\\\
 	CFLAGS="%{2} -I$(pwd)"					\\\
+	CPPFLAGS="${CPPFLAGS} -I$(pwd)"				\\\
 	TARGET_LDFLAGS=-static					\\\
         --with-platform=efi					\\\
 	--target=%{1}						\\\
