@@ -7,7 +7,7 @@
 Name:		grub2
 Epoch:		1
 Version:	2.02
-Release:	9%{?dist}
+Release:	10%{?dist}
 Summary:	Bootloader with support for Linux, Multiboot and more
 Group:		System Environment/Base
 License:	GPLv3+
@@ -492,6 +492,9 @@ fi
 %endif
 
 %changelog
+* Fri Aug 18 2017 Peter Jones <pjones@redhat.com> - 2.02-10
+- Add the .img files into grub2-pc-modules (and all legacy variants)
+
 * Wed Aug 16 2017 Peter Jones <pjones@redhat.com> - 2.02-9
 - Re-work for ia32-efi.
 
