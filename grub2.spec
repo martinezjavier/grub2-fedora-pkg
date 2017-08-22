@@ -7,7 +7,7 @@
 Name:		grub2
 Epoch:		1
 Version:	2.02
-Release:	10%{?dist}
+Release:	11%{?dist}
 Summary:	Bootloader with support for Linux, Multiboot and more
 Group:		System Environment/Base
 License:	GPLv3+
@@ -401,6 +401,7 @@ fi
 %{_sbindir}/%{name}-reboot
 %{_bindir}/%{name}-file
 %{_bindir}/%{name}-menulst2cfg
+%{_bindir}/%{name}-mkimage
 %{_bindir}/%{name}-mkrelpath
 %{_bindir}/%{name}-script-check
 %{_datadir}/man/man?/*
@@ -412,7 +413,6 @@ fi
 %exclude %{_datadir}/man/man1/%{name}-glue-efi*
 %exclude %{_datadir}/man/man1/%{name}-kbdcomp*
 %exclude %{_datadir}/man/man1/%{name}-mkfont*
-%exclude %{_datadir}/man/man1/%{name}-mkimage*
 %exclude %{_datadir}/man/man1/%{name}-mklayout*
 %exclude %{_datadir}/man/man1/%{name}-mknetdir*
 %exclude %{_datadir}/man/man1/%{name}-mkrescue*
@@ -457,7 +457,6 @@ fi
 %{_bindir}/%{name}-glue-efi
 %{_bindir}/%{name}-kbdcomp
 %{_bindir}/%{name}-mkfont
-%{_bindir}/%{name}-mkimage
 %{_bindir}/%{name}-mklayout
 %{_bindir}/%{name}-mknetdir
 %ifnarch %{sparc}
@@ -472,7 +471,6 @@ fi
 %{_datadir}/man/man1/%{name}-glue-efi*
 %{_datadir}/man/man1/%{name}-kbdcomp*
 %{_datadir}/man/man1/%{name}-mkfont*
-%{_datadir}/man/man1/%{name}-mkimage*
 %{_datadir}/man/man1/%{name}-mklayout*
 %{_datadir}/man/man1/%{name}-mknetdir*
 %{_datadir}/man/man1/%{name}-mkrescue*
@@ -492,6 +490,9 @@ fi
 %endif
 
 %changelog
+* Tue Aug 22 2017 Peter Jones <pjones@redhat.com> - 2.02-11
+- Put grub2-mkimage in -tools, not -tools-extra.
+
 * Fri Aug 18 2017 Peter Jones <pjones@redhat.com> - 2.02-10
 - Add the .img files into grub2-pc-modules (and all legacy variants)
 
