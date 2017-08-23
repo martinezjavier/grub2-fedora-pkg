@@ -54,7 +54,7 @@ BuildRequires:	pesign >= 0.99-8
 BuildRequires:	ccache
 %endif
 
-ExcludeArch:	s390 s390x %{arm} %{?ix86}
+ExcludeArch:	s390 s390x %{arm}
 Obsoletes:	%{name} <= %{evr}
 
 %if 0%{with_legacy_arch}
@@ -490,8 +490,10 @@ fi
 %endif
 
 %changelog
-* Tue Aug 22 2017 Peter Jones <pjones@redhat.com> - 2.02-11
+* Wed Aug 23 2017 Peter Jones <pjones@redhat.com> - 2.02-11
 - Put grub2-mkimage in -tools, not -tools-extra.
+- Fix i686 building
+- Fix ppc HFS+ usage due to /boot/efi's presence.
 
 * Fri Aug 18 2017 Peter Jones <pjones@redhat.com> - 2.02-10
 - Add the .img files into grub2-pc-modules (and all legacy variants)

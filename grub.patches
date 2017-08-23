@@ -190,3 +190,5 @@ Patch0189: 0189-don-t-use-int-for-efi-status.patch
 Patch0190: 0190-make-GRUB_MOD_INIT-declare-its-function-prototypes.patch
 Patch0191: 0191-Clean-up-some-errors-in-the-linuxefi-loader.patch
 Patch0192: 0192-editenv-handle-relative-symlinks.patch
+Patch0193: 0193-Make-libgrub.pp-depend-on-config-util.h.patch
+Patch0194: 0194-Don-t-guess-boot-efi-as-HFS-on-ppc-machines-in-grub-.patch

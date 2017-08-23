@@ -61,6 +61,13 @@
 %global platform ieee1275
 %endif
 
+%ifarch %{ix86}
+%global target_cpu_name %{_arch}
+%global legacy_target_cpu_name i386
+%global legacy_package_arch pc
+%global platform pc
+%endif
+
 %global efi_only aarch64 %{arm}
 %global efi_arch x86_64 ia64 %{efi_only}
 %ifarch %{efi_arch}
@@ -149,12 +156,14 @@
 
 %global evr %{epoch}:%{version}-%{release}
 
-%if %{with_legacy_arch}
+%ifarch x86_64
+%global with_efi_common 1
+%global with_legacy_modules 0
+%global with_legacy_common 0
+%else
 %global with_efi_common 0
 %global with_legacy_common 1
-%else
-%global with_efi_common 1
-%global with_legacy_common 0
+%global with_legacy_modules 1
 %endif
 
 %define define_legacy_variant()						\
@@ -174,14 +183,17 @@ Requires(post): dracut							\
 This subpackage provides support for %%{1} systems.			\
 									\
 %{expand:%%{?!buildsubdir:%%define buildsubdir grub-%%{1}-%{tarversion}}}\
-%{expand:%%package %%{1}-modules}					\
+%{expand:%%if 0%%{with_legacy_modules}					\
+%%package %%{1}-modules							\
 Summary:	Modules used to build custom grub images		\
 Group:		System Environment/Base					\
 BuildArch:	noarch							\
-Requires:	%{name}-common = %{evr}					\
-%{expand:%%description %%{1}-modules}					\
-%{desc}									\
+Requires:	%%{name}-common = %%{evr}				\
+%%description %%{1}-modules						\
+%%{desc}								\
 This subpackage provides support for rebuilding your own grub.efi.	\
+%%endif									\
+}									\
 									\
 %{expand:%%{?!buildsubdir:%%define buildsubdir grub-%%{1}-%{tarversion}}}\
 %{expand:%%package %%{1}-tools}						\
@@ -437,6 +449,7 @@ touch ${RPM_BUILD_ROOT}/boot/%{name}/grub.cfg			\
 %config(noreplace) %{_sysconfdir}/%{name}.cfg			\
 %ghost %config(noreplace) /boot/%{name}/grub.cfg		\
 								\
+%{expand:%if 0%{?with_legacy_modules}				\
 %{expand:%%files %{1}-modules}					\
 %defattr(-,root,root)						\
 %dir %{_libdir}/grub/%{2}/					\
@@ -444,6 +457,9 @@ touch ${RPM_BUILD_ROOT}/boot/%{name}/grub.cfg			\
 %exclude %{_libdir}/grub/%{2}/*.module				\
 %exclude %{_libdir}/grub/%{2}/{boot,boot_hybrid,cdboot,diskboot,lzma_decompress,pxeboot}.image \
 %exclude %{_libdir}/grub/%{2}/*.o				\
+%else								\
+%%exclude %%{_libdir}/grub/%%{grublegacyarch}/*			\
+%endif}								\
 %{nil}
 
 %define define_efi_variant_files()				\
