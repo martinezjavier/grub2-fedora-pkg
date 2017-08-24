@@ -1,7 +1,7 @@
-From 7e736292dcb182f7c012365c3fc02908585f8440 Mon Sep 17 00:00:00 2001
+From fb582651ea4568d7226f96e6b618ad795430c842 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 14 Jan 2014 13:12:23 -0500
-Subject: [PATCH 106/192] Make 10_linux work with our changes for linux16 and
+Subject: [PATCH 106/194] Make 10_linux work with our changes for linux16 and
  linuxefi on aarch64
 
 Signed-off-by: Peter Jones <pjones@redhat.com>
@@ -81,5 +81,5 @@ index ef52cf3db..191aebe80 100644
    for i in "${dirname}/config-${version}" "${dirname}/config-${alt_version}" "/etc/kernels/kernel-config-${version}" ; do
      if test -e "${i}" ; then
 -- 
-2.13.4
+2.13.5
 

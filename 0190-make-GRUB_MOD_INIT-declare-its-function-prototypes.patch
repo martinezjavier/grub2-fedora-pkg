@@ -1,7 +1,7 @@
-From a80182d86a6a55413b5794a2eca80b4b7dfc9be5 Mon Sep 17 00:00:00 2001
+From 4eff8a4634c2fd1fb4ece9d49e0b99b83b01b4c9 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 26 Jun 2017 12:46:23 -0400
-Subject: [PATCH 190/192] make GRUB_MOD_INIT() declare its function prototypes.
+Subject: [PATCH 190/194] make GRUB_MOD_INIT() declare its function prototypes.
 
 ---
  include/grub/dl.h | 2 ++
@@ -28,5 +28,5 @@ index 2bca56ce0..b1ed3c333 100644
  grub_##name##_fini (void) { grub_mod_fini (); } \
  static void \
 -- 
-2.13.4
+2.13.5
 

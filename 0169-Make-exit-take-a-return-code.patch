@@ -1,7 +1,7 @@
-From f06b7aa6c687bec98c237da8e63c4420fc46a7e5 Mon Sep 17 00:00:00 2001
+From ccf0fedfb6f550aa00fc2bdd1df1acce1d64363c Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Wed, 26 Feb 2014 21:49:12 -0500
-Subject: [PATCH 169/192] Make "exit" take a return code.
+Subject: [PATCH 169/194] Make "exit" take a return code.
 
 This adds "exit" with a return code.  With this patch, any "exit"
 command /may/ include a return code, and on platforms that support
@@ -52,5 +52,5 @@ index 5ce89a40c..04371ac49 100644
  grub_fatal (const char *fmt, ...)
  {
 -- 
-2.13.4
+2.13.5
 

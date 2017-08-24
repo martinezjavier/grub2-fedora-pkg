@@ -1,7 +1,7 @@
-From 696f516bc0868f089f1298ebbe7889f9fdc2930c Mon Sep 17 00:00:00 2001
+From 48b83be63828dd8d6ad164dae7b564d8fdf36a90 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 3 Aug 2015 11:46:42 -0400
-Subject: [PATCH 133/192] Try to make sure configure.ac and grub-rpm-sort play
+Subject: [PATCH 133/194] Try to make sure configure.ac and grub-rpm-sort play
  nice.
 
 Apparently the test for whether to use grub-rpm-sort and also the
@@ -57,5 +57,5 @@ index 954844d2d..9c410eae4 100644
  
  version_test_numeric ()
 -- 
-2.13.4
+2.13.5
 

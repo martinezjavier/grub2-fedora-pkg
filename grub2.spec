@@ -7,7 +7,7 @@
 Name:		grub2
 Epoch:		1
 Version:	2.02
-Release:	11%{?dist}
+Release:	12%{?dist}
 Summary:	Bootloader with support for Linux, Multiboot and more
 Group:		System Environment/Base
 License:	GPLv3+
@@ -72,20 +72,6 @@ hardware devices.\
 
 %description
 %{desc}
-
-# temporary
-%ifarch x86_64 aarch64
-%package efi
-Summary:	Bootloader with support for Linux, Multiboot, and more
-Group:		System Environment/Base
-Requires:	%{name}-tools-minimal = %{evr}
-Requires:	%{name}-tools-extra = %{evr}
-Requires:	%{name}-tools = %{evr}
-
-%description efi
-%{desc}
-This subpackage provides support for %{_arch} EFI systems
-%endif
 
 %package common
 Summary:	grub2 common layout
@@ -316,23 +302,6 @@ fi
 
 %files
 
-# temporary
-%ifarch x86_64 aarch64
-%files efi
-%defattr(-,root,root,-)
-%config(noreplace) %{_sysconfdir}/%{name}-efi.cfg
-%dir %attr(0755,root,root)/boot/efi/EFI/%{efidir}
-%dir %attr(0755,root,root)/boot/efi/EFI/%{efidir}/fonts
-%ghost %config(noreplace) /boot/efi/EFI/%{efidir}/grub.cfg
-/boot/grub2/grubenv
-%ghost %config(noreplace) %attr(0700,root,root)/boot/efi/EFI/%{efidir}/grubenv
-/boot/efi/EFI/%{efidir}/fonts/unicode.pf2
-/boot/efi/EFI/%{efidir}/gcd%{efiarch}.efi
-/boot/efi/EFI/%{efidir}/grub%{efiarch}.efi
-/boot/grub2/grubenv
-%license COPYING
-%endif
-
 %files common -f grub.lang
 %dir %{_libdir}/grub/
 %dir %{_datarootdir}/grub/
@@ -490,6 +459,11 @@ fi
 %endif
 
 %changelog
+* Thu Aug 24 2017 Peter Jones <pjones@redhat.com> - 2.02-12
+- Fix arm kernel command line allocation
+  Resolves: rhbz#1484609
+- Get rid of the temporary extra efi packages hack.
+
 * Wed Aug 23 2017 Peter Jones <pjones@redhat.com> - 2.02-11
 - Put grub2-mkimage in -tools, not -tools-extra.
 - Fix i686 building

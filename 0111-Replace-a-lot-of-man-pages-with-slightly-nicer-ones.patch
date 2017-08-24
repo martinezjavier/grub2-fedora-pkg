@@ -1,7 +1,7 @@
-From ef35b75ee89b4d065f6727b6e01cac72107e95f9 Mon Sep 17 00:00:00 2001
+From 6412d775976361b52c0914f6e5e3b0a4b99cdba9 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 4 Mar 2014 11:00:23 -0500
-Subject: [PATCH 111/192] Replace a lot of man pages with slightly nicer ones.
+Subject: [PATCH 111/194] Replace a lot of man pages with slightly nicer ones.
 
 Replace a bunch of machine generated ones with ones that look nicer.
 ---
@@ -1959,5 +1959,5 @@ index 000000000..37ea2dd5e
 +.SH SEE ALSO
 +.BR "info grub"
 -- 
-2.13.4
+2.13.5
 

@@ -1,7 +1,7 @@
-From 544becc2362005b59c561eefd1b68360ca1764ca Mon Sep 17 00:00:00 2001
+From a67be6e17cd318ad3d4a669efb2b8c5f6e76c003 Mon Sep 17 00:00:00 2001
 From: William Jon McCann <william.jon.mccann@gmail.com>
 Date: Fri, 7 Jun 2013 14:30:55 -0400
-Subject: [PATCH 096/192] Indent menu entries
+Subject: [PATCH 096/194] Indent menu entries
 
 ---
  grub-core/normal/menu_text.c | 3 ++-
@@ -22,5 +22,5 @@ index 1062d64ee..ecc60f99f 100644
    grub_print_ucs4_menu (unicode_title,
  			unicode_title + len,
 -- 
-2.13.4
+2.13.5
 

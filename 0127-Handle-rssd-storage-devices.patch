@@ -1,7 +1,7 @@
-From cdbc94f3f51b2575535a51c952238b2cd5b34639 Mon Sep 17 00:00:00 2001
+From 1dbfe2b96218a579d8da9ba8418857f0cf030890 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 30 Jun 2015 15:50:41 -0400
-Subject: [PATCH 127/192] Handle rssd storage devices.
+Subject: [PATCH 127/194] Handle rssd storage devices.
 
 Resolves: rhbz#1087962
 
@@ -35,5 +35,5 @@ index 90d92d3ad..6d9f4e5fa 100644
        if ((strncmp ("loop", p, 4) == 0) && p[4] >= '0' && p[4] <= '9')
  	{
 -- 
-2.13.4
+2.13.5
 
