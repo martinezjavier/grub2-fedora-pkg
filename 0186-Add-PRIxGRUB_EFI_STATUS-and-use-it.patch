@@ -1,4 +1,4 @@
-From 9fc1a37176af4503668566c17fe59e4c6279c9eb Mon Sep 17 00:00:00 2001
+From 03c01ad6ac50624a9cb9b061dbb9b46e590c6b1e Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 1 Jun 2017 10:07:50 -0400
 Subject: [PATCH 186/194] Add PRIxGRUB_EFI_STATUS and use it.

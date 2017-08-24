@@ -1,4 +1,4 @@
-From a62f9a9929a8529f5e4c89286c4a48d1dd45e13d Mon Sep 17 00:00:00 2001
+From a06e773669c63d8d32f54e17b31a7af66320a708 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Fri, 4 Mar 2016 16:29:13 -0500
 Subject: [PATCH 158/194] Make grub-editenv build again.

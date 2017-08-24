@@ -1,4 +1,4 @@
-From abe32cb229f3f47e372b0a40a75f7202b9686f9e Mon Sep 17 00:00:00 2001
+From 7e592062f2f97bb488bfe454e522c5cef9b2702f Mon Sep 17 00:00:00 2001
 From: Masahiro Matsuya <mmatsuya@redhat.com>
 Date: Sat, 29 Oct 2016 08:35:26 +0900
 Subject: [PATCH 151/194] bz1374141 fix incorrect mask for ppc64

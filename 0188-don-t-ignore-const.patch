@@ -1,4 +1,4 @@
-From be9ebcff6abe0f6552260fa1e466ea1538203b8e Mon Sep 17 00:00:00 2001
+From a87adc91140a81b55728d0519bb14ace5ed7d3e3 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 26 Jun 2017 12:43:22 -0400
 Subject: [PATCH 188/194] don't ignore const

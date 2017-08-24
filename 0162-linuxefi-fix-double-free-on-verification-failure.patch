@@ -1,4 +1,4 @@
-From 7b0b3f1f0d68b4362e4a839a84d968e9f521cc7e Mon Sep 17 00:00:00 2001
+From 45e38084c55932c6039dfa1cb464ea12fd03488f Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 14 Jun 2016 09:50:25 -0400
 Subject: [PATCH 162/194] linuxefi: fix double free on verification failure.

@@ -1,4 +1,4 @@
-From a055bf63e671e97ce5fe9f0948a4071162983167 Mon Sep 17 00:00:00 2001
+From e4b316bd39c8a93c146f0d4c4c570170084a7404 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Wed, 23 Aug 2017 10:37:27 -0400
 Subject: [PATCH 193/194] Make libgrub.pp depend on config-util.h

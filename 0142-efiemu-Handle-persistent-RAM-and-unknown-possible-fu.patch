@@ -1,4 +1,4 @@
-From d9392199bdda53cdd5461cd7ff8a0f361a49f301 Mon Sep 17 00:00:00 2001
+From 30420391d9c42ee08d0d68b13de70a4f63b01ec8 Mon Sep 17 00:00:00 2001
 From: Robert Elliott <elliott@hpe.com>
 Date: Fri, 22 Jan 2016 13:32:30 +0100
 Subject: [PATCH 142/194] efiemu: Handle persistent RAM and unknown possible

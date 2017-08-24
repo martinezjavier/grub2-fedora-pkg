@@ -1,4 +1,4 @@
-From f43a55cb0d8465355c2da26905d5817c0a8bf421 Mon Sep 17 00:00:00 2001
+From 93df822a82a37726833b977c4409141e1d8af3c9 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 14 Feb 2017 16:31:52 -0500
 Subject: [PATCH 166/194] linuxefi: minor cleanups

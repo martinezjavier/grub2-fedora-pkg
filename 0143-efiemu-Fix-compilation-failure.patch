@@ -1,4 +1,4 @@
-From 05b8716bd5605eff7c55d752c110fb686934090c Mon Sep 17 00:00:00 2001
+From 0588a88adbd4fd4482a02f717c76b4b3753bd653 Mon Sep 17 00:00:00 2001
 From: Vladimir Serbinenko <phcoder@gmail.com>
 Date: Fri, 22 Jan 2016 14:10:30 +0100
 Subject: [PATCH 143/194] efiemu: Fix compilation failure

@@ -1,4 +1,4 @@
-From 8adc85f6daabdd7ea991f8aa2b759fb4ed651198 Mon Sep 17 00:00:00 2001
+From b9e2b2aa41a486c550c5bb9849f4e7587d1493e4 Mon Sep 17 00:00:00 2001
 From: Mark Salter <msalter@redhat.com>
 Date: Mon, 17 Apr 2017 08:44:29 -0400
 Subject: [PATCH 170/194] arm64: make sure fdt has #address-cells and

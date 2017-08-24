@@ -1,4 +1,4 @@
-From 885f6f6d08a1180c5cee1b28cd1d501e2c83f1e0 Mon Sep 17 00:00:00 2001
+From 7766b66bf1f1c7c586026be98883e60e2cc943b9 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 7 Apr 2016 10:58:06 -0400
 Subject: [PATCH 144/194] Revert "reopen SNP protocol for exclusive use by

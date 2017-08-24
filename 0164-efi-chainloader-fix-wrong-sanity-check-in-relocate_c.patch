@@ -1,4 +1,4 @@
-From 87ba5c404c474c78c01199a2b05096015d493988 Mon Sep 17 00:00:00 2001
+From 64b1750a0d12280b7ac2612858680a99a673e24b Mon Sep 17 00:00:00 2001
 From: Laszlo Ersek <lersek@redhat.com>
 Date: Mon, 21 Nov 2016 15:34:00 +0100
 Subject: [PATCH 164/194] efi/chainloader: fix wrong sanity check in
