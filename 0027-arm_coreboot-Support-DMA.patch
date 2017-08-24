@@ -1,7 +1,7 @@
 From 265292f2b0da0eb414c409871ba0f94a99ec33c1 Mon Sep 17 00:00:00 2001
 From: Vladimir Serbinenko <phcoder@gmail.com>
 Date: Mon, 8 May 2017 22:06:04 +0200
-Subject: [PATCH 027/192] arm_coreboot: Support DMA.
+Subject: [PATCH 027/194] arm_coreboot: Support DMA.
 
 This is needed to support USB and some other busses.
 ---
@@ -288,5 +288,5 @@ index 70d9a0513..262c89b74 100644
  grub_uint8_t
  EXPORT_FUNC (grub_pci_find_capability) (grub_pci_device_t dev, grub_uint8_t cap);
 -- 
-2.13.4
+2.13.5
 

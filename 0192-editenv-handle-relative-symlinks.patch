@@ -1,7 +1,7 @@
-From 54a01b15263a71dce51f4da826e1364780c45590 Mon Sep 17 00:00:00 2001
+From 22e713954e46af9694b670cdab6ab78dea4f7958 Mon Sep 17 00:00:00 2001
 From: Jonathan Lebon <jlebon@redhat.com>
 Date: Mon, 14 Aug 2017 14:37:20 -0400
-Subject: [PATCH 192/192] editenv: handle relative symlinks
+Subject: [PATCH 192/194] editenv: handle relative symlinks
 
 Handle symlinks with targets relative to the containing dir. This
 ensures that the rename operation does not depend on the cwd.
@@ -49,5 +49,5 @@ index d8d1dad6a..41bc7cb1c 100644
  
    int rc = grub_util_rename (namenew, rename_target);
 -- 
-2.13.4
+2.13.5
 

@@ -1,7 +1,7 @@
-From 270c98a14f04ec48e93a67b32a66442773689ff4 Mon Sep 17 00:00:00 2001
+From a055bf63e671e97ce5fe9f0948a4071162983167 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Wed, 23 Aug 2017 10:37:27 -0400
-Subject: [PATCH] Make libgrub.pp depend on config-util.h
+Subject: [PATCH 193/194] Make libgrub.pp depend on config-util.h
 
 If you build with "make -j48" a lot, sometimes you see:
 

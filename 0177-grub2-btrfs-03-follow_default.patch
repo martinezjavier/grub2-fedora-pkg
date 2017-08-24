@@ -1,7 +1,7 @@
-From c92dacf72b436c42f7a417b161852017bd95ac72 Mon Sep 17 00:00:00 2001
+From 6ed9db71fa2593098dd94c14df0f304501f803d4 Mon Sep 17 00:00:00 2001
 From: Michael Chang <mchang@suse.com>
 Date: Thu, 21 Aug 2014 03:39:11 +0000
-Subject: [PATCH 177/192] grub2-btrfs-03-follow_default
+Subject: [PATCH 177/194] grub2-btrfs-03-follow_default
 
 ---
  grub-core/fs/btrfs.c | 107 ++++++++++++++++++++++++++++++++++++---------------
@@ -195,5 +195,5 @@ index 396296166..2c462584e 100644
  
  GRUB_MOD_FINI (btrfs)
 -- 
-2.13.4
+2.13.5
 

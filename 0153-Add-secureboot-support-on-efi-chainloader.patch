@@ -1,7 +1,7 @@
-From f4cf150259fab118806ac1dcc4e73cb2e50b3ffc Mon Sep 17 00:00:00 2001
+From c28876ae7347a7102587b289055f126263406614 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 6 Oct 2015 13:04:37 -0400
-Subject: [PATCH 153/192] Add secureboot support on efi chainloader
+Subject: [PATCH 153/194] Add secureboot support on efi chainloader
 
 Expand the chainloader to be able to verify the image by means of shim
 lock protocol. The PE/COFF image is loaded and relocated by the
@@ -796,5 +796,5 @@ index 7d44732d2..6e24dae2c 100644
  {
    grub_uint32_t page_rva;
 -- 
-2.13.4
+2.13.5
 

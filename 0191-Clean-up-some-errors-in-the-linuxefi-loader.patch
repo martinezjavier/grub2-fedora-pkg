@@ -1,7 +1,7 @@
-From 7d1c68137a2c4c69e3b4407d9771ccb51f3341fe Mon Sep 17 00:00:00 2001
+From 64c42b56e509074fb831ca99fa629d58c1073d68 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Wed, 24 May 2017 15:58:18 -0400
-Subject: [PATCH 191/192] Clean up some errors in the linuxefi loader
+Subject: [PATCH 191/194] Clean up some errors in the linuxefi loader
 
 Signed-off-by: Peter Jones <pjones@redhat.com>
 ---
@@ -65,5 +65,5 @@ index bed5919ca..6db5d0bf3 100644
  			 linux_cmdline,
  			 BYTES_TO_PAGES(lh->cmdline_size + 1));
 -- 
-2.13.4
+2.13.5
 

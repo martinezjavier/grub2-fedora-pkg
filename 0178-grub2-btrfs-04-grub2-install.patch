@@ -1,7 +1,7 @@
-From 9501029137b4751b2cb0c84baf23f31a8ff1a4dd Mon Sep 17 00:00:00 2001
+From 1edd1a29619c55a734ea75e6c709c370af52046f Mon Sep 17 00:00:00 2001
 From: Michael Chang <mchang@suse.com>
 Date: Thu, 21 Aug 2014 03:39:11 +0000
-Subject: [PATCH 178/192] grub2-btrfs-04-grub2-install
+Subject: [PATCH 178/194] grub2-btrfs-04-grub2-install
 
 ---
  grub-core/osdep/linux/getroot.c |  7 +++++++
@@ -173,5 +173,5 @@ index 47a241a39..5db7a9a7d 100644
        if (state->arg_num == 0)
  	arguments->pathname = xstrdup (arg);
 -- 
-2.13.4
+2.13.5
 

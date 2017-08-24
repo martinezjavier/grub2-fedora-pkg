@@ -1,7 +1,7 @@
-From 5a5ab4ce7f57bf2e18ba0f1cfb8ab478adf32676 Mon Sep 17 00:00:00 2001
+From da87c2566ef96dc32cf0fd025c18cbbc8eceaa21 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 14 Feb 2017 16:18:54 -0500
-Subject: [PATCH 167/192] Handle multi-arch (64-on-32) boot in linuxefi loader.
+Subject: [PATCH 167/194] Handle multi-arch (64-on-32) boot in linuxefi loader.
 
 Allow booting 64-bit kernels on 32-bit EFI on x86.
 
@@ -274,5 +274,5 @@ index fc36bdaf3..110ecf806 100644
    grub_uint32_t hardware_subarch;
    grub_uint64_t hardware_subarch_data;
 -- 
-2.13.4
+2.13.5
 

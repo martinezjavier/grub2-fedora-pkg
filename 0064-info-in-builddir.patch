@@ -1,7 +1,7 @@
 From 5cf0df8753c19e83251c7244cafe38869a65060f Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 8 Aug 2017 13:08:59 -0400
-Subject: [PATCH 064/192] info-in-builddir
+Subject: [PATCH 064/194] info-in-builddir
 
 ---
  docs/Makefile.am | 2 +-
@@ -18,5 +18,5 @@ index 93eb39627..e396ba10f 100644
  # AM_MAKEINFOFLAGS = --no-split --no-validate
  info_TEXINFOS = grub.texi grub-dev.texi
 -- 
-2.13.4
+2.13.5
 

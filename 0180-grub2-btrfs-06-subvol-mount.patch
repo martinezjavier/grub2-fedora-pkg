@@ -1,7 +1,7 @@
-From db75dad097b89491d1f2140a054a08c9a2975c40 Mon Sep 17 00:00:00 2001
+From 96e889f67248f1bf874fb8e21d414e3057c66c1f Mon Sep 17 00:00:00 2001
 From: Michael Chang <mchang@suse.com>
 Date: Fri, 22 May 2015 11:45:25 +0000
-Subject: [PATCH 180/192] grub2-btrfs-06-subvol-mount
+Subject: [PATCH 180/194] grub2-btrfs-06-subvol-mount
 
 ---
  grub-core/fs/btrfs.c            | 195 +++++++++++++++++++++++++++++++++++++++-
@@ -536,5 +536,5 @@ index 036fe1822..cd84a72b9 100644
    const char *core_name = NULL;
  
 -- 
-2.13.4
+2.13.5
 

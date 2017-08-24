@@ -1,7 +1,7 @@
-From 89cc931e0faf05a4cf79cf8554037d035b829d0a Mon Sep 17 00:00:00 2001
+From b21b80fe44eb379bb268c623ee092a9b776d11d9 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 18 Sep 2014 11:26:14 -0400
-Subject: [PATCH 123/192] Load arm with SB enabled.
+Subject: [PATCH 123/194] Load arm with SB enabled.
 
 Make sure we actually try to validate secure boot on this platform (even
 though we're not shipping it enabled by default.)
@@ -11,12 +11,12 @@ kernel command line, because we can't call systab->bs->LoadImage() if SB
 is enabled.
 ---
  grub-core/Makefile.core.def       |   3 +
- grub-core/loader/arm64/linux.c    | 116 ++++++++++++++++++++------------------
+ grub-core/loader/arm64/linux.c    | 115 ++++++++++++++++++++------------------
  grub-core/loader/efi/linux.c      |  65 +++++++++++++++++++++
  grub-core/loader/i386/efi/linux.c |  39 +------------
  include/grub/arm64/linux.h        |   7 +++
  include/grub/efi/linux.h          |  31 ++++++++++
- 6 files changed, 171 insertions(+), 90 deletions(-)
+ 6 files changed, 170 insertions(+), 90 deletions(-)
  create mode 100644 grub-core/loader/efi/linux.c
  create mode 100644 include/grub/efi/linux.h
 
@@ -42,7 +42,7 @@ index 7f3d5a2bf..5ae70204c 100644
    enable = x86_64_efi;
  };
 diff --git a/grub-core/loader/arm64/linux.c b/grub-core/loader/arm64/linux.c
-index 746edd104..03ff83563 100644
+index 746edd104..33345d375 100644
 --- a/grub-core/loader/arm64/linux.c
 +++ b/grub-core/loader/arm64/linux.c
 @@ -28,6 +28,7 @@
@@ -71,7 +71,7 @@ index 746edd104..03ff83563 100644
  
    void *fdt;
  
-@@ -100,6 +103,26 @@ finalize_params_linux (void)
+@@ -100,6 +103,25 @@ finalize_params_linux (void)
    if (grub_fdt_install() != GRUB_ERR_NONE)
      goto failure;
  
@@ -86,8 +86,7 @@ index 746edd104..03ff83563 100644
 +  loaded_image->load_options_size = len =
 +    (grub_strlen (linux_args) + 1) * sizeof (grub_efi_char16_t);
 +  loaded_image->load_options =
-+    grub_efi_allocate_pages_max (0,
-+				 GRUB_EFI_BYTES_TO_PAGES (loaded_image->load_options_size));
++    grub_efi_allocate_any_pages (GRUB_EFI_BYTES_TO_PAGES (loaded_image->load_options_size));
 +  if (!loaded_image->load_options)
 +    return grub_error(GRUB_ERR_BAD_OS, "failed to create kernel parameters");
 +
@@ -98,7 +97,7 @@ index 746edd104..03ff83563 100644
    return GRUB_ERR_NONE;
  
  failure:
-@@ -107,72 +130,47 @@ failure:
+@@ -107,72 +129,47 @@ failure:
    return grub_error(GRUB_ERR_BAD_OS, "failed to install/update FDT");
  }
  
@@ -199,7 +198,7 @@ index 746edd104..03ff83563 100644
  }
  
  static grub_err_t
-@@ -249,6 +247,7 @@ grub_cmd_linux (grub_command_t cmd __attribute__ ((unused)),
+@@ -249,6 +246,7 @@ grub_cmd_linux (grub_command_t cmd __attribute__ ((unused)),
  {
    grub_file_t file = 0;
    struct grub_arm64_linux_kernel_header lh;
@@ -207,7 +206,7 @@ index 746edd104..03ff83563 100644
  
    grub_dl_ref (my_mod);
  
-@@ -293,6 +292,15 @@ grub_cmd_linux (grub_command_t cmd __attribute__ ((unused)),
+@@ -293,6 +291,15 @@ grub_cmd_linux (grub_command_t cmd __attribute__ ((unused)),
  
    grub_dprintf ("linux", "kernel @ %p\n", kernel_addr);
  
@@ -423,5 +422,5 @@ index 000000000..d9ede3677
 +
 +#endif /* ! GRUB_EFI_LINUX_HEADER */
 -- 
-2.13.4
+2.13.5
 

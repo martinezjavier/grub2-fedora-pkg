@@ -1,7 +1,7 @@
-From c94146470358e5ba3b2047f8e0aa762f9357a15e Mon Sep 17 00:00:00 2001
+From 42ce91748c4ccfef6151bddd8ef6a39f230b6f0c Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 1 May 2017 11:19:40 -0400
-Subject: [PATCH 173/192] print more debug info in our module loader.
+Subject: [PATCH 173/194] print more debug info in our module loader.
 
 Signed-off-by: Peter Jones <pjones@redhat.com>
 ---
@@ -40,5 +40,5 @@ index 684ca93f8..1f3ac5e1d 100644
  }
  
 -- 
-2.13.4
+2.13.5
 

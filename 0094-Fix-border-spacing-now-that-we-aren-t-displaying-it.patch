@@ -1,7 +1,7 @@
-From 0346f89bd0d9332f613f84063f2e88eb60b80b5d Mon Sep 17 00:00:00 2001
+From c2e1e09485a5773dc3639d34eadc3a07ebce8fe5 Mon Sep 17 00:00:00 2001
 From: William Jon McCann <william.jon.mccann@gmail.com>
 Date: Fri, 7 Jun 2013 14:08:23 -0400
-Subject: [PATCH 094/192] Fix border spacing now that we aren't displaying it
+Subject: [PATCH 094/194] Fix border spacing now that we aren't displaying it
 
 ---
  grub-core/normal/menu_text.c | 6 +++---
@@ -28,5 +28,5 @@ index 64a83862f..1062d64ee 100644
    geo->timeout_lines = 2;
  
 -- 
-2.13.4
+2.13.5
 

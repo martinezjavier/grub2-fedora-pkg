@@ -1,7 +1,7 @@
-From b25aeee879c5b5dc8bf642c11090feb9b3ed875f Mon Sep 17 00:00:00 2001
+From 1e83cbd99c80c82b58f14df243b35aba21636458 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Fri, 10 Jun 2016 14:06:15 -0400
-Subject: [PATCH 161/192] Rework even more of efi chainload so non-sb cases
+Subject: [PATCH 161/194] Rework even more of efi chainload so non-sb cases
  work right.
 
 This ensures that if shim protocol is not loaded, or is loaded but shim
@@ -80,10 +80,10 @@ index a41b6c5b8..d74778b0c 100644
    if (*secure_boot && !*setup_mode)
      ret = 1;
 diff --git a/grub-core/loader/arm64/linux.c b/grub-core/loader/arm64/linux.c
-index 03ff83563..34f34e65a 100644
+index 33345d375..ad39a3015 100644
 --- a/grub-core/loader/arm64/linux.c
 +++ b/grub-core/loader/arm64/linux.c
-@@ -248,6 +248,7 @@ grub_cmd_linux (grub_command_t cmd __attribute__ ((unused)),
+@@ -247,6 +247,7 @@ grub_cmd_linux (grub_command_t cmd __attribute__ ((unused)),
    grub_file_t file = 0;
    struct grub_arm64_linux_kernel_header lh;
    struct grub_arm64_linux_pe_header *pe;
@@ -91,7 +91,7 @@ index 03ff83563..34f34e65a 100644
  
    grub_dl_ref (my_mod);
  
-@@ -292,7 +293,8 @@ grub_cmd_linux (grub_command_t cmd __attribute__ ((unused)),
+@@ -291,7 +292,8 @@ grub_cmd_linux (grub_command_t cmd __attribute__ ((unused)),
  
    grub_dprintf ("linux", "kernel @ %p\n", kernel_addr);
  
@@ -409,5 +409,5 @@ index d9ede3677..0033d9305 100644
  grub_err_t
  EXPORT_FUNC(grub_efi_linux_boot) (void *kernel_address, grub_off_t offset,
 -- 
-2.13.4
+2.13.5
 

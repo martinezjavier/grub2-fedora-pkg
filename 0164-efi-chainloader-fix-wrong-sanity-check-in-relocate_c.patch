@@ -1,7 +1,7 @@
-From 7004abbe4fd446b9ad6b03b657397704009382af Mon Sep 17 00:00:00 2001
+From 87ba5c404c474c78c01199a2b05096015d493988 Mon Sep 17 00:00:00 2001
 From: Laszlo Ersek <lersek@redhat.com>
 Date: Mon, 21 Nov 2016 15:34:00 +0100
-Subject: [PATCH 164/192] efi/chainloader: fix wrong sanity check in
+Subject: [PATCH 164/194] efi/chainloader: fix wrong sanity check in
  relocate_coff()
 
 In relocate_coff(), the relocation entries are parsed from the original
@@ -35,5 +35,5 @@ index b977c7b55..d5ab21d09 100644
            grub_error (GRUB_ERR_BAD_ARGUMENT, "Reloc entry %d overflows binary",
  		      n);
 -- 
-2.13.4
+2.13.5
 
