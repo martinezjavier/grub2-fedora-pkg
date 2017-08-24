@@ -1,4 +1,4 @@
-From 55b69bdee6f721044ba1d44e2efae98ccbb888f5 Mon Sep 17 00:00:00 2001
+From 603f5c1a20ec0acd20227eb4c48ffc4d21960ec1 Mon Sep 17 00:00:00 2001
 From: Laszlo Ersek <lersek@redhat.com>
 Date: Fri, 10 Oct 2014 11:11:09 +0200
 Subject: [PATCH 131/194] calibrate_tsc(): use the Stall() EFI boot service on
@@ -11,11 +11,11 @@ services instead.
 
 Signed-off-by: RHEL Ninjas <example@example.com>
 ---
- grub-core/kern/i386/tsc.c | 61 ++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 58 insertions(+), 3 deletions(-)
+ grub-core/kern/i386/tsc.c | 59 ++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 58 insertions(+), 1 deletion(-)
 
 diff --git a/grub-core/kern/i386/tsc.c b/grub-core/kern/i386/tsc.c
-index 2e85289d8..ca3009cf5 100644
+index 2e85289d8..48c013860 100644
 --- a/grub-core/kern/i386/tsc.c
 +++ b/grub-core/kern/i386/tsc.c
 @@ -24,6 +24,17 @@
@@ -81,16 +81,11 @@ index 2e85289d8..ca3009cf5 100644
  static grub_uint64_t
  grub_tsc_get_time_ms (void)
  {
-@@ -43,11 +92,17 @@ grub_tsc_get_time_ms (void)
-   return ((al * grub_tsc_rate) >> 32) + ah * grub_tsc_rate;
- }
- 
--static int
-+static void
+@@ -46,7 +95,15 @@ grub_tsc_get_time_ms (void)
+ static int
  calibrate_tsc_hardcode (void)
  {
 -  grub_tsc_rate = 5368;/* 800 MHz */
--  return 1;
 +  /* First calibrate the TSC rate (relative, not absolute time). */
 +  grub_uint64_t end_tsc;
 +
@@ -99,9 +94,10 @@ index 2e85289d8..ca3009cf5 100644
 +  end_tsc = grub_get_tsc ();
 +
 +  grub_tsc_rate = grub_divmod64 ((55ULL << 32), end_tsc - tsc_boot_time, 0);
++
+   return 1;
  }
  
- void
 -- 
 2.13.5
 

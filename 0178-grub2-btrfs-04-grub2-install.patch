@@ -1,4 +1,4 @@
-From 1edd1a29619c55a734ea75e6c709c370af52046f Mon Sep 17 00:00:00 2001
+From ddf05a259df3e5c43ea0714abf227bdb82dd34a5 Mon Sep 17 00:00:00 2001
 From: Michael Chang <mchang@suse.com>
 Date: Thu, 21 Aug 2014 03:39:11 +0000
 Subject: [PATCH 178/194] grub2-btrfs-04-grub2-install

@@ -1,4 +1,4 @@
-From 22e713954e46af9694b670cdab6ab78dea4f7958 Mon Sep 17 00:00:00 2001
+From ed676cb54536f5ed2948babe61afff197de5083f Mon Sep 17 00:00:00 2001
 From: Jonathan Lebon <jlebon@redhat.com>
 Date: Mon, 14 Aug 2017 14:37:20 -0400
 Subject: [PATCH 192/194] editenv: handle relative symlinks

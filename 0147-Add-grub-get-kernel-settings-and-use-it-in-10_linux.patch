@@ -1,4 +1,4 @@
-From 025c114176b79c2bdb9136fc0518e1d0d79a9cae Mon Sep 17 00:00:00 2001
+From a037c9021bf1b24299a521d0c40643600ddc437e Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 23 Jun 2016 11:01:39 -0400
 Subject: [PATCH 147/194] Add grub-get-kernel-settings and use it in 10_linux

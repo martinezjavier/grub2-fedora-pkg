@@ -1,4 +1,4 @@
-From a3d0b20b048769cf70001538950697600a08b164 Mon Sep 17 00:00:00 2001
+From 37e1a445f41ebf79242310e5f9a39573118aa21b Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 23 Sep 2014 09:58:49 -0400
 Subject: [PATCH 159/194] Fix up some man pages rpmdiff noticed.

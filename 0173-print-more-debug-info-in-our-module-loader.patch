@@ -1,4 +1,4 @@
-From 42ce91748c4ccfef6151bddd8ef6a39f230b6f0c Mon Sep 17 00:00:00 2001
+From 409a1fe49689976f464e3db82cb48c6488b78864 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 1 May 2017 11:19:40 -0400
 Subject: [PATCH 173/194] print more debug info in our module loader.

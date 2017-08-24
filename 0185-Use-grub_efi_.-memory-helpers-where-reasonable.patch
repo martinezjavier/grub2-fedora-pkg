@@ -1,4 +1,4 @@
-From 598a3479f505f5181b42c991b57faf401d7ff483 Mon Sep 17 00:00:00 2001
+From 38441515e97a0ae8bf668a747b40cd839821887a Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Thu, 1 Jun 2017 10:06:38 -0400
 Subject: [PATCH 185/194] Use grub_efi_...() memory helpers where reasonable.

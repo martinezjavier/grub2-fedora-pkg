@@ -1,4 +1,4 @@
-From c3cf9f937ceeb015d508c15f88541f166a578b24 Mon Sep 17 00:00:00 2001
+From ebfc7bb290eb5be7919107d93ee6d03f3030d599 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Wed, 24 May 2017 12:42:32 -0400
 Subject: [PATCH 174/194] macos: just build chainloader entries, don't try any
