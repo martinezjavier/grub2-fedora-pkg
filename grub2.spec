@@ -7,7 +7,7 @@
 Name:		grub2
 Epoch:		1
 Version:	2.02
-Release:	13%{?dist}
+Release:	14%{?dist}
 Summary:	Bootloader with support for Linux, Multiboot and more
 Group:		System Environment/Base
 License:	GPLv3+
@@ -328,9 +328,6 @@ fi
 %doc docs/font_char_metrics.png
 
 %files tools-minimal
-# I do not know why I'm getting this in the output...
-%exclude /usr/lib/.build-id
-
 %{_sysconfdir}/prelink.conf.d/grub2.conf
 %{_sbindir}/%{name}-get-kernel-settings
 %{_sbindir}/%{name}-set-default
@@ -346,9 +343,6 @@ fi
 
 %ifarch x86_64
 %files tools-efi
-# I do not know why I'm getting this in the output...
-%exclude /usr/lib/.build-id
-
 %{_sbindir}/%{name}-macbless
 %{_bindir}/%{name}-render-label
 %{_datadir}/man/man8/%{name}-macbless*
@@ -356,9 +350,6 @@ fi
 %endif
 
 %files tools
-# I do not know why I'm getting this in the output...
-%exclude /usr/lib/.build-id
-
 %attr(0644,root,root) %ghost %config(noreplace) %{_sysconfdir}/default/grub
 %config %{_sysconfdir}/grub.d/??_*
 %{_sysconfdir}/grub.d/README
@@ -424,9 +415,6 @@ fi
 %endif
 
 %files tools-extra
-# I do not know why I'm getting this in the output...
-%exclude /usr/lib/.build-id
-
 %{_sbindir}/%{name}-sparc64-setup
 %{_sbindir}/%{name}-ofpathname
 %{_bindir}/%{name}-fstest
@@ -466,6 +454,18 @@ fi
 %endif
 
 %changelog
+* Fri Aug 25 2017 Peter Jones <pjones@redhat.com> - 2.02-14
+- Revert the /usr/lib/.build-id/ change:
+  https://fedoraproject.org/wiki/Changes/ParallelInstallableDebuginfo
+  says (without any particularly convincing reasoning):
+    The main build-id file should not be in the debuginfo file, but in the
+    main package (this was always a problem since the package and debuginfo
+    package installed might not match). If we want to make usr/lib/debug/ a
+    network resource then we will need to move the symlink to another
+    location (maybe /usr/lib/.build-id).
+  So do it that way.  Of course it doesn't matter, because exclude gets
+  ignored due to implementation details.
+
 * Fri Aug 25 2017 Peter Jones <pjones@redhat.com> - 2.02-13
 - Add some unconditional Provides:
   grub2-efi on grub2-efi-${arch}
