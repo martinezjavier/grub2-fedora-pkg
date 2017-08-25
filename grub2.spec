@@ -7,7 +7,7 @@
 Name:		grub2
 Epoch:		1
 Version:	2.02
-Release:	12%{?dist}
+Release:	13%{?dist}
 Summary:	Bootloader with support for Linux, Multiboot and more
 Group:		System Environment/Base
 License:	GPLv3+
@@ -132,7 +132,7 @@ Obsoletes:	%{name}-tools < %{evr}
 This subpackage provides tools for support of all platforms.
 
 %if 0%{with_efi_arch}
-%{expand:%define_efi_variant %%{package_arch} -p}
+%{expand:%define_efi_variant %%{package_arch} -o}
 %endif
 %if 0%{with_alt_efi_arch}
 %{expand:%define_efi_variant %%{alt_package_arch}}
@@ -300,8 +300,6 @@ if [ "$1" = 0 ]; then
 	/sbin/install-info --delete --info-dir=%{_infodir} %{_infodir}/%{name}-dev.info.gz || :
 fi
 
-%files
-
 %files common -f grub.lang
 %dir %{_libdir}/grub/
 %dir %{_datarootdir}/grub/
@@ -330,7 +328,9 @@ fi
 %doc docs/font_char_metrics.png
 
 %files tools-minimal
-%defattr(-,root,root,-)
+# I do not know why I'm getting this in the output...
+%exclude /usr/lib/.build-id
+
 %{_sysconfdir}/prelink.conf.d/grub2.conf
 %{_sbindir}/%{name}-get-kernel-settings
 %{_sbindir}/%{name}-set-default
@@ -346,7 +346,9 @@ fi
 
 %ifarch x86_64
 %files tools-efi
-%defattr(-,root,root,-)
+# I do not know why I'm getting this in the output...
+%exclude /usr/lib/.build-id
+
 %{_sbindir}/%{name}-macbless
 %{_bindir}/%{name}-render-label
 %{_datadir}/man/man8/%{name}-macbless*
@@ -354,7 +356,9 @@ fi
 %endif
 
 %files tools
-%defattr(-,root,root,-)
+# I do not know why I'm getting this in the output...
+%exclude /usr/lib/.build-id
+
 %attr(0644,root,root) %ghost %config(noreplace) %{_sysconfdir}/default/grub
 %config %{_sysconfdir}/grub.d/??_*
 %{_sysconfdir}/grub.d/README
@@ -420,6 +424,9 @@ fi
 %endif
 
 %files tools-extra
+# I do not know why I'm getting this in the output...
+%exclude /usr/lib/.build-id
+
 %{_sbindir}/%{name}-sparc64-setup
 %{_sbindir}/%{name}-ofpathname
 %{_bindir}/%{name}-fstest
@@ -459,6 +466,14 @@ fi
 %endif
 
 %changelog
+* Fri Aug 25 2017 Peter Jones <pjones@redhat.com> - 2.02-13
+- Add some unconditional Provides:
+  grub2-efi on grub2-efi-${arch}
+  grub2-efi-cdboot on grub2-efi-${arch}-cdboot
+  grub2 on all grub2-${arch} pacakges
+- Something is somehow adding /usr/lib/.build-id/... to all the -tools
+  subpackages, so exclude all that.
+
 * Thu Aug 24 2017 Peter Jones <pjones@redhat.com> - 2.02-12
 - Fix arm kernel command line allocation
   Resolves: rhbz#1484609
