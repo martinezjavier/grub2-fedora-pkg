@@ -376,7 +376,7 @@ find . '(' -iname gdb_grub					\\\
 	-o -iname '*.mod'					\\\
 	')'							\\\
 	-exec cp {} $RPM_BUILD_ROOT/usr/lib/grub/%{grubaltefiarch}/ \\\; \
-find $RPM_BUILD_ROOT -iname "*.mod*" -exec chmod a-x {} '\;'	\
+find $RPM_BUILD_ROOT -type f -iname "*.mod*" -exec chmod a-x {} '\;'	\
 install -m 755 %{2} $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/%{2}	\
 install -m 755 %{3} $RPM_BUILD_ROOT/boot/efi/EFI/%{efidir}/%{3} \
 cd ..								\
