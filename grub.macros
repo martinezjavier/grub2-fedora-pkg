@@ -171,7 +171,7 @@
 Summary:	Bootloader with support for Linux, Multiboot, and more	\
 Group:		System Environment/Base					\
 Provides:	%{name} = %{evr}					\
-Obsoletes:	%{name} < 1:2.02-0					\
+Obsoletes:	%{name} < %{evr}					\
 Requires:	%{name}-common = %{evr}					\
 Requires:	%{name}-tools-minimal = %{evr}				\
 Requires:	%{name}-%{1}-modules = %{evr}				\
