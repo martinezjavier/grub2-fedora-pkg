@@ -7,7 +7,7 @@
 Name:		grub2
 Epoch:		1
 Version:	2.02
-Release:	15%{?dist}
+Release:	16%{?dist}
 Summary:	Bootloader with support for Linux, Multiboot and more
 Group:		System Environment/Base
 License:	GPLv3+
@@ -454,6 +454,9 @@ fi
 %endif
 
 %changelog
+* Wed Sep 06 2017 Peter Jones <pjones@redhat.com> - 2.02-16
+- Fix Obsoletes on grub2-pc
+
 * Wed Aug 30 2017 Petr Šabata <contyk@redhat.com> - 2.02-15
 - Limit the pattern matching in do_alt_efi_install to files to
   unbreak module builds
