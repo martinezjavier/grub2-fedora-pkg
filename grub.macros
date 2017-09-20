@@ -92,6 +92,10 @@
 %global efi_modules " backtrace http linuxefi usb usbserial_common usbserial_pl2303 usbserial_ftdi usbserial_usbdebug "
 %endif
 
+%ifarch aarch64
+%global legacy_provides -l
+%endif
+
 %ifarch x86_64
 %global efiarch x64
 %global target_cpu_name %{_arch}
@@ -221,6 +225,7 @@ Requires:	%{name}-tools-minimal >= %{evr}				\
 Requires:	%{name}-tools-extra = %{evr}				\
 Requires:	%{name}-tools = %{evr}					\
 Provides:	%{name}-efi = %{evr}					\
+%{?legacy_provides:Provides:	%{name} = %{evr}}			\
 %{-o:Obsoletes:	%{name}-efi < %{evr}}					\
 									\
 %{expand:%%description %{1}}						\
