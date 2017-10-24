@@ -192,3 +192,6 @@ Patch0191: 0191-Clean-up-some-errors-in-the-linuxefi-loader.patch
 Patch0192: 0192-editenv-handle-relative-symlinks.patch
 Patch0193: 0193-Make-libgrub.pp-depend-on-config-util.h.patch
 Patch0194: 0194-Don-t-guess-boot-efi-as-HFS-on-ppc-machines-in-grub-.patch
+Patch0195: 0195-Fix-util-grub.d-20_linux_xen.in-Add-xen_boot-command.patch
+Patch0196: 0196-Use-grub-file-to-figure-out-whether-multiboot2-shoul.patch
+Patch0197: 0197-20_linux_xen-load-xen-or-multiboot-2-modules-as-need.patch

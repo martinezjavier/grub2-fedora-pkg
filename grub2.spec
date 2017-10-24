@@ -7,7 +7,7 @@
 Name:		grub2
 Epoch:		1
 Version:	2.02
-Release:	18%{?dist}
+Release:	19%{?dist}
 Summary:	Bootloader with support for Linux, Multiboot and more
 Group:		System Environment/Base
 License:	GPLv3+
@@ -454,6 +454,10 @@ fi
 %endif
 
 %changelog
+* Tue Oct 24 2017 Peter Jones <pjones@redhat.com> - 2.02-19
+- Handle xen module loading (somewhat) better
+  Resolves: rhbz#1486002
+
 * Wed Sep 20 2017 Peter Jones <pjones@redhat.com> - 2.02-18
 - Make grub2-efi-aa64 provide grub2
   Resolves: rhbz#1491045
