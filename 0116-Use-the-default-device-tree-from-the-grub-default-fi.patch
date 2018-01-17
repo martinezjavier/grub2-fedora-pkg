@@ -1,7 +1,7 @@
 From 6ec36777aae0c4afd98f67f22d4d511b447dbb02 Mon Sep 17 00:00:00 2001
 From: Fedora Ninjas <grub2-owner@fedoraproject.org>
 Date: Wed, 12 Feb 2014 14:54:04 -0500
-Subject: [PATCH 116/194] Use the default device tree from the grub default
+Subject: [PATCH 116/198] Use the default device tree from the grub default
  file
 
 instead of hardcoding a value.
@@ -42,5 +42,5 @@ index 462b461ff..a9692a0c2 100644
      fi
    done
 -- 
-2.13.5
+2.14.3
 

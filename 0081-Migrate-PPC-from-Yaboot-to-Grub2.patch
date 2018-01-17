@@ -1,7 +1,7 @@
 From 91b2efdd5e9c3b0784d0a70282407324f07a30b8 Mon Sep 17 00:00:00 2001
 From: Mark Hamzy <hamzy@us.ibm.com>
 Date: Wed, 28 Mar 2012 14:46:41 -0500
-Subject: [PATCH 081/194] Migrate PPC from Yaboot to Grub2
+Subject: [PATCH 081/198] Migrate PPC from Yaboot to Grub2
 
 Add configuration support for serial terminal consoles.  This will set the
 maximum screen size so that text is not overwritten.
@@ -15,20 +15,20 @@ diff --git a/Makefile.util.def b/Makefile.util.def
 index f9caccb97..6d452da02 100644
 --- a/Makefile.util.def
 +++ b/Makefile.util.def
-@@ -487,6 +487,13 @@ script = {
+@@ -486,6 +486,13 @@ script = {
+   condition = COND_HOST_LINUX;
  };
  
- script = {
++script = {
 +  name = '20_ppc_terminfo';
 +  common = util/grub.d/20_ppc_terminfo.in;
 +  installdir = grubconf;
 +  condition = COND_HOST_LINUX;
 +};
 +
-+script = {
+ script = {
    name = '30_os-prober';
    common = util/grub.d/30_os-prober.in;
-   installdir = grubconf;
 diff --git a/util/grub.d/20_ppc_terminfo.in b/util/grub.d/20_ppc_terminfo.in
 new file mode 100644
 index 000000000..10d665868
@@ -150,5 +150,5 @@ index 000000000..10d665868
 +  terminfo -g ${X}x${Y} ${TERMINAL}
 +EOF
 -- 
-2.13.5
+2.14.3
 

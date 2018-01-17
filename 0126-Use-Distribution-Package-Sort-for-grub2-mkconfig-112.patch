@@ -1,7 +1,7 @@
-From 42c78f4a2f3359b415eff631712a0400c2042522 Mon Sep 17 00:00:00 2001
+From 3bafdc90cd92f95c0dbc373ae9f408d5f6883ec3 Mon Sep 17 00:00:00 2001
 From: Robert Marshall <rmarshall@redhat.com>
 Date: Mon, 16 Mar 2015 14:14:19 -0400
-Subject: [PATCH 126/194] Use Distribution Package Sort for grub2-mkconfig
+Subject: [PATCH 126/198] Use Distribution Package Sort for grub2-mkconfig
  (#1124074)
 
 Users reported that newly installed kernels on their systems installed
@@ -447,5 +447,5 @@ index 000000000..f33bd1ed5
 +  return 0;
 +}
 -- 
-2.13.5
+2.14.3
 

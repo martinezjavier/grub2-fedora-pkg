@@ -1,7 +1,7 @@
 From 266c7e797971879dc229594556a687a79c92d3b6 Mon Sep 17 00:00:00 2001
 From: Fedora Ninjas <grub2-owner@fedoraproject.org>
 Date: Tue, 22 Jan 2013 06:31:38 +0100
-Subject: [PATCH 089/194] blscfg: add blscfg module to parse Boot Loader
+Subject: [PATCH 089/198] blscfg: add blscfg module to parse Boot Loader
  Specification snippets
 
 http://www.freedesktop.org/wiki/Specifications/BootLoaderSpec
@@ -24,10 +24,11 @@ diff --git a/grub-core/Makefile.core.def b/grub-core/Makefile.core.def
 index c653c71c5..7f3d5a2bf 100644
 --- a/grub-core/Makefile.core.def
 +++ b/grub-core/Makefile.core.def
-@@ -769,6 +769,14 @@ module = {
+@@ -768,6 +768,14 @@ module = {
+   common = commands/blocklist.c;
  };
  
- module = {
++module = {
 +  name = blscfg;
 +  common = commands/blscfg.c;
 +  enable = i386_efi;
@@ -35,10 +36,9 @@ index c653c71c5..7f3d5a2bf 100644
 +  enable = i386_pc;
 +};
 +
-+module = {
+ module = {
    name = boot;
    common = commands/boot.c;
-   i386_pc = lib/i386/pc/biosnum.c;
 diff --git a/grub-core/commands/blscfg.c b/grub-core/commands/blscfg.c
 new file mode 100644
 index 000000000..4274aca5a
@@ -247,5 +247,5 @@ index 000000000..4274aca5a
 +  grub_unregister_extcmd (cmd);
 +}
 -- 
-2.13.5
+2.14.3
 
