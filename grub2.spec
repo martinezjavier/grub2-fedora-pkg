@@ -7,7 +7,7 @@
 Name:		grub2
 Epoch:		1
 Version:	2.02
-Release:	20%{?dist}
+Release:	21%{?dist}
 Summary:	Bootloader with support for Linux, Multiboot and more
 Group:		System Environment/Base
 License:	GPLv3+
@@ -454,6 +454,12 @@ fi
 %endif
 
 %changelog
+* Thu Jan 18 2018 Peter Jones <pjones@redhat.com> - 2.02-21
+- Fix grub2-efi-modules provides/obsoletes generation
+  Resolves: rhbz#1506704
+- *Also* build grub-efi-ia32{,-*,!-modules} packages for i686 builds
+  Resolves: rhbz#1502312
+
 * Wed Jan 17 2018 Peter Jones <pjones@redhat.com> - 2.02-20
 - Pull in patches for Apollo Lake hardware
   Resolves: rhbz#1519311
